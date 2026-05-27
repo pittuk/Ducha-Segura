@@ -1,0 +1,62 @@
+---
+// BaseLayout.astro — Layout base del sitio. Incluye tokens, reset, iconos, topbar,
+// header, prefooter, footer y el script de inicialización de UI global.
+import '../styles/tokens.css';
+import '../styles/base.css';
+import Icons from '../components/Icons.astro';
+import Topbar from '../components/Topbar.astro';
+import Header from '../components/Header.astro';
+import PrefooterCta from '../components/PrefooterCta.astro';
+import Footer from '../components/Footer.astro';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = 'Ducha Segura® — Rebajes de tina para acceso seguro. Producto nacional patentado. Instalación en 1 día. Garantía 3 años.',
+  ogImage = '/images/Ducha segura logo azul.png',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#0072C0" />
+  <title>{title}</title>
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link rel="apple-touch-icon" href="/images/Ducha segura logo azul.png" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=PT+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet" />
+  <ClientRouter />
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+  <Icons />
+  <Topbar />
+  <Header />
+  <main id="main">
+    <slot />
+  </main>
+  <PrefooterCta />
+  <Footer />
+  <script>
+    import { initUI } from '../scripts/ui';
+    document.addEventListener('astro:page-load', () => initUI());
+  </script>
+</body>
+</html>

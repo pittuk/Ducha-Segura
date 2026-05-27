@@ -1,0 +1,42 @@
+---
+// PrefooterCta.astro — Sección pre-footer con CTA (legacy 1092–1110).
+// data-pf attrs permiten a ui.ts actualizar el texto en el cambio de modo.
+// CSS de componente = legacy "Pre-footer" CSS (452–465), sin clases globales.
+import { HERO_COPY } from '../data/hero';
+const pf = HERO_COPY.user;
+---
+<section class="prefooter reveal">
+  <div class="prefooter__inner">
+    <div>
+      <div class="kicker kicker--light" style="margin-bottom:14px" data-pf="kicker">{pf.pfKicker}</div>
+      <h2 class="prefooter__h2">
+        <span data-pf="h2">{pf.pfH2}</span><br>
+        <span data-pf="sub">{pf.pfSub}</span>
+      </h2>
+      <p class="prefooter__sub">RM, Valparaíso y Bío Bío · 7–10 días hábiles desde la confirmación del pago.</p>
+    </div>
+    <div class="prefooter__ctas">
+      <a href="/catalogo" class="btn btn--on-light btn--lg btn--full">
+        <span>Ver tinas y precios</span>
+        <svg class="ic"><use href="#i-arrow"/></svg>
+      </a>
+      <a href="https://wa.me/56934044939" target="_blank" rel="noopener" class="btn btn--ghost btn--lg btn--full">
+        <svg class="ic"><use href="#i-whatsapp"/></svg>
+        <span>Habla con un técnico</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+.prefooter{background:var(--ds-blue-dark);color:#fff;padding:96px 64px;position:relative;overflow:hidden}
+@media (max-width:768px){.prefooter{padding:56px 20px}}
+.prefooter::before{content:'';position:absolute;top:-30%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,var(--ds-blue) 0%,transparent 60%);opacity:.35;filter:blur(40px);pointer-events:none}
+.prefooter__inner{max-width:var(--ds-container);margin:0 auto;position:relative;display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:center}
+@media (max-width:1024px){.prefooter__inner{grid-template-columns:1fr;gap:32px}}
+.prefooter__h2{margin:0;font-family:var(--ds-display);font-weight:800;font-size:clamp(56px,5.6vw,84px);line-height:1.02;letter-spacing:-.035em;color:#fff}
+@media (max-width:768px){.prefooter__h2{font-size:clamp(36px,9vw,48px)}}
+.prefooter__sub{margin:20px 0 0;font-size:17px;line-height:1.5;color:rgba(255,255,255,.75);max-width:480px}
+@media (max-width:768px){.prefooter__sub{font-size:15px}}
+.prefooter__ctas{display:flex;flex-direction:column;gap:12px}
+</style>

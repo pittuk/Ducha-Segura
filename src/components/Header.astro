@@ -1,0 +1,138 @@
+---
+// Header.astro — Cabecera del sitio + mobile menu drawer (legacy 636–672 + 1241–1265).
+// CSS de componente = legacy "Header" CSS (76–120) y "Mobile menu drawer" (554–566),
+// sin clases globales duplicadas.
+import { NAV } from '../data/site';
+const path = Astro.url.pathname;
+const isActive = (href: string) => href === '/' ? path === '/' : path.startsWith(href);
+---
+<header class="header">
+  <a href="/" class="logo" aria-label="Ducha Segura — Inicio">
+    <img class="logo__circle" src="/images/Ducha segura logo azul.png" alt="" width="44" height="44" />
+    <div class="logo__txt">
+      <span class="logo__name">Ducha Segura<sup>®</sup></span>
+      <span class="logo__sub">CHILE</span>
+    </div>
+  </a>
+
+  <nav class="nav" aria-label="Navegación principal">
+    {NAV.map(item => (
+      <a href={item.href} class:list={["nav__link", { active: isActive(item.href) }]}>{item.label}</a>
+    ))}
+  </nav>
+
+  <div class="header__actions">
+    <div class="mode-toggle" role="group" aria-label="Modo de navegación">
+      <button class="mode-toggle__btn active" data-mode="user">Para mí mismo</button>
+      <button class="mode-toggle__btn" data-mode="caregiver">Para un familiar</button>
+    </div>
+    <button class="icon-btn hide-mobile" aria-label="Buscar productos">
+      <svg class="ic" style="width:20px;height:20px"><use href="#i-search"/></svg>
+    </button>
+    <button class="icon-btn hide-mobile" aria-label="Mi cuenta">
+      <svg class="ic" style="width:20px;height:20px"><use href="#i-user"/></svg>
+    </button>
+    <button class="cart-trigger" id="cartTrigger" aria-label="Ver mi cotización">
+      <svg class="ic"><use href="#i-cart"/></svg>
+      <span class="cart-trigger__label">Cotización</span>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
+      <svg class="ic" style="width:22px;height:22px"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu drawer (legacy 1240–1265) -->
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<aside class="menu-drawer" id="menuDrawer" aria-label="Menú principal">
+  <div class="menu-drawer__head">
+    <div class="logo">
+      <img class="logo__circle" src="/images/Ducha segura logo azul.png" alt="" width="44" height="44" />
+      <div class="logo__txt">
+        <span class="logo__name">Ducha Segura<sup>®</sup></span>
+        <span class="logo__sub">CHILE</span>
+      </div>
+    </div>
+    <button class="drawer__close" id="menuClose" aria-label="Cerrar menú">
+      <svg class="ic"><use href="#i-close"/></svg>
+    </button>
+  </div>
+  <nav class="menu-drawer__nav">
+    {NAV.map(item => (
+      <a href={item.href}>{item.label}</a>
+    ))}
+  </nav>
+  <div class="menu-drawer__mode">
+    <div class="cfg-label" style="margin-bottom:10px">Modo de navegación</div>
+    <div class="mode-toggle" style="display:flex;width:100%">
+      <button class="mode-toggle__btn active" data-mode="user" style="flex:1">Para mí</button>
+      <button class="mode-toggle__btn" data-mode="caregiver" style="flex:1">Familiar</button>
+    </div>
+  </div>
+</aside>
+
+<style>
+/* Header (legacy 79–120) */
+.header{height:88px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--ds-border);position:sticky;top:0;z-index:50;display:flex;align-items:center;padding:0 48px}
+@media (max-width:768px){.header{height:64px;padding:0 16px}}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ds-text-strong)}
+.logo__circle{width:44px;height:44px;border-radius:50%;background:var(--ds-blue);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--ds-display);font-weight:800;font-size:18px;letter-spacing:-.04em;flex-shrink:0}
+img.logo__circle{background:#fff;object-fit:contain}
+@media (max-width:768px){.logo__circle{width:36px;height:36px;font-size:15px}}
+.logo__txt{display:flex;flex-direction:column;line-height:1}
+.logo__name{font-family:var(--ds-display);font-weight:800;font-size:18px;letter-spacing:-.02em}
+@media (max-width:768px){.logo__name{font-size:14px}}
+.logo__name sup{font-size:.55em;vertical-align:super;margin-left:1px}
+.logo__sub{font-family:var(--ds-sans);font-size:10px;font-weight:500;color:var(--ds-text);letter-spacing:.04em;text-transform:uppercase;margin-top:2px}
+@media (max-width:768px){.logo__sub{font-size:9px}}
+
+.nav{display:flex;gap:28px;margin-left:56px;flex:1}
+@media (max-width:1024px){.nav{display:none}}
+.nav__link{color:var(--ds-text-strong);font-size:15px;font-weight:500;padding:8px 0;position:relative;transition:color .15s}
+.nav__link:hover{color:var(--ds-blue)}
+.nav__link.active{color:var(--ds-blue);font-weight:600}
+.nav__link.active::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ds-blue);border-radius:1px}
+
+.header__actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+@media (max-width:1024px){.header__actions{gap:6px}}
+
+.mode-toggle{display:inline-flex;gap:2px;padding:3px;background:var(--ds-bg-alt);border-radius:999px;font-size:12px;font-weight:600}
+@media (max-width:1024px){.mode-toggle{display:none}}
+.mode-toggle__btn{padding:6px 12px;color:var(--ds-text);border-radius:999px;transition:all .15s;white-space:nowrap}
+.mode-toggle__btn.active{background:var(--ds-blue);color:#fff}
+
+.icon-btn{color:var(--ds-text-strong);padding:10px;display:flex;border-radius:999px;transition:background .15s}
+.icon-btn:hover{background:var(--ds-bg-alt)}
+@media (max-width:1024px){.icon-btn.hide-mobile{display:none}}
+
+.cart-trigger{position:relative;background:var(--ds-bg-alt);color:var(--ds-text-strong);padding:10px 14px;border-radius:999px;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;transition:background .15s}
+.cart-trigger:hover{background:#ececec}
+.cart-trigger__label{display:inline}
+@media (max-width:1024px){.cart-trigger{padding:8px;border-radius:50%}.cart-trigger__label{display:none}}
+.cart-badge{background:var(--ds-red);color:#fff;font-size:11px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px}
+@media (max-width:1024px){.cart-badge{position:absolute;top:0;right:0;font-size:10px;min-width:16px;height:16px}}
+
+.menu-btn{display:none;color:var(--ds-text-strong);padding:8px}
+@media (max-width:1024px){.menu-btn{display:flex}}
+
+/* Mobile menu drawer (legacy 554–566) */
+.menu-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
+.menu-backdrop.open{opacity:1;pointer-events:auto}
+.menu-drawer{position:fixed;top:0;right:0;bottom:0;width:300px;max-width:88vw;background:#fff;z-index:201;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.menu-drawer.open{transform:translateX(0)}
+.menu-drawer__head{padding:18px 20px;border-bottom:1px solid var(--ds-border);display:flex;align-items:center;justify-content:space-between}
+.menu-drawer__nav{padding:8px 0;display:flex;flex-direction:column}
+.menu-drawer__nav a{padding:14px 24px;font-size:16px;font-weight:600;color:var(--ds-text-strong)}
+.menu-drawer__nav a:hover{background:var(--ds-bg-alt);color:var(--ds-blue)}
+.menu-drawer__mode{padding:20px 24px;border-top:1px solid var(--ds-border)}
+/* Inside the mobile drawer the .mode-toggle should display flex */
+.menu-drawer .mode-toggle{display:flex}
+
+/* drawer__close is also used in the mobile header */
+.drawer__close{width:32px;height:32px;background:var(--ds-bg-alt);color:var(--ds-text-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.drawer__close:hover{background:#ececec}
+.drawer__close .ic{width:16px;height:16px}
+
+.cfg-label{font-size:12px;font-weight:700;color:var(--ds-text-strong);text-transform:uppercase;letter-spacing:.06em}
+</style>

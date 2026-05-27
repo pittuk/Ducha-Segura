@@ -1,0 +1,119 @@
+---
+// Footer.astro — Pie de página (legacy 1115–1188).
+// CSS de componente = legacy "Footer" CSS (466–495), sin clases globales.
+// data-accordion attributes en columnas para el acordeón móvil de ui.ts.
+---
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <div class="logo">
+        <img class="logo__circle" src="/images/Ducha segura logo azul.png" alt="Ducha Segura®" width="44" height="44" />
+      </div>
+      <p class="footer__about">+10 años fabricando rebajes para tina en Chile. Producto nacional patentado. Garantía 3 años con instalación incluida.</p>
+      <div class="footer__socials">
+        <a href="https://instagram.com/duchasegura_" target="_blank" rel="noopener" class="footer__social" aria-label="Instagram">IG</a>
+        <a href="https://facebook.com/Ducha-Segura-699654674213794" target="_blank" rel="noopener" class="footer__social" aria-label="Facebook">FB</a>
+        <a href="https://linkedin.com/company/ducha-segura" target="_blank" rel="noopener" class="footer__social" aria-label="LinkedIn">LI</a>
+        <a href="https://twitter.com/duchasegura_" target="_blank" rel="noopener" class="footer__social" aria-label="Twitter / X">X</a>
+      </div>
+      <div class="footer__contact">
+        <div class="footer__contact-row">
+          <svg class="ic"><use href="#i-phone"/></svg>
+          <a href="tel:+56934044939" style="color:var(--ds-text-strong);font-weight:600">+56 9 3404 4939</a>
+        </div>
+        <div class="footer__contact-row">
+          <svg class="ic"><use href="#i-info"/></svg>
+          <a href="mailto:contacto@duchasegura.cl">contacto@duchasegura.cl</a>
+        </div>
+        <div class="footer__contact-row">
+          <svg class="ic"><use href="#i-pin"/></svg>
+          <span>RM · Valparaíso · Bío Bío</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__col" data-accordion>
+      <button class="footer__col-head">
+        <span class="footer__col-title">Productos</span>
+        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
+      </button>
+      <ul class="footer__col-list">
+        <li><a href="/catalogo">Tina Tradicional</a></li>
+        <li><a href="/catalogo">Tina Jacuzzi</a></li>
+        <li><a href="/accesorios">Accesorios</a></li>
+        <li><a href="/catalogo">Kit DIY</a></li>
+        <li><a href="/catalogo">Spa XL — a medida</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col" data-accordion>
+      <button class="footer__col-head">
+        <span class="footer__col-title">Empresa</span>
+        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
+      </button>
+      <ul class="footer__col-list">
+        <li><a href="/convenios">Convenios</a></li>
+        <li><a href="#">Cobertura</a></li>
+        <li><a href="#">Garantía 3 años</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col" data-accordion>
+      <button class="footer__col-head">
+        <span class="footer__col-title">Ayuda</span>
+        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
+      </button>
+      <ul class="footer__col-list">
+        <li><a href="#">Términos y condiciones</a></li>
+        <li><a href="#">Política de privacidad</a></li>
+        <li><a href="#">Devoluciones</a></li>
+        <li><a href="#">Preguntas frecuentes</a></li>
+        <li><a href="#">¿Caso especial? Pedí presupuesto</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="footer__bottom-inner">
+      <div>© 2026 Ducha Segura® CHILE · Desarrollado por Agenciados.</div>
+      <div class="footer__bottom-links">
+        <a href="#">Términos</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+/* Footer (legacy 469–495) */
+.footer{background:#fff;color:var(--ds-text)}
+.footer__inner{max-width:var(--ds-container);margin:0 auto;padding:64px var(--ds-pad) 32px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px}
+@media (max-width:1024px){.footer__inner{grid-template-columns:1fr;gap:0;padding:48px 20px 24px}}
+.footer__brand{margin-bottom:0}
+@media (max-width:1024px){.footer__brand{margin-bottom:32px}}
+.footer__about{margin:20px 0 24px;font-size:14px;line-height:1.55;max-width:340px}
+.footer__socials{display:flex;gap:10px;margin-bottom:20px}
+.footer__social{width:36px;height:36px;border-radius:50%;background:var(--ds-bg-alt);color:var(--ds-text-strong);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;letter-spacing:.02em;transition:background .15s,color .15s}
+.footer__social:hover{background:var(--ds-blue);color:#fff}
+.footer__contact{display:flex;flex-direction:column;gap:6px;font-size:13px}
+.footer__contact-row{display:flex;align-items:center;gap:8px}
+.footer__contact-row .ic{width:14px;height:14px;stroke-width:2;color:var(--ds-blue)}
+.footer__col{border-top:0;padding:0}
+@media (max-width:1024px){.footer__col{border-top:1px solid var(--ds-border);padding:16px 0}}
+.footer__col-head{display:flex;align-items:center;justify-content:space-between;background:transparent;padding:0;width:100%;margin-bottom:14px;text-align:left}
+@media (max-width:1024px){.footer__col-head{margin-bottom:0;cursor:pointer}.footer__col.open .footer__col-head{margin-bottom:14px}}
+.footer__col-title{font-size:11px;font-weight:700;color:var(--ds-text-strong);text-transform:uppercase;letter-spacing:.08em}
+.footer__col-toggle{display:none;color:var(--ds-text)}
+@media (max-width:1024px){.footer__col-toggle{display:flex}}
+.footer__col-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+@media (max-width:1024px){.footer__col-list{display:none}.footer__col.open .footer__col-list{display:flex}}
+.footer__col-list a{font-size:14px;color:var(--ds-text);line-height:1.4;transition:color .15s}
+.footer__col-list a:hover{color:var(--ds-blue)}
+.footer__bottom{border-top:1px solid var(--ds-border);background:var(--ds-blue-dark);color:rgba(255,255,255,.7);padding:20px var(--ds-pad)}
+.footer__bottom-inner{max-width:var(--ds-container);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px}
+.footer__bottom-links{display:flex;gap:16px}
+img.logo__circle{background:#fff;object-fit:contain}
+</style>

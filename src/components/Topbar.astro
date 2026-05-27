@@ -1,0 +1,31 @@
+---
+// Topbar.astro — Barra promocional superior (legacy 618–634).
+// CSS de componente = legacy "TopBar" CSS (63–75), sin clases globales duplicadas.
+import { TOPBAR_MESSAGES } from '../data/site';
+---
+<div class="topbar" id="topbar" role="region" aria-label="Promociones vigentes">
+  <div class="topbar__dots" aria-hidden="true">
+    {TOPBAR_MESSAGES.map((_, i) => (
+      <span class:list={['topbar__dot', { active: i === 0 }]}></span>
+    ))}
+  </div>
+  <div class="topbar__msg" id="topbarMsg">
+    <svg class="ic" style="width:14px;height:14px;opacity:.85"><use href="#i-sparkles"/></svg>
+    <span id="topbarText">{TOPBAR_MESSAGES[0]}</span>
+  </div>
+  <button class="topbar__close" id="topbarClose" aria-label="Cerrar barra promocional">
+    <svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-close"/></svg>
+  </button>
+</div>
+
+<style>
+.topbar{height:48px;background:var(--ds-blue);color:#fff;display:flex;align-items:center;justify-content:center;position:relative;font-size:14px;font-weight:500;overflow:hidden;padding:0 60px}
+@media (max-width:768px){.topbar{height:56px;font-size:12px;padding:0 50px}}
+.topbar__msg{display:flex;align-items:center;gap:8px;text-align:center;line-height:1.3;transition:opacity .4s}
+.topbar__dots{position:absolute;left:30px;top:50%;transform:translateY(-50%);display:flex;gap:5px}
+@media (max-width:768px){.topbar__dots{left:14px}}
+.topbar__dot{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.4);transition:background .3s}
+.topbar__dot.active{background:#fff}
+.topbar__close{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#fff;padding:6px;opacity:.7;display:flex}
+.topbar__close:hover{opacity:1}
+</style>
