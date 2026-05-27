@@ -35,16 +35,4 @@ const regular = PRODUCTS.filter(p => !featuredIds.has(p.id));
     </div>
   </div>
 </section>
-
-<style>
-/* Productos section layout (legacy 251–254, 287–290) */
-.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px}
-@media (max-width:768px){.product-grid{grid-template-columns:1fr;gap:20px;margin-bottom:28px}}
-.product-grid--single{grid-template-columns:1fr;margin-bottom:56px}
-@media (max-width:768px){.product-grid--single{margin-bottom:40px}}
-
-.acc-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;flex-wrap:wrap;gap:8px}
-.acc-head h3{margin:0;font-family:var(--ds-display);font-weight:700;font-size:22px;color:var(--ds-text-strong);letter-spacing:-.02em}
-.acc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-@media (max-width:768px){.acc-grid{grid-template-columns:1fr 1fr;gap:12px}}
-</style>
+<!-- Grillas (.product-grid/.acc-grid/.acc-head) viven ahora en base.css (utilidades compartidas). -->
