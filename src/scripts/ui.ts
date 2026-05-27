@@ -4,12 +4,19 @@ import { $, $$ } from './dom';
 import { HERO_COPY, type Mode } from '../data/hero';
 import { TOPBAR_MESSAGES } from '../data/site';
 
-// Module-level state for slider (Fix 2: window listeners attached only once)
+// Module-level state for slider (window listeners attached only once)
 let _dragging = false;
 let _sliderEl: HTMLElement | null = null;
 
-// Module-level singleton IntersectionObserver for reveal (Fix 8)
+// Module-level singleton IntersectionObserver for reveal
 let _revealIO: IntersectionObserver | null = null;
+
+// Module-level guards for once-per-session document/window listeners.
+// Use module state (persists across Astro View Transitions) rather than a
+// `document.body.dataset.*` flag, because Astro replaces <body> on each swap.
+let _menuKeyBound = false;
+let _sliderWinBound = false;
+let _topbarInterval: ReturnType<typeof setInterval> | null = null;
 
 export function initUI(): void {
   initTopbar();
@@ -37,7 +44,9 @@ function initTopbar(): void {
   const topbarDots = $$<HTMLElement>('.topbar__dot');
   let topbarIdx = 0;
 
-  const interval = setInterval(() => {
+  // Clear any interval from a previous page (avoid orphaned timers across navigations)
+  if (_topbarInterval) clearInterval(_topbarInterval);
+  _topbarInterval = setInterval(() => {
     topbarIdx = (topbarIdx + 1) % TOPBAR_MESSAGES.length;
     if (topbarMsg) topbarMsg.style.opacity = '0';
     setTimeout(() => {
@@ -51,7 +60,7 @@ function initTopbar(): void {
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
       topbar.remove();
-      clearInterval(interval);
+      if (_topbarInterval) { clearInterval(_topbarInterval); _topbarInterval = null; }
       try { document.cookie = 'ds_topbar_dismissed=1;path=/;max-age=86400'; } catch (_) {}
     });
   }
@@ -137,9 +146,9 @@ function initSlider(): void {
   el.addEventListener('mousedown', onDown as EventListener);
   el.addEventListener('touchstart', onDown as EventListener, { passive: true });
 
-  // Attach window move/up/end listeners ONCE per session
-  if (!document.body.dataset.sliderWinBound) {
-    document.body.dataset.sliderWinBound = '1';
+  // Attach window move/up/end listeners ONCE per session (module guard; handlers use module state)
+  if (!_sliderWinBound) {
+    _sliderWinBound = true;
 
     const onMove = (e: MouseEvent | TouchEvent) => {
       if (!_dragging || !_sliderEl) return;
@@ -182,11 +191,16 @@ function initMobileMenu(): void {
   menuBackdrop?.addEventListener('click', closeMenu);
   $$('.menu-drawer__nav a').forEach(a => a.addEventListener('click', closeMenu));
 
-  // Guard keydown so it's attached only ONCE per session (document persists across View Transitions)
-  if (!document.body.dataset.menuKeyBound) {
-    document.body.dataset.menuKeyBound = '1';
+  // Attach the Escape handler ONCE per session. Module guard (Astro replaces <body> on swap,
+  // so a body dataset flag would reset and stack listeners). Query live nodes by id at call
+  // time so it always acts on the current page's drawer, not a stale closure.
+  if (!_menuKeyBound) {
+    _menuKeyBound = true;
     document.addEventListener('keydown', (e) => {
-      if ((e as KeyboardEvent).key === 'Escape') closeMenu();
+      if ((e as KeyboardEvent).key !== 'Escape') return;
+      document.getElementById('menuDrawer')?.classList.remove('open');
+      document.getElementById('menuBackdrop')?.classList.remove('open');
+      document.body.style.overflow = '';
     });
   }
 }
