@@ -4,6 +4,13 @@ import { $, $$ } from './dom';
 import { HERO_COPY, type Mode } from '../data/hero';
 import { TOPBAR_MESSAGES } from '../data/site';
 
+// Module-level state for slider (Fix 2: window listeners attached only once)
+let _dragging = false;
+let _sliderEl: HTMLElement | null = null;
+
+// Module-level singleton IntersectionObserver for reveal (Fix 8)
+let _revealIO: IntersectionObserver | null = null;
+
 export function initUI(): void {
   initTopbar();
   initModeToggle();
@@ -97,20 +104,19 @@ function initModeToggle(): void {
 
 /* ---------- Before/After slider (legacy 1527–1562) ---------- */
 function initSlider(): void {
-  const slider = $<HTMLElement>('#slider');
-  if (!slider) return;
-  if (slider.dataset.bound) return;
-  slider.dataset.bound = '1';
+  const el = $<HTMLElement>('#slider');
+  if (!el || el.dataset.bound) return;
+  el.dataset.bound = '1';
+  _sliderEl = el;
 
-  const before = $<HTMLElement>('#sliderBefore');
-  const handle = $<HTMLElement>('#sliderHandle');
-  const knob = $<HTMLElement>('#sliderKnob');
-  let dragging = false;
-
-  const update = (clientX: number) => {
-    const r = slider.getBoundingClientRect();
+  const sliderUpdate = (clientX: number) => {
+    if (!_sliderEl) return;
+    const r = _sliderEl.getBoundingClientRect();
     let p = ((clientX - r.left) / r.width) * 100;
     p = Math.max(2, Math.min(98, p));
+    const before = $<HTMLElement>('#sliderBefore');
+    const handle = $<HTMLElement>('#sliderHandle');
+    const knob = $<HTMLElement>('#sliderKnob');
     if (before) {
       before.style.clipPath = `polygon(0 0,${p}% 0,${p}% 100%,0 100%)`;
       // @ts-ignore: vendor prefix
@@ -121,25 +127,33 @@ function initSlider(): void {
   };
 
   const onDown = (e: MouseEvent | TouchEvent) => {
-    dragging = true;
+    _dragging = true;
     document.body.style.userSelect = 'none';
     const cx = (e as TouchEvent).touches ? (e as TouchEvent).touches[0].clientX : (e as MouseEvent).clientX;
-    update(cx);
+    sliderUpdate(cx);
   };
-  const onMove = (e: MouseEvent | TouchEvent) => {
-    if (!dragging) return;
-    if (e.cancelable) e.preventDefault();
-    const cx = (e as TouchEvent).touches ? (e as TouchEvent).touches[0].clientX : (e as MouseEvent).clientX;
-    update(cx);
-  };
-  const onUp = () => { dragging = false; document.body.style.userSelect = ''; };
 
-  slider.addEventListener('mousedown', onDown as EventListener);
-  slider.addEventListener('touchstart', onDown as EventListener, { passive: true });
-  window.addEventListener('mousemove', onMove as EventListener);
-  window.addEventListener('touchmove', onMove as EventListener, { passive: false });
-  window.addEventListener('mouseup', onUp);
-  window.addEventListener('touchend', onUp);
+  // Attach start-drag listeners to the node (safe — node is fresh each page)
+  el.addEventListener('mousedown', onDown as EventListener);
+  el.addEventListener('touchstart', onDown as EventListener, { passive: true });
+
+  // Attach window move/up/end listeners ONCE per session
+  if (!document.body.dataset.sliderWinBound) {
+    document.body.dataset.sliderWinBound = '1';
+
+    const onMove = (e: MouseEvent | TouchEvent) => {
+      if (!_dragging || !_sliderEl) return;
+      if (e.cancelable) e.preventDefault();
+      const cx = (e as TouchEvent).touches ? (e as TouchEvent).touches[0].clientX : (e as MouseEvent).clientX;
+      sliderUpdate(cx);
+    };
+    const onUp = () => { _dragging = false; document.body.style.userSelect = ''; };
+
+    window.addEventListener('mousemove', onMove as EventListener);
+    window.addEventListener('touchmove', onMove as EventListener, { passive: false });
+    window.addEventListener('mouseup', onUp);
+    window.addEventListener('touchend', onUp);
+  }
 }
 
 /* ---------- Mobile menu (legacy 1816–1828) ---------- */
@@ -168,9 +182,13 @@ function initMobileMenu(): void {
   menuBackdrop?.addEventListener('click', closeMenu);
   $$('.menu-drawer__nav a').forEach(a => a.addEventListener('click', closeMenu));
 
-  document.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (e.key === 'Escape') closeMenu();
-  });
+  // Guard keydown so it's attached only ONCE per session (document persists across View Transitions)
+  if (!document.body.dataset.menuKeyBound) {
+    document.body.dataset.menuKeyBound = '1';
+    document.addEventListener('keydown', (e) => {
+      if ((e as KeyboardEvent).key === 'Escape') closeMenu();
+    });
+  }
 }
 
 /* ---------- Footer accordion (mobile, legacy 1854–1865) ---------- */
@@ -202,15 +220,18 @@ function initReveal(): void {
     $$('.reveal').forEach(el => el.classList.add('in'));
     return;
   }
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.15 });
+  // Lazily create the singleton observer once per session
+  if (!_revealIO) {
+    _revealIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); _revealIO!.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+  }
   $$<HTMLElement>('.reveal').forEach(el => {
     if (!el.dataset.revealBound) {
       el.dataset.revealBound = '1';
-      io.observe(el);
+      _revealIO!.observe(el);
     }
   });
 }

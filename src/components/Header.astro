@@ -4,15 +4,11 @@
 // sin clases globales duplicadas.
 import { NAV } from '../data/site';
 const path = Astro.url.pathname;
-const isActive = (href: string) => href === '/' ? path === '/' : path.startsWith(href);
+const isActive = (href: string) => href === '/' ? path === '/' : (path === href || path.startsWith(href + '/'));
 ---
 <header class="header">
   <a href="/" class="logo" aria-label="Ducha Segura — Inicio">
     <img class="logo__circle" src="/images/Ducha segura logo azul.png" alt="" width="44" height="44" />
-    <div class="logo__txt">
-      <span class="logo__name">Ducha Segura<sup>®</sup></span>
-      <span class="logo__sub">CHILE</span>
-    </div>
   </a>
 
   <nav class="nav" aria-label="Navegación principal">
@@ -60,7 +56,7 @@ const isActive = (href: string) => href === '/' ? path === '/' : path.startsWith
   </div>
   <nav class="menu-drawer__nav">
     {NAV.map(item => (
-      <a href={item.href}>{item.label}</a>
+      <a href={item.href} class:list={[{ active: isActive(item.href) }]}>{item.label}</a>
     ))}
   </nav>
   <div class="menu-drawer__mode">
@@ -125,6 +121,7 @@ img.logo__circle{background:#fff;object-fit:contain}
 .menu-drawer__nav{padding:8px 0;display:flex;flex-direction:column}
 .menu-drawer__nav a{padding:14px 24px;font-size:16px;font-weight:600;color:var(--ds-text-strong)}
 .menu-drawer__nav a:hover{background:var(--ds-bg-alt);color:var(--ds-blue)}
+.menu-drawer__nav a.active{color:var(--ds-blue);background:var(--ds-bg-alt)}
 .menu-drawer__mode{padding:20px 24px;border-top:1px solid var(--ds-border)}
 /* Inside the mobile drawer the .mode-toggle should display flex */
 .menu-drawer .mode-toggle{display:flex}
