@@ -16,7 +16,6 @@ const { accesorio } = Astro.props;
     <div class="acc-card__foot">
       <div>
         <span class="acc-card__price">${clp(accesorio.price)}</span>
-        <span class="dummy">dummy</span>
       </div>
       <button class="add-btn" data-add-acc={accesorio.id} aria-label={`Agregar ${accesorio.name} a cotización`}>
         <svg class="ic"><use href="#i-plus"/></svg>
@@ -40,6 +39,4 @@ const { accesorio } = Astro.props;
 .add-btn{width:32px;height:32px;background:var(--ds-blue);color:#fff;border-radius:var(--ds-radius);display:flex;align-items:center;justify-content:center;transition:background .15s,transform .12s}
 .add-btn:hover{background:var(--ds-blue-hover);transform:scale(1.08)}
 .add-btn .ic{width:16px;height:16px;stroke-width:2.5}
-
-.dummy{font-family:ui-monospace,monospace;font-size:9px;font-weight:600;color:var(--ds-red);background:rgba(204,43,43,.08);padding:2px 6px;border-radius:3px;letter-spacing:.05em;text-transform:uppercase;vertical-align:middle;margin-left:6px}
 </style>

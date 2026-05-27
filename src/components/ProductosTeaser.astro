@@ -3,8 +3,11 @@ import { PRODUCTS } from '../data/products';
 import { ACCESORIOS } from '../data/accesorios';
 import ProductCard from './ProductCard.astro';
 import AccessoryCard from './AccessoryCard.astro';
-const featured = PRODUCTS.filter(p => p.featured);
-const regular = PRODUCTS.filter(p => !p.featured);
+// El grid destacado (.product-grid--single) está diseñado para EXACTAMENTE un producto.
+// Tomamos solo el primer destacado; el resto (incl. cualquier extra) va al grid regular.
+const featured = PRODUCTS.filter(p => p.featured).slice(0, 1);
+const featuredIds = new Set(featured.map(p => p.id));
+const regular = PRODUCTS.filter(p => !featuredIds.has(p.id));
 ---
 <section class="section" id="productos">
   <div class="container">
