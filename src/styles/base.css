@@ -59,6 +59,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--ds-blue);outline-of
 .see-all{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--ds-blue)}
 .see-all .ic{width:16px;height:16px}
 
+/* Kicker — utilidad tipográfica global usada en múltiples secciones (legacy 171–172) */
+.kicker{font-family:var(--ds-kicker);font-style:italic;font-size:16px;font-weight:400;color:var(--ds-blue)}
+.kicker--light{color:rgba(255,255,255,.85)}
+
 /* Scroll reveal (legacy 574–580) */
 @media (prefers-reduced-motion:no-preference){
   .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease-out,transform .5s ease-out}
