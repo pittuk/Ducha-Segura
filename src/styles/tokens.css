@@ -1,0 +1,29 @@
+/* Design system — variables. Extraído de legacy/index.html :root */
+:root{
+  --ds-blue:#0072C0;
+  --ds-blue-dark:#012E4D;
+  --ds-blue-mid:#1e73be;
+  --ds-blue-hover:#044a80;
+  --ds-blue-soft:#e6f4fd;
+  --ds-red:#CC2B2B;
+  --ds-green-wa:#25D366;
+  --ds-text:#434343;
+  --ds-text-strong:#12141c;
+  --ds-bg:#ffffff;
+  --ds-bg-alt:#f7f7f7;
+  --ds-border:#ebebeb;
+
+  --ds-sans:'Inter','Manrope',system-ui,-apple-system,sans-serif;
+  --ds-display:'Poppins',system-ui,sans-serif;
+  --ds-kicker:'PT Serif',Georgia,serif;
+  --ds-tnum:'Inter Tight','Inter',sans-serif;
+
+  --ds-radius:8px;
+  --ds-radius-lg:14px;
+  --ds-shadow:0 4px 14px rgba(0,114,192,.08);
+  --ds-shadow-lg:0 12px 32px rgba(0,114,192,.14);
+
+  --ds-container:1280px;
+  --ds-pad:64px;
+}
+@media (max-width:768px){:root{--ds-pad:20px}}
