@@ -45,12 +45,13 @@
           </a>
         </div>
       </div>
-      <div class="reveal video-card" role="button" tabindex="0" aria-label="Ver video de instalación">
-        <div class="video-card__label">[VIDEO MP4 — INSTALACIÓN PASO A PASO]</div>
-        <div class="video-card__play" aria-hidden="true"></div>
+      <div class="reveal video-card">
+        <video class="video-card__video" id="comoVideo" preload="metadata" playsinline>
+          <source src="/videos/Tiposde-Tinas-Ducha-Segura-Rebaje-de-Tina.mp4" type="video/mp4" />
+        </video>
+        <button class="video-card__play" id="comoVideoPlay" aria-label="Reproducir video: Tipos de Tinas - Ducha Segura® - Rebaje de Tina"></button>
         <div class="video-card__caption">
-          <div class="video-card__time">0:48 min</div>
-          <div class="video-card__txt">Ver una instalación real, de principio a fin</div>
+          <div class="video-card__txt">Tipos de Tinas - Ducha Segura® - Rebaje de Tina</div>
         </div>
       </div>
     </div>
@@ -70,11 +71,27 @@
 .como__cta{margin-top:32px}
 .video-card{position:relative;aspect-ratio:3/4;border-radius:var(--ds-radius-lg);overflow:hidden;box-shadow:var(--ds-shadow-lg);background:linear-gradient(180deg,#2a4a5e 0%,#4a6b7e 100%)}
 @media (max-width:768px){.video-card{aspect-ratio:4/5}}
-.video-card__label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.65);padding:6px 12px;background:rgba(0,0,0,.35);border-radius:2px;white-space:nowrap;text-align:center}
-.video-card__play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(0,0,0,.3);transition:transform .2s}
+.video-card__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.video-card__play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(0,0,0,.3);transition:transform .2s,opacity .25s;cursor:pointer}
 .video-card__play:hover{transform:translate(-50%,-50%) scale(1.08)}
 .video-card__play::after{content:'';width:0;height:0;border-left:22px solid var(--ds-blue);border-top:14px solid transparent;border-bottom:14px solid transparent;margin-left:6px}
-.video-card__caption{position:absolute;left:20px;bottom:20px;right:20px;color:#fff}
-.video-card__time{font-size:11px;font-weight:600;opacity:.8;letter-spacing:.08em;text-transform:uppercase}
-.video-card__txt{font-size:17px;font-weight:600;margin-top:4px}
+.video-card__caption{position:absolute;left:20px;bottom:20px;right:20px;color:#fff;pointer-events:none;text-shadow:0 1px 10px rgba(0,0,0,.65);transition:opacity .25s}
+.video-card__txt{font-size:17px;font-weight:600}
+.video-card.playing .video-card__play,.video-card.playing .video-card__caption{opacity:0;pointer-events:none}
 </style>
+
+<script>
+  function initComoVideo(): void {
+    const card = document.querySelector<HTMLElement>('.video-card');
+    const video = document.getElementById('comoVideo') as HTMLVideoElement | null;
+    const play = document.getElementById('comoVideoPlay');
+    if (!card || !video || !play || card.dataset.bound) return;
+    card.dataset.bound = '1';
+    play.addEventListener('click', () => {
+      video.setAttribute('controls', '');
+      card.classList.add('playing');
+      void video.play();
+    });
+  }
+  document.addEventListener('astro:page-load', initComoVideo);
+</script>
