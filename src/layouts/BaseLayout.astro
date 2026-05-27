@@ -8,6 +8,9 @@ import Topbar from '../components/Topbar.astro';
 import Header from '../components/Header.astro';
 import PrefooterCta from '../components/PrefooterCta.astro';
 import Footer from '../components/Footer.astro';
+import WhatsappFab from '../components/WhatsappFab.astro';
+import Toast from '../components/Toast.astro';
+import QuoteDrawer from '../components/QuoteDrawer.astro';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -55,9 +58,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   </main>
   <PrefooterCta />
   <Footer />
+  <WhatsappFab />
+  <Toast />
+  <QuoteDrawer />
   <script>
     import { initUI } from '../scripts/ui';
-    document.addEventListener('astro:page-load', () => initUI());
+    import { initCart } from '../scripts/cart';
+    document.addEventListener('astro:page-load', () => { initUI(); initCart(); });
   </script>
 </body>
 </html>

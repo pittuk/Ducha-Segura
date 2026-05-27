@@ -1,0 +1,10 @@
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg class="ic"><use href="#i-check"/></svg>
+  <span id="toastMsg">Agregado a tu cotización</span>
+</div>
+
+<style>
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--ds-blue-dark);color:#fff;padding:14px 22px;border-radius:999px;font-size:14px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:300;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;display:flex;align-items:center;gap:10px}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast .ic{color:var(--ds-green-wa);stroke-width:2.5;width:18px;height:18px}
+</style>

@@ -1,0 +1,83 @@
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="drawer" aria-label="Tu cotización" role="dialog" aria-modal="true">
+  <div class="drawer__head">
+    <div class="drawer__title">Tu cotización (<span id="drawerCount">0</span>)</div>
+    <button class="drawer__close" id="drawerClose" aria-label="Cerrar cotización">
+      <svg class="ic"><use href="#i-close"/></svg>
+    </button>
+  </div>
+  <div class="drawer__body" id="drawerBody">
+    <div class="drawer__empty" id="drawerEmpty">
+      <div class="drawer__empty-icon"><svg class="ic"><use href="#i-cart"/></svg></div>
+      <p style="margin:0 0 6px;font-weight:600;color:var(--ds-text-strong)">Tu cotización está vacía</p>
+      <p style="margin:0;font-size:14px">Agregá productos desde el catálogo para armar tu cotización.</p>
+    </div>
+  </div>
+  <div class="drawer__foot" id="drawerFoot" style="display:none">
+    <div class="drawer__row"><span>Subtotal</span><span id="drawerSubtotal" style="font-family:var(--ds-tnum);font-variant-numeric:tabular-nums">$0</span></div>
+    <div class="drawer__row"><span>Envío + instalación</span><span style="color:var(--ds-blue);font-weight:600">Incluido</span></div>
+    <div class="drawer__row drawer__row--total"><span class="l">Total estimado</span><span class="v">$<span id="drawerTotal">0</span></span></div>
+    <div class="drawer__note">24 cuotas sin interés disponibles al confirmar.</div>
+
+    <form class="drawer__form" id="quoteForm">
+      <div class="drawer__form-row">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="tel" name="telefono" placeholder="Teléfono" required>
+      </div>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="mensaje" placeholder="Datos de tu baño (ancho, largo, material) — opcional"></textarea>
+    </form>
+
+    <button class="btn btn--primary btn--lg btn--full" id="sendQuote">
+      <svg class="ic"><use href="#i-whatsapp"/></svg>
+      <span>Enviar cotización por WhatsApp</span>
+    </button>
+  </div>
+</aside>
+
+<style>
+  .drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
+  .drawer-backdrop.open{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:92vw;background:#fff;z-index:201;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .drawer.open{transform:translateX(0)}
+  .drawer__head{padding:20px 24px 16px;border-bottom:1px solid var(--ds-border);display:flex;align-items:center;justify-content:space-between}
+  .drawer__title{font-family:var(--ds-display);font-weight:700;font-size:20px;color:var(--ds-text-strong);letter-spacing:-.02em}
+  .drawer__close{width:32px;height:32px;background:var(--ds-bg-alt);color:var(--ds-text-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .15s}
+  .drawer__close:hover{background:#ececec}
+  .drawer__close .ic{width:16px;height:16px}
+  .drawer__body{flex:1;overflow-y:auto;padding:8px 24px}
+  .drawer__empty{padding:60px 20px;text-align:center;color:var(--ds-text)}
+  .drawer__empty-icon{margin:0 auto 16px;width:60px;height:60px;border-radius:50%;background:var(--ds-blue-soft);display:flex;align-items:center;justify-content:center;color:var(--ds-blue)}
+  .drawer__empty-icon .ic{width:28px;height:28px}
+  .cart-item{padding:16px 0;border-bottom:1px solid var(--ds-border);display:flex;gap:14px}
+  .cart-item__media{width:72px;height:72px;flex-shrink:0;overflow:hidden;border-radius:var(--ds-radius);background:#e8e7e3;position:relative;background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.035) 0 14px,transparent 14px 28px)}
+  .cart-item__media-l{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:8px;letter-spacing:.04em;color:rgba(0,0,0,.5);text-align:center;line-height:1.1;padding:0 4px}
+  .cart-item__body{flex:1;display:flex;flex-direction:column;gap:4px}
+  .cart-item__name{font-size:14px;font-weight:700;color:var(--ds-text-strong);line-height:1.2}
+  .cart-item__variant{font-size:12px;color:var(--ds-text)}
+  .cart-item__foot{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+  .qty{display:flex;align-items:center;border:1px solid var(--ds-border);border-radius:var(--ds-radius);overflow:hidden}
+  .qty button{width:28px;height:28px;color:var(--ds-text);transition:background .12s}
+  .qty button:hover{background:var(--ds-bg-alt)}
+  .qty span{min-width:24px;text-align:center;font-family:var(--ds-tnum);font-size:13px;font-weight:600}
+  .cart-item__price{font-family:var(--ds-tnum);font-size:15px;font-weight:700;color:var(--ds-text-strong);font-variant-numeric:tabular-nums}
+  .cart-item__remove{margin-left:8px;color:var(--ds-text);opacity:.6;padding:4px;transition:opacity .15s,color .15s}
+  .cart-item__remove:hover{opacity:1;color:var(--ds-red)}
+  .cart-item__remove .ic{width:14px;height:14px}
+  .upsell{margin-top:16px;padding:14px 16px;background:var(--ds-blue-soft);border-radius:var(--ds-radius);display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .upsell__t{font-size:13px;font-weight:700;color:var(--ds-text-strong)}
+  .upsell__s{font-size:12px;color:var(--ds-text)}
+  .upsell button{padding:6px 12px;background:var(--ds-blue);color:#fff;border-radius:var(--ds-radius);font-size:12px;font-weight:700;flex-shrink:0;transition:background .15s}
+  .upsell button:hover{background:var(--ds-blue-hover)}
+  .drawer__foot{padding:20px 24px;border-top:1px solid var(--ds-border);background:var(--ds-bg-alt)}
+  .drawer__row{display:flex;justify-content:space-between;font-size:13px;color:var(--ds-text);margin-bottom:6px}
+  .drawer__row--total{align-items:baseline;margin-top:8px;margin-bottom:14px}
+  .drawer__row--total .l{font-size:14px;font-weight:700;color:var(--ds-text-strong)}
+  .drawer__row--total .v{font-family:var(--ds-tnum);font-size:26px;font-weight:700;color:var(--ds-text-strong);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .drawer__note{font-size:12px;color:var(--ds-text);margin-bottom:12px;text-align:center}
+  .drawer__form{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+  .drawer__form input,.drawer__form textarea{padding:11px 13px;border:1px solid var(--ds-border);border-radius:var(--ds-radius);font-family:var(--ds-sans);font-size:14px;color:var(--ds-text-strong);background:#fff;outline:none;transition:border-color .15s}
+  .drawer__form input:focus,.drawer__form textarea:focus{border-color:var(--ds-blue)}
+  .drawer__form textarea{resize:vertical;min-height:60px}
+  .drawer__form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+</style>

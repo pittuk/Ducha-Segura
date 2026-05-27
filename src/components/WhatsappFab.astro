@@ -1,0 +1,13 @@
+---
+import { SITE } from '../data/site';
+---
+<a href={SITE.whatsappUrl + '?text=Hola%2C%20me%20gustar%C3%ADa%20consultar%20por%20un%20rebaje%20de%20tina'} target="_blank" rel="noopener" class="wa-fab" aria-label="Contactar por WhatsApp">
+  <svg class="ic"><use href="#i-whatsapp"/></svg>
+</a>
+
+<style>
+  .wa-fab{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:var(--ds-green-wa);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 22px rgba(37,211,102,.5);z-index:40;transition:transform .15s}
+  .wa-fab:hover{transform:scale(1.08)}
+  .wa-fab .ic{width:30px;height:30px;stroke-width:2}
+  @media (max-width:768px){.wa-fab{width:52px;height:52px;bottom:16px;right:16px}.wa-fab .ic{width:26px;height:26px}}
+</style>
