@@ -1,0 +1,53 @@
+---
+// Diferenciadores.astro — "Por qué un Ducha Segura" section (legacy markup 1023–1038)
+---
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal" style="max-width:720px">
+      <div class="kicker" style="margin-bottom:10px">Por qué un Ducha Segura</div>
+      <h2 class="h2">Seis razones técnicas, <span class="accent">una sola decisión.</span></h2>
+    </div>
+    <div class="diff-grid reveal">
+      <div class="diff">
+        <div class="diff__icon"><svg class="ic"><use href="#i-factory"/></svg></div>
+        <div><h3 class="diff__t">Producto nacional</h3><p class="diff__d">Patente chilena, fibra de vidrio reforzada 5 mm.</p></div>
+      </div>
+      <div class="diff">
+        <div class="diff__icon"><svg class="ic"><use href="#i-droplet"/></svg></div>
+        <div><h3 class="diff__t">Inclinación antiderrame</h3><p class="diff__d">Retorno del agua al interior de la tina.</p></div>
+      </div>
+      <div class="diff">
+        <div class="diff__icon"><svg class="ic"><use href="#i-shield"/></svg></div>
+        <div><h3 class="diff__t">Cantos seguros</h3><p class="diff__d">Vértices redondeados, sin riesgo de cortes.</p></div>
+      </div>
+      <div class="diff">
+        <div class="diff__icon"><svg class="ic"><use href="#i-ruler"/></svg></div>
+        <div><h3 class="diff__t">A la medida</h3><p class="diff__d">11 medidas (30, 40 y 50 cm de ancho) para cualquier tina.</p></div>
+      </div>
+      <div class="diff">
+        <div class="diff__icon"><svg class="ic"><use href="#i-wrench"/></svg></div>
+        <div><h3 class="diff__t">Sin obra</h3><p class="diff__d">No tocamos cañerías. Sin escombros ni filtración.</p></div>
+      </div>
+      <div class="diff">
+        <div class="diff__icon"><svg class="ic"><use href="#i-medal"/></svg></div>
+        <div><h3 class="diff__t">Garantía 3 años</h3><p class="diff__d">Garantía nacional, con instalación certificada.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Diferenciadores (legacy 388–399) */
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);overflow:hidden}
+@media (max-width:768px){.diff-grid{grid-template-columns:1fr}}
+.diff{padding:32px 28px;background:#fff;display:flex;flex-direction:column;gap:14px;border-right:1px solid var(--ds-border);border-bottom:1px solid var(--ds-border);transition:background .15s}
+@media (max-width:768px){.diff{padding:24px 20px;border-right:0}}
+.diff:hover{background:#fafbfc}
+.diff:nth-child(3n){border-right:0}
+.diff:nth-last-child(-n+3){border-bottom:0}
+@media (max-width:768px){.diff{border-right:0}.diff:last-child{border-bottom:0}.diff:not(:last-child){border-bottom:1px solid var(--ds-border)}}
+.diff__icon{width:48px;height:48px;border-radius:12px;background:var(--ds-blue-soft);color:var(--ds-blue);display:flex;align-items:center;justify-content:center}
+.diff__icon .ic{width:24px;height:24px;stroke-width:1.8}
+.diff__t{margin:0;font-family:var(--ds-display);font-weight:700;font-size:18px;color:var(--ds-text-strong);letter-spacing:-.015em;line-height:1.2}
+.diff__d{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--ds-text)}
+</style>

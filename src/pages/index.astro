@@ -1,6 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ConveniosMarquee from '../components/ConveniosMarquee.astro';
+import ComoFunciona from '../components/ComoFunciona.astro';
+import ProductosTeaser from '../components/ProductosTeaser.astro';
+import Diferenciadores from '../components/Diferenciadores.astro';
+import Prensa from '../components/Prensa.astro';
+import Testimonios from '../components/Testimonios.astro';
+import BlogTeaser from '../components/BlogTeaser.astro';
 ---
-<BaseLayout title="Ducha Segura® — Inicio">
-  <section class="section"><div class="container"><h1 class="h2">Home en construcción</h1></div></section>
+<BaseLayout title="Ducha Segura® — Rebajes de tina para acceso seguro · Chile">
+  <Hero />
+  <ConveniosMarquee />
+  <ComoFunciona />
+  <ProductosTeaser />
+  {/* Configurador (Tarea 8) y Calculadora (Tarea 9) se insertan aquí, entre Productos y Diferenciadores */}
+  <Diferenciadores />
+  <Prensa />
+  <Testimonios />
+  <BlogTeaser />
 </BaseLayout>

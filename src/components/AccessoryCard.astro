@@ -1,0 +1,45 @@
+---
+import type { Accesorio } from '../data/accesorios';
+import { clp } from '../lib/format';
+interface Props { accesorio: Accesorio; }
+const { accesorio } = Astro.props;
+---
+<article class="acc-card">
+  <div class="acc-card__media">
+    <div class="acc-card__media-label">[{accesorio.label}]</div>
+  </div>
+  <div class="acc-card__body">
+    <div>
+      <div class="acc-card__title">{accesorio.name}</div>
+      <div class="acc-card__sub">{accesorio.sub}</div>
+    </div>
+    <div class="acc-card__foot">
+      <div>
+        <span class="acc-card__price">${clp(accesorio.price)}</span>
+        <span class="dummy">dummy</span>
+      </div>
+      <button class="add-btn" data-add-acc={accesorio.id} aria-label={`Agregar ${accesorio.name} a cotización`}>
+        <svg class="ic"><use href="#i-plus"/></svg>
+      </button>
+    </div>
+  </div>
+</article>
+
+<style>
+/* Accesorios — acc-card (legacy 291–303) */
+.acc-card{background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.acc-card:hover{transform:translateY(-2px);box-shadow:var(--ds-shadow)}
+.acc-card__media{aspect-ratio:1;background:#e8e7e3;position:relative;background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.035) 0 14px,transparent 14px 28px)}
+.acc-card__media-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:rgba(0,0,0,.5);padding:5px 10px;background:rgba(255,255,255,.78);border-radius:2px;white-space:nowrap;text-align:center;line-height:1.2}
+.acc-card__body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+@media (max-width:768px){.acc-card__body{padding:12px}}
+.acc-card__title{font-family:var(--ds-display);font-weight:700;font-size:14px;color:var(--ds-text-strong);line-height:1.2}
+.acc-card__sub{font-size:12px;color:var(--ds-text);margin-top:3px}
+.acc-card__foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.acc-card__price{font-family:var(--ds-tnum);font-weight:700;font-size:16px;color:var(--ds-text-strong);font-variant-numeric:tabular-nums}
+.add-btn{width:32px;height:32px;background:var(--ds-blue);color:#fff;border-radius:var(--ds-radius);display:flex;align-items:center;justify-content:center;transition:background .15s,transform .12s}
+.add-btn:hover{background:var(--ds-blue-hover);transform:scale(1.08)}
+.add-btn .ic{width:16px;height:16px;stroke-width:2.5}
+
+.dummy{font-family:ui-monospace,monospace;font-size:9px;font-weight:600;color:var(--ds-red);background:rgba(204,43,43,.08);padding:2px 6px;border-radius:3px;letter-spacing:.05em;text-transform:uppercase;vertical-align:middle;margin-left:6px}
+</style>

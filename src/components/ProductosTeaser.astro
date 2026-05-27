@@ -1,0 +1,47 @@
+---
+import { PRODUCTS } from '../data/products';
+import { ACCESORIOS } from '../data/accesorios';
+import ProductCard from './ProductCard.astro';
+import AccessoryCard from './AccessoryCard.astro';
+const featured = PRODUCTS.filter(p => p.featured);
+const regular = PRODUCTS.filter(p => !p.featured);
+---
+<section class="section" id="productos">
+  <div class="container">
+    <div class="section-head section-head--row reveal">
+      <div>
+        <div class="kicker" style="margin-bottom:10px">Catálogo</div>
+        <h2 class="h2">Elige tu rebaje. <span class="accent">Cotiza hoy.</span></h2>
+      </div>
+      <a href="/catalogo" class="see-all"><span>Ver todo el catálogo</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+
+    <div class="product-grid reveal" id="productosGrid">
+      {regular.map(p => <ProductCard product={p} />)}
+    </div>
+    <div class="product-grid product-grid--single reveal" id="productosFeatured">
+      {featured.map(p => <ProductCard product={p} />)}
+    </div>
+
+    <div class="acc-head reveal">
+      <h3>Accesorios — ahora se venden solos</h3>
+      <a href="/accesorios" class="see-all">Ver todos <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="acc-grid reveal" id="accGrid">
+      {ACCESORIOS.map(a => <AccessoryCard accesorio={a} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+/* Productos section layout (legacy 251–254, 287–290) */
+.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px}
+@media (max-width:768px){.product-grid{grid-template-columns:1fr;gap:20px;margin-bottom:28px}}
+.product-grid--single{grid-template-columns:1fr;margin-bottom:56px}
+@media (max-width:768px){.product-grid--single{margin-bottom:40px}}
+
+.acc-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;flex-wrap:wrap;gap:8px}
+.acc-head h3{margin:0;font-family:var(--ds-display);font-weight:700;font-size:22px;color:var(--ds-text-strong);letter-spacing:-.02em}
+.acc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media (max-width:768px){.acc-grid{grid-template-columns:1fr 1fr;gap:12px}}
+</style>

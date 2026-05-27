@@ -1,0 +1,80 @@
+---
+// ComoFunciona.astro — "¿Cómo funciona?" section (legacy markup 744–786)
+---
+<section class="section section--soft" id="como-funciona">
+  <div class="container">
+    <div class="como">
+      <div class="reveal">
+        <div class="kicker" style="margin-bottom:12px">¿Cómo funciona?</div>
+        <h2 class="h2">Cuatro pasos. <span class="accent">Un solo día.</span></h2>
+        <p class="lead">Desde que mides tu tina hasta que entramos a instalar, todo el flujo está pensado para que no levantes ni un martillo.</p>
+        <div class="como__steps">
+          <div class="step">
+            <div class="step__num">01</div>
+            <div>
+              <div class="step__title">Mide tu tina</div>
+              <div class="step__desc">Selector simple en línea, o por WhatsApp. Tres datos: ancho, largo, material.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step__num">02</div>
+            <div>
+              <div class="step__title">Elige tu pieza</div>
+              <div class="step__desc">30, 40 o 50 cm. Material y color estándar. Un especialista te confirma.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step__num">03</div>
+            <div>
+              <div class="step__title">Coordina tu pago</div>
+              <div class="step__desc">Cotización clara. Webpay, MercadoPago o transferencia con orden de compra.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step__num">04</div>
+            <div>
+              <div class="step__title">Instalamos en 1 día</div>
+              <div class="step__desc">Sin obra, sin escombros, sin tocar cañerías. Tu baño limpio al final.</div>
+            </div>
+          </div>
+        </div>
+        <div class="como__cta">
+          <a href="#calculadora" class="btn btn--primary btn--lg">
+            <span>Empezar por la medida</span>
+            <svg class="ic"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="reveal video-card" role="button" tabindex="0" aria-label="Ver video de instalación">
+        <div class="video-card__label">[VIDEO MP4 — INSTALACIÓN PASO A PASO]</div>
+        <div class="video-card__play" aria-hidden="true"></div>
+        <div class="video-card__caption">
+          <div class="video-card__time">0:48 min</div>
+          <div class="video-card__txt">Ver una instalación real, de principio a fin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ¿Cómo funciona? — specific rules (legacy 229–246) */
+.como{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center}
+@media (max-width:1024px){.como{grid-template-columns:1fr;gap:40px}}
+.como__steps{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+.step{display:flex;gap:18px;padding:18px 20px;background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);align-items:flex-start;transition:transform .2s,box-shadow .2s,border-color .2s}
+.step:hover{transform:translateY(-2px);box-shadow:var(--ds-shadow);border-color:var(--ds-blue-soft)}
+.step__num{font-family:var(--ds-display);font-weight:700;font-size:28px;color:var(--ds-blue);line-height:1;min-width:36px;font-variant-numeric:tabular-nums}
+.step__title{font-family:var(--ds-display);font-weight:700;font-size:17px;color:var(--ds-text-strong);margin-bottom:4px}
+.step__desc{font-size:14px;line-height:1.45;color:var(--ds-text)}
+.como__cta{margin-top:32px}
+.video-card{position:relative;aspect-ratio:3/4;border-radius:var(--ds-radius-lg);overflow:hidden;box-shadow:var(--ds-shadow-lg);background:linear-gradient(180deg,#2a4a5e 0%,#4a6b7e 100%)}
+@media (max-width:768px){.video-card{aspect-ratio:4/5}}
+.video-card__label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.65);padding:6px 12px;background:rgba(0,0,0,.35);border-radius:2px;white-space:nowrap;text-align:center}
+.video-card__play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(0,0,0,.3);transition:transform .2s}
+.video-card__play:hover{transform:translate(-50%,-50%) scale(1.08)}
+.video-card__play::after{content:'';width:0;height:0;border-left:22px solid var(--ds-blue);border-top:14px solid transparent;border-bottom:14px solid transparent;margin-left:6px}
+.video-card__caption{position:absolute;left:20px;bottom:20px;right:20px;color:#fff}
+.video-card__time{font-size:11px;font-weight:600;opacity:.8;letter-spacing:.08em;text-transform:uppercase}
+.video-card__txt{font-size:17px;font-weight:600;margin-top:4px}
+</style>

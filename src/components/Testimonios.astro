@@ -1,0 +1,62 @@
+---
+import { TESTIMONIOS } from '../data/testimonios';
+
+// Compute initials server-side, matching legacy logic (first letter of each word, max 2)
+const withInitials = TESTIMONIOS.map(t => ({
+  ...t,
+  initials: t.name.split(' ').map((w: string) => w[0]).slice(0, 2).join(''),
+}));
+---
+<section class="section" id="testimonios">
+  <div class="container">
+    <div class="section-head section-head--row reveal">
+      <div>
+        <div class="kicker" style="margin-bottom:10px">Lo que dicen quienes ya viven con un Ducha Segura</div>
+        <h2 class="h2">4,9 de 5 <span class="accent">en 287 reseñas verificadas.</span></h2>
+      </div>
+      <div class="trust-strip">
+        <svg class="ic"><use href="#i-shield"/></svg>
+        <span>Reseñas verificadas por Trustindex</span>
+      </div>
+    </div>
+    <div class="test-grid reveal" id="testGrid">
+      {withInitials.map(t => (
+        <article class="test-card">
+          <div class="test-card__head">
+            <div class="test-card__avatar">{t.initials}</div>
+            <div class="test-card__who">
+              <div class="test-card__name">{t.name}</div>
+              <div class="test-card__city">{t.city}</div>
+            </div>
+            <div class="test-card__stars" aria-label="5 estrellas">
+              {Array.from({length: 5}).map(() => (
+                <svg class="ic"><use href="#i-star"/></svg>
+              ))}
+            </div>
+          </div>
+          <p class="test-card__text">"{t.text}"</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+/* Testimonios (legacy 416–431) */
+.test-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:768px){.test-grid{grid-template-columns:1fr}}
+.test-card{padding:28px;background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);display:flex;flex-direction:column;gap:14px;transition:transform .2s,box-shadow .2s}
+@media (max-width:768px){.test-card{padding:22px}}
+.test-card:hover{transform:translateY(-2px);box-shadow:var(--ds-shadow)}
+.test-card__head{display:flex;align-items:center;gap:14px}
+.test-card__avatar{width:44px;height:44px;border-radius:50%;background:var(--ds-blue-soft);display:flex;align-items:center;justify-content:center;font-family:var(--ds-display);font-weight:700;font-size:16px;color:var(--ds-blue);flex-shrink:0}
+.test-card__who{flex:1}
+.test-card__name{font-size:14px;font-weight:700;color:var(--ds-text-strong)}
+.test-card__city{font-size:12px;color:var(--ds-text)}
+.test-card__stars{display:flex;gap:2px;color:var(--ds-blue)}
+.test-card__stars .ic{width:14px;height:14px;fill:var(--ds-blue);stroke-width:1.4}
+.test-card__text{margin:0;font-size:16px;line-height:1.55;color:var(--ds-text-strong)}
+@media (max-width:768px){.test-card__text{font-size:15px}}
+.trust-strip{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--ds-bg-alt);border:1px solid var(--ds-border);border-radius:999px;font-size:12px;font-weight:600}
+.trust-strip .ic{width:14px;height:14px;stroke-width:2;color:var(--ds-blue)}
+</style>
