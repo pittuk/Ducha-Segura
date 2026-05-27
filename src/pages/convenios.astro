@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONVENIOS } from '../data/convenios';
+import { DISCOUNTS, BANCO_LABELS } from '../lib/pricing';
+const bancos = (['santander','bci','estado'] as const).map(b => ({ label: BANCO_LABELS[b], disc: DISCOUNTS[b] }));
+---
+<BaseLayout title="Convenios y descuentos — Ducha Segura®" description="Convenios con bancos, AFP, isapres y municipios. Descuentos en rebajes de tina.">
+  <section class="section">
+    <div class="container">
+      <div class="section-head"><h1 class="h2">Convenios</h1><p class="lead">Descuentos vigentes con bancos, AFP, isapres y municipios.</p></div>
+      <ul class="conv-banks">
+        {bancos.map(b => <li><strong>{b.label}</strong> — {b.disc}% de descuento</li>)}
+      </ul>
+      <div class="conv-grid">
+        {CONVENIOS.map(c => <div class="convenio-chip">[LOGO]<br />{c}</div>)}
+      </div>
+      <p class="conv-note">Presenta tu tarjeta o credencial del convenio al cotizar. Descuentos no acumulables salvo indicación.</p>
+    </div>
+  </section>
+  <style>
+    .conv-banks{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;margin:0 0 28px}
+    .conv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+    .convenio-chip{border:1px solid var(--ds-border);border-radius:var(--ds-radius);padding:18px;text-align:center;font-size:13px;font-weight:600;color:var(--ds-text)}
+    .conv-note{margin-top:24px;font-size:14px;color:var(--ds-text)}
+  </style>
+</BaseLayout>

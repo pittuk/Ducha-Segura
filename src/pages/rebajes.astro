@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Configurator from '../components/Configurator.astro';
+import Calculator from '../components/Calculator.astro';
+import { PRODUCTS } from '../data/products';
+---
+<BaseLayout title="Rebajes de tina — Ducha Segura®" description="Rebajes de tina Tradicional, Jacuzzi y Spa XL. Instalación incluida, garantía 3 años.">
+  <section class="section">
+    <div class="container">
+      <div class="section-head"><h1 class="h2">Rebajes de tina</h1><p class="lead">Elige el rebaje según tu tina.</p></div>
+      <div class="product-grid">{PRODUCTS.map(p => <ProductCard product={p} />)}</div>
+    </div>
+  </section>
+  <Configurator />
+  <Calculator />
+</BaseLayout>

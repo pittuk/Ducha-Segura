@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AccessoryCard from '../components/AccessoryCard.astro';
+import { ACCESORIOS } from '../data/accesorios';
+---
+<BaseLayout title="Accesorios de seguridad para baño — Ducha Segura®" description="Barras de apoyo, asientos abatibles, antideslizantes y mamparas para baño asistido.">
+  <section class="section">
+    <div class="container">
+      <div class="section-head"><h1 class="h2">Accesorios</h1><p class="lead">Complementa tu rebaje con seguridad.</p></div>
+      <div class="acc-grid">{ACCESORIOS.map(a => <AccessoryCard accesorio={a} />)}</div>
+    </div>
+  </section>
+</BaseLayout>

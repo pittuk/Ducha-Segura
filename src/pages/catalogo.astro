@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CategoryTabs from '../components/CategoryTabs.astro';
+import ProductCard from '../components/ProductCard.astro';
+import AccessoryCard from '../components/AccessoryCard.astro';
+import { PRODUCTS } from '../data/products';
+import { ACCESORIOS } from '../data/accesorios';
+---
+<BaseLayout title="Catálogo — Ducha Segura®" description="Catálogo completo de rebajes de tina y accesorios de seguridad para baño.">
+  <section class="section">
+    <div class="container">
+      <div class="section-head"><h1 class="h2">Catálogo</h1><p class="lead">Rebajes y accesorios para un baño accesible.</p></div>
+      <CategoryTabs categories={[{id:'rebajes',label:'Rebajes'},{id:'accesorios',label:'Accesorios'}]} />
+      <div class="product-grid">
+        {PRODUCTS.map(p => <div data-cat-item="rebajes"><ProductCard product={p} /></div>)}
+      </div>
+      <div class="acc-grid" style="margin-top:32px">
+        {ACCESORIOS.map(a => <div data-cat-item="accesorios"><AccessoryCard accesorio={a} /></div>)}
+      </div>
+    </div>
+  </section>
+  <script>
+    import { initCatalogFilter } from '../scripts/catalog-filter';
+    document.addEventListener('astro:page-load', initCatalogFilter);
+  </script>
+</BaseLayout>

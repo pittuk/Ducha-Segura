@@ -1,0 +1,13 @@
+---
+interface Props { categories: { id: string; label: string }[]; }
+const { categories } = Astro.props;
+---
+<div class="cat-tabs" role="tablist" aria-label="Categorías">
+  <button class="cat-tab active" data-cat="todos">Todos</button>
+  {categories.map(c => <button class="cat-tab" data-cat={c.id}>{c.label}</button>)}
+</div>
+<style>
+  .cat-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+  .cat-tab{padding:8px 16px;border-radius:999px;border:1px solid var(--ds-border);background:#fff;font-weight:600;font-size:14px;color:var(--ds-text)}
+  .cat-tab.active{background:var(--ds-blue);color:#fff;border-color:var(--ds-blue)}
+</style>
