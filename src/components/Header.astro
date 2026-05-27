@@ -8,7 +8,7 @@ const isActive = (href: string) => href === '/' ? path === '/' : (path === href 
 ---
 <header class="header">
   <a href="/" class="logo" aria-label="Ducha Segura — Inicio">
-    <img class="logo__circle" src="/images/Ducha segura logo azul.png" alt="" width="44" height="44" />
+    <img class="logo__circle" src="/images/Ducha segura logo azul.png" alt="" width="85" height="85" />
   </a>
 
   <nav class="nav" aria-label="Navegación principal">
@@ -44,7 +44,7 @@ const isActive = (href: string) => href === '/' ? path === '/' : (path === href 
 <aside class="menu-drawer" id="menuDrawer" aria-label="Menú principal">
   <div class="menu-drawer__head">
     <div class="logo">
-      <img class="logo__circle" src="/images/Ducha segura logo azul.png" alt="" width="44" height="44" />
+      <img class="logo__circle" src="/images/Ducha segura logo azul.png" alt="" width="85" height="85" />
       <div class="logo__txt">
         <span class="logo__name">Ducha Segura<sup>®</sup></span>
         <span class="logo__sub">CHILE</span>
@@ -70,12 +70,11 @@ const isActive = (href: string) => href === '/' ? path === '/' : (path === href 
 
 <style>
 /* Header (legacy 79–120) */
-.header{height:88px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--ds-border);position:sticky;top:0;z-index:50;display:flex;align-items:center;padding:0 48px}
-@media (max-width:768px){.header{height:64px;padding:0 16px}}
+.header{height:110px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--ds-border);position:sticky;top:0;z-index:50;display:flex;align-items:center;padding:0 48px}
+@media (max-width:768px){.header{height:92px;padding:0 16px}}
 .logo{display:flex;align-items:center;gap:10px;color:var(--ds-text-strong)}
-.logo__circle{width:44px;height:44px;border-radius:50%;background:var(--ds-blue);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--ds-display);font-weight:800;font-size:18px;letter-spacing:-.04em;flex-shrink:0}
+.logo__circle{width:85px;height:85px;border-radius:50%;background:var(--ds-blue);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--ds-display);font-weight:800;font-size:30px;letter-spacing:-.04em;flex-shrink:0}
 img.logo__circle{background:#fff;object-fit:contain}
-@media (max-width:768px){.logo__circle{width:36px;height:36px;font-size:15px}}
 .logo__txt{display:flex;flex-direction:column;line-height:1}
 .logo__name{font-family:var(--ds-display);font-weight:800;font-size:18px;letter-spacing:-.02em}
 @media (max-width:768px){.logo__name{font-size:14px}}
