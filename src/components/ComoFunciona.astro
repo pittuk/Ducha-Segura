@@ -87,11 +87,14 @@
     const play = document.getElementById('comoVideoPlay');
     if (!card || !video || !play || card.dataset.bound) return;
     card.dataset.bound = '1';
+    // Click en el botón central: muestra controles nativos y reproduce.
     play.addEventListener('click', () => {
-      video.setAttribute('controls', '');
-      card.classList.add('playing');
+      video.controls = true;
       void video.play();
     });
+    // Ocultar el overlay (botón + caption) en cuanto el video arranca,
+    // sin importar si se disparó desde el botón o desde los controles nativos.
+    video.addEventListener('play', () => card.classList.add('playing'));
   }
   document.addEventListener('astro:page-load', initComoVideo);
 </script>
