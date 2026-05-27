@@ -31,3 +31,7 @@ export function subtotal(cart: CartItem[]): number {
 export function count(cart: CartItem[]): number {
   return cart.reduce((s, i) => s + i.qty, 0);
 }
+
+export function hasItem(cart: CartItem[], id: string): boolean {
+  return cart.some(i => i.id === id);
+}

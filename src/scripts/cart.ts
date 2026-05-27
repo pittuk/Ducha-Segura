@@ -111,7 +111,7 @@ function renderCart(): void {
     </div>
   `).join('');
 
-  const upsell = !items.find(i => i.id === 'acc-barra60') ? `
+  const upsell = !Cart.hasItem(items, 'acc-barra60') ? `
     <div class="upsell">
       <div>
         <div class="upsell__t">Suma una barra de apoyo</div>
@@ -246,6 +246,9 @@ function bindQuoteForm(): void {
 
 // --- initCart: called each page-load (binds fresh per-page nodes + ensures session listeners) ---
 export function initCart(): void {
+  // Expose the cart API for other scripts (configurador/calculadora) — idempotent.
+  window.dsCart = { add };
+
   // Re-read from localStorage in case another tab changed it
   items = load();
 
@@ -267,10 +270,9 @@ export function initCart(): void {
   renderCart();
 }
 
-// --- Expose dsCart on window for use from other scripts ---
+// --- dsCart is exposed on window inside initCart() (see above) ---
 declare global {
   interface Window {
     dsCart: { add: (item: NewItem) => void };
   }
 }
-window.dsCart = { add };

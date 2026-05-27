@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { addItem, removeItem, changeQty, subtotal, count, type CartItem } from './cart';
+import { addItem, removeItem, changeQty, subtotal, count, hasItem, type CartItem } from './cart';
 
 const base = { id: 'p1', name: 'Rebaje', variant: '40 cm', label: 'REBAJE 40', unitPrice: 229000 };
 
@@ -36,5 +36,12 @@ describe('cart', () => {
     c = changeQty(c, 'p1', 2);          // qty 3
     expect(subtotal(c)).toBe(687000);   // 229000 * 3
     expect(count(c)).toBe(3);
+  });
+
+  it('hasItem detecta presencia por id', () => {
+    const c = addItem([], base);
+    expect(hasItem(c, 'p1')).toBe(true);
+    expect(hasItem(c, 'otro')).toBe(false);
+    expect(hasItem([], 'p1')).toBe(false);
   });
 });
