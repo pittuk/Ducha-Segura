@@ -1,0 +1,147 @@
+---
+---
+<!-- ============================================================
+     Calculadora (STAR)
+     ============================================================ -->
+<section class="section section--xl calc" id="calculadora">
+  <div class="container">
+    <div class="calc__grid">
+      <div class="calc__left">
+        <div class="reveal">
+          <div class="kicker kicker--light" style="margin-bottom:14px">Calculadora de presupuesto</div>
+          <h2 class="calc__h2">¿Cuánto te sale tu rebaje?</h2>
+          <p class="calc__lead">Cuatro datos. Precio final con cuotas y descuento, en pantalla.</p>
+        </div>
+
+        <div class="calc-step reveal">
+          <div class="calc-step__head"><span class="calc-step__n">1</span><span class="calc-step__l">Tipo de tina</span></div>
+          <div class="calc-chips" data-calc="tipo">
+            <button class="calc-chip active" data-value="tradicional">Tradicional</button>
+            <button class="calc-chip" data-value="jacuzzi">Jacuzzi</button>
+          </div>
+        </div>
+
+        <div class="calc-step reveal">
+          <div class="calc-step__head"><span class="calc-step__n">2</span><span class="calc-step__l">Ancho del rebaje</span></div>
+          <div class="calc-chips" data-calc="ancho">
+            <button class="calc-chip" data-value="30">30 cm</button>
+            <button class="calc-chip active" data-value="40">40 cm</button>
+            <button class="calc-chip" data-value="50">50 cm</button>
+          </div>
+        </div>
+
+        <div class="calc-step reveal">
+          <div class="calc-step__head"><span class="calc-step__n">3</span><span class="calc-step__l">Comuna de instalación</span></div>
+          <div class="calc-chips" data-calc="region">
+            <button class="calc-chip active" data-value="RM">RM</button>
+            <button class="calc-chip" data-value="Valparaíso">Valparaíso</button>
+            <button class="calc-chip" data-value="Bío Bío">Bío Bío</button>
+          </div>
+          <select class="calc-select" id="calcComuna" aria-label="Comuna"></select>
+        </div>
+
+        <div class="calc-step reveal">
+          <div class="calc-step__head"><span class="calc-step__n">4</span><span class="calc-step__l">Banco de pago (opcional)</span></div>
+          <div class="calc-chips" data-calc="banco">
+            <button class="calc-chip active" data-value="santander" data-disc="15">Santander <span class="calc-chip__dc">-15%</span></button>
+            <button class="calc-chip" data-value="bci" data-disc="8">BCI <span class="calc-chip__dc">-8%</span></button>
+            <button class="calc-chip" data-value="estado" data-disc="5">BancoEstado <span class="calc-chip__dc">-5%</span></button>
+            <button class="calc-chip" data-value="otro" data-disc="0">Otro / sin convenio</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc__panel reveal">
+        <div>
+          <div class="calc__panel-l">Tu configuración</div>
+          <div class="calc__cfg" id="calcCfg">Rebaje Tina Tradicional · 40 cm</div>
+          <div class="calc__loc" id="calcLoc">Las Condes, RM</div>
+        </div>
+
+        <div class="calc__price-zone">
+          <div class="calc__total-row">
+            <span style="font-size:13px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.06em">Total</span>
+            <span class="calc__strike" id="calcStrike">$229.000</span>
+          </div>
+          <div class="calc__total">
+            <span class="calc__total-n">$<span id="calcTotal">194.650</span></span>
+            <span class="dummy">dummy</span>
+          </div>
+          <div class="calc__save" id="calcSave">
+            <svg class="ic" style="width:13px;height:13px;stroke-width:2.5"><use href="#i-zap"/></svg>
+            <span id="calcSaveTxt">Ahorras $34.350 con Santander</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="calc__cuotas-head">
+            <span class="calc__cuotas-l">O en cuotas</span>
+            <span class="calc__cuotas-r"><span id="calcCuotasN">12</span> cuotas sin interés</span>
+          </div>
+          <input type="range" min="3" max="24" step="3" value="12" id="calcCuotasRange" aria-label="Número de cuotas">
+          <div class="calc__cuotas-amt"><span id="calcCuotasN2">12</span> × <span>$<span id="calcCuotaAmt">16.221</span></span><span class="dummy">dummy</span></div>
+        </div>
+
+        <button class="btn btn--on-light btn--lg btn--full" id="calcAdd">
+          <span>Agregar a mi cotización</span>
+          <svg class="ic"><use href="#i-arrow"/></svg>
+        </button>
+
+        <div class="calc__pays">
+          <span>Webpay</span><span>·</span><span>MercadoPago</span><span>·</span><span>Khipu</span><span>·</span><span>Transferencia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ==========================================================================
+     Calculadora
+     ========================================================================== */
+  .calc{background:linear-gradient(135deg,var(--ds-blue-dark) 0%,var(--ds-blue) 100%);color:#fff;position:relative;overflow:hidden}
+  .calc::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 0 0,rgba(255,255,255,.06) 1px,transparent 1px);background-size:24px 24px;opacity:.5;pointer-events:none}
+  .calc__grid{display:grid;grid-template-columns:5fr 4fr;gap:56px;align-items:stretch;position:relative}
+  @media (max-width:1024px){.calc__grid{grid-template-columns:1fr;gap:32px}}
+  .calc__left{display:flex;flex-direction:column;gap:28px}
+  .calc__h2{margin:0;font-family:var(--ds-display);font-weight:800;font-size:clamp(48px,4.4vw,68px);line-height:1.02;letter-spacing:-.03em;color:#fff}
+  @media (max-width:768px){.calc__h2{font-size:clamp(34px,8vw,44px)}}
+  .calc__lead{margin-top:16px;margin-bottom:0;font-size:18px;line-height:1.5;color:rgba(255,255,255,.82);max-width:420px}
+  @media (max-width:768px){.calc__lead{font-size:16px}}
+  .calc-step__head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .calc-step__n{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+  .calc-step__l{font-size:14px;font-weight:600}
+  .calc-chips{display:flex;gap:8px;flex-wrap:wrap}
+  .calc-chip{padding:10px 16px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius);font-size:13px;font-weight:600;display:inline-flex;align-items:center;transition:all .15s}
+  .calc-chip:hover{background:rgba(255,255,255,.15)}
+  .calc-chip.active{background:#fff;color:var(--ds-blue-dark);border-color:#fff}
+  .calc-chip__dc{margin-left:6px;padding:2px 6px;background:var(--ds-red);color:#fff;font-size:10px;font-weight:700;border-radius:4px}
+  .calc-chip.active .calc-chip__dc{background:rgba(0,0,0,.1);color:var(--ds-red)}
+  .calc-select{margin-top:10px;width:100%;padding:12px 14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius);color:#fff;font-family:var(--ds-sans);font-size:14px;font-weight:500;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='white' opacity='.7' d='M0 0h12L6 8z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+  .calc-select option{background:#012E4D;color:#fff}
+  .calc__panel{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.16);border-radius:var(--ds-radius-lg);padding:36px;display:flex;flex-direction:column;gap:20px;position:sticky;top:110px;align-self:start}
+  @media (max-width:1024px){.calc__panel{position:static;padding:24px}}
+  .calc__panel-l{font-size:12px;font-weight:600;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+  .calc__cfg{font-family:var(--ds-display);font-weight:700;font-size:22px;line-height:1.2;color:#fff}
+  .calc__loc{margin-top:4px;font-size:14px;color:rgba(255,255,255,.7)}
+  .calc__price-zone{padding:20px 0;border-top:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15)}
+  .calc__total-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .calc__strike{font-family:var(--ds-tnum);font-size:16px;color:rgba(255,255,255,.55);text-decoration:line-through;font-variant-numeric:tabular-nums}
+  .calc__total{display:flex;align-items:flex-start;gap:4px;margin-top:4px}
+  .calc__total-n{font-family:var(--ds-tnum);font-weight:700;font-size:72px;line-height:.92;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+  @media (max-width:768px){.calc__total-n{font-size:52px}}
+  .calc__save{margin-top:10px;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--ds-red);border-radius:999px;font-size:12px;font-weight:700}
+  .calc__cuotas-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+  .calc__cuotas-l{font-size:13px;color:rgba(255,255,255,.85);font-weight:600}
+  .calc__cuotas-r{font-family:var(--ds-tnum);font-size:13px;color:rgba(255,255,255,.65);font-variant-numeric:tabular-nums}
+  .calc__cuotas-amt{margin-top:8px;font-family:var(--ds-tnum);font-size:28px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:rgba(255,255,255,.2);border-radius:999px;outline:none;accent-color:#fff}
+  input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
+  input[type="range"]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
+  .calc__pays{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:.7;font-size:11px;color:#fff;font-weight:500}
+</style>
+
+<script>
+  import { initCalculator } from '../scripts/calculator';
+  document.addEventListener('astro:page-load', initCalculator);
+</script>
