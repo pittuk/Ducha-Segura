@@ -73,6 +73,11 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--ds-blue);outline-of
 .acc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 @media (max-width:768px){.acc-grid{grid-template-columns:1fr 1fr;gap:12px}}
 
+/* Blog grid — layout compartido entre BlogTeaser y /blog (legacy 436) */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:1024px){.blog-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:768px){.blog-grid{grid-template-columns:1fr}}
+
 /* Scroll reveal (legacy 574–580) */
 @media (prefers-reduced-motion:no-preference){
   .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease-out,transform .5s ease-out}

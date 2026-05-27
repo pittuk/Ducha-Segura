@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+---
+<BaseLayout title="Blog — Ducha Segura®" description="Guías sobre baño accesible, reformas y seguridad para adultos mayores en Chile.">
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head"><h1 class="h2">Blog</h1><p class="lead">Guías sobre baño accesible y seguridad.</p></div>
+      <div class="blog-grid">
+        {posts.map(post => (
+          <BlogCard
+            slug={post.id}
+            cat={post.data.cat}
+            date={post.data.date}
+            title={post.data.title}
+            excerpt={post.data.excerpt}
+            label={post.data.label}
+            bg={post.data.bg}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
