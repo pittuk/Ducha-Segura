@@ -3,6 +3,7 @@
 // data-pf attrs permiten a ui.ts actualizar el texto en el cambio de modo.
 // CSS de componente = legacy "Pre-footer" CSS (452–465), sin clases globales.
 import { HERO_COPY } from '../data/hero';
+import { SITE } from '../data/site';
 const pf = HERO_COPY.user;
 ---
 <section class="prefooter reveal">
@@ -20,7 +21,7 @@ const pf = HERO_COPY.user;
         <span>Ver tinas y precios</span>
         <svg class="ic"><use href="#i-arrow"/></svg>
       </a>
-      <a href="https://wa.me/56934044939" target="_blank" rel="noopener" class="btn btn--ghost btn--lg btn--full">
+      <a href={SITE.whatsappUrl} target="_blank" rel="noopener" class="btn btn--ghost btn--lg btn--full">
         <svg class="ic"><use href="#i-whatsapp"/></svg>
         <span>Habla con un técnico</span>
       </a>

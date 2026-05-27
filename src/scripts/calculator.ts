@@ -122,7 +122,7 @@ export function initCalculator(): void {
       const base = basePrice(state.tipo, state.ancho);
       const discAmt = discountAmount(base, state.banco);
       const final = finalPrice(base, state.banco);
-      (window as any).dsCart?.add({
+      window.dsCart.add({
         id: `calc-${state.tipo}-${state.ancho}-${state.banco}`,
         name: `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'}`,
         variant: `${state.ancho} cm · ${state.comuna}, ${state.region}${discAmt > 0 ? ' · banco ' + state.banco : ''}`,

@@ -28,12 +28,12 @@ const isActive = (href: string) => href === '/' ? path === '/' : (path === href 
     <button class="icon-btn hide-mobile" aria-label="Mi cuenta">
       <svg class="ic" style="width:20px;height:20px"><use href="#i-user"/></svg>
     </button>
-    <button class="cart-trigger" id="cartTrigger" aria-label="Ver mi cotización">
+    <button class="cart-trigger" id="cartTrigger" aria-label="Ver mi cotización" aria-expanded="false" aria-controls="drawer">
       <svg class="ic"><use href="#i-cart"/></svg>
       <span class="cart-trigger__label">Cotización</span>
       <span class="cart-badge" id="cartBadge">0</span>
     </button>
-    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuDrawer">
       <svg class="ic" style="width:22px;height:22px"><use href="#i-menu"/></svg>
     </button>
   </div>

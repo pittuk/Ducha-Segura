@@ -46,6 +46,7 @@ function openDrawer(): void {
   const backdrop = document.getElementById('drawerBackdrop');
   drawer?.classList.add('open');
   backdrop?.classList.add('open');
+  document.getElementById('cartTrigger')?.setAttribute('aria-expanded', 'true');
   document.body.style.overflow = 'hidden';
 }
 
@@ -54,6 +55,7 @@ function closeDrawer(): void {
   const backdrop = document.getElementById('drawerBackdrop');
   drawer?.classList.remove('open');
   backdrop?.classList.remove('open');
+  document.getElementById('cartTrigger')?.setAttribute('aria-expanded', 'false');
   document.body.style.overflow = '';
 }
 

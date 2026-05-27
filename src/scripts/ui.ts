@@ -178,11 +178,13 @@ function initMobileMenu(): void {
   const openMenu = () => {
     menuDrawer?.classList.add('open');
     menuBackdrop?.classList.add('open');
+    menuBtn.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   };
   const closeMenu = () => {
     menuDrawer?.classList.remove('open');
     menuBackdrop?.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
   };
 
@@ -200,6 +202,7 @@ function initMobileMenu(): void {
       if ((e as KeyboardEvent).key !== 'Escape') return;
       document.getElementById('menuDrawer')?.classList.remove('open');
       document.getElementById('menuBackdrop')?.classList.remove('open');
+      document.getElementById('menuBtn')?.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
     });
   }
