@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Ducha Segura® — Rebajes de tina para acceso seguro. Producto nacional patentado. Instalación en 1 día. Garantía 3 años. Cobertura RM, Valparaíso y Bío Bío." />
+<meta name="theme-color" content="#0072C0" />
+<title>Ducha Segura® — Rebajes de tina para acceso seguro · Chile</title>
+
+<link rel="icon" type="image/png" href="images/favicon.png" />
+<link rel="apple-touch-icon" href="images/Ducha segura logo azul.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=PT+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ==========================================================================
+   DUCHA SEGURA — Design System (direction: Literal del brief)
+   ========================================================================== */
+:root{
+  --ds-blue:#0072C0;
+  --ds-blue-dark:#012E4D;
+  --ds-blue-mid:#1e73be;
+  --ds-blue-hover:#044a80;
+  --ds-blue-soft:#e6f4fd;
+  --ds-red:#CC2B2B;
+  --ds-green-wa:#25D366;
+  --ds-text:#434343;
+  --ds-text-strong:#12141c;
+  --ds-bg:#ffffff;
+  --ds-bg-alt:#f7f7f7;
+  --ds-border:#ebebeb;
+
+  --ds-sans:'Inter','Manrope',system-ui,-apple-system,sans-serif;
+  --ds-display:'Poppins',system-ui,sans-serif;
+  --ds-kicker:'PT Serif',Georgia,serif;
+  --ds-tnum:'Inter Tight','Inter',sans-serif;
+
+  --ds-radius:8px;
+  --ds-radius-lg:14px;
+  --ds-shadow:0 4px 14px rgba(0,114,192,.08);
+  --ds-shadow-lg:0 12px 32px rgba(0,114,192,.14);
+
+  --ds-container:1280px;
+  --ds-pad:64px;
+}
+@media (max-width:768px){:root{--ds-pad:20px}}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ds-bg);color:var(--ds-text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+body{font-family:var(--ds-sans);font-size:17px;line-height:1.55}
+img,svg{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:0;background:transparent;padding:0}
+a{color:inherit;text-decoration:none}
+button:focus-visible,a:focus-visible{outline:2px solid var(--ds-blue);outline-offset:2px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--ds-blue);color:#fff;padding:12px 18px;z-index:1000}
+.skip-link:focus{left:0}
+
+.container{max-width:var(--ds-container);margin:0 auto;padding:0 var(--ds-pad)}
+
+/* ==========================================================================
+   TopBar promocional
+   ========================================================================== */
+.topbar{height:48px;background:var(--ds-blue);color:#fff;display:flex;align-items:center;justify-content:center;position:relative;font-size:14px;font-weight:500;overflow:hidden;padding:0 60px}
+@media (max-width:768px){.topbar{height:56px;font-size:12px;padding:0 50px}}
+.topbar__msg{display:flex;align-items:center;gap:8px;text-align:center;line-height:1.3;transition:opacity .4s}
+.topbar__dots{position:absolute;left:30px;top:50%;transform:translateY(-50%);display:flex;gap:5px}
+@media (max-width:768px){.topbar__dots{left:14px}}
+.topbar__dot{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.4);transition:background .3s}
+.topbar__dot.active{background:#fff}
+.topbar__close{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#fff;padding:6px;opacity:.7;display:flex}
+.topbar__close:hover{opacity:1}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.header{height:88px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--ds-border);position:sticky;top:0;z-index:50;display:flex;align-items:center;padding:0 48px}
+@media (max-width:768px){.header{height:64px;padding:0 16px}}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ds-text-strong)}
+.logo__circle{width:44px;height:44px;border-radius:50%;background:var(--ds-blue);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--ds-display);font-weight:800;font-size:18px;letter-spacing:-.04em;flex-shrink:0}
+img.logo__circle{background:#fff;object-fit:contain}
+@media (max-width:768px){.logo__circle{width:36px;height:36px;font-size:15px}}
+.logo__txt{display:flex;flex-direction:column;line-height:1}
+.logo__name{font-family:var(--ds-display);font-weight:800;font-size:18px;letter-spacing:-.02em}
+@media (max-width:768px){.logo__name{font-size:14px}}
+.logo__name sup{font-size:.55em;vertical-align:super;margin-left:1px}
+.logo__sub{font-family:var(--ds-sans);font-size:10px;font-weight:500;color:var(--ds-text);letter-spacing:.04em;text-transform:uppercase;margin-top:2px}
+@media (max-width:768px){.logo__sub{font-size:9px}}
+
+.nav{display:flex;gap:28px;margin-left:56px;flex:1}
+@media (max-width:1024px){.nav{display:none}}
+.nav__link{color:var(--ds-text-strong);font-size:15px;font-weight:500;padding:8px 0;position:relative;transition:color .15s}
+.nav__link:hover{color:var(--ds-blue)}
+.nav__link.active{color:var(--ds-blue);font-weight:600}
+.nav__link.active::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ds-blue);border-radius:1px}
+
+.header__actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+@media (max-width:1024px){.header__actions{gap:6px}}
+
+.mode-toggle{display:inline-flex;gap:2px;padding:3px;background:var(--ds-bg-alt);border-radius:999px;font-size:12px;font-weight:600}
+@media (max-width:1024px){.mode-toggle{display:none}}
+.mode-toggle__btn{padding:6px 12px;color:var(--ds-text);border-radius:999px;transition:all .15s;white-space:nowrap}
+.mode-toggle__btn.active{background:var(--ds-blue);color:#fff}
+
+.icon-btn{color:var(--ds-text-strong);padding:10px;display:flex;border-radius:999px;transition:background .15s}
+.icon-btn:hover{background:var(--ds-bg-alt)}
+@media (max-width:1024px){.icon-btn.hide-mobile{display:none}}
+
+.cart-trigger{position:relative;background:var(--ds-bg-alt);color:var(--ds-text-strong);padding:10px 14px;border-radius:999px;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;transition:background .15s}
+.cart-trigger:hover{background:#ececec}
+.cart-trigger__label{display:inline}
+@media (max-width:1024px){.cart-trigger{padding:8px;border-radius:50%}.cart-trigger__label{display:none}}
+.cart-badge{background:var(--ds-red);color:#fff;font-size:11px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px}
+@media (max-width:1024px){.cart-badge{position:absolute;top:0;right:0;font-size:10px;min-width:16px;height:16px}}
+
+.menu-btn{display:none;color:var(--ds-text-strong);padding:8px}
+@media (max-width:1024px){.menu-btn{display:flex}}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:999px;font-family:var(--ds-sans);font-weight:600;font-size:15px;letter-spacing:-.005em;cursor:pointer;white-space:nowrap;transition:background .15s,transform .12s,box-shadow .15s,color .15s,border-color .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn--lg{height:56px;padding:0 26px;font-size:17px}
+.btn--sm{height:36px;padding:0 14px;font-size:13px}
+.btn--full{width:100%}
+.btn--primary{background:var(--ds-blue);color:#fff;box-shadow:var(--ds-shadow)}
+.btn--primary:hover{background:var(--ds-blue-hover);box-shadow:var(--ds-shadow-lg)}
+.btn--secondary{background:#fff;color:var(--ds-blue);border:1px solid var(--ds-blue)}
+.btn--secondary:hover{background:var(--ds-blue-soft)}
+.btn--ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.85)}
+.btn--ghost:hover{background:rgba(255,255,255,.12)}
+.btn--ghost-dark{background:transparent;color:var(--ds-text-strong);border:1px solid var(--ds-border)}
+.btn--ghost-dark:hover{background:var(--ds-bg-alt)}
+.btn--on-light{background:#fff;color:var(--ds-blue-dark);box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.btn--on-light:hover{box-shadow:0 8px 22px rgba(0,0,0,.18)}
+.btn--wa{background:var(--ds-green-wa);color:#fff}
+.btn--wa:hover{background:#1eb854}
+
+/* Icons (inline SVG sized via CSS) */
+.ic{width:18px;height:18px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.btn--lg .ic{width:20px;height:20px}
+
+/* ==========================================================================
+   Hero — full-bleed with before/after slider
+   ========================================================================== */
+.hero{position:relative;height:720px;overflow:hidden;background:var(--ds-blue-dark)}
+@media (max-width:768px){.hero{height:640px}}
+.slider{position:absolute;inset:0;cursor:col-resize;overflow:hidden;user-select:none;-webkit-user-select:none}
+.slider__layer{position:absolute;inset:0;background-size:cover;background-position:center}
+.slider__after{background:linear-gradient(180deg,#4a6b7e 0%,#6d8a99 60%,#91a6b3 100%)}
+.slider__before{background:linear-gradient(180deg,#5a4a3a 0%,#6d5a48 50%,#7d6a5c 100%)}
+.slider__label{position:absolute;padding:6px 12px;font-family:var(--ds-sans);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px}
+.slider__label--after{left:32px;bottom:32px;background:rgba(255,255,255,.92);color:var(--ds-blue-dark)}
+.slider__label--before{left:32px;top:32px;background:rgba(0,0,0,.55);color:#fff;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+@media (max-width:768px){.slider__label--after{left:16px;bottom:90px}.slider__label--before{left:16px;top:110px}}
+.slider__photo-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,'JetBrains Mono','Menlo',monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:6px 12px;background:rgba(255,255,255,.78);color:rgba(0,0,0,.45);border-radius:2px;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);white-space:nowrap;pointer-events:none}
+.slider__photo-label--dark{background:rgba(0,0,0,.35);color:rgba(255,255,255,.65)}
+.slider__handle{position:absolute;top:0;bottom:0;width:2px;background:#fff;box-shadow:0 0 18px rgba(0,0,0,.35);transform:translateX(-1px);pointer-events:none}
+.slider__knob{position:absolute;top:50%;width:44px;height:44px;margin-left:-22px;margin-top:-22px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,.3);color:var(--ds-blue);pointer-events:none}
+.slider__hint{position:absolute;top:28px;right:32px;padding:8px 14px;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:600;border-radius:999px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;gap:6px;pointer-events:none}
+@media (max-width:768px){.slider__hint{top:20px;right:20px}}
+.hero__overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(1,46,77,.55) 0%,rgba(0,114,192,.15) 60%,transparent 100%);pointer-events:none}
+.hero__content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:0 64px 80px;pointer-events:none}
+@media (max-width:768px){.hero__content{padding:0 20px 32px}}
+.hero__inner{max-width:720px;display:flex;flex-direction:column;gap:24px;pointer-events:auto}
+@media (max-width:768px){.hero__inner{gap:16px}}
+.kicker{font-family:var(--ds-kicker);font-style:italic;font-size:16px;font-weight:400;color:var(--ds-blue)}
+.kicker--light{color:rgba(255,255,255,.85)}
+.h1{margin:0;font-family:var(--ds-display);font-weight:800;font-size:clamp(56px,6vw,96px);line-height:1.02;letter-spacing:-.035em;color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.3)}
+@media (max-width:768px){.h1{font-size:clamp(38px,10vw,56px)}}
+.h1 span{display:block}
+.hero__sub{margin:0;font-family:var(--ds-sans);font-size:20px;line-height:1.4;color:rgba(255,255,255,.92);max-width:540px}
+@media (max-width:768px){.hero__sub{font-size:17px}}
+.hero__ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+.hero__trust{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+
+.trust-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;font-size:13px;font-weight:500;border-radius:999px}
+.trust-pill--light{background:#fff;color:var(--ds-text-strong);border:1px solid var(--ds-border)}
+.trust-pill--dark{background:rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.trust-pill .ic{width:14px;height:14px;stroke-width:2.5;color:var(--ds-blue)}
+.trust-pill--dark .ic{color:#fff}
+
+/* ==========================================================================
+   Convenios strip
+   ========================================================================== */
+.convenios{background:var(--ds-bg);border-top:1px solid var(--ds-border);border-bottom:1px solid var(--ds-border);padding:40px 0;overflow:hidden}
+@media (max-width:768px){.convenios{padding:32px 0}}
+.convenios__head{text-align:center;margin-bottom:20px;padding:0 20px}
+.marquee{position:relative;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marquee__track{display:flex;gap:56px;animation:marquee 35s linear infinite;width:max-content}
+@media (max-width:768px){.marquee__track{gap:32px}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.convenio-chip{display:flex;align-items:center;justify-content:center;min-width:180px;height:56px;padding:0 16px;background:var(--ds-bg-alt);border:1px solid var(--ds-border);border-radius:var(--ds-radius);opacity:.7;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.06em;color:var(--ds-text);text-align:center;line-height:1.2;flex-shrink:0;transition:opacity .2s}
+.convenio-chip:hover{opacity:1}
+@media (max-width:768px){.convenio-chip{min-width:130px}}
+
+/* ==========================================================================
+   Sections — generic banding
+   ========================================================================== */
+.section{padding:96px 0}
+@media (max-width:768px){.section{padding:64px 0}}
+.section--soft{background:var(--ds-blue-soft)}
+.section--alt{background:var(--ds-bg-alt)}
+.section--dark{background:var(--ds-blue-dark);color:#fff}
+.section--xl{padding:120px 0}
+@media (max-width:768px){.section--xl{padding:72px 0}}
+
+.h2{margin:0;font-family:var(--ds-display);font-weight:800;font-size:44px;line-height:1.08;letter-spacing:-.025em;color:var(--ds-text-strong)}
+@media (max-width:768px){.h2{font-size:34px}}
+.h2 .accent{color:var(--ds-blue)}
+.section--dark .h2{color:#fff}
+.lead{margin:16px 0 0;font-size:17px;line-height:1.55;color:var(--ds-text);max-width:520px}
+.section--dark .lead{color:rgba(255,255,255,.82)}
+
+.section-head{margin-bottom:36px}
+.section-head--center{text-align:center;display:flex;flex-direction:column;align-items:center}
+.section-head--row{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+
+.see-all{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--ds-blue)}
+.see-all .ic{width:16px;height:16px}
+
+/* ==========================================================================
+   ¿Cómo funciona?
+   ========================================================================== */
+.como{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center}
+@media (max-width:1024px){.como{grid-template-columns:1fr;gap:40px}}
+.como__steps{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+.step{display:flex;gap:18px;padding:18px 20px;background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);align-items:flex-start;transition:transform .2s,box-shadow .2s,border-color .2s}
+.step:hover{transform:translateY(-2px);box-shadow:var(--ds-shadow);border-color:var(--ds-blue-soft)}
+.step__num{font-family:var(--ds-display);font-weight:700;font-size:28px;color:var(--ds-blue);line-height:1;min-width:36px;font-variant-numeric:tabular-nums}
+.step__title{font-family:var(--ds-display);font-weight:700;font-size:17px;color:var(--ds-text-strong);margin-bottom:4px}
+.step__desc{font-size:14px;line-height:1.45;color:var(--ds-text)}
+.como__cta{margin-top:32px}
+.video-card{position:relative;aspect-ratio:3/4;border-radius:var(--ds-radius-lg);overflow:hidden;box-shadow:var(--ds-shadow-lg);background:linear-gradient(180deg,#2a4a5e 0%,#4a6b7e 100%)}
+@media (max-width:768px){.video-card{aspect-ratio:4/5}}
+.video-card__label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.65);padding:6px 12px;background:rgba(0,0,0,.35);border-radius:2px;white-space:nowrap;text-align:center}
+.video-card__play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(0,0,0,.3);transition:transform .2s}
+.video-card__play:hover{transform:translate(-50%,-50%) scale(1.08)}
+.video-card__play::after{content:'';width:0;height:0;border-left:22px solid var(--ds-blue);border-top:14px solid transparent;border-bottom:14px solid transparent;margin-left:6px}
+.video-card__caption{position:absolute;left:20px;bottom:20px;right:20px;color:#fff}
+.video-card__time{font-size:11px;font-weight:600;opacity:.8;letter-spacing:.08em;text-transform:uppercase}
+.video-card__txt{font-size:17px;font-weight:600;margin-top:4px}
+
+/* ==========================================================================
+   Productos destacados
+   ========================================================================== */
+.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px}
+@media (max-width:768px){.product-grid{grid-template-columns:1fr;gap:20px;margin-bottom:28px}}
+.product-grid--single{grid-template-columns:1fr;margin-bottom:56px}
+@media (max-width:768px){.product-grid--single{margin-bottom:40px}}
+
+.product-card{background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--ds-shadow);transition:transform .2s,box-shadow .2s}
+.product-card:hover{transform:translateY(-4px);box-shadow:var(--ds-shadow-lg)}
+.product-card__media{position:relative;aspect-ratio:4/3}
+.product-card--featured .product-card__media{aspect-ratio:21/9}
+@media (max-width:768px){.product-card--featured .product-card__media{aspect-ratio:4/3}}
+.product-card__media-inner{position:absolute;inset:0;background-size:14px 14px;background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.035) 0 14px,transparent 14px 28px)}
+.product-card__media-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:rgba(0,0,0,.5);padding:6px 12px;background:rgba(255,255,255,.78);border-radius:2px;white-space:nowrap}
+.product-card__badge{position:absolute;top:16px;left:16px}
+.product-card__chip-r{position:absolute;top:16px;right:16px;padding:4px 10px;background:rgba(255,255,255,.92);font-size:11px;font-weight:600;color:var(--ds-text-strong);border-radius:999px;letter-spacing:.04em}
+.product-card__body{padding:28px;display:flex;flex-direction:column;gap:16px;flex:1}
+@media (max-width:768px){.product-card__body{padding:20px}}
+.product-card__title{margin:0;font-family:var(--ds-display);font-weight:700;font-size:26px;line-height:1.15;color:var(--ds-text-strong);letter-spacing:-.02em}
+@media (max-width:768px){.product-card__title{font-size:22px}}
+.product-card__sub{font-size:14px;color:var(--ds-text);margin-top:6px}
+.price-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.price-label{font-size:12px;color:var(--ds-text);text-transform:uppercase;letter-spacing:.06em}
+.price-big{font-family:var(--ds-tnum);font-weight:700;font-size:36px;color:var(--ds-text-strong);font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1}
+@media (max-width:768px){.price-big{font-size:30px}}
+.price-cuotas{font-size:13px;color:var(--ds-blue);font-weight:500}
+.bullets{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.bullet{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ds-text)}
+.bullet .ic{width:14px;height:14px;stroke-width:2.5;color:var(--ds-blue)}
+.product-card__cta{margin-top:auto;padding-top:8px}
+
+.badge{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:999px;font-family:var(--ds-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.badge--red{background:var(--ds-red);color:#fff}
+.badge--blue{background:var(--ds-blue);color:#fff}
+.badge--soft{background:var(--ds-blue-soft);color:var(--ds-blue-dark)}
+
+.dummy{font-family:ui-monospace,monospace;font-size:9px;font-weight:600;color:var(--ds-red);background:rgba(204,43,43,.08);padding:2px 6px;border-radius:3px;letter-spacing:.05em;text-transform:uppercase;vertical-align:middle;margin-left:6px}
+
+.acc-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;flex-wrap:wrap;gap:8px}
+.acc-head h3{margin:0;font-family:var(--ds-display);font-weight:700;font-size:22px;color:var(--ds-text-strong);letter-spacing:-.02em}
+.acc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media (max-width:768px){.acc-grid{grid-template-columns:1fr 1fr;gap:12px}}
+.acc-card{background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.acc-card:hover{transform:translateY(-2px);box-shadow:var(--ds-shadow)}
+.acc-card__media{aspect-ratio:1;background:#e8e7e3;position:relative;background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.035) 0 14px,transparent 14px 28px)}
+.acc-card__media-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:rgba(0,0,0,.5);padding:5px 10px;background:rgba(255,255,255,.78);border-radius:2px;white-space:nowrap;text-align:center;line-height:1.2}
+.acc-card__body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+@media (max-width:768px){.acc-card__body{padding:12px}}
+.acc-card__title{font-family:var(--ds-display);font-weight:700;font-size:14px;color:var(--ds-text-strong);line-height:1.2}
+.acc-card__sub{font-size:12px;color:var(--ds-text);margin-top:3px}
+.acc-card__foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.acc-card__price{font-family:var(--ds-tnum);font-weight:700;font-size:16px;color:var(--ds-text-strong);font-variant-numeric:tabular-nums}
+.add-btn{width:32px;height:32px;background:var(--ds-blue);color:#fff;border-radius:var(--ds-radius);display:flex;align-items:center;justify-content:center;transition:background .15s,transform .12s}
+.add-btn:hover{background:var(--ds-blue-hover);transform:scale(1.08)}
+.add-btn .ic{width:16px;height:16px;stroke-width:2.5}
+
+/* ==========================================================================
+   Configurador
+   ========================================================================== */
+.cfg-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:32px}
+.cfg-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px}
+@media (max-width:1024px){.cfg-grid{grid-template-columns:1fr;gap:20px}}
+.cfg-preview{position:relative;aspect-ratio:5/4;border-radius:var(--ds-radius-lg);overflow:hidden;border:1px solid var(--ds-border);background:linear-gradient(180deg,#d6d3cf 0%,#b5b3b0 100%);background-size:14px 14px;background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 14px,transparent 14px 28px),linear-gradient(180deg,#d6d3cf 0%,#b5b3b0 100%)}
+@media (max-width:768px){.cfg-preview{aspect-ratio:4/3}}
+.cfg-preview__label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:rgba(0,0,0,.5);padding:6px 12px;background:rgba(255,255,255,.78);border-radius:2px;white-space:nowrap;pointer-events:none}
+.cfg-preview__svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.cfg-callout{position:absolute;top:16px;left:16px;padding:6px 12px;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;border-radius:999px}
+.cfg-swap{position:absolute;bottom:16px;right:16px;padding:10px 16px;background:rgba(255,255,255,.95);color:var(--ds-blue-dark);border-radius:999px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(0,0,0,.18);transition:transform .12s}
+.cfg-swap:hover{transform:scale(1.03)}
+.cfg-upload{position:absolute;bottom:16px;left:16px;padding:10px 16px;background:var(--ds-blue);color:#fff;border-radius:999px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(0,114,192,.4);transition:transform .12s}
+.cfg-upload:hover{transform:scale(1.03);background:var(--ds-blue-hover)}
+.cfg-controls{background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);padding:28px;display:flex;flex-direction:column;gap:24px}
+@media (max-width:768px){.cfg-controls{padding:20px}}
+.cfg-label{font-size:11px;font-weight:700;color:var(--ds-text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.cfg-opts{display:grid;gap:8px}
+.cfg-opts--2{grid-template-columns:1fr 1fr}
+.cfg-opts--3{grid-template-columns:1fr 1fr 1fr}
+.cfg-opt{padding:12px;background:#fff;border:1.5px solid var(--ds-border);border-radius:var(--ds-radius);text-align:left;transition:all .15s}
+.cfg-opt:hover{border-color:var(--ds-blue-mid)}
+.cfg-opt.active{background:var(--ds-blue-soft);border-color:var(--ds-blue)}
+.cfg-opt__t{font-size:14px;font-weight:700;color:var(--ds-text-strong);line-height:1.2}
+.cfg-opt.active .cfg-opt__t{color:var(--ds-blue)}
+.cfg-opt__s{margin-top:2px;font-size:11px;color:var(--ds-text)}
+.cfg-colors{display:flex;gap:10px;flex-wrap:wrap}
+.cfg-color{padding:0;background:transparent;text-align:center}
+.cfg-color__swatch{width:56px;height:56px;border-radius:50%;box-shadow:0 0 0 1px var(--ds-border);transition:box-shadow .15s}
+.cfg-color.active .cfg-color__swatch{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ds-blue)}
+.cfg-color__name{margin-top:6px;font-size:11px;font-weight:500;color:var(--ds-text)}
+.cfg-color.active .cfg-color__name{color:var(--ds-blue);font-weight:700}
+.cfg-summary{padding:16px;background:var(--ds-blue-soft);border-radius:var(--ds-radius);font-size:13px;line-height:1.5;color:var(--ds-text-strong)}
+.cfg-summary__t{font-weight:700;margin-bottom:4px}
+
+/* ==========================================================================
+   Calculadora
+   ========================================================================== */
+.calc{background:linear-gradient(135deg,var(--ds-blue-dark) 0%,var(--ds-blue) 100%);color:#fff;position:relative;overflow:hidden}
+.calc::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 0 0,rgba(255,255,255,.06) 1px,transparent 1px);background-size:24px 24px;opacity:.5;pointer-events:none}
+.calc__grid{display:grid;grid-template-columns:5fr 4fr;gap:56px;align-items:stretch;position:relative}
+@media (max-width:1024px){.calc__grid{grid-template-columns:1fr;gap:32px}}
+.calc__left{display:flex;flex-direction:column;gap:28px}
+.calc__h2{margin:0;font-family:var(--ds-display);font-weight:800;font-size:clamp(48px,4.4vw,68px);line-height:1.02;letter-spacing:-.03em;color:#fff}
+@media (max-width:768px){.calc__h2{font-size:clamp(34px,8vw,44px)}}
+.calc__lead{margin-top:16px;margin-bottom:0;font-size:18px;line-height:1.5;color:rgba(255,255,255,.82);max-width:420px}
+@media (max-width:768px){.calc__lead{font-size:16px}}
+.calc-step__head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.calc-step__n{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.calc-step__l{font-size:14px;font-weight:600}
+.calc-chips{display:flex;gap:8px;flex-wrap:wrap}
+.calc-chip{padding:10px 16px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius);font-size:13px;font-weight:600;display:inline-flex;align-items:center;transition:all .15s}
+.calc-chip:hover{background:rgba(255,255,255,.15)}
+.calc-chip.active{background:#fff;color:var(--ds-blue-dark);border-color:#fff}
+.calc-chip__dc{margin-left:6px;padding:2px 6px;background:var(--ds-red);color:#fff;font-size:10px;font-weight:700;border-radius:4px}
+.calc-chip.active .calc-chip__dc{background:rgba(0,0,0,.1);color:var(--ds-red)}
+.calc-select{margin-top:10px;width:100%;padding:12px 14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius);color:#fff;font-family:var(--ds-sans);font-size:14px;font-weight:500;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='white' opacity='.7' d='M0 0h12L6 8z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.calc-select option{background:#012E4D;color:#fff}
+.calc__panel{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.16);border-radius:var(--ds-radius-lg);padding:36px;display:flex;flex-direction:column;gap:20px;position:sticky;top:110px;align-self:start}
+@media (max-width:1024px){.calc__panel{position:static;padding:24px}}
+.calc__panel-l{font-size:12px;font-weight:600;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.calc__cfg{font-family:var(--ds-display);font-weight:700;font-size:22px;line-height:1.2;color:#fff}
+.calc__loc{margin-top:4px;font-size:14px;color:rgba(255,255,255,.7)}
+.calc__price-zone{padding:20px 0;border-top:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15)}
+.calc__total-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.calc__strike{font-family:var(--ds-tnum);font-size:16px;color:rgba(255,255,255,.55);text-decoration:line-through;font-variant-numeric:tabular-nums}
+.calc__total{display:flex;align-items:flex-start;gap:4px;margin-top:4px}
+.calc__total-n{font-family:var(--ds-tnum);font-weight:700;font-size:72px;line-height:.92;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+@media (max-width:768px){.calc__total-n{font-size:52px}}
+.calc__save{margin-top:10px;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--ds-red);border-radius:999px;font-size:12px;font-weight:700}
+.calc__cuotas-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.calc__cuotas-l{font-size:13px;color:rgba(255,255,255,.85);font-weight:600}
+.calc__cuotas-r{font-family:var(--ds-tnum);font-size:13px;color:rgba(255,255,255,.65);font-variant-numeric:tabular-nums}
+.calc__cuotas-amt{margin-top:8px;font-family:var(--ds-tnum);font-size:28px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:rgba(255,255,255,.2);border-radius:999px;outline:none;accent-color:#fff}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
+input[type="range"]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
+.calc__pays{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:.7;font-size:11px;color:#fff;font-weight:500}
+
+/* ==========================================================================
+   Diferenciadores
+   ========================================================================== */
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);overflow:hidden}
+@media (max-width:768px){.diff-grid{grid-template-columns:1fr}}
+.diff{padding:32px 28px;background:#fff;display:flex;flex-direction:column;gap:14px;border-right:1px solid var(--ds-border);border-bottom:1px solid var(--ds-border);transition:background .15s}
+@media (max-width:768px){.diff{padding:24px 20px;border-right:0}}
+.diff:hover{background:#fafbfc}
+.diff:nth-child(3n){border-right:0}
+.diff:nth-last-child(-n+3){border-bottom:0}
+@media (max-width:768px){.diff{border-right:0}.diff:last-child{border-bottom:0}.diff:not(:last-child){border-bottom:1px solid var(--ds-border)}}
+.diff__icon{width:48px;height:48px;border-radius:12px;background:var(--ds-blue-soft);color:var(--ds-blue);display:flex;align-items:center;justify-content:center}
+.diff__icon .ic{width:24px;height:24px;stroke-width:1.8}
+.diff__t{margin:0;font-family:var(--ds-display);font-weight:700;font-size:18px;color:var(--ds-text-strong);letter-spacing:-.015em;line-height:1.2}
+.diff__d{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--ds-text)}
+
+/* ==========================================================================
+   Prensa
+   ========================================================================== */
+.prensa-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--ds-border);border:1px solid var(--ds-border);border-radius:var(--ds-radius);overflow:visible}
+@media (max-width:768px){.prensa-grid{grid-template-columns:1fr 1fr}}
+.prensa-cell{background:#fff;padding:24px 16px;min-height:90px;display:flex;align-items:center;justify-content:center;position:relative;transition:background .15s}
+.prensa-cell:hover{background:#fafbfc}
+.prensa-cell__lbl{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.1em;color:var(--ds-text);opacity:.55;text-align:center;transition:all .15s;line-height:1.3}
+.prensa-cell:hover .prensa-cell__lbl{opacity:1;color:var(--ds-blue)}
+.prensa-cell__quote{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:220px;padding:12px 16px;background:var(--ds-blue-dark);color:#fff;border-radius:var(--ds-radius);font-size:13px;font-style:italic;line-height:1.4;text-align:center;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;transform:translateX(-50%) translateY(4px)}
+.prensa-cell:hover .prensa-cell__quote{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ==========================================================================
+   Testimonios
+   ========================================================================== */
+.test-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:768px){.test-grid{grid-template-columns:1fr}}
+.test-card{padding:28px;background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);display:flex;flex-direction:column;gap:14px;transition:transform .2s,box-shadow .2s}
+@media (max-width:768px){.test-card{padding:22px}}
+.test-card:hover{transform:translateY(-2px);box-shadow:var(--ds-shadow)}
+.test-card__head{display:flex;align-items:center;gap:14px}
+.test-card__avatar{width:44px;height:44px;border-radius:50%;background:var(--ds-blue-soft);display:flex;align-items:center;justify-content:center;font-family:var(--ds-display);font-weight:700;font-size:16px;color:var(--ds-blue);flex-shrink:0}
+.test-card__who{flex:1}
+.test-card__name{font-size:14px;font-weight:700;color:var(--ds-text-strong)}
+.test-card__city{font-size:12px;color:var(--ds-text)}
+.test-card__stars{display:flex;gap:2px;color:var(--ds-blue)}
+.test-card__stars .ic{width:14px;height:14px;fill:var(--ds-blue);stroke-width:1.4}
+.test-card__text{margin:0;font-size:16px;line-height:1.55;color:var(--ds-text-strong)}
+@media (max-width:768px){.test-card__text{font-size:15px}}
+.trust-strip{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--ds-bg-alt);border:1px solid var(--ds-border);border-radius:999px;font-size:12px;font-weight:600}
+.trust-strip .ic{width:14px;height:14px;stroke-width:2;color:var(--ds-blue)}
+
+/* ==========================================================================
+   Blog
+   ========================================================================== */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:1024px){.blog-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:768px){.blog-grid{grid-template-columns:1fr}}
+.blog-card{background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.blog-card:hover{transform:translateY(-3px);box-shadow:var(--ds-shadow)}
+.blog-card__media{aspect-ratio:16/9;position:relative;background-size:14px 14px;background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.035) 0 14px,transparent 14px 28px)}
+.blog-card__media-l{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:rgba(0,0,0,.5);padding:6px 12px;background:rgba(255,255,255,.78);border-radius:2px;white-space:nowrap}
+.blog-card__body{padding:24px;display:flex;flex-direction:column;gap:12px;flex:1}
+@media (max-width:768px){.blog-card__body{padding:20px}}
+.blog-card__meta{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;color:var(--ds-blue);letter-spacing:.06em;text-transform:uppercase}
+.blog-card__meta .dot{width:3px;height:3px;border-radius:3px;background:var(--ds-border)}
+.blog-card__meta .date{color:var(--ds-text)}
+.blog-card__title{margin:0;font-family:var(--ds-display);font-weight:700;font-size:20px;line-height:1.2;letter-spacing:-.02em;color:var(--ds-text-strong);text-wrap:pretty}
+.blog-card__excerpt{margin:0;font-size:14px;line-height:1.5;color:var(--ds-text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.blog-card__read{margin-top:auto;font-size:14px;font-weight:600;color:var(--ds-blue);display:inline-flex;align-items:center;gap:6px;padding-top:4px}
+
+/* ==========================================================================
+   Pre-footer
+   ========================================================================== */
+.prefooter{background:var(--ds-blue-dark);color:#fff;padding:96px 64px;position:relative;overflow:hidden}
+@media (max-width:768px){.prefooter{padding:56px 20px}}
+.prefooter::before{content:'';position:absolute;top:-30%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,var(--ds-blue) 0%,transparent 60%);opacity:.35;filter:blur(40px);pointer-events:none}
+.prefooter__inner{max-width:var(--ds-container);margin:0 auto;position:relative;display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:center}
+@media (max-width:1024px){.prefooter__inner{grid-template-columns:1fr;gap:32px}}
+.prefooter__h2{margin:0;font-family:var(--ds-display);font-weight:800;font-size:clamp(56px,5.6vw,84px);line-height:1.02;letter-spacing:-.035em;color:#fff}
+@media (max-width:768px){.prefooter__h2{font-size:clamp(36px,9vw,48px)}}
+.prefooter__sub{margin:20px 0 0;font-size:17px;line-height:1.5;color:rgba(255,255,255,.75);max-width:480px}
+@media (max-width:768px){.prefooter__sub{font-size:15px}}
+.prefooter__ctas{display:flex;flex-direction:column;gap:12px}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.footer{background:#fff;color:var(--ds-text)}
+.footer__inner{max-width:var(--ds-container);margin:0 auto;padding:64px var(--ds-pad) 32px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px}
+@media (max-width:1024px){.footer__inner{grid-template-columns:1fr;gap:0;padding:48px 20px 24px}}
+.footer__brand{margin-bottom:0}
+@media (max-width:1024px){.footer__brand{margin-bottom:32px}}
+.footer__about{margin:20px 0 24px;font-size:14px;line-height:1.55;max-width:340px}
+.footer__socials{display:flex;gap:10px;margin-bottom:20px}
+.footer__social{width:36px;height:36px;border-radius:50%;background:var(--ds-bg-alt);color:var(--ds-text-strong);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;letter-spacing:.02em;transition:background .15s,color .15s}
+.footer__social:hover{background:var(--ds-blue);color:#fff}
+.footer__contact{display:flex;flex-direction:column;gap:6px;font-size:13px}
+.footer__contact-row{display:flex;align-items:center;gap:8px}
+.footer__contact-row .ic{width:14px;height:14px;stroke-width:2;color:var(--ds-blue)}
+.footer__col{border-top:0;padding:0}
+@media (max-width:1024px){.footer__col{border-top:1px solid var(--ds-border);padding:16px 0}}
+.footer__col-head{display:flex;align-items:center;justify-content:space-between;background:transparent;padding:0;width:100%;margin-bottom:14px;text-align:left}
+@media (max-width:1024px){.footer__col-head{margin-bottom:0;cursor:pointer}.footer__col.open .footer__col-head{margin-bottom:14px}}
+.footer__col-title{font-size:11px;font-weight:700;color:var(--ds-text-strong);text-transform:uppercase;letter-spacing:.08em}
+.footer__col-toggle{display:none;color:var(--ds-text)}
+@media (max-width:1024px){.footer__col-toggle{display:flex}}
+.footer__col-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+@media (max-width:1024px){.footer__col-list{display:none}.footer__col.open .footer__col-list{display:flex}}
+.footer__col-list a{font-size:14px;color:var(--ds-text);line-height:1.4;transition:color .15s}
+.footer__col-list a:hover{color:var(--ds-blue)}
+.footer__bottom{border-top:1px solid var(--ds-border);background:var(--ds-blue-dark);color:rgba(255,255,255,.7);padding:20px var(--ds-pad)}
+.footer__bottom-inner{max-width:var(--ds-container);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px}
+.footer__bottom-links{display:flex;gap:16px}
+
+/* ==========================================================================
+   WhatsApp floating
+   ========================================================================== */
+.wa-fab{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:var(--ds-green-wa);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 22px rgba(37,211,102,.5);z-index:40;transition:transform .15s}
+.wa-fab:hover{transform:scale(1.08)}
+.wa-fab .ic{width:30px;height:30px;stroke-width:2}
+@media (max-width:768px){.wa-fab{width:52px;height:52px;bottom:16px;right:16px}.wa-fab .ic{width:26px;height:26px}}
+
+/* ==========================================================================
+   Cart drawer (cotización)
+   ========================================================================== */
+.drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
+.drawer-backdrop.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:92vw;background:#fff;z-index:201;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.drawer.open{transform:translateX(0)}
+.drawer__head{padding:20px 24px 16px;border-bottom:1px solid var(--ds-border);display:flex;align-items:center;justify-content:space-between}
+.drawer__title{font-family:var(--ds-display);font-weight:700;font-size:20px;color:var(--ds-text-strong);letter-spacing:-.02em}
+.drawer__close{width:32px;height:32px;background:var(--ds-bg-alt);color:var(--ds-text-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.drawer__close:hover{background:#ececec}
+.drawer__close .ic{width:16px;height:16px}
+.drawer__body{flex:1;overflow-y:auto;padding:8px 24px}
+.drawer__empty{padding:60px 20px;text-align:center;color:var(--ds-text)}
+.drawer__empty-icon{margin:0 auto 16px;width:60px;height:60px;border-radius:50%;background:var(--ds-blue-soft);display:flex;align-items:center;justify-content:center;color:var(--ds-blue)}
+.drawer__empty-icon .ic{width:28px;height:28px}
+.cart-item{padding:16px 0;border-bottom:1px solid var(--ds-border);display:flex;gap:14px}
+.cart-item__media{width:72px;height:72px;flex-shrink:0;overflow:hidden;border-radius:var(--ds-radius);background:#e8e7e3;position:relative;background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.035) 0 14px,transparent 14px 28px)}
+.cart-item__media-l{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,monospace;font-size:8px;letter-spacing:.04em;color:rgba(0,0,0,.5);text-align:center;line-height:1.1;padding:0 4px}
+.cart-item__body{flex:1;display:flex;flex-direction:column;gap:4px}
+.cart-item__name{font-size:14px;font-weight:700;color:var(--ds-text-strong);line-height:1.2}
+.cart-item__variant{font-size:12px;color:var(--ds-text)}
+.cart-item__foot{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.qty{display:flex;align-items:center;border:1px solid var(--ds-border);border-radius:var(--ds-radius);overflow:hidden}
+.qty button{width:28px;height:28px;color:var(--ds-text);transition:background .12s}
+.qty button:hover{background:var(--ds-bg-alt)}
+.qty span{min-width:24px;text-align:center;font-family:var(--ds-tnum);font-size:13px;font-weight:600}
+.cart-item__price{font-family:var(--ds-tnum);font-size:15px;font-weight:700;color:var(--ds-text-strong);font-variant-numeric:tabular-nums}
+.cart-item__remove{margin-left:8px;color:var(--ds-text);opacity:.6;padding:4px;transition:opacity .15s,color .15s}
+.cart-item__remove:hover{opacity:1;color:var(--ds-red)}
+.cart-item__remove .ic{width:14px;height:14px}
+
+.upsell{margin-top:16px;padding:14px 16px;background:var(--ds-blue-soft);border-radius:var(--ds-radius);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.upsell__t{font-size:13px;font-weight:700;color:var(--ds-text-strong)}
+.upsell__s{font-size:12px;color:var(--ds-text)}
+.upsell button{padding:6px 12px;background:var(--ds-blue);color:#fff;border-radius:var(--ds-radius);font-size:12px;font-weight:700;flex-shrink:0;transition:background .15s}
+.upsell button:hover{background:var(--ds-blue-hover)}
+
+.drawer__foot{padding:20px 24px;border-top:1px solid var(--ds-border);background:var(--ds-bg-alt)}
+.drawer__row{display:flex;justify-content:space-between;font-size:13px;color:var(--ds-text);margin-bottom:6px}
+.drawer__row--total{align-items:baseline;margin-top:8px;margin-bottom:14px}
+.drawer__row--total .l{font-size:14px;font-weight:700;color:var(--ds-text-strong)}
+.drawer__row--total .v{font-family:var(--ds-tnum);font-size:26px;font-weight:700;color:var(--ds-text-strong);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.drawer__note{font-size:12px;color:var(--ds-text);margin-bottom:12px;text-align:center}
+.drawer__form{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.drawer__form input,.drawer__form textarea{padding:11px 13px;border:1px solid var(--ds-border);border-radius:var(--ds-radius);font-family:var(--ds-sans);font-size:14px;color:var(--ds-text-strong);background:#fff;outline:none;transition:border-color .15s}
+.drawer__form input:focus,.drawer__form textarea:focus{border-color:var(--ds-blue)}
+.drawer__form textarea{resize:vertical;min-height:60px}
+.drawer__form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* ==========================================================================
+   Mobile menu drawer
+   ========================================================================== */
+.menu-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s}
+.menu-backdrop.open{opacity:1;pointer-events:auto}
+.menu-drawer{position:fixed;top:0;right:0;bottom:0;width:300px;max-width:88vw;background:#fff;z-index:201;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.menu-drawer.open{transform:translateX(0)}
+.menu-drawer__head{padding:18px 20px;border-bottom:1px solid var(--ds-border);display:flex;align-items:center;justify-content:space-between}
+.menu-drawer__nav{padding:8px 0;display:flex;flex-direction:column}
+.menu-drawer__nav a{padding:14px 24px;font-size:16px;font-weight:600;color:var(--ds-text-strong)}
+.menu-drawer__nav a:hover{background:var(--ds-bg-alt);color:var(--ds-blue)}
+.menu-drawer__mode{padding:20px 24px;border-top:1px solid var(--ds-border)}
+
+/* ==========================================================================
+   Toast
+   ========================================================================== */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--ds-blue-dark);color:#fff;padding:14px 22px;border-radius:999px;font-size:14px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.2);z-index:300;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;display:flex;align-items:center;gap:10px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .ic{color:var(--ds-green-wa);stroke-width:2.5;width:18px;height:18px}
+
+/* ==========================================================================
+   Scroll reveal
+   ========================================================================== */
+@media (prefers-reduced-motion:no-preference){
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease-out,transform .5s ease-out}
+  .reveal.in{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+<!-- ============================================================
+     SVG sprite — all icons defined once, referenced via <use>
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 5h2l2.4 11.5a2 2 0 002 1.5h7.2a2 2 0 002-1.5L20.5 9H6.2"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-3.5-3.5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/></symbol>
+    <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V8l5 3V8l5 3V8l5 3v10H3z"/></symbol>
+    <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 3s-6 7-6 11a6 6 0 0012 0c0-4-6-11-6-11z"/></symbol>
+    <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M3 7l14-4 4 14-14 4z M6 8l2 2 M9 7l1 1 M12 6l2 2 M15 5l1 1"/></symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 00-5.4 5.4l-6 6 2 2 6-6a4 4 0 005.4-5.4l-2 2-2-2 2-2z"/></symbol>
+    <symbol id="i-medal" viewBox="0 0 24 24"><path d="M12 8a5 5 0 100 10 5 5 0 000-10zM8 8L4 2h6l2 4M16 8l4-6h-6l-2 4"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M16.6 13.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.4.8 3.1 1.3 4.8 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.6 0-3.2-.4-4.5-1.2l-.3-.2-3.3.9.9-3.2-.2-.3C3.7 14.6 3.2 13.3 3.2 12c0-4.9 4-8.8 8.8-8.8 4.9 0 8.8 4 8.8 8.8s-3.9 8-8.8 8z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.5 5.7 21l1.5-7L2 9.3l7-.8L12 2z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="M7 4l-4 4 4 4M3 8h12M17 20l4-4-4-4M21 16H9"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-7-7-12a7 7 0 0114 0c0 5-7 12-7 12z M12 11a2 2 0 100-4 2 2 0 000 4z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A17 17 0 013 6a2 2 0 012-2z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><path d="M12 22a10 10 0 100-20 10 10 0 000 20zM12 8v.01M11 12h1v6"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============================================================
+     TopBar promocional
+     ============================================================ -->
+<div class="topbar" id="topbar" role="region" aria-label="Promociones vigentes">
+  <div class="topbar__dots" aria-hidden="true">
+    <span class="topbar__dot active"></span>
+    <span class="topbar__dot"></span>
+    <span class="topbar__dot"></span>
+  </div>
+  <div class="topbar__msg" id="topbarMsg">
+    <svg class="ic" style="width:14px;height:14px;opacity:.85"><use href="#i-sparkles"/></svg>
+    <span id="topbarText">15% dcto. pagando con Banco Santander en Santiago y Gran Concepción</span>
+  </div>
+  <button class="topbar__close" id="topbarClose" aria-label="Cerrar barra promocional">
+    <svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-close"/></svg>
+  </button>
+</div>
+
+<!-- ============================================================
+     Header
+     ============================================================ -->
+<header class="header">
+  <a href="#" class="logo" aria-label="Ducha Segura — Inicio">
+    <img class="logo__circle" src="images/Ducha segura logo azul.png" alt="" />
+  </a>
+
+  <nav class="nav" aria-label="Navegación principal">
+    <a href="#productos" class="nav__link active">Tienda</a>
+    <a href="#productos" class="nav__link">Rebajes</a>
+    <a href="#productos" class="nav__link">Accesorios</a>
+    <a href="#blog" class="nav__link">Blog</a>
+    <a href="#" class="nav__link">Convenios</a>
+  </nav>
+
+  <div class="header__actions">
+    <div class="mode-toggle" role="group" aria-label="Modo de navegación">
+      <button class="mode-toggle__btn active" data-mode="user">Para mí mismo</button>
+      <button class="mode-toggle__btn" data-mode="caregiver">Para un familiar</button>
+    </div>
+    <button class="icon-btn hide-mobile" aria-label="Buscar productos">
+      <svg class="ic" style="width:20px;height:20px"><use href="#i-search"/></svg>
+    </button>
+    <button class="icon-btn hide-mobile" aria-label="Mi cuenta">
+      <svg class="ic" style="width:20px;height:20px"><use href="#i-user"/></svg>
+    </button>
+    <button class="cart-trigger" id="cartTrigger" aria-label="Ver mi cotización">
+      <svg class="ic"><use href="#i-cart"/></svg>
+      <span class="cart-trigger__label">Cotización</span>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
+      <svg class="ic" style="width:22px;height:22px"><use href="#i-menu"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============================================================
+     Hero — full-bleed con slider antes/después
+     ============================================================ -->
+<section class="hero" aria-label="Presentación principal">
+  <div class="slider" id="slider" role="region" aria-label="Comparador antes y después">
+    <div class="slider__layer slider__after" aria-hidden="true">
+      <div class="slider__photo-label">[FOTO BAÑO CON REBAJE INSTALADO]</div>
+      <div class="slider__label slider__label--after">Después</div>
+    </div>
+    <div class="slider__layer slider__before" id="sliderBefore" style="clip-path:polygon(0 0,50% 0,50% 100%,0 100%);-webkit-clip-path:polygon(0 0,50% 0,50% 100%,0 100%)" aria-hidden="true">
+      <div class="slider__photo-label slider__photo-label--dark">[FOTO BAÑO ORIGINAL — TINA ALTA]</div>
+      <div class="slider__label slider__label--before">Antes</div>
+    </div>
+    <div class="slider__handle" id="sliderHandle" style="left:50%"></div>
+    <div class="slider__knob" id="sliderKnob" style="left:50%">
+      <svg class="ic" style="width:20px;height:20px;stroke-width:2"><use href="#i-swap"/></svg>
+    </div>
+  </div>
+
+  <div class="hero__overlay" aria-hidden="true"></div>
+
+  <div class="slider__hint">
+    <svg class="ic" style="width:13px;height:13px;stroke-width:2"><use href="#i-swap"/></svg>
+    <span>Arrastra para ver el cambio</span>
+  </div>
+
+  <div class="hero__content">
+    <div class="hero__inner">
+      <div class="kicker kicker--light" id="heroKicker">Patente chilena · +10 años en Chile</div>
+      <h1 class="h1">
+        <span id="heroH1A">Rebaje para tinas.</span>
+        <span id="heroH1B">Un acceso seguro.</span>
+      </h1>
+      <p class="hero__sub" id="heroSub">Adapta tu tina en un día. Sin obra, sin escombros, con garantía de 3 años.</p>
+      <div class="hero__ctas">
+        <a href="#productos" class="btn btn--on-light btn--lg" id="heroCtaPrimary">
+          <span>Ver tinas y precios</span>
+          <svg class="ic"><use href="#i-arrow"/></svg>
+        </a>
+        <a href="https://wa.me/56934044939" target="_blank" rel="noopener" class="btn btn--ghost btn--lg" id="heroCtaSecondary">
+          <svg class="ic"><use href="#i-whatsapp"/></svg>
+          <span>Habla con un técnico</span>
+        </a>
+      </div>
+      <div class="hero__trust">
+        <span class="trust-pill trust-pill--dark"><svg class="ic"><use href="#i-check"/></svg>Producto nacional patentado</span>
+        <span class="trust-pill trust-pill--dark"><svg class="ic"><use href="#i-check"/></svg>3 años de garantía</span>
+        <span class="trust-pill trust-pill--dark"><svg class="ic"><use href="#i-check"/></svg>+10 años en Chile</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Convenios strip
+     ============================================================ -->
+<section class="convenios" aria-label="Convenios vigentes">
+  <div class="convenios__head">
+    <div class="kicker">Nuestros convenios vigentes</div>
+  </div>
+  <div class="marquee">
+    <div class="marquee__track" id="conveniosTrack"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ¿Cómo funciona?
+     ============================================================ -->
+<section class="section section--soft" id="como-funciona">
+  <div class="container">
+    <div class="como">
+      <div class="reveal">
+        <div class="kicker" style="margin-bottom:12px">¿Cómo funciona?</div>
+        <h2 class="h2">Cuatro pasos. <span class="accent">Un solo día.</span></h2>
+        <p class="lead">Desde que mides tu tina hasta que entramos a instalar, todo el flujo está pensado para que no levantes ni un martillo.</p>
+        <div class="como__steps">
+          <div class="step">
+            <div class="step__num">01</div>
+            <div><div class="step__title">Mide tu tina</div><div class="step__desc">Selector simple en línea, o por WhatsApp. Tres datos: ancho, largo, material.</div></div>
+          </div>
+          <div class="step">
+            <div class="step__num">02</div>
+            <div><div class="step__title">Elige tu pieza</div><div class="step__desc">30, 40 o 50 cm. Material y color estándar. Un especialista te confirma.</div></div>
+          </div>
+          <div class="step">
+            <div class="step__num">03</div>
+            <div><div class="step__title">Coordina tu pago</div><div class="step__desc">Cotización clara. Webpay, MercadoPago o transferencia con orden de compra.</div></div>
+          </div>
+          <div class="step">
+            <div class="step__num">04</div>
+            <div><div class="step__title">Instalamos en 1 día</div><div class="step__desc">Sin obra, sin escombros, sin tocar cañerías. Tu baño limpio al final.</div></div>
+          </div>
+        </div>
+        <div class="como__cta">
+          <a href="#calculadora" class="btn btn--primary btn--lg">
+            <span>Empezar por la medida</span>
+            <svg class="ic"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="reveal video-card" role="button" tabindex="0" aria-label="Ver video de instalación">
+        <div class="video-card__label">[VIDEO MP4 — INSTALACIÓN PASO A PASO]</div>
+        <div class="video-card__play" aria-hidden="true"></div>
+        <div class="video-card__caption">
+          <div class="video-card__time">0:48 min</div>
+          <div class="video-card__txt">Ver una instalación real, de principio a fin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Productos destacados
+     ============================================================ -->
+<section class="section" id="productos">
+  <div class="container">
+    <div class="section-head section-head--row reveal">
+      <div>
+        <div class="kicker" style="margin-bottom:10px">Catálogo</div>
+        <h2 class="h2">Elige tu rebaje. <span class="accent">Cotiza hoy.</span></h2>
+      </div>
+      <a href="#" class="see-all"><span>Ver todo el catálogo</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+
+    <div class="product-grid reveal" id="productosGrid"></div>
+    <div class="product-grid product-grid--single reveal" id="productosFeatured"></div>
+
+    <div class="acc-head reveal">
+      <h3>Accesorios — ahora se venden solos</h3>
+      <a href="#" class="see-all">Ver todos <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="acc-grid reveal" id="accGrid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Configurador visual (WOW)
+     ============================================================ -->
+<section class="section section--alt" id="configurador">
+  <div class="container">
+    <div class="cfg-head reveal">
+      <div style="max-width:640px">
+        <div class="kicker" style="margin-bottom:10px">Configurador visual</div>
+        <h2 class="h2">Mirá cómo se va a ver<br><span class="accent">en tu baño.</span></h2>
+        <p class="lead">Elegí el tipo, el ancho y el color. Después subí una foto de tu propio baño para ver el rebaje aplicado a tu tina.</p>
+      </div>
+      <span class="badge badge--soft">
+        <svg class="ic" style="width:11px;height:11px;stroke-width:2"><use href="#i-sparkles"/></svg>
+        Vista previa
+      </span>
+    </div>
+
+    <div class="cfg-grid">
+      <div class="cfg-preview reveal" id="cfgPreview">
+        <div class="cfg-preview__label" id="cfgPreviewLabel">[BAÑO ESTÁNDAR · TINA BLANCA]</div>
+        <svg class="cfg-preview__svg" viewBox="0 0 500 400" preserveAspectRatio="none">
+          <g>
+            <path d="M 80 200 Q 80 160 110 160 L 390 160 Q 420 160 420 200 L 420 320 Q 420 360 380 360 L 120 360 Q 80 360 80 320 Z"
+                  fill="rgba(0,0,0,.35)" stroke="rgba(255,255,255,.4)" stroke-width="1.2"/>
+            <path d="M 100 220 Q 100 200 130 200 L 370 200 Q 400 200 400 220 L 400 320 Q 400 340 370 340 L 130 340 Q 100 340 100 320 Z"
+                  fill="rgba(0,0,0,.55)"/>
+            <g id="cfgCut" style="transition:all .35s">
+              <rect id="cfgCutRect" x="202.5" y="155" width="95" height="66"
+                    fill="#f5f5f4" stroke="rgba(255,255,255,.85)" stroke-width="1.6"/>
+              <line id="cfgCutDash" x1="202.5" y1="160" x2="297.5" y2="160"
+                    stroke="rgba(255,255,255,.6)" stroke-width="1" stroke-dasharray="4 3"/>
+              <g id="cfgDim">
+                <line id="cfgDimLine" x1="202.5" y1="138" x2="297.5" y2="138" stroke="#fff" stroke-width="1.4"/>
+                <line id="cfgDimL" x1="202.5" y1="134" x2="202.5" y2="142" stroke="#fff" stroke-width="1.4"/>
+                <line id="cfgDimR" x1="297.5" y1="134" x2="297.5" y2="142" stroke="#fff" stroke-width="1.4"/>
+                <text id="cfgDimT" x="250" y="128" fill="#fff" font-size="14" font-family="Inter Tight,Inter,sans-serif" font-weight="700" text-anchor="middle">40 cm</text>
+              </g>
+              <rect id="cfgCutGlow" x="200.5" y="153" width="99" height="70" fill="none" stroke="#0072C0" stroke-width="2.5" opacity=".85"/>
+            </g>
+            <g id="cfgJets" opacity="0" style="transition:opacity .25s">
+              <circle cx="140" cy="290" r="4" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.2"/>
+              <circle cx="200" cy="290" r="4" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.2"/>
+              <circle cx="260" cy="290" r="4" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.2"/>
+              <circle cx="320" cy="290" r="4" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.2"/>
+              <circle cx="380" cy="290" r="4" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.2"/>
+            </g>
+          </g>
+        </svg>
+        <div class="cfg-callout">Vista esquemática · placeholder</div>
+        <button class="cfg-swap" id="cfgSwap">
+          <svg class="ic" style="width:14px;height:14px;stroke-width:2"><use href="#i-swap"/></svg>
+          <span>Cambiar baño de ejemplo</span>
+        </button>
+        <button class="cfg-upload">
+          <svg class="ic" style="width:14px;height:14px;stroke-width:2"><use href="#i-user"/></svg>
+          <span>Subir foto de mi baño</span>
+        </button>
+      </div>
+
+      <div class="cfg-controls reveal">
+        <div>
+          <div class="cfg-label">Tipo de tina</div>
+          <div class="cfg-opts cfg-opts--2" data-cfg="tipo">
+            <button class="cfg-opt active" data-value="tradicional">
+              <div class="cfg-opt__t">Tradicional</div>
+              <div class="cfg-opt__s">Tina rectangular</div>
+            </button>
+            <button class="cfg-opt" data-value="jacuzzi">
+              <div class="cfg-opt__t">Jacuzzi</div>
+              <div class="cfg-opt__s">Hidromasaje</div>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div class="cfg-label">Ancho del rebaje</div>
+          <div class="cfg-opts cfg-opts--3" data-cfg="ancho">
+            <button class="cfg-opt" data-value="30">
+              <div class="cfg-opt__t">30 cm</div>
+              <div class="cfg-opt__s">Mínimo</div>
+            </button>
+            <button class="cfg-opt active" data-value="40">
+              <div class="cfg-opt__t">40 cm</div>
+              <div class="cfg-opt__s">Más común</div>
+            </button>
+            <button class="cfg-opt" data-value="50">
+              <div class="cfg-opt__t">50 cm</div>
+              <div class="cfg-opt__s">Máximo acceso</div>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div class="cfg-label">Color</div>
+          <div class="cfg-colors" data-cfg="color">
+            <button class="cfg-color active" data-value="blanco" data-hex="#f5f5f4" title="Blanco"><div class="cfg-color__swatch" style="background:#f5f5f4"></div><div class="cfg-color__name">Blanco</div></button>
+            <button class="cfg-color" data-value="crema" data-hex="#e8dfcd" title="Crema"><div class="cfg-color__swatch" style="background:#e8dfcd"></div><div class="cfg-color__name">Crema</div></button>
+            <button class="cfg-color" data-value="gris" data-hex="#b0b0ad" title="Gris"><div class="cfg-color__swatch" style="background:#b0b0ad"></div><div class="cfg-color__name">Gris</div></button>
+            <button class="cfg-color" data-value="negro" data-hex="#1f1f1f" title="Negro mate"><div class="cfg-color__swatch" style="background:#1f1f1f"></div><div class="cfg-color__name">Negro mate</div></button>
+          </div>
+        </div>
+        <div class="cfg-summary">
+          <div class="cfg-summary__t">Tu configuración</div>
+          <div id="cfgSummary">Rebaje <strong>Tradicional</strong> · 40 cm · color <strong>Blanco</strong></div>
+        </div>
+        <button class="btn btn--primary btn--full btn--lg" id="cfgAdd">
+          <span>Sumar a mi cotización · $<span id="cfgPrice">229.000</span></span>
+          <span class="dummy">dummy</span>
+          <svg class="ic"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Calculadora (STAR)
+     ============================================================ -->
+<section class="section section--xl calc" id="calculadora">
+  <div class="container">
+    <div class="calc__grid">
+      <div class="calc__left">
+        <div class="reveal">
+          <div class="kicker kicker--light" style="margin-bottom:14px">Calculadora de presupuesto</div>
+          <h2 class="calc__h2">¿Cuánto te sale tu rebaje?</h2>
+          <p class="calc__lead">Cuatro datos. Precio final con cuotas y descuento, en pantalla.</p>
+        </div>
+
+        <div class="calc-step reveal">
+          <div class="calc-step__head"><span class="calc-step__n">1</span><span class="calc-step__l">Tipo de tina</span></div>
+          <div class="calc-chips" data-calc="tipo">
+            <button class="calc-chip active" data-value="tradicional">Tradicional</button>
+            <button class="calc-chip" data-value="jacuzzi">Jacuzzi</button>
+          </div>
+        </div>
+
+        <div class="calc-step reveal">
+          <div class="calc-step__head"><span class="calc-step__n">2</span><span class="calc-step__l">Ancho del rebaje</span></div>
+          <div class="calc-chips" data-calc="ancho">
+            <button class="calc-chip" data-value="30">30 cm</button>
+            <button class="calc-chip active" data-value="40">40 cm</button>
+            <button class="calc-chip" data-value="50">50 cm</button>
+          </div>
+        </div>
+
+        <div class="calc-step reveal">
+          <div class="calc-step__head"><span class="calc-step__n">3</span><span class="calc-step__l">Comuna de instalación</span></div>
+          <div class="calc-chips" data-calc="region">
+            <button class="calc-chip active" data-value="RM">RM</button>
+            <button class="calc-chip" data-value="Valparaíso">Valparaíso</button>
+            <button class="calc-chip" data-value="Bío Bío">Bío Bío</button>
+          </div>
+          <select class="calc-select" id="calcComuna" aria-label="Comuna"></select>
+        </div>
+
+        <div class="calc-step reveal">
+          <div class="calc-step__head"><span class="calc-step__n">4</span><span class="calc-step__l">Banco de pago (opcional)</span></div>
+          <div class="calc-chips" data-calc="banco">
+            <button class="calc-chip active" data-value="santander" data-disc="15">Santander <span class="calc-chip__dc">-15%</span></button>
+            <button class="calc-chip" data-value="bci" data-disc="8">BCI <span class="calc-chip__dc">-8%</span></button>
+            <button class="calc-chip" data-value="estado" data-disc="5">BancoEstado <span class="calc-chip__dc">-5%</span></button>
+            <button class="calc-chip" data-value="otro" data-disc="0">Otro / sin convenio</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc__panel reveal">
+        <div>
+          <div class="calc__panel-l">Tu configuración</div>
+          <div class="calc__cfg" id="calcCfg">Rebaje Tina Tradicional · 40 cm</div>
+          <div class="calc__loc" id="calcLoc">Las Condes, RM</div>
+        </div>
+
+        <div class="calc__price-zone">
+          <div class="calc__total-row">
+            <span style="font-size:13px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.06em">Total</span>
+            <span class="calc__strike" id="calcStrike">$229.000</span>
+          </div>
+          <div class="calc__total">
+            <span class="calc__total-n">$<span id="calcTotal">194.650</span></span>
+            <span class="dummy">dummy</span>
+          </div>
+          <div class="calc__save" id="calcSave">
+            <svg class="ic" style="width:13px;height:13px;stroke-width:2.5"><use href="#i-zap"/></svg>
+            <span id="calcSaveTxt">Ahorras $34.350 con Santander</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="calc__cuotas-head">
+            <span class="calc__cuotas-l">O en cuotas</span>
+            <span class="calc__cuotas-r"><span id="calcCuotasN">12</span> cuotas sin interés</span>
+          </div>
+          <input type="range" min="3" max="24" step="3" value="12" id="calcCuotasRange" aria-label="Número de cuotas">
+          <div class="calc__cuotas-amt"><span id="calcCuotasN2">12</span> × <span>$<span id="calcCuotaAmt">16.221</span></span><span class="dummy">dummy</span></div>
+        </div>
+
+        <button class="btn btn--on-light btn--lg btn--full" id="calcAdd">
+          <span>Agregar a mi cotización</span>
+          <svg class="ic"><use href="#i-arrow"/></svg>
+        </button>
+
+        <div class="calc__pays">
+          <span>Webpay</span><span>·</span><span>MercadoPago</span><span>·</span><span>Khipu</span><span>·</span><span>Transferencia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Diferenciadores
+     ============================================================ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal" style="max-width:720px">
+      <div class="kicker" style="margin-bottom:10px">Por qué un Ducha Segura</div>
+      <h2 class="h2">Seis razones técnicas, <span class="accent">una sola decisión.</span></h2>
+    </div>
+    <div class="diff-grid reveal">
+      <div class="diff"><div class="diff__icon"><svg class="ic"><use href="#i-factory"/></svg></div><div><h3 class="diff__t">Producto nacional</h3><p class="diff__d">Patente chilena, fibra de vidrio reforzada 5 mm.</p></div></div>
+      <div class="diff"><div class="diff__icon"><svg class="ic"><use href="#i-droplet"/></svg></div><div><h3 class="diff__t">Inclinación antiderrame</h3><p class="diff__d">Retorno del agua al interior de la tina.</p></div></div>
+      <div class="diff"><div class="diff__icon"><svg class="ic"><use href="#i-shield"/></svg></div><div><h3 class="diff__t">Cantos seguros</h3><p class="diff__d">Vértices redondeados, sin riesgo de cortes.</p></div></div>
+      <div class="diff"><div class="diff__icon"><svg class="ic"><use href="#i-ruler"/></svg></div><div><h3 class="diff__t">A la medida</h3><p class="diff__d">11 medidas (30, 40 y 50 cm de ancho) para cualquier tina.</p></div></div>
+      <div class="diff"><div class="diff__icon"><svg class="ic"><use href="#i-wrench"/></svg></div><div><h3 class="diff__t">Sin obra</h3><p class="diff__d">No tocamos cañerías. Sin escombros ni filtración.</p></div></div>
+      <div class="diff"><div class="diff__icon"><svg class="ic"><use href="#i-medal"/></svg></div><div><h3 class="diff__t">Garantía 3 años</h3><p class="diff__d">Garantía nacional, con instalación certificada.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Prensa
+     ============================================================ -->
+<section class="section section--alt" style="padding:64px 0">
+  <div class="container">
+    <div class="section-head section-head--center reveal" style="margin-bottom:32px">
+      <div class="kicker">¿Nos viste? Estamos en prensa.</div>
+    </div>
+    <div class="prensa-grid reveal" id="prensaGrid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Testimonios
+     ============================================================ -->
+<section class="section" id="testimonios">
+  <div class="container">
+    <div class="section-head section-head--row reveal">
+      <div>
+        <div class="kicker" style="margin-bottom:10px">Lo que dicen quienes ya viven con un Ducha Segura</div>
+        <h2 class="h2">4,9 de 5 <span class="accent">en 287 reseñas verificadas.</span></h2>
+      </div>
+      <div class="trust-strip">
+        <svg class="ic"><use href="#i-shield"/></svg>
+        <span>Reseñas verificadas por Trustindex</span>
+      </div>
+    </div>
+    <div class="test-grid reveal" id="testGrid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Blog
+     ============================================================ -->
+<section class="section section--alt" id="blog">
+  <div class="container">
+    <div class="section-head section-head--row reveal">
+      <div>
+        <div class="kicker" style="margin-bottom:10px">Recursos para tu decisión</div>
+        <h2 class="h2">Desde el blog</h2>
+      </div>
+      <a href="#" class="see-all">Todos los artículos <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="blog-grid reveal" id="blogGrid"></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     Pre-footer
+     ============================================================ -->
+<section class="prefooter reveal">
+  <div class="prefooter__inner">
+    <div>
+      <div class="kicker kicker--light" style="margin-bottom:14px" id="pfKicker">¿Listo para tu rebaje?</div>
+      <h2 class="prefooter__h2" id="pfH2">Coordina hoy.<br><span id="pfSub">Instalamos esta semana.</span></h2>
+      <p class="prefooter__sub" id="pfSub2">RM, Valparaíso y Bío Bío · 7–10 días hábiles desde la confirmación del pago.</p>
+    </div>
+    <div class="prefooter__ctas">
+      <a href="#productos" class="btn btn--on-light btn--lg btn--full">
+        <span>Ver tinas y precios</span>
+        <svg class="ic"><use href="#i-arrow"/></svg>
+      </a>
+      <a href="https://wa.me/56934044939" target="_blank" rel="noopener" class="btn btn--ghost btn--lg btn--full">
+        <svg class="ic"><use href="#i-whatsapp"/></svg>
+        <span>Habla con un técnico</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <div class="logo">
+        <img class="logo__circle" src="images/Ducha segura logo azul.png" alt="Ducha Segura®" />
+      </div>
+      <p class="footer__about">+10 años fabricando rebajes para tina en Chile. Producto nacional patentado. Garantía 3 años con instalación incluida.</p>
+      <div class="footer__socials">
+        <a href="https://instagram.com/duchasegura_" target="_blank" rel="noopener" class="footer__social" aria-label="Instagram">IG</a>
+        <a href="https://facebook.com/Ducha-Segura-699654674213794" target="_blank" rel="noopener" class="footer__social" aria-label="Facebook">FB</a>
+        <a href="https://linkedin.com/company/ducha-segura" target="_blank" rel="noopener" class="footer__social" aria-label="LinkedIn">LI</a>
+        <a href="https://twitter.com/duchasegura_" target="_blank" rel="noopener" class="footer__social" aria-label="Twitter / X">X</a>
+      </div>
+      <div class="footer__contact">
+        <div class="footer__contact-row"><svg class="ic"><use href="#i-phone"/></svg><a href="tel:+56934044939" style="color:var(--ds-text-strong);font-weight:600">+56 9 3404 4939</a></div>
+        <div class="footer__contact-row"><svg class="ic"><use href="#i-info"/></svg><a href="mailto:contacto@duchasegura.cl">contacto@duchasegura.cl</a></div>
+        <div class="footer__contact-row"><svg class="ic"><use href="#i-pin"/></svg><span>RM · Valparaíso · Bío Bío</span></div>
+      </div>
+    </div>
+
+    <div class="footer__col" data-accordion>
+      <button class="footer__col-head">
+        <span class="footer__col-title">Productos</span>
+        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
+      </button>
+      <ul class="footer__col-list">
+        <li><a href="#productos">Tina Tradicional</a></li>
+        <li><a href="#productos">Tina Jacuzzi</a></li>
+        <li><a href="#productos">Accesorios</a></li>
+        <li><a href="#productos">Kit DIY</a></li>
+        <li><a href="#productos">Spa XL — a medida</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col" data-accordion>
+      <button class="footer__col-head">
+        <span class="footer__col-title">Empresa</span>
+        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
+      </button>
+      <ul class="footer__col-list">
+        <li><a href="#">Convenios</a></li>
+        <li><a href="#">Cobertura</a></li>
+        <li><a href="#">Garantía 3 años</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col" data-accordion>
+      <button class="footer__col-head">
+        <span class="footer__col-title">Ayuda</span>
+        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
+      </button>
+      <ul class="footer__col-list">
+        <li><a href="#">Términos y condiciones</a></li>
+        <li><a href="#">Política de privacidad</a></li>
+        <li><a href="#">Devoluciones</a></li>
+        <li><a href="#">Preguntas frecuentes</a></li>
+        <li><a href="#">¿Caso especial? Pedí presupuesto</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="footer__bottom-inner">
+      <div>© 2026 Ducha Segura® CHILE · Desarrollado por Agenciados.</div>
+      <div class="footer__bottom-links">
+        <a href="#">Términos</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     WhatsApp floating
+     ============================================================ -->
+<a href="https://wa.me/56934044939?text=Hola,%20me%20gustar%C3%ADa%20consultar%20por%20un%20rebaje%20de%20tina" target="_blank" rel="noopener" class="wa-fab" aria-label="Contactar por WhatsApp">
+  <svg class="ic"><use href="#i-whatsapp"/></svg>
+</a>
+
+<!-- ============================================================
+     Cart drawer (cotización)
+     ============================================================ -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="drawer" aria-label="Tu cotización" role="dialog" aria-modal="true">
+  <div class="drawer__head">
+    <div class="drawer__title">Tu cotización (<span id="drawerCount">0</span>)</div>
+    <button class="drawer__close" id="drawerClose" aria-label="Cerrar cotización">
+      <svg class="ic"><use href="#i-close"/></svg>
+    </button>
+  </div>
+  <div class="drawer__body" id="drawerBody">
+    <div class="drawer__empty" id="drawerEmpty">
+      <div class="drawer__empty-icon"><svg class="ic"><use href="#i-cart"/></svg></div>
+      <p style="margin:0 0 6px;font-weight:600;color:var(--ds-text-strong)">Tu cotización está vacía</p>
+      <p style="margin:0;font-size:14px">Agregá productos desde el catálogo para armar tu cotización.</p>
+    </div>
+  </div>
+  <div class="drawer__foot" id="drawerFoot" style="display:none">
+    <div class="drawer__row"><span>Subtotal</span><span id="drawerSubtotal" style="font-family:var(--ds-tnum);font-variant-numeric:tabular-nums">$0</span></div>
+    <div class="drawer__row"><span>Envío + instalación</span><span style="color:var(--ds-blue);font-weight:600">Incluido</span></div>
+    <div class="drawer__row drawer__row--total"><span class="l">Total estimado</span><span class="v">$<span id="drawerTotal">0</span><span class="dummy">dummy</span></span></div>
+    <div class="drawer__note">24 cuotas sin interés disponibles al confirmar.</div>
+
+    <form class="drawer__form" id="quoteForm">
+      <div class="drawer__form-row">
+        <input type="text" name="nombre" placeholder="Nombre" required>
+        <input type="tel" name="telefono" placeholder="Teléfono" required>
+      </div>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="mensaje" placeholder="Datos de tu baño (ancho, largo, material) — opcional"></textarea>
+    </form>
+
+    <button class="btn btn--primary btn--lg btn--full" id="sendQuote">
+      <svg class="ic"><use href="#i-whatsapp"/></svg>
+      <span>Enviar cotización por WhatsApp</span>
+    </button>
+  </div>
+</aside>
+
+<!-- ============================================================
+     Mobile menu drawer
+     ============================================================ -->
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<aside class="menu-drawer" id="menuDrawer" aria-label="Menú principal">
+  <div class="menu-drawer__head">
+    <div class="logo">
+      <img class="logo__circle" src="images/Ducha segura logo azul.png" alt="" />
+      <div class="logo__txt"><span class="logo__name">Ducha Segura<sup>®</sup></span><span class="logo__sub">CHILE</span></div>
+    </div>
+    <button class="drawer__close" id="menuClose" aria-label="Cerrar menú"><svg class="ic"><use href="#i-close"/></svg></button>
+  </div>
+  <nav class="menu-drawer__nav">
+    <a href="#productos">Tienda</a>
+    <a href="#productos">Rebajes</a>
+    <a href="#productos">Accesorios</a>
+    <a href="#blog">Blog</a>
+    <a href="#">Convenios</a>
+    <a href="#">Cobertura</a>
+    <a href="#">Contacto</a>
+  </nav>
+  <div class="menu-drawer__mode">
+    <div class="cfg-label" style="margin-bottom:10px">Modo de navegación</div>
+    <div class="mode-toggle" style="display:flex;width:100%">
+      <button class="mode-toggle__btn active" data-mode="user" style="flex:1">Para mí</button>
+      <button class="mode-toggle__btn" data-mode="caregiver" style="flex:1">Familiar</button>
+    </div>
+  </div>
+</aside>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg class="ic"><use href="#i-check"/></svg>
+  <span id="toastMsg">Agregado a tu cotización</span>
+</div>
+
+<script>
+/* ============================================================
+   DUCHA SEGURA — App logic (vanilla)
+   ============================================================ */
+'use strict';
+
+const $  = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const clp = n => Number(n).toLocaleString('es-CL');
+const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ---------- Data ---------- */
+const PRODUCTS = [
+  { id:'tradicional', name:'Rebaje Tina Tradicional', sub:'Lata, latón, fierro o fibra de vidrio',
+    badge:'Más vendido', badgeColor:'red', priceFrom:199000,
+    cuotas:'12 cuotas de $16.583 sin interés', medidas:'30 · 40 · 50 cm',
+    bullets:['Instalación incluida','Garantía 3 años','7–10 días hábiles'],
+    label:'PRODUCTO REBAJE TRADICIONAL', accent:'#7a96a8' },
+  { id:'jacuzzi', name:'Rebaje Tina Jacuzzi', sub:'Hidromasaje · caso especializado',
+    badge:'Con hidromasaje', badgeColor:'blue', priceFrom:399000,
+    cuotas:'24 cuotas de $16.625 sin interés', medidas:'40 · 50 cm',
+    bullets:['Cañerías intactas','Instalación incluida','Garantía 3 años'],
+    label:'PRODUCTO REBAJE JACUZZI', accent:'#5a7990' },
+  { id:'spa', name:'Rebaje Tina Spa XL', sub:'Tinas grandes · ofuro · spa doméstico',
+    badge:'Caso especial', badgeColor:'soft', priceFrom:799000,
+    cuotas:'Hasta 36 cuotas · consultar', medidas:'A medida',
+    bullets:['Visita técnica previa','Diseño a medida','Garantía 3 años'],
+    label:'PRODUCTO REBAJE SPA XL', accent:'#3f5e72', featured:true },
+];
+
+const ACCESORIOS = [
+  { id:'barra60', name:'Barra de apoyo recta', sub:'60 cm · acero inox.', price:34990, label:'BARRA APOYO 60CM' },
+  { id:'asiento', name:'Asiento abatible de ducha', sub:'Carga hasta 130 kg', price:89990, label:'ASIENTO ABATIBLE' },
+  { id:'piso', name:'Set antideslizante de piso', sub:'8 piezas · doble adhesivo', price:19990, label:'SET ANTIDESLIZANTE' },
+  { id:'mampara', name:'Mampara baño asistido', sub:'Apertura amplia · vidrio', price:249990, label:'MAMPARA APERTURA' },
+];
+
+const CONVENIOS = ['BANCO SANTANDER','BANCO BCI','BANCO ESTADO','AFP HABITAT','ISAPRE COLMENA','MUNICIPALIDAD PROVIDENCIA','AFP CUPRUM','ISAPRE BANMÉDICA','CCAF LOS ANDES','MUTUAL DE SEGURIDAD'];
+
+const PRENSA = [
+  { name:'EL MERCURIO', quote:'"Una solución chilena para envejecer en casa con seguridad."' },
+  { name:'LA TERCERA', quote:'"Sin obra, en un día: el rebaje que transforma el baño."' },
+  { name:'COOPERATIVA', quote:'"Ducha Segura lleva diez años cuidando a los adultos mayores."' },
+  { name:'BIOBIO CHILE', quote:'"Producto patentado, fabricado en Chile, instalado en horas."' },
+  { name:'CANAL 13', quote:'"La autonomía no es un lujo. Es un derecho."' },
+  { name:'EMOL', quote:'"Una alternativa real al cambio completo de tina."' },
+];
+
+const TESTIMONIOS = [
+  { name:'Carmen R., 78', city:'Las Condes', text:'Pensé que iba a ser una obra. Vinieron en la mañana, al mediodía ya me bañé.' },
+  { name:'Andrés P.', city:'Hijo cuidador, Viña', text:'Lo elegí para mi mamá. La diferencia con productos importados se nota a los 5 minutos.' },
+  { name:'Sandra V., 71', city:'Providencia', text:'Lo recomendé en mi club de adulto mayor. Tres compañeras lo instalaron después.' },
+  { name:'Familia Ortiz', city:'Concepción', text:'Llamamos un sábado, instalaron el viernes siguiente. Cumplen.' },
+];
+
+const BLOG_POSTS = [
+  { cat:'BAÑO ACCESIBLE', date:'Abr 2026',
+    title:'¿Cómo debe ser un baño para un adulto mayor?',
+    excerpt:'Altura del WC, ubicación de las barras, antideslizantes, iluminación. Los seis cambios que más impactan.',
+    label:'FOTO BAÑO ACCESIBLE', bg:'#cdd5d8' },
+  { cat:'REFORMA', date:'Feb 2026',
+    title:'Reforma de baño: cómo crear un espacio accesible y seguro en Chile',
+    excerpt:'Guía paso a paso con normativa local, opciones según presupuesto y plazos reales en Santiago y regiones.',
+    label:'FOTO REFORMA BAÑO', bg:'#d8cdb8' },
+  { cat:'HÁGALO USTED MISMO', date:'Ene 2026',
+    title:'Rebaje de Tina Hágalo Usted Mismo: la nueva solución DIY de Ducha Segura®',
+    excerpt:'Para casos puntuales o instaladores locales: el kit que llega listo para colocar en una mañana.',
+    label:'FOTO KIT DIY', bg:'#c8bfb0' },
+];
+
+const COMUNAS = {
+  'RM':['Las Condes','Providencia','Ñuñoa','Vitacura','La Reina','Lo Barnechea','Maipú','San Miguel','La Florida','Macul','Santiago Centro','Independencia'],
+  'Valparaíso':['Viña del Mar','Valparaíso','Concón','Quilpué','Villa Alemana'],
+  'Bío Bío':['Concepción','Talcahuano','San Pedro de la Paz','Chiguayante','Hualpén'],
+};
+
+const BASE_PRICES = {
+  tradicional: { 30:199000, 40:229000, 50:259000 },
+  jacuzzi:     { 30:399000, 40:429000, 50:469000 },
+};
+
+const HERO_COPY = {
+  user: {
+    kicker:'Patente chilena · +10 años en Chile',
+    h1A:'Rebaje para tinas.', h1B:'Un acceso seguro.',
+    sub:'Adapta tu tina en un día. Sin obra, sin escombros, con garantía de 3 años.',
+    primary:'Ver tinas y precios', secondary:'Habla con un técnico',
+    pfKicker:'¿Listo para tu rebaje?', pfH2:'Coordina hoy.', pfSub:'Instalamos esta semana.',
+  },
+  caregiver: {
+    kicker:'Para quien cuida con amor',
+    h1A:'Cuidar es prevenir', h1B:'esa caída.',
+    sub:'Le devolvés autonomía a mamá, papá o a quien quieras cuidar. Un día de instalación, 3 años de garantía.',
+    primary:'Ver precios y agendar', secondary:'Quiero asesorarme',
+    pfKicker:'¿Listos para hacer su baño seguro?', pfH2:'Coordina hoy.', pfSub:'Le instalamos esta semana.',
+  }
+};
+
+/* ---------- TopBar carousel ---------- */
+const topbarMessages = [
+  '15% dcto. pagando con Banco Santander en Santiago y Gran Concepción',
+  'Hasta 24 cuotas sin interés con tarjeta de crédito',
+  'Despacho a RM, Valparaíso y Bío Bío — Instalación en 7–10 días hábiles',
+];
+let topbarIdx = 0;
+const topbarText = $('#topbarText');
+const topbarMsg = $('#topbarMsg');
+const topbarDots = $$('.topbar__dot');
+const topbarInterval = setInterval(() => {
+  topbarIdx = (topbarIdx + 1) % topbarMessages.length;
+  topbarMsg.style.opacity = '0';
+  setTimeout(() => {
+    topbarText.textContent = topbarMessages[topbarIdx];
+    topbarMsg.style.opacity = '1';
+    topbarDots.forEach((d, i) => d.classList.toggle('active', i === topbarIdx));
+  }, 200);
+}, 6000);
+$('#topbarClose').addEventListener('click', () => {
+  $('#topbar').remove();
+  clearInterval(topbarInterval);
+  try { document.cookie = 'ds_topbar_dismissed=1;path=/;max-age=86400'; } catch(_){}
+});
+if (document.cookie.includes('ds_topbar_dismissed=1')) {
+  $('#topbar')?.remove();
+  clearInterval(topbarInterval);
+}
+
+/* ---------- Convenios marquee ---------- */
+const conveniosTrack = $('#conveniosTrack');
+const renderConvenios = () => {
+  const items = [...CONVENIOS, ...CONVENIOS];
+  conveniosTrack.innerHTML = items.map(c => `<div class="convenio-chip">[LOGO]<br>${escapeHtml(c)}</div>`).join('');
+};
+renderConvenios();
+
+/* ---------- Products grid ---------- */
+const renderProduct = (p) => `
+  <article class="product-card${p.featured ? ' product-card--featured' : ''}" data-product-id="${p.id}">
+    <div class="product-card__media" style="background:linear-gradient(180deg,${p.accent}33 0%,${p.accent}cc 100%)">
+      <div class="product-card__media-inner"></div>
+      <div class="product-card__media-label">[${escapeHtml(p.label)}]</div>
+      <div class="product-card__badge"><span class="badge badge--${p.badgeColor}">${escapeHtml(p.badge)}</span></div>
+      <div class="product-card__chip-r">${escapeHtml(p.medidas)}</div>
+    </div>
+    <div class="product-card__body">
+      <div>
+        <h3 class="product-card__title">${escapeHtml(p.name)}</h3>
+        <div class="product-card__sub">${escapeHtml(p.sub)}</div>
+      </div>
+      <div class="price-row">
+        <span class="price-label">Desde</span>
+        <span class="price-big">$${clp(p.priceFrom)}</span>
+        <span class="dummy">dummy</span>
+      </div>
+      <div class="price-cuotas">${escapeHtml(p.cuotas)}</div>
+      <div class="bullets">
+        ${p.bullets.map(b => `<div class="bullet"><svg class="ic"><use href="#i-check"/></svg><span>${escapeHtml(b)}</span></div>`).join('')}
+      </div>
+      <div class="product-card__cta">
+        <button class="btn btn--primary btn--full" data-add-product="${p.id}">
+          <span>Personalizar y cotizar</span>
+          <svg class="ic"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+`;
+$('#productosGrid').innerHTML = PRODUCTS.slice(0,2).map(renderProduct).join('');
+$('#productosFeatured').innerHTML = renderProduct(PRODUCTS[2]);
+
+/* ---------- Accessories grid ---------- */
+$('#accGrid').innerHTML = ACCESORIOS.map(a => `
+  <article class="acc-card">
+    <div class="acc-card__media"><div class="acc-card__media-label">[${escapeHtml(a.label)}]</div></div>
+    <div class="acc-card__body">
+      <div>
+        <div class="acc-card__title">${escapeHtml(a.name)}</div>
+        <div class="acc-card__sub">${escapeHtml(a.sub)}</div>
+      </div>
+      <div class="acc-card__foot">
+        <div><span class="acc-card__price">$${clp(a.price)}</span><span class="dummy">dummy</span></div>
+        <button class="add-btn" data-add-acc="${a.id}" aria-label="Agregar ${escapeHtml(a.name)} a cotización">
+          <svg class="ic"><use href="#i-plus"/></svg>
+        </button>
+      </div>
+    </div>
+  </article>
+`).join('');
+
+/* ---------- Prensa grid ---------- */
+$('#prensaGrid').innerHTML = PRENSA.map(p => `
+  <div class="prensa-cell">
+    <div class="prensa-cell__lbl">[LOGO]<br>${escapeHtml(p.name)}</div>
+    <div class="prensa-cell__quote">${escapeHtml(p.quote)}</div>
+  </div>
+`).join('');
+
+/* ---------- Testimonios ---------- */
+$('#testGrid').innerHTML = TESTIMONIOS.map(t => {
+  const initials = t.name.split(' ').map(w => w[0]).slice(0,2).join('');
+  return `
+    <article class="test-card">
+      <div class="test-card__head">
+        <div class="test-card__avatar">${escapeHtml(initials)}</div>
+        <div class="test-card__who">
+          <div class="test-card__name">${escapeHtml(t.name)}</div>
+          <div class="test-card__city">${escapeHtml(t.city)}</div>
+        </div>
+        <div class="test-card__stars" aria-label="5 estrellas">
+          ${Array.from({length:5}).map(() => `<svg class="ic"><use href="#i-star"/></svg>`).join('')}
+        </div>
+      </div>
+      <p class="test-card__text">"${escapeHtml(t.text)}"</p>
+    </article>
+  `;
+}).join('');
+
+/* ---------- Blog ---------- */
+$('#blogGrid').innerHTML = BLOG_POSTS.map(p => `
+  <article class="blog-card">
+    <div class="blog-card__media" style="background-color:${p.bg}"><div class="blog-card__media-l">[${escapeHtml(p.label)}]</div></div>
+    <div class="blog-card__body">
+      <div class="blog-card__meta">
+        <span>${escapeHtml(p.cat)}</span>
+        <span class="dot"></span>
+        <span class="date">${escapeHtml(p.date)}</span>
+      </div>
+      <h3 class="blog-card__title">${escapeHtml(p.title)}</h3>
+      <p class="blog-card__excerpt">${escapeHtml(p.excerpt)}</p>
+      <a href="#" class="blog-card__read">Leer artículo <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+  </article>
+`).join('');
+
+/* ---------- Mode toggle (Cuidador / Usuario) ---------- */
+let currentMode = localStorage.getItem('ds_mode') || 'user';
+const applyMode = (m) => {
+  currentMode = m;
+  localStorage.setItem('ds_mode', m);
+  const c = HERO_COPY[m];
+  $('#heroKicker').textContent = c.kicker;
+  $('#heroH1A').textContent = c.h1A;
+  $('#heroH1B').textContent = c.h1B;
+  $('#heroSub').textContent = c.sub;
+  $('#heroCtaPrimary').querySelector('span').textContent = c.primary;
+  $('#heroCtaSecondary').querySelector('span').textContent = c.secondary;
+  $('#pfKicker').textContent = c.pfKicker;
+  $('#pfH2').firstChild.textContent = c.pfH2;
+  $('#pfSub').textContent = c.pfSub;
+  $$('.mode-toggle__btn').forEach(b => b.classList.toggle('active', b.dataset.mode === m));
+};
+$$('.mode-toggle__btn').forEach(btn => btn.addEventListener('click', () => applyMode(btn.dataset.mode)));
+applyMode(currentMode);
+
+/* ---------- Before/After slider ---------- */
+(() => {
+  const slider = $('#slider');
+  const before = $('#sliderBefore');
+  const handle = $('#sliderHandle');
+  const knob = $('#sliderKnob');
+  let dragging = false;
+  const update = (clientX) => {
+    const r = slider.getBoundingClientRect();
+    let p = ((clientX - r.left) / r.width) * 100;
+    p = Math.max(2, Math.min(98, p));
+    before.style.clipPath = `polygon(0 0,${p}% 0,${p}% 100%,0 100%)`;
+    before.style.webkitClipPath = `polygon(0 0,${p}% 0,${p}% 100%,0 100%)`;
+    handle.style.left = p + '%';
+    knob.style.left = p + '%';
+  };
+  const onDown = (e) => {
+    dragging = true;
+    document.body.style.userSelect = 'none';
+    const cx = e.touches ? e.touches[0].clientX : e.clientX;
+    update(cx);
+  };
+  const onMove = (e) => {
+    if (!dragging) return;
+    if (e.cancelable) e.preventDefault();
+    const cx = e.touches ? e.touches[0].clientX : e.clientX;
+    update(cx);
+  };
+  const onUp = () => { dragging = false; document.body.style.userSelect = ''; };
+  slider.addEventListener('mousedown', onDown);
+  slider.addEventListener('touchstart', onDown, { passive: true });
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, { passive: false });
+  window.addEventListener('mouseup', onUp);
+  window.addEventListener('touchend', onUp);
+})();
+
+/* ---------- Configurador ---------- */
+(() => {
+  const state = { tipo:'tradicional', ancho:40, color:'blanco', colorHex:'#f5f5f4', bano:0 };
+  const banos = [
+    { label:'[BAÑO ESTÁNDAR · TINA BLANCA]', bg:'linear-gradient(180deg,#d6d3cf 0%,#b5b3b0 100%)' },
+    { label:'[BAÑO REFORMADO · CERÁMICA BEIGE]', bg:'linear-gradient(180deg,#d8cdb8 0%,#b3a48d 100%)' },
+    { label:'[BAÑO MODERNO · GRIS Y MADERA]', bg:'linear-gradient(180deg,#c7cdd1 0%,#5e6c75 100%)' },
+  ];
+  const cutRect = $('#cfgCutRect');
+  const cutDash = $('#cfgCutDash');
+  const dimLine = $('#cfgDimLine');
+  const dimL = $('#cfgDimL');
+  const dimR = $('#cfgDimR');
+  const dimT = $('#cfgDimT');
+  const cutGlow = $('#cfgCutGlow');
+  const jets = $('#cfgJets');
+  const preview = $('#cfgPreview');
+  const previewLabel = $('#cfgPreviewLabel');
+
+  const render = () => {
+    const cutW = state.ancho === 30 ? 70 : state.ancho === 40 ? 95 : 120;
+    const cutX = 250 - cutW / 2;
+    cutRect.setAttribute('x', cutX);
+    cutRect.setAttribute('width', cutW);
+    cutRect.setAttribute('fill', state.colorHex);
+    cutDash.setAttribute('x1', cutX);
+    cutDash.setAttribute('x2', cutX + cutW);
+    dimLine.setAttribute('x1', cutX);
+    dimLine.setAttribute('x2', cutX + cutW);
+    dimL.setAttribute('x1', cutX); dimL.setAttribute('x2', cutX);
+    dimR.setAttribute('x1', cutX + cutW); dimR.setAttribute('x2', cutX + cutW);
+    dimT.textContent = state.ancho + ' cm';
+    cutGlow.setAttribute('x', cutX - 2);
+    cutGlow.setAttribute('width', cutW + 4);
+    jets.setAttribute('opacity', state.tipo === 'jacuzzi' ? '0.7' : '0');
+    preview.style.background = banos[state.bano].bg;
+    previewLabel.textContent = banos[state.bano].label;
+    const colorName = $$('.cfg-color').find(c => c.dataset.value === state.color)?.querySelector('.cfg-color__name').textContent || '';
+    $('#cfgSummary').innerHTML = `Rebaje <strong>${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'}</strong> · ${state.ancho} cm · color <strong>${colorName}</strong>`;
+    const price = BASE_PRICES[state.tipo][state.ancho];
+    $('#cfgPrice').textContent = clp(price);
+  };
+
+  $$('[data-cfg="tipo"] .cfg-opt').forEach(b => b.addEventListener('click', () => {
+    $$('[data-cfg="tipo"] .cfg-opt').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.tipo = b.dataset.value;
+    render();
+  }));
+  $$('[data-cfg="ancho"] .cfg-opt').forEach(b => b.addEventListener('click', () => {
+    $$('[data-cfg="ancho"] .cfg-opt').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.ancho = parseInt(b.dataset.value, 10);
+    render();
+  }));
+  $$('[data-cfg="color"] .cfg-color').forEach(b => b.addEventListener('click', () => {
+    $$('[data-cfg="color"] .cfg-color').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.color = b.dataset.value;
+    state.colorHex = b.dataset.hex;
+    render();
+  }));
+  $('#cfgSwap').addEventListener('click', () => {
+    state.bano = (state.bano + 1) % banos.length;
+    render();
+  });
+  $('#cfgAdd').addEventListener('click', () => {
+    const price = BASE_PRICES[state.tipo][state.ancho];
+    const name = `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'}`;
+    const variant = `${state.ancho} cm · color ${$$('.cfg-color').find(c => c.dataset.value === state.color)?.querySelector('.cfg-color__name').textContent}`;
+    addItem({ id:`cfg-${state.tipo}-${state.ancho}-${state.color}`, name, variant, price, label:`${state.tipo.toUpperCase()} ${state.ancho}` });
+  });
+  render();
+})();
+
+/* ---------- Calculadora ---------- */
+(() => {
+  const state = { tipo:'tradicional', ancho:40, region:'RM', comuna:'Las Condes', banco:'santander', cuotas:12 };
+  const select = $('#calcComuna');
+  const fillComunas = () => {
+    select.innerHTML = COMUNAS[state.region].map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+    state.comuna = COMUNAS[state.region][0];
+    select.value = state.comuna;
+  };
+  fillComunas();
+
+  let displayed = 0;
+  const animate = (from, to) => {
+    const start = performance.now();
+    const dur = 380;
+    const tick = (t) => {
+      const k = Math.min(1, (t - start) / dur);
+      const eased = 1 - Math.pow(1 - k, 3);
+      const v = Math.round(from + (to - from) * eased);
+      $('#calcTotal').textContent = clp(v);
+      if (k < 1) requestAnimationFrame(tick);
+      else displayed = to;
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const render = () => {
+    const base = BASE_PRICES[state.tipo][state.ancho];
+    const discMap = { santander:15, bci:8, estado:5, otro:0 };
+    const disc = discMap[state.banco] || 0;
+    const discAmt = Math.round(base * disc / 100);
+    const final = base - discAmt;
+    const cuotaVal = Math.round(final / state.cuotas);
+
+    $('#calcCfg').textContent = `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'} · ${state.ancho} cm`;
+    $('#calcLoc').textContent = `${state.comuna}, ${state.region}`;
+    $('#calcStrike').textContent = '$' + clp(base);
+    $('#calcStrike').style.display = disc > 0 ? '' : 'none';
+    animate(displayed, final);
+    if (disc > 0) {
+      $('#calcSave').style.display = '';
+      const bancoLabels = { santander:'Santander', bci:'BCI', estado:'BancoEstado', otro:'' };
+      $('#calcSaveTxt').textContent = `Ahorras $${clp(discAmt)} con ${bancoLabels[state.banco]}`;
+    } else {
+      $('#calcSave').style.display = 'none';
+    }
+    $('#calcCuotasN').textContent = state.cuotas;
+    $('#calcCuotasN2').textContent = state.cuotas;
+    $('#calcCuotaAmt').textContent = clp(cuotaVal);
+  };
+
+  $$('[data-calc] .calc-chip').forEach(chip => chip.addEventListener('click', () => {
+    const group = chip.parentElement.dataset.calc;
+    $$(`[data-calc="${group}"] .calc-chip`).forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    if (group === 'tipo') state.tipo = chip.dataset.value;
+    else if (group === 'ancho') state.ancho = parseInt(chip.dataset.value, 10);
+    else if (group === 'region') { state.region = chip.dataset.value; fillComunas(); }
+    else if (group === 'banco') state.banco = chip.dataset.value;
+    render();
+  }));
+  select.addEventListener('change', () => { state.comuna = select.value; render(); });
+  $('#calcCuotasRange').addEventListener('input', (e) => { state.cuotas = parseInt(e.target.value, 10); render(); });
+
+  $('#calcAdd').addEventListener('click', () => {
+    const base = BASE_PRICES[state.tipo][state.ancho];
+    const discMap = { santander:15, bci:8, estado:5, otro:0 };
+    const final = base - Math.round(base * (discMap[state.banco] || 0) / 100);
+    addItem({
+      id:`calc-${state.tipo}-${state.ancho}-${state.banco}`,
+      name:`Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'}`,
+      variant:`${state.ancho} cm · ${state.comuna}, ${state.region}${discMap[state.banco] ? ' · banco ' + state.banco : ''}`,
+      price: final,
+      label:`${state.tipo.toUpperCase()} ${state.ancho}`
+    });
+  });
+
+  // Initial paint
+  $('#calcTotal').textContent = clp(BASE_PRICES.tradicional[40] - Math.round(BASE_PRICES.tradicional[40] * 0.15));
+  displayed = BASE_PRICES.tradicional[40] - Math.round(BASE_PRICES.tradicional[40] * 0.15);
+  render();
+})();
+
+/* ---------- Cart / Cotización ---------- */
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem('ds_cart') || '[]'); } catch(_) { cart = []; }
+
+const saveCart = () => { try { localStorage.setItem('ds_cart', JSON.stringify(cart)); } catch(_){} };
+
+const addItem = (item) => {
+  const existing = cart.find(i => i.id === item.id);
+  if (existing) existing.qty += 1;
+  else cart.push({ ...item, qty:1 });
+  saveCart();
+  renderCart();
+  showToast(`${item.name} agregado a tu cotización`);
+  openDrawer();
+};
+const removeItem = (id) => { cart = cart.filter(i => i.id !== id); saveCart(); renderCart(); };
+const changeQty = (id, delta) => {
+  const it = cart.find(i => i.id === id);
+  if (!it) return;
+  it.qty = Math.max(1, it.qty + delta);
+  saveCart();
+  renderCart();
+};
+
+const drawerBody = $('#drawerBody');
+const drawerFoot = $('#drawerFoot');
+const drawerEmpty = $('#drawerEmpty');
+const cartBadge = $('#cartBadge');
+const drawerCount = $('#drawerCount');
+const drawerSubtotal = $('#drawerSubtotal');
+const drawerTotal = $('#drawerTotal');
+
+const renderCart = () => {
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  cartBadge.textContent = count;
+  cartBadge.style.display = count > 0 ? '' : 'none';
+  drawerCount.textContent = cart.length;
+
+  if (cart.length === 0) {
+    drawerBody.innerHTML = '';
+    drawerBody.appendChild(drawerEmpty);
+    drawerEmpty.style.display = '';
+    drawerFoot.style.display = 'none';
+    return;
+  }
+  drawerEmpty.style.display = 'none';
+  const itemsHtml = cart.map(i => `
+    <div class="cart-item" data-id="${i.id}">
+      <div class="cart-item__media"><div class="cart-item__media-l">[${escapeHtml(i.label)}]</div></div>
+      <div class="cart-item__body">
+        <div class="cart-item__name">${escapeHtml(i.name)}</div>
+        <div class="cart-item__variant">${escapeHtml(i.variant)}</div>
+        <div class="cart-item__foot">
+          <div class="qty">
+            <button data-qty="-1" data-id="${i.id}" aria-label="Restar">−</button>
+            <span>${i.qty}</span>
+            <button data-qty="1" data-id="${i.id}" aria-label="Sumar">+</button>
+          </div>
+          <div style="display:flex;align-items:center">
+            <span class="cart-item__price">$${clp(i.price * i.qty)}</span>
+            <button class="cart-item__remove" data-remove="${i.id}" aria-label="Eliminar">
+              <svg class="ic"><use href="#i-trash"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  const upsell = !cart.find(i => i.id === 'acc-barra60') ? `
+    <div class="upsell">
+      <div>
+        <div class="upsell__t">Suma una barra de apoyo</div>
+        <div class="upsell__s">por solo $34.990 <span class="dummy">dummy</span></div>
+      </div>
+      <button data-upsell>+ Agregar</button>
+    </div>` : '';
+  drawerBody.innerHTML = itemsHtml + upsell;
+
+  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  drawerSubtotal.textContent = '$' + clp(subtotal);
+  drawerTotal.textContent = clp(subtotal);
+  drawerFoot.style.display = '';
+};
+renderCart();
+
+/* ---------- Drawer open/close ---------- */
+const drawer = $('#drawer');
+const backdrop = $('#drawerBackdrop');
+const openDrawer = () => { drawer.classList.add('open'); backdrop.classList.add('open'); document.body.style.overflow = 'hidden'; };
+const closeDrawer = () => { drawer.classList.remove('open'); backdrop.classList.remove('open'); document.body.style.overflow = ''; };
+$('#cartTrigger').addEventListener('click', openDrawer);
+$('#drawerClose').addEventListener('click', closeDrawer);
+backdrop.addEventListener('click', closeDrawer);
+
+/* ---------- Mobile menu ---------- */
+const menuDrawer = $('#menuDrawer');
+const menuBackdrop = $('#menuBackdrop');
+const openMenu = () => { menuDrawer.classList.add('open'); menuBackdrop.classList.add('open'); document.body.style.overflow = 'hidden'; };
+const closeMenu = () => { menuDrawer.classList.remove('open'); menuBackdrop.classList.remove('open'); document.body.style.overflow = ''; };
+$('#menuBtn').addEventListener('click', openMenu);
+$('#menuClose').addEventListener('click', closeMenu);
+menuBackdrop.addEventListener('click', closeMenu);
+$$('.menu-drawer__nav a').forEach(a => a.addEventListener('click', closeMenu));
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeDrawer(); closeMenu(); }
+});
+
+/* ---------- Add buttons (event delegation) ---------- */
+document.addEventListener('click', (e) => {
+  const addP = e.target.closest('[data-add-product]');
+  if (addP) {
+    const p = PRODUCTS.find(x => x.id === addP.dataset.addProduct);
+    if (p) addItem({ id:'prod-'+p.id, name:p.name, variant:'Configurar variante en cotización', price:p.priceFrom, label:p.label });
+    return;
+  }
+  const addA = e.target.closest('[data-add-acc]');
+  if (addA) {
+    const a = ACCESORIOS.find(x => x.id === addA.dataset.addAcc);
+    if (a) addItem({ id:'acc-'+a.id, name:a.name, variant:a.sub, price:a.price, label:a.label });
+    return;
+  }
+  const qty = e.target.closest('[data-qty]');
+  if (qty) { changeQty(qty.dataset.id, parseInt(qty.dataset.qty, 10)); return; }
+  const rm = e.target.closest('[data-remove]');
+  if (rm) { removeItem(rm.dataset.remove); return; }
+  if (e.target.closest('[data-upsell]')) {
+    const a = ACCESORIOS[0];
+    addItem({ id:'acc-'+a.id, name:a.name, variant:a.sub, price:a.price, label:a.label });
+  }
+});
+
+/* ---------- Footer accordion (mobile) ---------- */
+$$('[data-accordion] .footer__col-head').forEach(head => {
+  head.addEventListener('click', (e) => {
+    if (window.innerWidth > 1024) return;
+    const col = head.parentElement;
+    const wasOpen = col.classList.contains('open');
+    $$('[data-accordion]').forEach(c => c.classList.remove('open'));
+    if (!wasOpen) col.classList.add('open');
+    const icon = head.querySelector('use');
+    if (icon) icon.setAttribute('href', col.classList.contains('open') ? '#i-minus' : '#i-plus');
+  });
+});
+
+/* ---------- Quote form (send via WhatsApp) ---------- */
+$('#sendQuote').addEventListener('click', (e) => {
+  e.preventDefault();
+  const form = $('#quoteForm');
+  if (!form.reportValidity()) return;
+  if (cart.length === 0) { showToast('Tu cotización está vacía'); return; }
+  const data = new FormData(form);
+  const nombre = data.get('nombre');
+  const telefono = data.get('telefono');
+  const email = data.get('email');
+  const mensaje = data.get('mensaje');
+  const lines = [
+    `*Solicitud de cotización — Ducha Segura*`,
+    ``,
+    `Nombre: ${nombre}`,
+    `Teléfono: ${telefono}`,
+    `Email: ${email}`,
+    mensaje ? `Datos del baño: ${mensaje}` : '',
+    ``,
+    `*Productos solicitados:*`,
+    ...cart.map(i => `• ${i.name} — ${i.variant} — Cant: ${i.qty} — $${clp(i.price * i.qty)}`),
+    ``,
+    `Total estimado: $${clp(cart.reduce((s,i) => s + i.price * i.qty, 0))}`,
+    ``,
+    `(Precios referenciales. Sujetos a confirmación final.)`,
+  ].filter(Boolean).join('\n');
+  const url = `https://wa.me/56934044939?text=${encodeURIComponent(lines)}`;
+  window.open(url, '_blank', 'noopener');
+  showToast('Abriendo WhatsApp para enviar tu cotización');
+});
+
+/* ---------- Toast ---------- */
+const toast = $('#toast');
+const toastMsg = $('#toastMsg');
+let toastTimer = null;
+const showToast = (msg) => {
+  toastMsg.textContent = msg;
+  toast.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+};
+
+/* ---------- Scroll reveal ---------- */
+if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  $$('.reveal').forEach(el => io.observe(el));
+} else {
+  $$('.reveal').forEach(el => el.classList.add('in'));
+}
+</script>
+</body>
+</html>
