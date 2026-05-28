@@ -1,7 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import BlogCard from './BlogCard.astro';
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).slice(0, 3);
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => +new Date(b.data.pubdate ?? 0) - +new Date(a.data.pubdate ?? 0))
+  .slice(0, 3);
 ---
 <section class="section section--alt" id="blog">
   <div class="container">
@@ -22,6 +24,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).slice(0, 
           excerpt={post.data.excerpt}
           label={post.data.label}
           bg={post.data.bg}
+          image={post.data.image}
         />
       ))}
     </div>

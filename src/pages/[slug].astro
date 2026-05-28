@@ -1,0 +1,45 @@
+---
+// Posts del blog servidos en la RAÍZ (/<slug>/) para mantener las URLs indexadas
+// del WordPress original. El listado vive en /blog.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { data } = post;
+---
+<BaseLayout
+  title={`${data.title} — Ducha Segura®`}
+  description={data.seoDescription || data.excerpt}
+  ogImage={data.image || undefined}
+>
+  <article class="section">
+    <div class="container" style="max-width:760px">
+      <span class="kicker">{data.cat} · {data.date}</span>
+      <h1 class="h2" style="margin-top:10px">{data.title}</h1>
+      {data.image && (
+        <img class="post-hero" src={data.image} alt={data.title} width="760" height="428" loading="eager" />
+      )}
+      <div class="prose" set:html={post.body} />
+      <p style="margin-top:40px"><a href="/blog" class="see-all">← Volver al blog</a></p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-hero{width:100%;height:auto;border-radius:var(--ds-radius-lg);margin:24px 0 8px;display:block}
+  .prose{margin-top:20px;font-size:17px;line-height:1.7;color:var(--ds-text)}
+  .prose :global(h2){font-family:var(--ds-display);font-size:26px;line-height:1.2;color:var(--ds-text-strong);margin:32px 0 12px}
+  .prose :global(h3){font-family:var(--ds-display);font-size:20px;color:var(--ds-text-strong);margin:24px 0 10px}
+  .prose :global(p){margin:0 0 16px}
+  .prose :global(ul),.prose :global(ol){margin:0 0 16px;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+  .prose :global(a){color:var(--ds-blue);text-decoration:underline}
+  .prose :global(img){max-width:100%;height:auto;border-radius:var(--ds-radius);margin:16px 0}
+  .prose :global(figure){margin:20px 0}
+  .prose :global(iframe){max-width:100%;border-radius:var(--ds-radius)}
+  .prose :global(.wp-block-embed__wrapper){position:relative}
+</style>
