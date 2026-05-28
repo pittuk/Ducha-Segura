@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Prose from '../../components/Prose.astro';
+import { PRODUCTOS, type Producto } from '../../data/productos';
+import { SITE } from '../../data/site';
+import { clp } from '../../lib/format';
+
+export function getStaticPaths() {
+  return PRODUCTOS.map((p) => ({ params: { slug: p.slug }, props: { producto: p } }));
+}
+
+interface Props { producto: Producto; }
+const { producto: p } = Astro.props;
+const GRUPO: Record<Producto['grupo'], string> = { rebaje: 'Rebaje de tina', kit: 'Kit', accesorio: 'Accesorio' };
+const grupoLabel = GRUPO[p.grupo];
+const priceTxt = p.price > 0 ? `$${clp(p.price)}` : (p.priceLabel ?? 'Consultar');
+const fit = p.grupo === 'rebaje' ? 'cover' : 'contain';
+---
+<BaseLayout title={`${p.name} — Ducha Segura®`} description={p.shortDescription || p.name} ogImage={p.image}>
+  <section class="section">
+    <div class="container">
+      <nav class="ficha__crumbs" aria-label="Migas de pan"><a href="/catalogo/">Catálogo</a><span aria-hidden="true">›</span><span>{grupoLabel}</span></nav>
+
+      <div class="ficha">
+        <div class:list={['ficha__media', `ficha__media--${fit}`]}>
+          <img src={p.image} alt={p.name} loading="eager" />
+        </div>
+        <div class="ficha__info">
+          <span class="kicker">{grupoLabel}</span>
+          <h1 class="h2 ficha__name">{p.name}</h1>
+          <div class="ficha__price">{priceTxt}</div>
+          {p.shortDescription && <p class="ficha__short">{p.shortDescription}</p>}
+          <div class="ficha__actions">
+            {p.price > 0 ? (
+              <button class="btn btn--primary btn--lg" type="button" data-add-producto={p.slug}>
+                <svg class="ic"><use href="#i-plus" /></svg><span>Agregar a la cotización</span>
+              </button>
+            ) : (
+              <a class="btn btn--primary btn--lg" href={SITE.whatsappUrl} target="_blank" rel="noopener">
+                <svg class="ic"><use href="#i-whatsapp" /></svg><span>Cotizar este producto</span>
+              </a>
+            )}
+            <a class="btn btn--secondary btn--lg" href="/catalogo/">Ver catálogo</a>
+          </div>
+          <ul class="ficha__trust">
+            <li><svg class="ic"><use href="#i-check" /></svg>Instalación incluida</li>
+            <li><svg class="ic"><use href="#i-check" /></svg>Garantía 3 años</li>
+            <li><svg class="ic"><use href="#i-check" /></svg>Producto nacional patentado</li>
+          </ul>
+        </div>
+      </div>
+
+      {p.descriptionHtml && (
+        <div class="ficha__desc">
+          <h2 class="h2">Descripción</h2>
+          <Prose html={p.descriptionHtml} />
+        </div>
+      )}
+    </div>
+  </section>
+
+  <style>
+    .ficha__crumbs{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--ds-text);margin-bottom:20px}
+    .ficha__crumbs a{color:var(--ds-blue)}
+    .ficha{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+    @media (max-width:860px){.ficha{grid-template-columns:1fr;gap:24px}}
+    .ficha__media{border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);overflow:hidden;background:#fff;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+    .ficha__media img{width:100%;height:100%;display:block}
+    .ficha__media--cover img{object-fit:cover}
+    .ficha__media--contain img{object-fit:contain;padding:28px}
+    .ficha__info{display:flex;flex-direction:column;gap:14px}
+    .ficha__name{margin:4px 0 0}
+    .ficha__price{font-family:var(--ds-tnum);font-weight:700;font-size:34px;color:var(--ds-blue);font-variant-numeric:tabular-nums}
+    .ficha__short{margin:0;font-size:15px;line-height:1.55;color:var(--ds-text)}
+    .ficha__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+    .ficha__trust{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px}
+    .ficha__trust li{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ds-text)}
+    .ficha__trust .ic{width:16px;height:16px;color:var(--ds-blue);stroke-width:2.5}
+    .ficha__desc{margin-top:48px;max-width:820px}
+    .ficha__desc h2{margin-bottom:12px}
+  </style>
+</BaseLayout>

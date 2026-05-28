@@ -1,0 +1,69 @@
+---
+import type { Producto } from '../data/productos';
+import { clp } from '../lib/format';
+interface Props { producto: Producto; }
+const { producto: p } = Astro.props;
+const href = `/producto/${p.slug}/`;
+const priceTxt = p.price > 0 ? `${p.grupo === 'rebaje' ? 'Desde ' : ''}$${clp(p.price)}` : (p.priceLabel ?? 'Consultar');
+const fit = p.grupo === 'rebaje' ? 'cover' : 'contain';
+---
+<article class:list={['prod-card', { 'prod-card--featured': p.featured }]}>
+  <div class:list={['prod-card__media', `prod-card__media--${fit}`]}>
+    <a href={href} class="prod-card__imglink" aria-label={p.name}>
+      <img src={p.image} alt={p.name} loading="lazy" />
+    </a>
+    <button
+      class="prod-card__qv"
+      type="button"
+      data-quickview
+      data-qv-slug={p.slug}
+      data-qv-name={p.name}
+      data-qv-price={String(p.price)}
+      data-qv-pricelabel={p.priceLabel ?? ''}
+      data-qv-grupo={p.grupo}
+      data-qv-img={p.image}
+      data-qv-desc={p.shortDescription}
+      aria-label={`Vista rápida de ${p.name}`}
+    >
+      <svg class="ic"><use href="#i-eye" /></svg>
+      <span>Vista rápida</span>
+    </button>
+  </div>
+  <div class="prod-card__body">
+    <h3 class="prod-card__name"><a href={href}>{p.name}</a></h3>
+    <div class="prod-card__foot">
+      <span class="prod-card__price">{priceTxt}</span>
+      {p.price > 0 ? (
+        <button class="btn btn--primary btn--sm" type="button" data-add-producto={p.slug}>
+          <svg class="ic"><use href="#i-plus" /></svg><span>Agregar</span>
+        </button>
+      ) : (
+        <a href={href} class="btn btn--secondary btn--sm">Consultar</a>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .prod-card{background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--ds-shadow);transition:transform .2s,box-shadow .2s}
+  .prod-card:hover{transform:translateY(-4px);box-shadow:var(--ds-shadow-lg)}
+  .prod-card__media{position:relative;aspect-ratio:4/3;background:#fff}
+  .prod-card--featured .prod-card__media{aspect-ratio:21/9}
+  @media (max-width:768px){.prod-card--featured .prod-card__media{aspect-ratio:4/3}}
+  .prod-card__imglink{position:absolute;inset:0;display:block}
+  .prod-card__media img{width:100%;height:100%;display:block}
+  .prod-card__media--cover img{object-fit:cover}
+  .prod-card__media--contain img{object-fit:contain;padding:14px}
+  .prod-card__qv{position:absolute;top:12px;right:12px;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;background:rgba(255,255,255,.94);color:var(--ds-text-strong);border-radius:999px;font-size:12px;font-weight:600;box-shadow:0 2px 10px rgba(0,0,0,.15);opacity:0;transform:translateY(-4px);transition:opacity .18s,transform .18s,background .15s,color .15s}
+  .prod-card:hover .prod-card__qv,.prod-card__qv:focus-visible{opacity:1;transform:translateY(0)}
+  .prod-card__qv:hover{background:var(--ds-blue);color:#fff}
+  .prod-card__qv .ic{width:15px;height:15px;stroke-width:2}
+  @media (max-width:768px){.prod-card__qv{opacity:1;transform:none}.prod-card__qv span{display:none}}
+  .prod-card__body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .prod-card__name{margin:0;font-family:var(--ds-display);font-weight:700;font-size:18px;line-height:1.2;letter-spacing:-.01em}
+  .prod-card__name a{color:var(--ds-text-strong)}
+  .prod-card__name a:hover{color:var(--ds-blue)}
+  .prod-card__foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .prod-card__price{font-family:var(--ds-tnum);font-weight:700;font-size:18px;color:var(--ds-text-strong);font-variant-numeric:tabular-nums}
+  .prod-card--featured .prod-card__price{font-size:22px}
+</style>

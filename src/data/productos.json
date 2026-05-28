@@ -1,0 +1,227 @@
+[
+  {
+    "id": "wc-3515",
+    "slug": "rebaje-de-tina-jacuzzi",
+    "name": "Rebaje de tina: Jacuzzi",
+    "grupo": "rebaje",
+    "price": 460000,
+    "regularPrice": 460000,
+    "salePrice": null,
+    "shortDescription": "*Precio sujeto a evaluación de factibilidad técnica.",
+    "descriptionHtml": "<p>Esta tina de lujo, comodidad y relajación se hace muy fácil de diferenciar a la vista, por sus salidas de cañerías de agua para el hidromasaje y sus conexiones eléctricas internas para el funcionamiento del motor.</p>\n<p>Su instalación es más compleja a diferencia de las otras, debido a la posición que el cliente requiere en su montaje y el enlace de conexiones para facilitar el llenado y desagüe de esta.</p>",
+    "image": "/images/productos/rebaje-de-tina-jacuzzi/ESCENA3_A.jpg",
+    "images": [
+      "/images/productos/rebaje-de-tina-jacuzzi/ESCENA3_A.jpg"
+    ]
+  },
+  {
+    "id": "wc-3517",
+    "slug": "rebaje-de-tina-tradicional",
+    "name": "Rebaje de tina: Tradicional",
+    "grupo": "rebaje",
+    "price": 365000,
+    "regularPrice": 365000,
+    "salePrice": null,
+    "shortDescription": "*Precio sujeto a evaluación de factibilidad técnica.",
+    "descriptionHtml": "<h2><strong>Fierro Fundido</strong></h2>\n<p>Son las tinas de baño más comunes y tienen una gran diversidad de modelos, además de ser muy resistentes, pero pueden oxidarse con el paso de los años. Al momento de tener desperfectos se pueden arreglar usando productos como masilla de cerámica.</p>\n<p>Las tinas de hierro fundido se consideran más habituales en instalaciones exentas y también en modelos empotrados con faldones, que debido a su antigüedad están fabricadas en albañilería “ladrillo”.</p>\n<p>Estas tinas son las más pesadas pero las más resistentes, además de ser muy buenas conservadoras de la temperatura del agua. Son muy rígidas y estables, manteniendo sus condiciones en el tiempo, por lo que son conocidas como las “tinas para toda la vida”.</p>\n\n<h2><strong>Lata o Latón</strong></h2>\n<p>Es un material que tiene muchas ventajas y prácticamente ningún contra. Además son mucho más fáciles de instalar ya que pesan menos y se hacen más ligeras para manipular.</p>\n<p>Sus superficies lisas hacen que sea mucho más fácil la limpieza, además de evitar ensuciar prendas al momento de limpiar. Son tinas mucho más resistentes a los golpes y cualquier “rasmillón” se puede pulir con facilidad.</p>",
+    "image": "/images/productos/rebaje-de-tina-tradicional/ESCENA2_A.jpg",
+    "images": [
+      "/images/productos/rebaje-de-tina-tradicional/ESCENA2_A.jpg"
+    ]
+  },
+  {
+    "id": "wc-3127",
+    "slug": "juego-de-ducha-2-funciones",
+    "name": "Juego de Ducha 2 funciones de 1.75 o 2.00 m",
+    "grupo": "kit",
+    "price": 35000,
+    "regularPrice": 35000,
+    "salePrice": null,
+    "shortDescription": "Juego de Ducha Anticalcáreo con Maneral de 2 funciones.",
+    "descriptionHtml": "<p>Juego de ducha anticalcáreo con maneral de 2m de longitud.</p>",
+    "image": "/images/productos/juego-de-ducha-2-funciones/Mesa-de-trabajo-1.png",
+    "images": [
+      "/images/productos/juego-de-ducha-2-funciones/Mesa-de-trabajo-1.png"
+    ]
+  },
+  {
+    "id": "wc-3126",
+    "slug": "kit-cortina-bano",
+    "name": "Kit de cortina",
+    "grupo": "kit",
+    "price": 54500,
+    "regularPrice": 54500,
+    "salePrice": null,
+    "shortDescription": "*Incluye instalación. Cotización válida junto a Rebaje de Tina.",
+    "descriptionHtml": "<p>Incluye riel tubular de acero inoxidable de 19mm de espesor, argollas plásticas, soporte para riel y forro de cortina.</p>",
+    "image": "/images/productos/kit-cortina-bano/Mesa-de-trabajo-1-copia-2.png",
+    "images": [
+      "/images/productos/kit-cortina-bano/Mesa-de-trabajo-1-copia-2.png"
+    ]
+  },
+  {
+    "id": "wc-3123",
+    "slug": "tabla-de-tina-para-bano",
+    "name": "Asiento 2 posiciones",
+    "grupo": "accesorio",
+    "price": 42500,
+    "regularPrice": 42500,
+    "salePrice": null,
+    "shortDescription": "*Incluye instalación. Cotización válida junto a Rebaje de Tina.",
+    "descriptionHtml": "<p>Asiento plástico antideslizante ergonómico con agujeros de drenaje para evitar acumulación de agua y minimizar el deslizamiento. Soporta hasta 100kg.</p>",
+    "image": "/images/productos/tabla-de-tina-para-bano/Mesa-de-trabajo-1-copia-9.png",
+    "images": [
+      "/images/productos/tabla-de-tina-para-bano/Mesa-de-trabajo-1-copia-9.png"
+    ]
+  },
+  {
+    "id": "wc-3122",
+    "slug": "banco-de-transferencia-para-tina",
+    "name": "Banco de transferencia para tina",
+    "grupo": "accesorio",
+    "price": 49500,
+    "regularPrice": 49500,
+    "salePrice": null,
+    "shortDescription": "*Incluye instalación. Cotización válida junto a Rebaje de Tina.",
+    "descriptionHtml": "<p>Diseñado para personas con problema de movilidad o recién operados. Fácilmente ajustable para todo tipo de tinas, resiste hasta 113kg aproximadamente.</p>",
+    "image": "/images/productos/banco-de-transferencia-para-tina/Mesa-de-trabajo-1-copia-3.png",
+    "images": [
+      "/images/productos/banco-de-transferencia-para-tina/Mesa-de-trabajo-1-copia-3.png"
+    ]
+  },
+  {
+    "id": "wc-3120",
+    "slug": "barra-abatible",
+    "name": "Barra abatible 60cm",
+    "grupo": "accesorio",
+    "price": 77500,
+    "regularPrice": 77500,
+    "salePrice": null,
+    "shortDescription": "*Incluye instalación. Cotización válida junto a Rebaje de Tina.",
+    "descriptionHtml": "<p>Barra abatible color blanco de acero inoxidable empotrada en muro.</p>",
+    "image": "/images/productos/barra-abatible/Mesa-de-trabajo-1-copia-7.png",
+    "images": [
+      "/images/productos/barra-abatible/Mesa-de-trabajo-1-copia-7.png"
+    ]
+  },
+  {
+    "id": "wc-3119",
+    "slug": "barra-borde-tina",
+    "name": "Barra borde tina",
+    "grupo": "accesorio",
+    "price": 49500,
+    "regularPrice": 49500,
+    "salePrice": null,
+    "shortDescription": "*Incluye instalación. Cotización válida junto a Rebaje de Tina.",
+    "descriptionHtml": "<p>Barra de acero inoxidable color blanca, instalada en el borde de la tina, ayudando al ingreso / salida de ésta. Se sugiere instalación en tinas de fierro fundido.</p>",
+    "image": "/images/productos/barra-borde-tina/Mesa-de-trabajo-1-copia-10.png",
+    "images": [
+      "/images/productos/barra-borde-tina/Mesa-de-trabajo-1-copia-10.png"
+    ]
+  },
+  {
+    "id": "wc-7089",
+    "slug": "barra-de-cromada-40cm",
+    "name": "Barra de cromada 40cm",
+    "grupo": "accesorio",
+    "price": 27500,
+    "regularPrice": 27500,
+    "salePrice": null,
+    "shortDescription": "*Precio variable según medidas de la barra. *Incluye instalación. Cotización válida junto a Rebaje de Tina.",
+    "descriptionHtml": "",
+    "image": "/images/productos/barra-de-cromada-40cm/Barra_cromada_de_seguridad-1.webp",
+    "images": [
+      "/images/productos/barra-de-cromada-40cm/Barra_cromada_de_seguridad-1.webp"
+    ]
+  },
+  {
+    "id": "wc-3118",
+    "slug": "barra-de-seguridad-30cm",
+    "name": "Barra de seguridad 30cm",
+    "grupo": "accesorio",
+    "price": 42500,
+    "regularPrice": 42500,
+    "salePrice": null,
+    "shortDescription": "*Precio variable según medidas de la barra. *Incluye instalación. Cotización válida junto a Rebaje de Tina.",
+    "descriptionHtml": "<p>Hecha de acero inoxidable, soporta hasta 100kg de carga, ideal para apoyo y soporte entrada – salida de tina. Tenemos diferentes medidas: 30, 40 y 60 cm.</p>",
+    "image": "/images/productos/barra-de-seguridad-30cm/Mesa-de-trabajo-1-copia-6.png",
+    "images": [
+      "/images/productos/barra-de-seguridad-30cm/Mesa-de-trabajo-1-copia-6.png"
+    ]
+  },
+  {
+    "id": "wc-5215",
+    "slug": "barra-de-seguridad-40cm",
+    "name": "Barra de seguridad 40cm",
+    "grupo": "accesorio",
+    "price": 47500,
+    "regularPrice": 47500,
+    "salePrice": null,
+    "shortDescription": "*Precio variable según medidas de la barra. *Incluye instalación. Cotización válida junto a Rebaje de Tina.",
+    "descriptionHtml": "<p>Hecha de acero inoxidable, soporta hasta 100kg de carga, ideal para apoyo y soporte entrada – salida de tina.</p>",
+    "image": "/images/productos/barra-de-seguridad-40cm/Mesa-de-trabajo-1-copia-6.png",
+    "images": [
+      "/images/productos/barra-de-seguridad-40cm/Mesa-de-trabajo-1-copia-6.png"
+    ]
+  },
+  {
+    "id": "wc-5219",
+    "slug": "barra-de-seguridad-60cm",
+    "name": "Barra de seguridad 60cm",
+    "grupo": "accesorio",
+    "price": 49500,
+    "regularPrice": 49500,
+    "salePrice": null,
+    "shortDescription": "*Precio variable según medidas de la barra. *Incluye instalación. Cotización válida junto a Rebaje de Tina.",
+    "descriptionHtml": "<p>Hecha de acero inoxidable, soporta hasta 100kg de carga, ideal para apoyo y soporte entrada – salida de tina.</p>",
+    "image": "/images/productos/barra-de-seguridad-60cm/Mesa-de-trabajo-1-copia-6.png",
+    "images": [
+      "/images/productos/barra-de-seguridad-60cm/Mesa-de-trabajo-1-copia-6.png"
+    ]
+  },
+  {
+    "id": "wc-7088",
+    "slug": "barra-de-seguridad-76cm",
+    "name": "Barra de seguridad 76cm",
+    "grupo": "accesorio",
+    "price": 52500,
+    "regularPrice": 52500,
+    "salePrice": null,
+    "shortDescription": "*Precio variable según medidas de la barra. *Incluye instalación. Cotización válida junto a Rebaje de Tina.",
+    "descriptionHtml": "<p>Hecha de acero inoxidable, soporta hasta 100kg de carga, ideal para apoyo y soporte entrada – salida de tina.</p>",
+    "image": "/images/productos/barra-de-seguridad-76cm/Mesa-de-trabajo-1-copia-6.png",
+    "images": [
+      "/images/productos/barra-de-seguridad-76cm/Mesa-de-trabajo-1-copia-6.png"
+    ]
+  },
+  {
+    "id": "wc-7091",
+    "slug": "barra-muro-piso-60cm",
+    "name": "Barra muro piso 60cm",
+    "grupo": "accesorio",
+    "price": 72500,
+    "regularPrice": 72500,
+    "salePrice": null,
+    "shortDescription": "De acero inoxidable, de medida 60 cm diseñada para proporcionar apoyo en el baño, en ambos lados del W.C. Soporta hasta 100kg. Incluye su instalación.",
+    "descriptionHtml": "De acero inoxidable, de medida 60 cm diseñada para proporcionar apoyo en el baño, en ambos lados del W.C. Soporta hasta 100kg. Incluye su instalación.",
+    "image": "/images/productos/barra-muro-piso-60cm/Barra_muro_piso.webp",
+    "images": [
+      "/images/productos/barra-muro-piso-60cm/Barra_muro_piso.webp"
+    ]
+  },
+  {
+    "id": "wc-3125",
+    "slug": "lamina-antideslizante-para-tinas-3m",
+    "name": "Lámina antideslizante para tinas 3M",
+    "grupo": "accesorio",
+    "price": 27500,
+    "regularPrice": 27500,
+    "salePrice": null,
+    "shortDescription": "*Incluye instalación. Cotización válida junto a Rebaje de Tina.",
+    "descriptionHtml": "<p>Film 3M, duradero, antihongos y antibacterial. Textura rugosa y autoadhesiva, instalada sobre la base de la tina.</p>",
+    "image": "/images/productos/lamina-antideslizante-para-tinas-3m/Mesa-de-trabajo-1-copia.png",
+    "images": [
+      "/images/productos/lamina-antideslizante-para-tinas-3m/Mesa-de-trabajo-1-copia.png"
+    ]
+  }
+]

@@ -1,20 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProductCard from '../components/ProductCard.astro';
+import ProductoCard from '../components/ProductoCard.astro';
 import Configurator from '../components/Configurator.astro';
 import Calculator from '../components/Calculator.astro';
-import { PRODUCTS } from '../data/products';
+import { REBAJES } from '../data/productos';
 // Mismo layout que la home: 2 regulares arriba + el featured (Spa XL) a todo el ancho.
-const featured = PRODUCTS.filter(p => p.featured).slice(0, 1);
+const featured = REBAJES.filter(p => p.featured).slice(0, 1);
 const featuredIds = new Set(featured.map(p => p.id));
-const regular = PRODUCTS.filter(p => !featuredIds.has(p.id));
+const regular = REBAJES.filter(p => !featuredIds.has(p.id));
 ---
 <BaseLayout title="Rebajes de tina — Ducha Segura®" description="Rebajes de tina Tradicional, Jacuzzi y Spa XL. Instalación incluida, garantía 3 años.">
   <section class="section">
     <div class="container">
       <div class="section-head"><h1 class="h2">Rebajes de tina</h1><p class="lead">Elige el rebaje según tu tina.</p></div>
-      <div class="product-grid">{regular.map(p => <ProductCard product={p} />)}</div>
-      <div class="product-grid product-grid--single">{featured.map(p => <ProductCard product={p} />)}</div>
+      <div class="product-grid">{regular.map(p => <ProductoCard producto={p} />)}</div>
+      <div class="product-grid product-grid--single">{featured.map(p => <ProductoCard producto={p} />)}</div>
     </div>
   </section>
   <Configurator />

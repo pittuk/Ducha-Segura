@@ -52,7 +52,7 @@ Sitio Web/
 └─ docs/           ESTADO.md (este archivo) · PAYMENTS.md · superpowers/specs · superpowers/plans
 ```
 
-**Rutas:** `/` · `/catalogo` (filtro: Todos/Rebajes/Kits/Accesorios) · `/rebaje-de-tina` · `/kits` · `/accesorios` · `/convenios` · `/blog` (listado) · `/terminos-y-condiciones-ducha-segura` · `/accion-social` · **`/<slug>` (posts del blog, en la RAÍZ)** · `404`.
+**Rutas:** `/` · `/catalogo` (filtro: Todos/Rebajes/Kits/Accesorios) · `/rebaje-de-tina` · `/kits` · `/accesorios` · `/convenios` · `/blog` (listado) · `/terminos-y-condiciones-ducha-segura` · `/accion-social` · **`/producto/<slug>` (ficha de producto, 16)** · **`/<slug>` (posts del blog, en la RAÍZ)** · `404`.
 
 > **Slugs alineados con WordPress** (para preservar indexación): `/rebaje-de-tina`, `/accesorios`, `/convenios`, `/blog`, `/terminos-y-condiciones-ducha-segura`, `/accion-social` y `/` coinciden con los slugs reales del WP. `/kits` y `/catalogo` son **nuevos** (no existían en WP).
 >
@@ -61,7 +61,7 @@ Sitio Web/
 
 > **Blog — URLs:** los posts se sirven en la **raíz** `/<slug>/` (vía `src/pages/[slug].astro`), igual que en el WordPress original, para **preservar la indexación**. El listado vive en `/blog`. Las páginas estáticas (`/rebaje-de-tina`, `/accesorios`, etc.) tienen prioridad sobre la ruta dinámica.
 
-**Menú (`NAV` en `src/data/site.ts`):** Inicio · Rebajes (`/rebaje-de-tina`) · **Catálogo ▾ (`/catalogo`) → Accesorios, Kits** · Blog · Convenios. El desplegable es CSS-only (hover/focus en desktop; subítems indentados en el drawer móvil). `/catalogo` también es accesible vía los CTA "Ver todo el catálogo" (home `ProductosTeaser`, `PrefooterCta`). **Taxonomía:** Rebajes = `products.ts`; Accesorios = `accesorios.ts` (7 reales); Kits = `kits.ts` (4: kit rebaje+barra, kit cortina, set antideslizante, rebaje con puerta estanca). Kits y accesorios comparten `AccessoryCard`.
+**Menú (`NAV` en `src/data/site.ts`):** Inicio · Rebajes (`/rebaje-de-tina`) · **Catálogo ▾ (`/catalogo`) → Accesorios, Kits** · Blog · Convenios. El desplegable es CSS-only (hover/focus en desktop; subítems indentados en el drawer móvil). `/catalogo` también es accesible vía los CTA "Ver todo el catálogo" (home `ProductosTeaser`, `PrefooterCta`). **Catálogo desde WooCommerce (fuente única):** los 15 productos vienen de la API WC (`scripts/import-woo.mjs` → `src/data/productos.json`; wrapper `src/data/productos.ts` con tipos, agrupaciones `REBAJES`/`KITS`/`ACCESORIOS`, overrides de imagen de rebajes y el **Spa XL** curado, que no existe en WC). Grupo por producto: rebaje · kit · accesorio. Todas las tarjetas usan **`ProductoCard`** con **ícono de vista rápida → modal `QuickView`**. Cada producto tiene su **ficha** en `/producto/<slug>` (slug real de WC, indexación preservada). Re-sincronizar: `$env:WC_CK`/`$env:WC_CS` + `node scripts/import-woo.mjs`. *(Se retiraron `products.ts`/`accesorios.ts`/`kits.ts`/`ProductCard`/`AccessoryCard`.)*
 
 **Decisiones clave:**
 - **Datos centralizados** en `src/data/`: cambiar un precio/nombre = un solo archivo.
@@ -87,11 +87,10 @@ Sitio Web/
 1. **Imágenes reales de producto/secciones.**
    - ✅ **Hecho: tarjetas de producto** (`ProductCard`). Las 3 (Tradicional, Jacuzzi, Spa XL) usan fotos reales en `public/images/rebajes/` vía `<img>`; mapeo `id → { image, fit, alt }` en `src/data/products-media.ts` (con fallback al placeholder). *(Se retiró el pipeline `<Image>`/`src/assets/productos` anterior.)* Spec/plan inicial: `docs/superpowers/{specs,plans}/2026-05-28-imagenes-reales-productos*`.
    - ✅ **Hecho: hero** (`Hero.astro`). El comparador antes/después usa imágenes reales del mismo baño (`background-image`): **antes** = `Rebaje Tina Tradicional antes.webp` (tina intacta), **después** = `Rebaje Tina Tradicional.webp` (rebaje instalado). El "antes" se convirtió de PNG 5.7MB a webp 171KB (sharp) por rendimiento.
-   - ✅ **Hecho: accesorios y kits** (`AccessoryCard`). Imágenes reales vía `<img>` desde `public/images/accesorios/<carpeta>/` (campo `image` + `fit`). Ver **precios provisionales** abajo.
+   - ✅ **Hecho: productos, accesorios y kits** — ahora vienen de **WooCommerce** (imágenes, nombres y **precios reales**) y se renderizan con `ProductoCard`. (Reemplaza `AccessoryCard`/`public/images/accesorios`.)
    - ✅ **Hecho: blog** — tarjetas y posts usan la **imagen destacada real** de WordPress (ver punto del blog abajo).
    - ⏳ **Pendiente:** solo **prensa** (`Prensa`) sigue con placeholders. Fuente: `../Imagenes de la pagina vieja/imagenes_descargadas/`.
-2. **⚠️ Precios provisionales de accesorios y kits.** `src/data/accesorios.ts` y `src/data/kits.ts` traen precios **temporales** (marcados con `// TODO precio provisional`). **Confirmar/corregir antes de desplegar.**
-3. **Nombres de archivo de imágenes de accesorios = frágiles.** Algunas imágenes están con nombres de exportación genéricos (`Mesa-de-trabajo-1-copia-N.png`); las rutas en los datos apuntan a esos nombres exactos. Si se vuelven a exportar/renombrar, las rutas se rompen. Recomendado: renombrar a nombres estables (kebab-case) por accesorio y actualizar los `image` una sola vez.
+2. **✅ Precios reales (resuelto).** Productos/accesorios/kits ahora usan los **precios de WooCommerce** (se acabaron los provisionales). El catálogo, las fichas y la vista rápida los usan. El **Spa XL** queda "a medida" (sin precio fijo, deriva a cotizar).
 4. **✅ Blog migrado desde WordPress.** Se importaron **50 entradas reales** (reemplazando los 3 stubs) con la API REST de `duchasegura.cl`. Cada post es un `.md` en `src/content/blog/<slug>.md` (frontmatter + HTML del cuerpo, renderizado con `set:html`) e imágenes en `public/images/blog/<slug>/`.
    - **Re-sincronizar / traer nuevos posts:** `scripts/import-blog.mjs`. Requiere credenciales por entorno (NO en el repo): `$env:WP_USER` y `$env:WP_APP_PASSWORD` (contraseña de aplicación de WordPress). Reescribe los `.md` y baja imágenes nuevas.
    - **Imágenes de Google expiradas:** 4 posts traían imágenes de `lh*.googleusercontent.com` ya caídas en el origen; se removieron esos `<figure>`. Los embeds de YouTube se conservan.

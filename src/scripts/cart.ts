@@ -7,10 +7,10 @@ import * as Cart from '../lib/cart';
 import type { CartItem, NewItem } from '../lib/cart';
 import { clp } from '../lib/format';
 import { escapeHtml } from './dom';
-import { PRODUCTS } from '../data/products';
-import { ACCESORIOS } from '../data/accesorios';
-import { PRODUCT_MEDIA } from '../data/products-media';
+import { PRODUCTOS, ACCESORIOS, type Grupo } from '../data/productos';
 import { SITE } from '../data/site';
+
+const ID_PREFIX: Record<Grupo, string> = { rebaje: 'reb', kit: 'kit', accesorio: 'acc' };
 
 // --- Module-level state ---
 let items: CartItem[] = load();
@@ -118,8 +118,8 @@ function renderCart(): void {
 
   // "Complementa tu rebaje": accesorios aún no agregados (cuando ya hay un rebaje en la cotización).
   const inCart = new Set(items.map(i => i.id));
-  const hasRebaje = items.some(i => /^(prod|cfg|calc)-/.test(i.id));
-  const suggestions = ACCESORIOS.filter(a => !inCart.has('acc-' + a.id));
+  const hasRebaje = items.some(i => /^(reb|cfg|calc)-/.test(i.id));
+  const suggestions = ACCESORIOS.filter(a => !inCart.has('acc-' + a.slug));
   const suggestHtml = (hasRebaje && suggestions.length) ? `
     <div class="cart-suggest">
       <div class="cart-suggest__h">Complementa tu rebaje</div>
@@ -129,7 +129,7 @@ function renderCart(): void {
             <div class="cart-suggest__media">${a.image ? `<img src="${escapeHtml(a.image)}" alt="${escapeHtml(a.name)}" loading="lazy">` : ''}</div>
             <div class="cart-suggest__name">${escapeHtml(a.name)}</div>
             <div class="cart-suggest__price">$${clp(a.price)}</div>
-            <button class="cart-suggest__add" data-add-acc="${escapeHtml(a.id)}" aria-label="Agregar ${escapeHtml(a.name)} a la cotización">+ Agregar</button>
+            <button class="cart-suggest__add" data-add-producto="${escapeHtml(a.slug)}" aria-label="Agregar ${escapeHtml(a.name)} a la cotización">+ Agregar</button>
           </article>`).join('')}
       </div>
     </div>` : '';
@@ -161,19 +161,13 @@ function bindDocumentClick(): void {
   document.addEventListener('click', (e) => {
     const target = e.target as Element;
 
-    // [data-add-product]
-    const addP = target.closest<HTMLElement>('[data-add-product]');
+    // [data-add-producto] — productos del catálogo (rebaje/kit/accesorio) por slug
+    const addP = target.closest<HTMLElement>('[data-add-producto]');
     if (addP) {
-      const p = PRODUCTS.find(x => x.id === addP.dataset.addProduct);
-      if (p) add({ id: 'prod-' + p.id, name: p.name, variant: p.medidas, unitPrice: p.priceFrom, label: p.label, image: PRODUCT_MEDIA[p.id]?.image });
-      return;
-    }
-
-    // [data-add-acc]
-    const addA = target.closest<HTMLElement>('[data-add-acc]');
-    if (addA) {
-      const a = ACCESORIOS.find(x => x.id === addA.dataset.addAcc);
-      if (a) add({ id: 'acc-' + a.id, name: a.name, variant: a.sub, unitPrice: a.price, label: a.label, image: a.image });
+      const p = PRODUCTOS.find(x => x.slug === addP.dataset.addProducto);
+      if (p && p.price > 0) {
+        add({ id: `${ID_PREFIX[p.grupo]}-${p.slug}`, name: p.name, variant: p.shortDescription, unitPrice: p.price, label: p.name, image: p.image });
+      }
       return;
     }
 

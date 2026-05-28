@@ -1,13 +1,11 @@
 ---
-import { PRODUCTS } from '../data/products';
-import { ACCESORIOS } from '../data/accesorios';
-import ProductCard from './ProductCard.astro';
-import AccessoryCard from './AccessoryCard.astro';
+import { REBAJES, ACCESORIOS } from '../data/productos';
+import ProductoCard from './ProductoCard.astro';
 // El grid destacado (.product-grid--single) está diseñado para EXACTAMENTE un producto.
-// Tomamos solo el primer destacado; el resto (incl. cualquier extra) va al grid regular.
-const featured = PRODUCTS.filter(p => p.featured).slice(0, 1);
+const featured = REBAJES.filter(p => p.featured).slice(0, 1);
 const featuredIds = new Set(featured.map(p => p.id));
-const regular = PRODUCTS.filter(p => !featuredIds.has(p.id));
+const regular = REBAJES.filter(p => !featuredIds.has(p.id));
+const accs = ACCESORIOS.slice(0, 4);
 ---
 <section class="section" id="productos">
   <div class="container">
@@ -20,18 +18,18 @@ const regular = PRODUCTS.filter(p => !featuredIds.has(p.id));
     </div>
 
     <div class="product-grid reveal" id="productosGrid">
-      {regular.map(p => <ProductCard product={p} />)}
+      {regular.map(p => <ProductoCard producto={p} />)}
     </div>
     <div class="product-grid product-grid--single reveal" id="productosFeatured">
-      {featured.map(p => <ProductCard product={p} />)}
+      {featured.map(p => <ProductoCard producto={p} />)}
     </div>
 
     <div class="acc-head reveal">
       <h3>Accesorios — ahora se venden solos</h3>
       <a href="/accesorios" class="see-all">Ver todos <svg class="ic"><use href="#i-arrow"/></svg></a>
     </div>
-    <div class="acc-grid reveal" id="accGrid">
-      {ACCESORIOS.map(a => <AccessoryCard accesorio={a} />)}
+    <div class="prod-grid reveal" id="accGrid">
+      {accs.map(p => <ProductoCard producto={p} />)}
     </div>
   </div>
 </section>
