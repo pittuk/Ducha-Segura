@@ -9,9 +9,16 @@
   </button>
   <div class="qv__media" id="qvMedia"><img id="qvImg" src="" alt="" /></div>
   <div class="qv__body">
+    <span class="kicker qv__cat" id="qvCat"></span>
     <h2 class="qv__name" id="qvName"></h2>
     <div class="qv__price" id="qvPrice"></div>
     <p class="qv__desc" id="qvDesc"></p>
+    <p class="qv__extract" id="qvExtract"></p>
+    <ul class="qv__trust">
+      <li><svg class="ic"><use href="#i-check" /></svg>Instalación incluida</li>
+      <li><svg class="ic"><use href="#i-check" /></svg>Garantía 3 años</li>
+      <li><svg class="ic"><use href="#i-check" /></svg>Producto nacional patentado</li>
+    </ul>
     <div class="qv__actions">
       <button class="btn btn--primary" type="button" id="qvAdd"><svg class="ic"><use href="#i-plus" /></svg><span>Agregar a la cotización</span></button>
       <a class="btn btn--secondary" id="qvFicha" href="#">Ver ficha completa</a>
@@ -22,18 +29,24 @@
 <style>
   .qv-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:210;opacity:0;pointer-events:none;transition:opacity .2s}
   .qv-backdrop.open{opacity:1;pointer-events:auto}
-  .qv{position:fixed;top:50%;left:50%;transform:translate(-50%,-46%);width:680px;max-width:94vw;max-height:90vh;overflow:auto;background:#fff;z-index:211;border-radius:var(--ds-radius-lg);box-shadow:0 24px 70px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;display:grid;grid-template-columns:1fr 1fr}
+  .qv{position:fixed;top:50%;left:50%;transform:translate(-50%,-46%);width:780px;max-width:94vw;max-height:90vh;overflow:auto;background:#fff;z-index:211;border-radius:var(--ds-radius-lg);box-shadow:0 24px 70px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;display:grid;grid-template-columns:1fr 1fr}
   @media (max-width:640px){.qv{grid-template-columns:1fr}}
   .qv.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
   .qv__close{position:absolute;top:12px;right:12px;width:34px;height:34px;background:rgba(255,255,255,.92);color:var(--ds-text-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.15);z-index:1}
   .qv__close:hover{background:#ececec}
   .qv__close .ic{width:16px;height:16px}
-  .qv__media{background:#f4f4f2;display:flex;align-items:center;justify-content:center;min-height:240px}
-  .qv__media img{width:100%;height:100%;max-height:380px;object-fit:cover;display:block}
-  .qv__media--contain img{object-fit:contain;padding:24px}
-  .qv__body{padding:28px;display:flex;flex-direction:column;gap:12px}
-  .qv__name{margin:0;font-family:var(--ds-display);font-weight:700;font-size:24px;line-height:1.15;color:var(--ds-text-strong);letter-spacing:-.02em}
-  .qv__price{font-family:var(--ds-tnum);font-weight:700;font-size:24px;color:var(--ds-blue);font-variant-numeric:tabular-nums}
+  .qv__media{background:#fff;display:flex;align-items:center;justify-content:center;min-height:260px;border-right:1px solid var(--ds-border)}
+  @media (max-width:640px){.qv__media{border-right:none;border-bottom:1px solid var(--ds-border)}}
+  .qv__media img{width:100%;height:100%;max-height:420px;object-fit:cover;display:block}
+  .qv__media--contain img{object-fit:contain;padding:28px}
+  .qv__body{padding:30px;display:flex;flex-direction:column;gap:10px}
+  .qv__cat{margin:0}
+  .qv__name{margin:0;font-family:var(--ds-display);font-weight:700;font-size:25px;line-height:1.15;color:var(--ds-text-strong);letter-spacing:-.02em}
+  .qv__price{font-family:var(--ds-tnum);font-weight:700;font-size:26px;color:var(--ds-blue);font-variant-numeric:tabular-nums}
   .qv__desc{margin:0;font-size:14px;line-height:1.55;color:var(--ds-text)}
-  .qv__actions{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-top:8px}
+  .qv__extract{margin:0;font-size:13px;line-height:1.6;color:var(--ds-text)}
+  .qv__trust{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:7px}
+  .qv__trust li{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ds-text)}
+  .qv__trust .ic{width:15px;height:15px;color:var(--ds-blue);stroke-width:2.5}
+  .qv__actions{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-top:14px}
 </style>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Prose from '../../components/Prose.astro';
+import ProductoCard from '../../components/ProductoCard.astro';
 import { PRODUCTOS, type Producto } from '../../data/productos';
 import { SITE } from '../../data/site';
 import { clp } from '../../lib/format';
@@ -15,6 +16,7 @@ const GRUPO: Record<Producto['grupo'], string> = { rebaje: 'Rebaje de tina', kit
 const grupoLabel = GRUPO[p.grupo];
 const priceTxt = p.price > 0 ? `$${clp(p.price)}` : (p.priceLabel ?? 'Consultar');
 const fit = p.grupo === 'rebaje' ? 'cover' : 'contain';
+const related = PRODUCTOS.filter((x) => x.grupo === p.grupo && x.slug !== p.slug).slice(0, 4);
 ---
 <BaseLayout title={`${p.name} — Ducha Segura®`} description={p.shortDescription || p.name} ogImage={p.image}>
   <section class="section">
@@ -56,6 +58,15 @@ const fit = p.grupo === 'rebaje' ? 'cover' : 'contain';
           <Prose html={p.descriptionHtml} />
         </div>
       )}
+
+      {related.length > 0 && (
+        <div class="ficha__related">
+          <h2 class="h2">Productos relacionados</h2>
+          <div class="prod-grid">
+            {related.map((r) => <ProductoCard producto={r} />)}
+          </div>
+        </div>
+      )}
     </div>
   </section>
 
@@ -78,5 +89,7 @@ const fit = p.grupo === 'rebaje' ? 'cover' : 'contain';
     .ficha__trust .ic{width:16px;height:16px;color:var(--ds-blue);stroke-width:2.5}
     .ficha__desc{margin-top:48px;max-width:820px}
     .ficha__desc h2{margin-bottom:12px}
+    .ficha__related{margin-top:56px}
+    .ficha__related h2{margin-bottom:18px}
   </style>
 </BaseLayout>

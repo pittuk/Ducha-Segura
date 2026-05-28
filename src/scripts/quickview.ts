@@ -19,7 +19,12 @@ function openQV(el: HTMLElement): void {
   const priceEl = document.getElementById('qvPrice');
   if (priceEl) priceEl.textContent = price > 0 ? '$' + clp(price) : (d.qvPricelabel || 'Consultar');
   const desc = document.getElementById('qvDesc');
-  if (desc) desc.textContent = d.qvDesc || '';
+  if (desc) { desc.textContent = d.qvDesc || ''; (desc as HTMLElement).style.display = d.qvDesc ? '' : 'none'; }
+  const GRUPO: Record<string, string> = { rebaje: 'Rebaje de tina', kit: 'Kit', accesorio: 'Accesorio' };
+  const cat = document.getElementById('qvCat');
+  if (cat) cat.textContent = GRUPO[d.qvGrupo || ''] || '';
+  const extract = document.getElementById('qvExtract');
+  if (extract) { extract.textContent = d.qvExtract || ''; (extract as HTMLElement).style.display = d.qvExtract ? '' : 'none'; }
   const ficha = document.getElementById('qvFicha') as HTMLAnchorElement | null;
   if (ficha) ficha.href = `/producto/${d.qvSlug}/`;
   const add = document.getElementById('qvAdd');

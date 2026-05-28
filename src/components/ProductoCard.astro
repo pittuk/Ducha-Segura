@@ -6,6 +6,7 @@ const { producto: p } = Astro.props;
 const href = `/producto/${p.slug}/`;
 const priceTxt = p.price > 0 ? `${p.grupo === 'rebaje' ? 'Desde ' : ''}$${clp(p.price)}` : (p.priceLabel ?? 'Consultar');
 const fit = p.grupo === 'rebaje' ? 'cover' : 'contain';
+const extract = (p.descriptionHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 220);
 ---
 <article class:list={['prod-card', { 'prod-card--featured': p.featured }]}>
   <div class:list={['prod-card__media', `prod-card__media--${fit}`]}>
@@ -23,6 +24,7 @@ const fit = p.grupo === 'rebaje' ? 'cover' : 'contain';
       data-qv-grupo={p.grupo}
       data-qv-img={p.image}
       data-qv-desc={p.shortDescription}
+      data-qv-extract={extract}
       aria-label={`Vista rápida de ${p.name}`}
     >
       <svg class="ic"><use href="#i-eye" /></svg>
