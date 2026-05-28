@@ -1,7 +1,6 @@
 ---
 import type { Product } from '../data/products';
 import { clp } from '../lib/format';
-import { Image } from 'astro:assets';
 import { PRODUCT_MEDIA } from '../data/products-media';
 interface Props { product: Product; }
 const { product } = Astro.props;
@@ -13,12 +12,11 @@ const media = PRODUCT_MEDIA[product.id];
     style={media ? undefined : `background:linear-gradient(180deg,${product.accent}33 0%,${product.accent}cc 100%)`}
   >
     {media ? (
-      <Image
-        src={media.src}
+      <img
+        src={media.image}
         alt={media.alt}
+        loading="lazy"
         class:list={['product-card__img', `product-card__img--${media.fit}`]}
-        widths={[400, 700, 1000]}
-        sizes="(max-width:768px) 100vw, 420px"
       />
     ) : (
       <>

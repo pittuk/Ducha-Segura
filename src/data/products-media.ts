@@ -1,30 +1,26 @@
-import type { ImageMetadata } from 'astro';
-import tradicional from '../assets/productos/rebaje-tradicional.png';
-import jacuzzi from '../assets/productos/rebaje-jacuzzi.webp';
-import spa from '../assets/productos/rebaje-spa.webp';
-
 export interface ProductMedia {
-  src: ImageMetadata;
+  /** Ruta de imagen en public/ (ej. /images/rebajes/...). */
+  image: string;
   fit: 'contain' | 'cover';
   alt: string;
 }
 
-// Mapa id de producto → imagen. Importa assets, por eso vive aparte de
-// products.ts (que debe quedar libre de imports de imágenes para Vitest).
+// Mapa id de producto → imagen real (en public/images/rebajes/).
+// Se usa con <img> en ProductCard; si un producto no está aquí, cae al placeholder.
 export const PRODUCT_MEDIA: Record<string, ProductMedia> = {
   tradicional: {
-    src: tradicional,
-    fit: 'contain',
-    alt: 'Pieza de rebaje de tina Ducha Segura, vista de producto',
+    image: '/images/rebajes/Rebaje Tina Tradicional.webp',
+    fit: 'cover',
+    alt: 'Rebaje de tina tradicional instalado en un baño',
   },
   jacuzzi: {
-    src: jacuzzi,
+    image: '/images/rebajes/Rebaje Tina Jacuzzi.webp',
     fit: 'cover',
-    alt: 'Antes y después: rebaje instalado en una tina jacuzzi',
+    alt: 'Tina jacuzzi en un baño, lista para rebaje',
   },
   spa: {
-    src: spa,
+    image: '/images/rebajes/Rebaje Tina Spa XL.webp',
     fit: 'cover',
-    alt: 'Tina grande con rebaje de acceso instalado',
+    alt: 'Rebaje en tina grande tipo spa instalado en un baño',
   },
 };

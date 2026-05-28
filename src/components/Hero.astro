@@ -6,11 +6,9 @@ const h = HERO_COPY.user;
 <section class="hero" aria-label="Presentación principal">
   <div class="slider" id="slider" role="region" aria-label="Comparador antes y después">
     <div class="slider__layer slider__after" aria-hidden="true">
-      <div class="slider__photo-label">[FOTO BAÑO CON REBAJE INSTALADO]</div>
       <div class="slider__label slider__label--after">Después</div>
     </div>
     <div class="slider__layer slider__before" id="sliderBefore" style="clip-path:polygon(0 0,50% 0,50% 100%,0 100%);-webkit-clip-path:polygon(0 0,50% 0,50% 100%,0 100%)" aria-hidden="true">
-      <div class="slider__photo-label slider__photo-label--dark">[FOTO BAÑO ORIGINAL — TINA ALTA]</div>
       <div class="slider__label slider__label--before">Antes</div>
     </div>
     <div class="slider__handle" id="sliderHandle" style="left:50%"></div>
@@ -60,14 +58,12 @@ const h = HERO_COPY.user;
 @media (max-width:768px){.hero{height:640px}}
 .slider{position:absolute;inset:0;cursor:col-resize;overflow:hidden;user-select:none;-webkit-user-select:none}
 .slider__layer{position:absolute;inset:0;background-size:cover;background-position:center}
-.slider__after{background:linear-gradient(180deg,#4a6b7e 0%,#6d8a99 60%,#91a6b3 100%)}
-.slider__before{background:linear-gradient(180deg,#5a4a3a 0%,#6d5a48 50%,#7d6a5c 100%)}
+.slider__after{background-color:#6d8a99;background-image:url('/images/rebajes/Rebaje Tina Tradicional.webp')}
+.slider__before{background-color:#6d5a48;background-image:url('/images/rebajes/Rebaje Tina Tradicional antes.webp')}
 .slider__label{position:absolute;padding:6px 12px;font-family:var(--ds-sans);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px}
 .slider__label--after{left:32px;bottom:32px;background:rgba(255,255,255,.92);color:var(--ds-blue-dark)}
 .slider__label--before{left:32px;top:32px;background:rgba(0,0,0,.55);color:#fff;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 @media (max-width:768px){.slider__label--after{left:16px;bottom:90px}.slider__label--before{left:16px;top:110px}}
-.slider__photo-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:ui-monospace,'JetBrains Mono','Menlo',monospace;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:6px 12px;background:rgba(255,255,255,.78);color:rgba(0,0,0,.45);border-radius:2px;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);white-space:nowrap;pointer-events:none}
-.slider__photo-label--dark{background:rgba(0,0,0,.35);color:rgba(255,255,255,.65)}
 .slider__handle{position:absolute;top:0;bottom:0;width:2px;background:#fff;box-shadow:0 0 18px rgba(0,0,0,.35);transform:translateX(-1px);pointer-events:none}
 .slider__knob{position:absolute;top:50%;width:44px;height:44px;margin-left:-22px;margin-top:-22px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,.3);color:var(--ds-blue);pointer-events:none}
 .slider__hint{position:absolute;top:28px;right:32px;padding:8px 14px;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:600;border-radius:999px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;gap:6px;pointer-events:none}
