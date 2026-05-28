@@ -1,13 +1,12 @@
 export interface NavItem { label: string; href: string; children?: NavItem[]; }
 
-// Nota: /catalogo existe como página pero NO va en el menú (decisión del cliente).
-// Se accede vía los CTA "Ver todo el catálogo" (home/ProductosTeaser, PrefooterCta).
 export const NAV: NavItem[] = [
   { label: 'Inicio', href: '/' },
-  { label: 'Rebajes', href: '/rebaje', children: [
+  { label: 'Rebajes', href: '/rebaje' },
+  { label: 'Catálogo', href: '/catalogo', children: [
+    { label: 'Accesorios', href: '/accesorios' },
     { label: 'Kits', href: '/kits' },
   ] },
-  { label: 'Accesorios', href: '/accesorios' },
   { label: 'Blog', href: '/blog' },
   { label: 'Convenios', href: '/convenios' },
 ];
