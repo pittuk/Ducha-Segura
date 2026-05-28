@@ -28,8 +28,8 @@ npm run dev      # http://localhost:4321/
 
 - `npm test` → **12/12** tests OK (pricing + cart).
 - `npx astro check` → **0 errores / 0 warnings / 0 hints**.
-- `npm run build` → **10 páginas** generadas en `dist/`, sin warnings.
-- Rama: **`main`** (la rama de trabajo `feat/migracion-astro` ya se mergeó y eliminó).
+- `npm run build` → **81 páginas** generadas en `dist/`, sin warnings (catálogo WooCommerce + 16 fichas de producto + 50 posts de blog + páginas estáticas).
+- Rama: **`main`**. Las ramas de trabajo `feat/migracion-astro`, `kits`, `blog`, `carrito`, `productos` ya se mergearon y eliminaron. No hay remoto configurado → todo vive en el `main` local (sin `git push`).
 
 ## 4. Qué se construyó (arquitectura)
 
@@ -82,6 +82,20 @@ Sitio Web/
   - **Poster**: `public/videos/…-poster.jpg` (frame del fundador) — se muestra antes de reproducir.
   - Caption: "Tipos de Tinas - Ducha Segura® - Rebaje de Tina".
 
+## 5b. Trabajo posterior (catálogo WooCommerce, fichas y ajustes finos)
+
+Bloque hecho tras la migración base (commits `8e34d98` → `e6d5b67`):
+
+- **Navegación:** menú reorganizado a **Catálogo ▾ (Accesorios, Kits)** con Rebajes como enlace simple a `/rebaje-de-tina`. Navbar a **85px**, topbar a **35px**.
+- **Catálogo desde WooCommerce (fuente única, fin de precios provisionales):** `scripts/import-woo.mjs` → `src/data/productos.json` (15 productos WC) + wrapper `src/data/productos.ts` (tipos, `REBAJES`/`KITS`/`ACCESORIOS`, overrides de imagen de rebajes y el **Spa XL** curado que no está en WC). Tarjeta única `ProductoCard`.
+- **Fichas de producto:** `/producto/<slug>` (16, slug real de WC para preservar indexación) con descripción (`Prose`), garantías y "Productos relacionados". `src/pages/producto/[slug].astro`.
+- **Vista rápida:** ícono en cada tarjeta → modal `QuickView` (`src/components/QuickView.astro` + `src/scripts/quickview.ts`). Imagen full-bleed al lado izquierdo, categoría, precio, extracto, garantías, "Agregar"/"Ver ficha". El "Agregar" reusa la delegación `[data-add-producto]` del carrito.
+- **Carrito (drawer):** thumbnails con imagen real, tira **"Complementa tu rebaje"** para sumar accesorios desde el drawer, layout compacto. Estilos del drawer en `<style is:global>` (los ítems se inyectan por JS y el scoped no los alcanza).
+- **Páginas WP portadas:** `/terminos-y-condiciones-ducha-segura` y `/accion-social` (esta última **rediseñada a mano** con el lineamiento del sitio). Footer "Términos y condiciones" enlaza con barra final.
+- **Prensa real:** 5 logos en `public/images/prensa/` (LUN, Diario La Estrella, Radio Bío Bío, NexNews, Radio Festival de Valparaíso); datos en `src/data/prensa.ts`, render en `Prensa.astro`.
+- **Tipografía/UI:** títulos de calculadora y prefooter a **55px**; precio de tarjeta en **azul/bold** (diferenciado del nombre); subtítulos de ficha a 26px.
+- **Íconos:** logo de **WhatsApp relleno** (se veía roto porque el sistema `.ic` es de trazo; el glifo lleva `fill=currentColor` para anularlo) en todo el sitio; **redes del footer** con íconos reales (Instagram/Facebook/LinkedIn/X) en vez de texto. `src/components/Icons.astro` + `Footer.astro`.
+
 ## 6. Pendientes (para continuar)
 
 1. **Imágenes reales de producto/secciones.**
@@ -89,7 +103,8 @@ Sitio Web/
    - ✅ **Hecho: hero** (`Hero.astro`). El comparador antes/después usa imágenes reales del mismo baño (`background-image`): **antes** = `Rebaje Tina Tradicional antes.webp` (tina intacta), **después** = `Rebaje Tina Tradicional.webp` (rebaje instalado). El "antes" se convirtió de PNG 5.7MB a webp 171KB (sharp) por rendimiento.
    - ✅ **Hecho: productos, accesorios y kits** — ahora vienen de **WooCommerce** (imágenes, nombres y **precios reales**) y se renderizan con `ProductoCard`. (Reemplaza `AccessoryCard`/`public/images/accesorios`.)
    - ✅ **Hecho: blog** — tarjetas y posts usan la **imagen destacada real** de WordPress (ver punto del blog abajo).
-   - ⏳ **Pendiente:** solo **prensa** (`Prensa`) sigue con placeholders. Fuente: `../Imagenes de la pagina vieja/imagenes_descargadas/`.
+   - ✅ **Hecho: prensa** (`Prensa`) — 5 logos reales en `public/images/prensa/`, datos en `src/data/prensa.ts`.
+   - ✅ **Imágenes reales completas.** No quedan secciones con placeholders de imagen.
 2. **✅ Precios reales (resuelto).** Productos/accesorios/kits ahora usan los **precios de WooCommerce** (se acabaron los provisionales). El catálogo, las fichas y la vista rápida los usan. El **Spa XL** queda "a medida" (sin precio fijo, deriva a cotizar).
 4. **✅ Blog migrado desde WordPress.** Se importaron **50 entradas reales** (reemplazando los 3 stubs) con la API REST de `duchasegura.cl`. Cada post es un `.md` en `src/content/blog/<slug>.md` (frontmatter + HTML del cuerpo, renderizado con `set:html`) e imágenes en `public/images/blog/<slug>/`.
    - **Re-sincronizar / traer nuevos posts:** `scripts/import-blog.mjs`. Requiere credenciales por entorno (NO en el repo): `$env:WP_USER` y `$env:WP_APP_PASSWORD` (contraseña de aplicación de WordPress). Reescribe los `.md` y baja imágenes nuevas.
@@ -99,6 +114,10 @@ Sitio Web/
 5. **✅ Página `/convenios` rediseñada.** Tarjetas (`ConvenioCard`) con los **12 convenios reales** del WP (logo, % de descuento, beneficiarios, precios/condiciones, zona y vigencia). Datos en `src/data/convenios.ts` (interfaz ampliada: `name, logo, beneficiarios, descuento, detalle[], zona?, vigencia?`). El marquee de la home (`ConveniosMarquee`) ahora muestra los 12 logos. Nota: `DISCOUNTS` en `lib/pricing` sigue usándose **solo** en la calculadora (no en /convenios).
 6. **Pagos online (futuro).** Todo el andamiaje está reservado y documentado en [`docs/PAYMENTS.md`](PAYMENTS.md): pasar a `output` con adapter Node, implementar `src/lib/payments/<proveedor>.ts`, endpoints en `src/pages/api/`, página `/checkout`. Candidatos en Chile: Webpay/Transbank, Mercado Pago, Flow, Khipu.
 7. **Poster del video (opcional):** si se cambia el video, regenerar el poster (hoy se extrajo con un script headless puntual; no quedó herramienta instalada).
+8. **⏳ Reseñas de Google (DIFERIDO — retomar otro día).** Los 4 testimonios de `src/data/testimonios.ts` son **ficticios** (placeholders). El cliente quiere usar las reseñas **reales** de Google (perfil: link `https://share.google/Byq8WeqhhDqYszZIb`).
+   - **Hallazgo:** no existe una API **gratuita y confiable** para esto. Google Places API exige cuenta con *billing* y solo devuelve **5** reseñas que elige Google; las APIs de terceros (SerpApi/Outscraper) son **de pago**; scrapear Maps está bloqueado y va contra ToS. Como el sitio es **estático** (sin backend), no hay llamada a API en runtime de todos modos.
+   - **Plan acordado (gratis y robusto): captura manual.** El cliente envía **capturas o el texto** de las reseñas; se transcriben a `testimonios.ts`. Antes de cargarlas, **ampliar la interfaz `Testimonio`** para incluir `rating` (estrellas), `date` y `source: 'Google'`, y mostrar estrellas + badge "Reseña de Google" en `Testimonios.astro` para dar aspecto de reseña verificada.
+   - Se creó y borró la rama vacía `review` (no llegó a haber cambios).
 
 ## 7. Documentos de referencia
 
@@ -109,15 +128,22 @@ Sitio Web/
 
 ## 8. Historial de commits (resumen)
 
-Migración en 17 tareas + ajustes de UI. Los últimos commits (más reciente arriba):
+Migración en 17 tareas + ajustes de UI + catálogo WooCommerce. Los últimos commits (más reciente arriba):
 
 ```
-c1acbbb feat(home): poster del video
-3e1f754 fix(home): tarjeta de video con tamaño 0 (margin:auto en grid)
-d7175bd fix(home): tarjeta de video a 9:16 sin recorte
-0aa8aa4 fix(home): overlay del video se oculta al reproducir
-9c38c06 feat(home): video real + assets de convenios versionados
-ebf7c6a feat(ui): logo 85px, h1 hero 45px, logos reales de convenios
-f9c67ac chore: retirar legacy/index.html
-... (ver `git log` para el detalle completo de las 17 tareas de migración)
+e6d5b67 fix(icons): logo de WhatsApp relleno + íconos de redes en el footer
+1c8e192 style(ficha,card): subtítulos de ficha 26px + precio de tarjeta en azul
+a34efd8 style: títulos calculadora y prefooter a 55px + imagen del modal full-left
+1316b75 feat: ajustes — prensa real, productos relacionados, vista rápida ampliada
+f3ccc65 feat(productos): catálogo desde WooCommerce + fichas /producto/<slug> + vista rápida
+68ce92e fix(footer): "Términos y condiciones" → /terminos-y-condiciones-ducha-segura/
+4f6ab07 feat(accion-social): rediseño completo con el lineamiento del sitio
+ae40dec feat(convenios): rediseñar /convenios con los 12 convenios reales del WordPress
+cc7ec03 feat(paginas): portar /terminos-y-condiciones y /accion-social desde WordPress
+7a5c3c3 fix(seo): slug /rebaje → /rebaje-de-tina (URL indexada en WordPress)
+a85b14f feat(carrito): thumbnails reales + agregar accesorios desde el drawer (+2 fix carrito)
+467fa96 feat(catalogo,rebaje): layout destacado del Spa XL (2 arriba + featured full-width)
+dc64247 feat(nav): reorganizar menú — Catálogo ▾ (Accesorios, Kits)
+58583f8 style: navbar a 85px y topbar a 35px (desktop)
+c1acbbb feat(home): poster del video  ·  (… ver `git log` para el detalle completo)
 ```
