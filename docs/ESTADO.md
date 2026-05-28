@@ -52,7 +52,9 @@ Sitio Web/
 └─ docs/           ESTADO.md (este archivo) · PAYMENTS.md · superpowers/specs · superpowers/plans
 ```
 
-**Rutas:** `/` · `/catalogo` (filtro: Todos/Rebajes/Kits/Accesorios) · `/rebajes` · `/kits` · `/accesorios` · `/convenios` · `/blog` · `/blog/<slug>` · `404`.
+**Rutas:** `/` · `/catalogo` (filtro: Todos/Rebajes/Kits/Accesorios) · `/rebaje` · `/kits` · `/accesorios` · `/convenios` · `/blog` (listado) · **`/<slug>` (posts del blog, en la RAÍZ)** · `404`.
+
+> **Blog — URLs:** los posts se sirven en la **raíz** `/<slug>/` (vía `src/pages/[slug].astro`), igual que en el WordPress original, para **preservar la indexación**. El listado vive en `/blog`. Las páginas estáticas (`/rebaje`, `/accesorios`, etc.) tienen prioridad sobre la ruta dinámica.
 
 **Menú (`NAV` en `src/data/site.ts`):** Inicio · **Rebajes ▾ (→ Kits)** · Accesorios · Blog · Convenios. **`/catalogo` NO va en el menú** (decisión del cliente); se llega vía los CTA "Ver todo el catálogo" (home `ProductosTeaser`, `PrefooterCta`). El desplegable es CSS-only (hover/focus en desktop; subítems indentados en el drawer móvil). **Taxonomía:** Rebajes = `products.ts`; Accesorios = `accesorios.ts` (7 reales); Kits = `kits.ts` (4: kit rebaje+barra, kit cortina, set antideslizante, rebaje con puerta estanca). Kits y accesorios comparten `AccessoryCard`.
 
@@ -80,10 +82,15 @@ Sitio Web/
 1. **Imágenes reales de producto/secciones.**
    - ✅ **Hecho: tarjetas de producto** (`ProductCard`). Las 3 (Tradicional, Jacuzzi, Spa XL) usan imágenes reales optimizadas con el componente `<Image>` de Astro. Fuentes en `src/assets/productos/`; mapeo `id → { src, fit, alt }` en `src/data/products-media.ts` (con fallback al placeholder para productos sin foto). Spec/plan: `docs/superpowers/{specs,plans}/2026-05-28-imagenes-reales-productos*`.
    - ✅ **Hecho: accesorios y kits** (`AccessoryCard`). Imágenes reales vía `<img>` desde `public/images/accesorios/<carpeta>/` (campo `image` + `fit` en los datos). Ver punto de **precios provisionales** abajo.
-   - ⏳ **Pendiente:** hero (`[FOTO BAÑO ACCESIBLE]`), blog (`BlogCard`) y prensa (`Prensa`) siguen con placeholders de texto. Fuente: `../Imagenes de la pagina vieja/imagenes_descargadas/`. Patrón: fotos pesadas → `src/assets/` + `<Image>`; logos/íconos chicos → `public/images/` + `<img>`.
+   - ✅ **Hecho: blog** — las tarjetas y los posts usan la **imagen destacada real** importada de WordPress (ver punto del blog abajo).
+   - ⏳ **Pendiente:** hero (`[FOTO BAÑO ACCESIBLE]`) y prensa (`Prensa`) siguen con placeholders de texto. Fuente: `../Imagenes de la pagina vieja/imagenes_descargadas/`. Patrón: fotos pesadas → `src/assets/` + `<Image>`; logos/íconos chicos → `public/images/` + `<img>`.
 2. **⚠️ Precios provisionales de accesorios y kits.** `src/data/accesorios.ts` y `src/data/kits.ts` traen precios **temporales** (marcados con `// TODO precio provisional`). **Confirmar/corregir antes de desplegar.**
 3. **Nombres de archivo de imágenes de accesorios = frágiles.** Algunas imágenes están con nombres de exportación genéricos (`Mesa-de-trabajo-1-copia-N.png`); las rutas en los datos apuntan a esos nombres exactos. Si se vuelven a exportar/renombrar, las rutas se rompen. Recomendado: renombrar a nombres estables (kebab-case) por accesorio y actualizar los `image` una sola vez.
-4. **Textos del blog.** Los 3 artículos en `src/content/blog/*.md` son stubs ("Contenido en preparación"). Falta el contenido real (el cliente lo aporta). Agregar un artículo nuevo = crear un `.md` con el frontmatter (title, cat, date, excerpt, label, bg).
+4. **✅ Blog migrado desde WordPress.** Se importaron **50 entradas reales** (reemplazando los 3 stubs) con la API REST de `duchasegura.cl`. Cada post es un `.md` en `src/content/blog/<slug>.md` (frontmatter + HTML del cuerpo, renderizado con `set:html`) e imágenes en `public/images/blog/<slug>/`.
+   - **Re-sincronizar / traer nuevos posts:** `scripts/import-blog.mjs`. Requiere credenciales por entorno (NO en el repo): `$env:WP_USER` y `$env:WP_APP_PASSWORD` (contraseña de aplicación de WordPress). Reescribe los `.md` y baja imágenes nuevas.
+   - **Imágenes de Google expiradas:** 4 posts traían imágenes de `lh*.googleusercontent.com` ya caídas en el origen; se removieron esos `<figure>`. Los embeds de YouTube se conservan.
+   - **⚠️ Video testimonial pesado:** un post (`ducha-segura-en-medios…`) incluye `IMG_6508.mov` (**~40 MB**) descargado a `public/images/blog/.../`. Conviene **convertirlo a mp4 o subirlo a YouTube** y reemplazar el `<video>` (reduce el peso del repo y mejora compatibilidad).
+   - **⚠️ Canonical www vs no-www:** `astro.config.mjs` usa `site: 'https://www.duchasegura.cl'` (**con www**) pero las URLs indexadas del WordPress son **sin www** (`https://duchasegura.cl/<slug>/`). Definir el host canónico y, si corresponde, cambiar `site` a no-www + configurar el redirect 301 en Hostinger para no dividir señales de SEO.
 5. **Página `/convenios` — bloque de descuentos por banco.** Arriba lista "Santander 15% · BCI 8% · BancoEstado 5%" (viene de `DISCOUNTS` en `lib/pricing`, usado también por la calculadora). No está alineado 1:1 con los 8 logos reales. Revisar si se ajusta.
 6. **Pagos online (futuro).** Todo el andamiaje está reservado y documentado en [`docs/PAYMENTS.md`](PAYMENTS.md): pasar a `output` con adapter Node, implementar `src/lib/payments/<proveedor>.ts`, endpoints en `src/pages/api/`, página `/checkout`. Candidatos en Chile: Webpay/Transbank, Mercado Pago, Flow, Khipu.
 7. **Poster del video (opcional):** si se cambia el video, regenerar el poster (hoy se extrajo con un script headless puntual; no quedó herramienta instalada).
