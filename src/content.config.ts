@@ -7,8 +7,11 @@ const blog = defineCollection({
     title: z.string(),
     cat: z.string(),
     date: z.string(),
+    pubdate: z.string().optional(),       // ISO, para ordenar por fecha real
     excerpt: z.string(),
-    label: z.string(),
+    seoDescription: z.string().optional(), // meta description (Yoast)
+    image: z.string().optional(),          // ruta local de la imagen destacada
+    label: z.string().default(''),         // placeholder legacy (fallback sin imagen)
     bg: z.string().default('#cdd5d8'),
     draft: z.boolean().default(false),
   }),
