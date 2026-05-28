@@ -5,16 +5,18 @@ import ProductCard from '../components/ProductCard.astro';
 import AccessoryCard from '../components/AccessoryCard.astro';
 import { PRODUCTS } from '../data/products';
 import { ACCESORIOS } from '../data/accesorios';
+import { KITS } from '../data/kits';
 ---
 <BaseLayout title="Catálogo — Ducha Segura®" description="Catálogo completo de rebajes de tina y accesorios de seguridad para baño.">
   <section class="section">
     <div class="container">
       <div class="section-head"><h1 class="h2">Catálogo</h1><p class="lead">Rebajes y accesorios para un baño accesible.</p></div>
-      <CategoryTabs categories={[{id:'rebajes',label:'Rebajes'},{id:'accesorios',label:'Accesorios'}]} />
+      <CategoryTabs categories={[{id:'rebajes',label:'Rebajes'},{id:'kits',label:'Kits'},{id:'accesorios',label:'Accesorios'}]} />
       <div class="product-grid">
         {PRODUCTS.map(p => <div data-cat-item="rebajes"><ProductCard product={p} /></div>)}
       </div>
       <div class="acc-grid" style="margin-top:32px">
+        {KITS.map(k => <div data-cat-item="kits"><AccessoryCard accesorio={k} /></div>)}
         {ACCESORIOS.map(a => <div data-cat-item="accesorios"><AccessoryCard accesorio={a} /></div>)}
       </div>
     </div>

@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AccessoryCard from '../components/AccessoryCard.astro';
+import { KITS } from '../data/kits';
+---
+<BaseLayout title="Kits — Ducha Segura®" description="Kits de rebaje de tina: combos de rebaje con barra, cortina, antideslizante y puerta estanca.">
+  <section class="section">
+    <div class="container">
+      <div class="section-head"><h1 class="h2">Kits</h1><p class="lead">Combos listos para un baño seguro.</p></div>
+      <div class="acc-grid">{KITS.map(k => <AccessoryCard accesorio={k} />)}</div>
+    </div>
+  </section>
+</BaseLayout>
