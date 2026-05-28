@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths, Page } from 'astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = (await getCollection('blog', ({ data }) => !data.draft))
+    .sort((a, b) => +new Date(b.data.pubdate ?? 0) - +new Date(a.data.pubdate ?? 0));
+  return paginate(posts, { pageSize: 9 });
+}) satisfies GetStaticPaths;
+
+interface Props { page: Page<import('astro:content').CollectionEntry<'blog'>>; }
+const { page } = Astro.props;
+
+const pageUrl = (n: number) => (n === 1 ? '/blog' : `/blog/${n}`);
+const title = page.currentPage > 1
+  ? `Blog (página ${page.currentPage}) — Ducha Segura®`
+  : 'Blog — Ducha Segura®';
+---
+<BaseLayout title={title} description="Guías sobre baño accesible, reformas y seguridad para adultos mayores en Chile.">
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head"><h1 class="h2">Blog</h1><p class="lead">Guías sobre baño accesible y seguridad.</p></div>
+      <div class="blog-grid">
+        {page.data.map(post => (
+          <BlogCard
+            slug={post.id}
+            cat={post.data.cat}
+            date={post.data.date}
+            title={post.data.title}
+            excerpt={post.data.excerpt}
+            label={post.data.label}
+            bg={post.data.bg}
+            image={post.data.image}
+          />
+        ))}
+      </div>
+
+      {page.lastPage > 1 && (
+        <nav class="pager" aria-label="Paginación del blog">
+          {page.url.prev
+            ? <a class="pager__btn" href={page.url.prev} rel="prev">← Anterior</a>
+            : <span class="pager__btn pager__btn--off">← Anterior</span>}
+
+          <ul class="pager__nums">
+            {Array.from({ length: page.lastPage }, (_, i) => i + 1).map(n => (
+              <li>
+                <a
+                  class:list={['pager__num', { 'is-current': n === page.currentPage }]}
+                  href={pageUrl(n)}
+                  aria-current={n === page.currentPage ? 'page' : undefined}
+                >{n}</a>
+              </li>
+            ))}
+          </ul>
+
+          {page.url.next
+            ? <a class="pager__btn" href={page.url.next} rel="next">Siguiente →</a>
+            : <span class="pager__btn pager__btn--off">Siguiente →</span>}
+        </nav>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .pager{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:40px}
+  .pager__nums{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+  .pager__btn,.pager__num{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 12px;border:1px solid var(--ds-border);border-radius:999px;background:#fff;font-size:14px;font-weight:600;color:var(--ds-text-strong);transition:background .15s,color .15s,border-color .15s}
+  .pager__btn:hover,.pager__num:hover{background:var(--ds-bg-alt);color:var(--ds-blue)}
+  .pager__num.is-current{background:var(--ds-blue);border-color:var(--ds-blue);color:#fff}
+  .pager__btn--off{opacity:.4;pointer-events:none}
+  @media (max-width:768px){.pager__btn{min-width:auto}}
+</style>
