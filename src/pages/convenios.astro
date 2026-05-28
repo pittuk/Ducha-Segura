@@ -1,29 +1,35 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ConvenioCard from '../components/ConvenioCard.astro';
 import { CONVENIOS } from '../data/convenios';
-import { DISCOUNTS, BANCO_LABELS } from '../lib/pricing';
-const bancos = (['santander','bci','estado'] as const).map(b => ({ label: BANCO_LABELS[b], disc: DISCOUNTS[b] }));
+import { SITE } from '../data/site';
 ---
-<BaseLayout title="Convenios y descuentos — Ducha Segura®" description="Convenios con bancos, AFP, isapres y municipios. Descuentos en rebajes de tina.">
+<BaseLayout title="Convenios y descuentos — Ducha Segura®" description="Convenios vigentes con bancos, seguros, cajas de compensación y municipios. Descuentos en el rebaje de tina.">
   <section class="section">
     <div class="container">
-      <div class="section-head"><h1 class="h2">Convenios</h1><p class="lead">Descuentos vigentes con bancos, AFP, isapres y municipios.</p></div>
-      <ul class="conv-banks">
-        {bancos.map(b => <li><strong>{b.label}</strong> — {b.disc}% de descuento</li>)}
-      </ul>
-      <div class="conv-grid">
-        {CONVENIOS.map(c => (
-          <div class="convenio-chip"><img src={c.logo} alt={c.name} loading="lazy" /></div>
-        ))}
+      <div class="section-head">
+        <h1 class="h2">Convenios vigentes</h1>
+        <p class="lead">Aprovecha descuentos únicos con bancos, seguros, cajas de compensación y municipios. Los descuentos no son acumulables entre sí.</p>
       </div>
-      <p class="conv-note">Presenta tu tarjeta o credencial del convenio al cotizar. Descuentos no acumulables salvo indicación.</p>
+
+      <div class="conv-grid">
+        {CONVENIOS.map(c => <ConvenioCard convenio={c} />)}
+      </div>
+
+      <div class="conv-cta">
+        <p>Los descuentos aplican junto al rebaje de tina y no son acumulables entre sí. Presenta tu tarjeta o credencial del convenio al cotizar.</p>
+        <a href={SITE.whatsappUrl} target="_blank" rel="noopener" class="btn btn--primary btn--lg">
+          <svg class="ic"><use href="#i-whatsapp" /></svg>
+          <span>Cotiza tu servicio</span>
+        </a>
+      </div>
     </div>
   </section>
+
   <style>
-    .conv-banks{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;margin:0 0 28px}
-    .conv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
-    .convenio-chip{display:flex;align-items:center;justify-content:center;border:1px solid var(--ds-border);border-radius:var(--ds-radius);padding:20px;min-height:96px}
-    .convenio-chip img{max-height:60px;max-width:140px;width:auto;object-fit:contain}
-    .conv-note{margin-top:24px;font-size:14px;color:var(--ds-text)}
+    .conv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+    @media (max-width:768px){.conv-grid{grid-template-columns:1fr}}
+    .conv-cta{margin-top:40px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+    .conv-cta p{max-width:640px;margin:0;font-size:14px;color:var(--ds-text)}
   </style>
 </BaseLayout>

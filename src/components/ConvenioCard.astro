@@ -1,0 +1,41 @@
+---
+import type { Convenio } from '../data/convenios';
+interface Props { convenio: Convenio; }
+const { convenio: c } = Astro.props;
+---
+<article class="conv-card">
+  <div class="conv-card__head">
+    <div class="conv-card__logo"><img src={c.logo} alt={c.name} loading="lazy" /></div>
+    <span class="conv-card__badge">{c.descuento} dcto.</span>
+  </div>
+  <h3 class="conv-card__name">{c.name}</h3>
+  <p class="conv-card__benef">{c.beneficiarios}</p>
+  <ul class="conv-card__detalle">
+    {c.detalle.map(d => (
+      <li><svg class="ic"><use href="#i-check" /></svg><span>{d}</span></li>
+    ))}
+  </ul>
+  {(c.zona || c.vigencia) && (
+    <div class="conv-card__foot">
+      {c.zona && <span class="conv-card__meta"><svg class="ic"><use href="#i-pin" /></svg>{c.zona}</span>}
+      {c.vigencia && <span class="conv-card__meta">Vigente {c.vigencia}</span>}
+    </div>
+  )}
+</article>
+
+<style>
+  .conv-card{background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);box-shadow:var(--ds-shadow);padding:22px;display:flex;flex-direction:column;gap:12px;transition:transform .2s,box-shadow .2s}
+  .conv-card:hover{transform:translateY(-3px);box-shadow:var(--ds-shadow-lg)}
+  .conv-card__head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .conv-card__logo{height:46px;display:flex;align-items:center}
+  .conv-card__logo img{max-height:46px;max-width:150px;width:auto;object-fit:contain}
+  .conv-card__badge{flex-shrink:0;background:var(--ds-blue);color:#fff;font-family:var(--ds-tnum);font-weight:700;font-size:14px;padding:5px 12px;border-radius:999px;white-space:nowrap}
+  .conv-card__name{margin:0;font-family:var(--ds-display);font-weight:700;font-size:18px;line-height:1.2;color:var(--ds-text-strong);letter-spacing:-.01em}
+  .conv-card__benef{margin:0;font-size:13px;font-weight:600;color:var(--ds-blue)}
+  .conv-card__detalle{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .conv-card__detalle li{display:flex;gap:8px;font-size:13px;line-height:1.45;color:var(--ds-text)}
+  .conv-card__detalle .ic{width:15px;height:15px;min-width:15px;margin-top:2px;stroke-width:2.5;color:var(--ds-blue)}
+  .conv-card__foot{margin-top:auto;padding-top:10px;border-top:1px solid var(--ds-border);display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--ds-text)}
+  .conv-card__meta{display:inline-flex;align-items:center;gap:5px}
+  .conv-card__meta .ic{width:13px;height:13px;color:var(--ds-text)}
+</style>
