@@ -12,9 +12,23 @@ const isActive = (href: string) => href === '/' ? path === '/' : (path === href 
   </a>
 
   <nav class="nav" aria-label="Navegación principal">
-    {NAV.map(item => (
-      <a href={item.href} class:list={["nav__link", { active: isActive(item.href) }]}>{item.label}</a>
-    ))}
+    {NAV.map(item => {
+      const itemActive = isActive(item.href) || (item.children?.some(c => isActive(c.href)) ?? false);
+      return item.children ? (
+        <div class="nav__item">
+          <a href={item.href} class:list={["nav__link", { active: itemActive }]} aria-haspopup="true">
+            {item.label}<span class="nav__caret" aria-hidden="true">▾</span>
+          </a>
+          <div class="nav__dropdown" role="menu">
+            {item.children.map(c => (
+              <a href={c.href} class:list={["nav__dropdown-link", { active: isActive(c.href) }]} role="menuitem">{c.label}</a>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <a href={item.href} class:list={["nav__link", { active: itemActive }]}>{item.label}</a>
+      );
+    })}
   </nav>
 
   <div class="header__actions">
@@ -56,7 +70,12 @@ const isActive = (href: string) => href === '/' ? path === '/' : (path === href 
   </div>
   <nav class="menu-drawer__nav">
     {NAV.map(item => (
-      <a href={item.href} class:list={[{ active: isActive(item.href) }]}>{item.label}</a>
+      <>
+        <a href={item.href} class:list={[{ active: isActive(item.href) }]}>{item.label}</a>
+        {item.children?.map(c => (
+          <a href={c.href} class:list={["menu-drawer__sub", { active: isActive(c.href) }]}>{c.label}</a>
+        ))}
+      </>
     ))}
   </nav>
   <div class="menu-drawer__mode">
@@ -88,6 +107,16 @@ img.logo__circle{background:#fff;object-fit:contain}
 .nav__link:hover{color:var(--ds-blue)}
 .nav__link.active{color:var(--ds-blue);font-weight:600}
 .nav__link.active::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ds-blue);border-radius:1px}
+
+/* Dropdown (desktop) — hover/focus, sin JS */
+.nav__item{position:relative;display:flex;align-items:center}
+.nav__caret{font-size:10px;margin-left:5px;display:inline-block;transition:transform .15s}
+.nav__item:hover .nav__caret,.nav__item:focus-within .nav__caret{transform:rotate(180deg)}
+.nav__dropdown{position:absolute;top:100%;left:0;min-width:180px;background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius);box-shadow:var(--ds-shadow-lg);padding:6px;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .15s,transform .15s;z-index:60}
+.nav__item:hover .nav__dropdown,.nav__item:focus-within .nav__dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+.nav__dropdown-link{padding:9px 12px;border-radius:8px;font-size:14px;font-weight:500;color:var(--ds-text-strong);white-space:nowrap;transition:background .15s,color .15s}
+.nav__dropdown-link:hover{background:var(--ds-bg-alt);color:var(--ds-blue)}
+.nav__dropdown-link.active{color:var(--ds-blue)}
 
 .header__actions{display:flex;align-items:center;gap:10px;margin-left:auto}
 @media (max-width:1024px){.header__actions{gap:6px}}
@@ -121,6 +150,8 @@ img.logo__circle{background:#fff;object-fit:contain}
 .menu-drawer__nav a{padding:14px 24px;font-size:16px;font-weight:600;color:var(--ds-text-strong)}
 .menu-drawer__nav a:hover{background:var(--ds-bg-alt);color:var(--ds-blue)}
 .menu-drawer__nav a.active{color:var(--ds-blue);background:var(--ds-bg-alt)}
+.menu-drawer__nav a.menu-drawer__sub{padding-left:42px;font-size:15px;font-weight:500;color:var(--ds-text)}
+.menu-drawer__nav a.menu-drawer__sub::before{content:'└';margin-right:8px;color:var(--ds-text-soft, #9aa)}
 .menu-drawer__mode{padding:20px 24px;border-top:1px solid var(--ds-border)}
 /* Inside the mobile drawer the .mode-toggle should display flex */
 .menu-drawer .mode-toggle{display:flex}
