@@ -6,6 +6,7 @@ import {
   type Tipo, type Ancho, type Banco,
 } from '../lib/pricing';
 import { COMUNAS, type Region } from '../data/comunas';
+import { PRODUCT_MEDIA } from '../data/products-media';
 
 export function initCalculator(): void {
   const select = $('#calcComuna') as HTMLSelectElement | null;
@@ -128,6 +129,7 @@ export function initCalculator(): void {
         variant: `${state.ancho} cm · ${state.comuna}, ${state.region}${discAmt > 0 ? ' · banco ' + state.banco : ''}`,
         unitPrice: final,
         label: `${state.tipo.toUpperCase()} ${state.ancho}`,
+        image: PRODUCT_MEDIA[state.tipo]?.image,
       });
     });
   }

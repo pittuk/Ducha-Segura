@@ -9,6 +9,7 @@ import { clp } from '../lib/format';
 import { escapeHtml } from './dom';
 import { PRODUCTS } from '../data/products';
 import { ACCESORIOS } from '../data/accesorios';
+import { PRODUCT_MEDIA } from '../data/products-media';
 import { SITE } from '../data/site';
 
 // --- Module-level state ---
@@ -92,7 +93,9 @@ function renderCart(): void {
 
   const itemsHtml = items.map(i => `
     <div class="cart-item" data-id="${escapeHtml(i.id)}">
-      <div class="cart-item__media"><div class="cart-item__media-l">[${escapeHtml(i.label)}]</div></div>
+      <div class="cart-item__media">${i.image
+        ? `<img class="cart-item__img" src="${escapeHtml(i.image)}" alt="${escapeHtml(i.name)}" loading="lazy">`
+        : `<div class="cart-item__media-l">${escapeHtml(i.label)}</div>`}</div>
       <div class="cart-item__body">
         <div class="cart-item__name">${escapeHtml(i.name)}</div>
         <div class="cart-item__variant">${escapeHtml(i.variant)}</div>
@@ -113,16 +116,25 @@ function renderCart(): void {
     </div>
   `).join('');
 
-  const upsell = !Cart.hasItem(items, 'acc-barra60') ? `
-    <div class="upsell">
-      <div>
-        <div class="upsell__t">Suma una barra de apoyo</div>
-        <div class="upsell__s">por solo $34.990</div>
+  // "Complementa tu rebaje": accesorios aún no agregados (cuando ya hay un rebaje en la cotización).
+  const inCart = new Set(items.map(i => i.id));
+  const hasRebaje = items.some(i => /^(prod|cfg|calc)-/.test(i.id));
+  const suggestions = ACCESORIOS.filter(a => !inCart.has('acc-' + a.id));
+  const suggestHtml = (hasRebaje && suggestions.length) ? `
+    <div class="cart-suggest">
+      <div class="cart-suggest__h">Complementa tu rebaje</div>
+      <div class="cart-suggest__row">
+        ${suggestions.map(a => `
+          <article class="cart-suggest__card">
+            <div class="cart-suggest__media">${a.image ? `<img src="${escapeHtml(a.image)}" alt="${escapeHtml(a.name)}" loading="lazy">` : ''}</div>
+            <div class="cart-suggest__name">${escapeHtml(a.name)}</div>
+            <div class="cart-suggest__price">$${clp(a.price)}</div>
+            <button class="cart-suggest__add" data-add-acc="${escapeHtml(a.id)}" aria-label="Agregar ${escapeHtml(a.name)} a la cotización">+ Agregar</button>
+          </article>`).join('')}
       </div>
-      <button data-upsell>+ Agregar</button>
     </div>` : '';
 
-  drawerBody.innerHTML = itemsHtml + upsell;
+  drawerBody.innerHTML = itemsHtml + suggestHtml;
 
   const sub = Cart.subtotal(items);
   if (drawerSubtotal) drawerSubtotal.textContent = '$' + clp(sub);
@@ -153,7 +165,7 @@ function bindDocumentClick(): void {
     const addP = target.closest<HTMLElement>('[data-add-product]');
     if (addP) {
       const p = PRODUCTS.find(x => x.id === addP.dataset.addProduct);
-      if (p) add({ id: 'prod-' + p.id, name: p.name, variant: 'Configurar variante en cotización', unitPrice: p.priceFrom, label: p.label });
+      if (p) add({ id: 'prod-' + p.id, name: p.name, variant: p.medidas, unitPrice: p.priceFrom, label: p.label, image: PRODUCT_MEDIA[p.id]?.image });
       return;
     }
 
@@ -161,7 +173,7 @@ function bindDocumentClick(): void {
     const addA = target.closest<HTMLElement>('[data-add-acc]');
     if (addA) {
       const a = ACCESORIOS.find(x => x.id === addA.dataset.addAcc);
-      if (a) add({ id: 'acc-' + a.id, name: a.name, variant: a.sub, unitPrice: a.price, label: a.label });
+      if (a) add({ id: 'acc-' + a.id, name: a.name, variant: a.sub, unitPrice: a.price, label: a.label, image: a.image });
       return;
     }
 
@@ -183,12 +195,6 @@ function bindDocumentClick(): void {
       save();
       renderCart();
       return;
-    }
-
-    // [data-upsell]
-    if (target.closest('[data-upsell]')) {
-      const a = ACCESORIOS[0];
-      add({ id: 'acc-' + a.id, name: a.name, variant: a.sub, unitPrice: a.price, label: a.label });
     }
   });
 }

@@ -3,6 +3,7 @@
 import { $, $$ } from './dom';
 import { clp } from '../lib/format';
 import { basePrice, type Tipo, type Ancho } from '../lib/pricing';
+import { PRODUCT_MEDIA } from '../data/products-media';
 
 export function initConfigurator(): void {
   const root = $<HTMLElement>('#cfgPreview');
@@ -129,6 +130,7 @@ export function initConfigurator(): void {
       variant: `${state.ancho} cm · color ${colorName}`,
       unitPrice: basePrice(state.tipo as Tipo, state.ancho as Ancho),
       label: `${state.tipo.toUpperCase()} ${state.ancho}`,
+      image: PRODUCT_MEDIA[state.tipo]?.image,
     });
   });
 

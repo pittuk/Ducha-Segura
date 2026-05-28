@@ -3,6 +3,7 @@ export interface CartItem {
   name: string;
   variant: string;
   label: string;
+  image?: string;      // ruta de imagen en public/ (thumbnail); si falta, cae al label
   unitPrice: number;   // precio unitario (checkout-ready)
   qty: number;
 }
