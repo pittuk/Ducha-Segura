@@ -4,7 +4,7 @@ export interface NavItem { label: string; href: string; children?: NavItem[]; }
 // Se accede vía los CTA "Ver todo el catálogo" (home/ProductosTeaser, PrefooterCta).
 export const NAV: NavItem[] = [
   { label: 'Inicio', href: '/' },
-  { label: 'Rebajes', href: '/rebajes', children: [
+  { label: 'Rebajes', href: '/rebaje', children: [
     { label: 'Kits', href: '/kits' },
   ] },
   { label: 'Accesorios', href: '/accesorios' },
