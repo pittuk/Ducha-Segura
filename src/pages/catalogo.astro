@@ -6,6 +6,10 @@ import AccessoryCard from '../components/AccessoryCard.astro';
 import { PRODUCTS } from '../data/products';
 import { ACCESORIOS } from '../data/accesorios';
 import { KITS } from '../data/kits';
+// Rebajes con el mismo layout que la home: 2 regulares + Spa XL (featured) a todo el ancho.
+const featured = PRODUCTS.filter(p => p.featured).slice(0, 1);
+const featuredIds = new Set(featured.map(p => p.id));
+const regular = PRODUCTS.filter(p => !featuredIds.has(p.id));
 ---
 <BaseLayout title="Catálogo — Ducha Segura®" description="Catálogo completo de rebajes de tina y accesorios de seguridad para baño.">
   <section class="section">
@@ -13,7 +17,10 @@ import { KITS } from '../data/kits';
       <div class="section-head"><h1 class="h2">Catálogo</h1><p class="lead">Rebajes y accesorios para un baño accesible.</p></div>
       <CategoryTabs categories={[{id:'rebajes',label:'Rebajes'},{id:'kits',label:'Kits'},{id:'accesorios',label:'Accesorios'}]} />
       <div class="product-grid">
-        {PRODUCTS.map(p => <div data-cat-item="rebajes"><ProductCard product={p} /></div>)}
+        {regular.map(p => <div data-cat-item="rebajes"><ProductCard product={p} /></div>)}
+      </div>
+      <div class="product-grid product-grid--single">
+        {featured.map(p => <div data-cat-item="rebajes"><ProductCard product={p} /></div>)}
       </div>
       <div class="acc-grid" style="margin-top:32px">
         {KITS.map(k => <div data-cat-item="kits"><AccessoryCard accesorio={k} /></div>)}
@@ -25,4 +32,11 @@ import { KITS } from '../data/kits';
     import { initCatalogFilter } from '../scripts/catalog-filter';
     document.addEventListener('astro:page-load', initCatalogFilter);
   </script>
+
+  <style>
+    /* Colapsa una grilla cuando el filtro dejó todos sus ítems ocultos (evita huecos). */
+    .product-grid:not(:has([data-cat-item]:not([hidden]))),
+    .product-grid--single:not(:has([data-cat-item]:not([hidden]))),
+    .acc-grid:not(:has([data-cat-item]:not([hidden]))){display:none}
+  </style>
 </BaseLayout>
