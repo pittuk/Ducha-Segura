@@ -52,9 +52,12 @@ Sitio Web/
 └─ docs/           ESTADO.md (este archivo) · PAYMENTS.md · superpowers/specs · superpowers/plans
 ```
 
-**Rutas:** `/` · `/catalogo` (filtro: Todos/Rebajes/Kits/Accesorios) · `/rebaje-de-tina` · `/kits` · `/accesorios` · `/convenios` · `/blog` (listado) · **`/<slug>` (posts del blog, en la RAÍZ)** · `404`.
+**Rutas:** `/` · `/catalogo` (filtro: Todos/Rebajes/Kits/Accesorios) · `/rebaje-de-tina` · `/kits` · `/accesorios` · `/convenios` · `/blog` (listado) · `/terminos-y-condiciones-ducha-segura` · `/accion-social` · **`/<slug>` (posts del blog, en la RAÍZ)** · `404`.
 
-> **Slugs alineados con WordPress** (para preservar indexación): `/rebaje-de-tina`, `/accesorios`, `/convenios`, `/blog` y `/` coinciden con los slugs reales del WP. `/kits` y `/catalogo` son **nuevos** (no existían en WP). Páginas WP **aún no portadas a Astro**: `/cotizar/`, `/accion-social/`, `/finalizar-cotizacion/`, `/terminos-y-condiciones-ducha-segura/`, `/gracias-por-contactarnos/`.
+> **Slugs alineados con WordPress** (para preservar indexación): `/rebaje-de-tina`, `/accesorios`, `/convenios`, `/blog`, `/terminos-y-condiciones-ducha-segura`, `/accion-social` y `/` coinciden con los slugs reales del WP. `/kits` y `/catalogo` son **nuevos** (no existían en WP).
+>
+> **Páginas WP portadas con contenido real** (vía `scripts/import-pages.mjs`, extrae el contenido de Elementor y lo limpia → `src/data/paginas/<slug>.{html,meta.json}`, renderizado con el componente `Prose`): `/terminos-y-condiciones-ducha-segura`, `/accion-social`.
+> **Páginas WP aún pendientes:** `/cotizar/`, `/finalizar-cotizacion/`, `/gracias-por-contactarnos/`.
 
 > **Blog — URLs:** los posts se sirven en la **raíz** `/<slug>/` (vía `src/pages/[slug].astro`), igual que en el WordPress original, para **preservar la indexación**. El listado vive en `/blog`. Las páginas estáticas (`/rebaje-de-tina`, `/accesorios`, etc.) tienen prioridad sobre la ruta dinámica.
 

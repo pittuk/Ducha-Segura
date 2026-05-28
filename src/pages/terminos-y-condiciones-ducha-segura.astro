@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Prose from '../components/Prose.astro';
+import html from '../data/paginas/terminos-y-condiciones-ducha-segura.html?raw';
+import meta from '../data/paginas/terminos-y-condiciones-ducha-segura.meta.json';
+---
+<BaseLayout title={`${meta.title} — Ducha Segura®`} description={meta.description}>
+  <section class="section">
+    <div class="container" style="max-width:820px">
+      <Prose html={html} />
+    </div>
+  </section>
+</BaseLayout>

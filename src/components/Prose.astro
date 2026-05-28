@@ -1,0 +1,21 @@
+---
+// Renderiza HTML enriquecido (set:html) con la tipografía del sitio.
+// Los selectores internos usan :global() porque el HTML se inyecta (no es del template).
+interface Props { html: string; }
+const { html } = Astro.props;
+---
+<div class="prose" set:html={html} />
+
+<style>
+  .prose{font-size:17px;line-height:1.7;color:var(--ds-text)}
+  .prose :global(h1){font-family:var(--ds-display);font-weight:800;font-size:34px;line-height:1.12;color:var(--ds-text-strong);letter-spacing:-.02em;margin:0 0 16px}
+  .prose :global(h2){font-family:var(--ds-display);font-weight:700;font-size:26px;line-height:1.2;color:var(--ds-text-strong);margin:32px 0 12px;letter-spacing:-.01em}
+  .prose :global(h3){font-family:var(--ds-display);font-weight:700;font-size:19px;color:var(--ds-text-strong);margin:22px 0 8px}
+  .prose :global(p){margin:0 0 16px}
+  .prose :global(ul),.prose :global(ol){margin:0 0 16px;padding-left:22px;display:flex;flex-direction:column;gap:8px}
+  .prose :global(a){color:var(--ds-blue);text-decoration:underline}
+  .prose :global(strong),.prose :global(b){color:var(--ds-text-strong)}
+  .prose :global(img){max-width:100%;height:auto;border-radius:var(--ds-radius-lg);margin:18px 0;display:block}
+  .prose :global(figure){margin:20px 0}
+  .prose :global(iframe){max-width:100%;border-radius:var(--ds-radius)}
+</style>
