@@ -52,11 +52,13 @@ Sitio Web/
 └─ docs/           ESTADO.md (este archivo) · PAYMENTS.md · superpowers/specs · superpowers/plans
 ```
 
-**Rutas:** `/` · `/catalogo` (filtro: Todos/Rebajes/Kits/Accesorios) · `/rebaje` · `/kits` · `/accesorios` · `/convenios` · `/blog` (listado) · **`/<slug>` (posts del blog, en la RAÍZ)** · `404`.
+**Rutas:** `/` · `/catalogo` (filtro: Todos/Rebajes/Kits/Accesorios) · `/rebaje-de-tina` · `/kits` · `/accesorios` · `/convenios` · `/blog` (listado) · **`/<slug>` (posts del blog, en la RAÍZ)** · `404`.
 
-> **Blog — URLs:** los posts se sirven en la **raíz** `/<slug>/` (vía `src/pages/[slug].astro`), igual que en el WordPress original, para **preservar la indexación**. El listado vive en `/blog`. Las páginas estáticas (`/rebaje`, `/accesorios`, etc.) tienen prioridad sobre la ruta dinámica.
+> **Slugs alineados con WordPress** (para preservar indexación): `/rebaje-de-tina`, `/accesorios`, `/convenios`, `/blog` y `/` coinciden con los slugs reales del WP. `/kits` y `/catalogo` son **nuevos** (no existían en WP). Páginas WP **aún no portadas a Astro**: `/cotizar/`, `/accion-social/`, `/finalizar-cotizacion/`, `/terminos-y-condiciones-ducha-segura/`, `/gracias-por-contactarnos/`.
 
-**Menú (`NAV` en `src/data/site.ts`):** Inicio · Rebajes (`/rebaje`) · **Catálogo ▾ (`/catalogo`) → Accesorios, Kits** · Blog · Convenios. El desplegable es CSS-only (hover/focus en desktop; subítems indentados en el drawer móvil). `/catalogo` también es accesible vía los CTA "Ver todo el catálogo" (home `ProductosTeaser`, `PrefooterCta`). **Taxonomía:** Rebajes = `products.ts`; Accesorios = `accesorios.ts` (7 reales); Kits = `kits.ts` (4: kit rebaje+barra, kit cortina, set antideslizante, rebaje con puerta estanca). Kits y accesorios comparten `AccessoryCard`.
+> **Blog — URLs:** los posts se sirven en la **raíz** `/<slug>/` (vía `src/pages/[slug].astro`), igual que en el WordPress original, para **preservar la indexación**. El listado vive en `/blog`. Las páginas estáticas (`/rebaje-de-tina`, `/accesorios`, etc.) tienen prioridad sobre la ruta dinámica.
+
+**Menú (`NAV` en `src/data/site.ts`):** Inicio · Rebajes (`/rebaje-de-tina`) · **Catálogo ▾ (`/catalogo`) → Accesorios, Kits** · Blog · Convenios. El desplegable es CSS-only (hover/focus en desktop; subítems indentados en el drawer móvil). `/catalogo` también es accesible vía los CTA "Ver todo el catálogo" (home `ProductosTeaser`, `PrefooterCta`). **Taxonomía:** Rebajes = `products.ts`; Accesorios = `accesorios.ts` (7 reales); Kits = `kits.ts` (4: kit rebaje+barra, kit cortina, set antideslizante, rebaje con puerta estanca). Kits y accesorios comparten `AccessoryCard`.
 
 **Decisiones clave:**
 - **Datos centralizados** en `src/data/`: cambiar un precio/nombre = un solo archivo.
