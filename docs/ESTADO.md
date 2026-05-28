@@ -1,6 +1,6 @@
 # Estado del proyecto — Ducha Segura® (sitio web)
 
-> **Última actualización:** 2026-05-27
+> **Última actualización:** 2026-05-28
 > **Propósito de este documento:** dejar registrado todo lo hecho para retomar mañana con contexto completo.
 
 ---
@@ -75,7 +75,9 @@ Sitio Web/
 
 ## 6. Pendientes (para continuar)
 
-1. **Imágenes reales de producto/secciones.** Hoy el sitio usa placeholders de texto (ej. `[PRODUCTO REBAJE TRADICIONAL]`, `[FOTO BAÑO ACCESIBLE]`). Hay imágenes disponibles en `../Imagenes de la pagina vieja/imagenes_descargadas/` (carpeta hermana, fuera del proyecto). Tarea: copiar las útiles a `public/images/` y sustituir los placeholders en los componentes (ProductCard, AccessoryCard, BlogCard, Prensa, etc.).
+1. **Imágenes reales de producto/secciones.**
+   - ✅ **Hecho: tarjetas de producto** (`ProductCard`). Las 3 (Tradicional, Jacuzzi, Spa XL) usan imágenes reales optimizadas con el componente `<Image>` de Astro. Fuentes en `src/assets/productos/`; mapeo `id → { src, fit, alt }` en `src/data/products-media.ts` (con fallback al placeholder para productos sin foto). Spec/plan: `docs/superpowers/{specs,plans}/2026-05-28-imagenes-reales-productos*`.
+   - ⏳ **Pendiente:** hero (`[FOTO BAÑO ACCESIBLE]`), accesorios (`AccessoryCard`), blog (`BlogCard`) y prensa (`Prensa`) siguen con placeholders de texto. Fuente de imágenes: `../Imagenes de la pagina vieja/imagenes_descargadas/` (carpeta hermana, fuera del proyecto). Patrón recomendado: fotos pesadas → `src/assets/` + `<Image>`; logos/íconos chicos → `public/images/` + `<img>`.
 2. **Textos del blog.** Los 3 artículos en `src/content/blog/*.md` son stubs ("Contenido en preparación"). Falta el contenido real (el cliente lo aporta). Agregar un artículo nuevo = crear un `.md` con el frontmatter (title, cat, date, excerpt, label, bg).
 3. **Página `/convenios` — bloque de descuentos por banco.** Arriba lista "Santander 15% · BCI 8% · BancoEstado 5%" (viene de `DISCOUNTS` en `lib/pricing`, usado también por la calculadora). No está alineado 1:1 con los 8 logos reales. Revisar si se ajusta.
 4. **Pagos online (futuro).** Todo el andamiaje está reservado y documentado en [`docs/PAYMENTS.md`](PAYMENTS.md): pasar a `output` con adapter Node, implementar `src/lib/payments/<proveedor>.ts`, endpoints en `src/pages/api/`, página `/checkout`. Candidatos en Chile: Webpay/Transbank, Mercado Pago, Flow, Khipu.
