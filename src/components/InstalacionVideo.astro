@@ -1,0 +1,55 @@
+---
+// InstalacionVideo.astro — Sección de video del proceso de instalación.
+// Reemplaza al antiguo configurador visual. El render vive en public/videos/DuchaSegura.mp4 (16:9, ~89s).
+// El still se muestra con el media-fragment #t=2 (frame de los 2s) — sin póster aparte.
+---
+<section class="section section--alt" id="instalacion-video">
+  <div class="container">
+    <div class="instvid-head reveal">
+      <div class="kicker">El proceso</div>
+      <h2 class="h2">Así instalamos <span class="accent">tu rebaje.</span></h2>
+      <p class="lead">Un render del proceso completo: del corte de la tina al rebaje terminado. Sin obra, sin escombros, en un solo día.</p>
+    </div>
+
+    <div class="instvid reveal">
+      <video class="instvid__video" id="instVideo" preload="metadata" playsinline src="/videos/DuchaSegura.mp4#t=2"></video>
+      <button class="instvid__play" id="instVideoPlay" aria-label="Reproducir video: Así instalamos tu rebaje"></button>
+      <div class="instvid__caption">
+        <div class="instvid__txt">Render del proceso de instalación · Ducha Segura®</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .instvid-head{text-align:center;max-width:660px;margin:0 auto 36px}
+  .instvid-head .kicker{margin-bottom:12px}
+  .instvid-head .lead{margin-left:auto;margin-right:auto}
+  .instvid{position:relative;aspect-ratio:16/9;width:min(960px,100%);margin:0 auto;border-radius:var(--ds-radius-lg);overflow:hidden;box-shadow:var(--ds-shadow-lg);border:1px solid var(--ds-border);background:linear-gradient(135deg,var(--ds-blue-dark) 0%,var(--ds-blue) 100%)}
+  .instvid__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .instvid__play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:88px;height:88px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(0,0,0,.3);transition:transform .2s,opacity .25s;cursor:pointer}
+  .instvid__play:hover{transform:translate(-50%,-50%) scale(1.08)}
+  .instvid__play::after{content:'';width:0;height:0;border-left:24px solid var(--ds-blue);border-top:15px solid transparent;border-bottom:15px solid transparent;margin-left:7px}
+  .instvid__caption{position:absolute;left:22px;bottom:20px;right:22px;color:#fff;pointer-events:none;text-shadow:0 1px 10px rgba(0,0,0,.65);transition:opacity .25s}
+  .instvid__txt{font-size:15px;font-weight:600}
+  .instvid.playing .instvid__play,.instvid.playing .instvid__caption{opacity:0;pointer-events:none}
+  @media (max-width:768px){.instvid__play{width:68px;height:68px}.instvid__play::after{border-left-width:19px;border-top-width:12px;border-bottom-width:12px}}
+</style>
+
+<script>
+  function initInstalacionVideo(): void {
+    const card = document.querySelector<HTMLElement>('.instvid');
+    const video = document.getElementById('instVideo') as HTMLVideoElement | null;
+    const play = document.getElementById('instVideoPlay');
+    if (!card || !video || !play || card.dataset.bound) return;
+    card.dataset.bound = '1';
+    // El still es el frame de los 2s (#t=2). Al reproducir, arranca desde el inicio con controles.
+    play.addEventListener('click', () => {
+      video.currentTime = 0;
+      video.controls = true;
+      void video.play();
+    });
+    video.addEventListener('play', () => card.classList.add('playing'));
+  }
+  document.addEventListener('astro:page-load', initInstalacionVideo);
+</script>

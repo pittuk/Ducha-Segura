@@ -18,9 +18,4 @@ export const PRODUCT_MEDIA: Record<string, ProductMedia> = {
     fit: 'cover',
     alt: 'Tina jacuzzi en un baño, lista para rebaje',
   },
-  spa: {
-    image: '/images/rebajes/Rebaje Tina Spa XL.webp',
-    fit: 'cover',
-    alt: 'Rebaje en tina grande tipo spa instalado en un baño',
-  },
 };
