@@ -1,4 +1,5 @@
 ---
+import { SITE } from '../data/site';
 ---
 <!-- ============================================================
      Calculadora (STAR)
@@ -9,8 +10,7 @@
       <div class="calc__left">
         <div class="reveal">
           <div class="kicker kicker--light" style="margin-bottom:14px">Calculadora de presupuesto</div>
-          <h2 class="calc__h2">¿Cuánto te sale tu rebaje?</h2>
-          <p class="calc__lead">Cuatro datos. Precio final con cuotas y descuento, en pantalla.</p>
+          <h2 class="calc__h2">¿Cuánto cuesta tu rebaje?</h2>
         </div>
 
         <div class="calc-step reveal">
@@ -44,9 +44,11 @@
           <div class="calc-step__head"><span class="calc-step__n">4</span><span class="calc-step__l">Banco de pago (opcional)</span></div>
           <div class="calc-chips" data-calc="banco">
             <button class="calc-chip active" data-value="santander" data-disc="15">Santander <span class="calc-chip__dc">-15%</span></button>
-            <button class="calc-chip" data-value="bci" data-disc="8">BCI <span class="calc-chip__dc">-8%</span></button>
-            <button class="calc-chip" data-value="estado" data-disc="5">BancoEstado <span class="calc-chip__dc">-5%</span></button>
-            <button class="calc-chip" data-value="otro" data-disc="0">Otro / sin convenio</button>
+            <button class="calc-chip" data-value="chile" data-disc="20">Banco de Chile <span class="calc-chip__dc">-20%</span></button>
+            <button class="calc-chip" data-value="losandes" data-disc="20">Caja Los Andes <span class="calc-chip__dc">-20%</span></button>
+            <a class="calc-chip calc-chip--wa" href={SITE.whatsappUrl} target="_blank" rel="noopener">
+              <svg class="ic" style="width:14px;height:14px;margin-right:6px"><use href="#i-whatsapp"/></svg>Otros convenios
+            </a>
           </div>
         </div>
       </div>
@@ -91,6 +93,10 @@
         </div>
       </div>
     </div>
+
+    <p class="calc__note reveal">
+      Si tienes dudas, <a href={SITE.whatsappUrl} target="_blank" rel="noopener">contacta con un ejecutivo</a>.
+    </p>
   </div>
 </section>
 
@@ -116,6 +122,9 @@
   .calc-chip.active{background:#fff;color:var(--ds-blue-dark);border-color:#fff}
   .calc-chip__dc{margin-left:6px;padding:2px 6px;background:var(--ds-red);color:#fff;font-size:10px;font-weight:700;border-radius:4px}
   .calc-chip.active .calc-chip__dc{background:rgba(0,0,0,.1);color:var(--ds-red)}
+  .calc-chip--wa{text-decoration:none;background:rgba(37,211,102,.16);border-color:rgba(37,211,102,.5)}
+  .calc-chip--wa:hover{background:rgba(37,211,102,.28)}
+  .calc-chip--wa .ic{color:var(--ds-green-wa)}
   .calc-select{margin-top:10px;width:100%;padding:12px 14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius);color:#fff;font-family:var(--ds-sans);font-size:14px;font-weight:500;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='white' opacity='.7' d='M0 0h12L6 8z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
   .calc-select option{background:#012E4D;color:#fff}
   .calc__panel{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.16);border-radius:var(--ds-radius-lg);padding:36px;display:flex;flex-direction:column;gap:20px;position:sticky;top:110px;align-self:start}
@@ -138,6 +147,10 @@
   input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
   input[type="range"]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
   .calc__pays{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:.7;font-size:11px;color:#fff;font-weight:500}
+  .calc__note{position:relative;margin:40px 0 0;text-align:center;font-size:15px;color:rgba(255,255,255,.8)}
+  .calc__note a{color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+  .calc__note a:hover{opacity:.85}
+  @media (max-width:1024px){.calc__note{margin-top:28px}}
 </style>
 
 <script>

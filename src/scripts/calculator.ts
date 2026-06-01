@@ -93,6 +93,9 @@ export function initCalculator(): void {
   };
 
   $$('[data-calc] .calc-chip').forEach(chip => {
+    // Chips sin data-value (ej. el enlace "Otros convenios" → WhatsApp) no son
+    // selectores: dejamos que el navegador siga el href sin tocar el estado.
+    if ((chip as HTMLElement).dataset.value === undefined) return;
     chip.addEventListener('click', () => {
       const group = (chip as HTMLElement).parentElement?.getAttribute('data-calc');
       if (!group) return;

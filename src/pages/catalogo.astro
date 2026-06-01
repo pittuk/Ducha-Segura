@@ -12,14 +12,14 @@ const regular = REBAJES.filter(p => !featuredIds.has(p.id));
   <section class="section">
     <div class="container">
       <div class="section-head"><h1 class="h2">Catálogo</h1><p class="lead">Rebajes y accesorios para un baño accesible.</p></div>
-      <CategoryTabs categories={[{id:'rebajes',label:'Rebajes'},{id:'kits',label:'Kits'},{id:'accesorios',label:'Accesorios'}]} />
+      <CategoryTabs categories={[{id:'rebajes',label:'Rebajes'},{id:'accesorios',label:'Accesorios'},{id:'kits',label:'Kits'}]} />
       <div class="product-grid">
         {regular.map(p => <div data-cat-item="rebajes"><ProductoCard producto={p} /></div>)}
       </div>
       <div class="product-grid product-grid--single">
         {featured.map(p => <div data-cat-item="rebajes"><ProductoCard producto={p} /></div>)}
       </div>
-      <div class="prod-grid" style="margin-top:32px">
+      <div class="prod-grid prod-grid--uniform" style="margin-top:32px">
         {KITS.map(p => <div data-cat-item="kits"><ProductoCard producto={p} /></div>)}
         {ACCESORIOS.map(p => <div data-cat-item="accesorios"><ProductoCard producto={p} /></div>)}
       </div>
@@ -31,6 +31,14 @@ const regular = REBAJES.filter(p => !featuredIds.has(p.id));
   </script>
 
   <style>
+    /* Catálogo: kits + accesorios en una sola grilla, TODAS las tarjetas con la misma altura.
+       - display:contents hace que el wrapper del filtro "desaparezca" del layout, así la .prod-card
+         es el ítem del grid directamente (igual que en /accesorios y /kits, donde funciona).
+       - grid-auto-rows:1fr iguala el alto de TODAS las filas a la más alta. */
+    .prod-grid--uniform{grid-auto-rows:1fr}
+    .prod-grid--uniform > [data-cat-item]{display:contents}
+    .prod-grid--uniform > [data-cat-item][hidden]{display:none}
+
     /* Colapsa una grilla cuando el filtro dejó todos sus ítems ocultos (evita huecos). */
     .product-grid:not(:has([data-cat-item]:not([hidden]))),
     .product-grid--single:not(:has([data-cat-item]:not([hidden]))),
