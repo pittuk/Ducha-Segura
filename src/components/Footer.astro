@@ -2,12 +2,15 @@
 // Footer.astro — Pie de página (legacy 1115–1188).
 // CSS de componente = legacy "Footer" CSS (466–495), sin clases globales.
 // data-accordion attributes en columnas para el acordeón móvil de ui.ts.
+import { Image } from 'astro:assets';
+import logoAzul from '../assets/logo-azul.png';
+import { REBAJES } from '../data/productos';
 ---
 <footer class="footer">
   <div class="footer__inner">
     <div class="footer__brand">
       <div class="logo">
-        <img class="logo__circle" src="/images/Ducha segura logo azul.png" alt="Ducha Segura®" width="85" height="85" />
+        <Image class="logo__circle" src={logoAzul} alt="Ducha Segura®" width={85} height={85} densities={[2]} />
       </div>
       <p class="footer__about">+10 años fabricando rebajes para tina en Chile. Producto nacional patentado. Garantía 3 años con instalación incluida.</p>
       <div class="footer__socials">
@@ -16,7 +19,39 @@
         <a href="https://linkedin.com/company/ducha-segura" target="_blank" rel="noopener" class="footer__social" aria-label="LinkedIn"><svg class="ic"><use href="#i-linkedin" /></svg></a>
         <a href="https://twitter.com/duchasegura_" target="_blank" rel="noopener" class="footer__social" aria-label="Twitter / X"><svg class="ic"><use href="#i-x" /></svg></a>
       </div>
-      <div class="footer__contact">
+    </div>
+
+    <div class="footer__col" data-accordion>
+      <button class="footer__col-head">
+        <span class="footer__col-title">Productos</span>
+        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
+      </button>
+      <ul class="footer__col-list">
+        {REBAJES.map((p) => (
+          <li><a href={`/producto/${p.slug}/`}>{p.name}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="footer__col" data-accordion>
+      <button class="footer__col-head">
+        <span class="footer__col-title">Empresa</span>
+        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
+      </button>
+      <ul class="footer__col-list">
+        <li><a href="/catalogo">Catálogo</a></li>
+        <li><a href="/convenios">Convenios</a></li>
+        <li><a href="/accion-social">Acción social</a></li>
+        <li><a href="/blog">Blog</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col" data-accordion>
+      <button class="footer__col-head">
+        <span class="footer__col-title">Contacto</span>
+        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
+      </button>
+      <div class="footer__col-list footer__contact">
         <div class="footer__contact-row">
           <svg class="ic"><use href="#i-phone"/></svg>
           <a href="tel:+56934044939" style="color:var(--ds-text-strong);font-weight:600">+56 9 3404 4939</a>
@@ -30,48 +65,6 @@
           <span>RM · Valparaíso · Bío Bío</span>
         </div>
       </div>
-    </div>
-
-    <div class="footer__col" data-accordion>
-      <button class="footer__col-head">
-        <span class="footer__col-title">Productos</span>
-        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
-      </button>
-      <ul class="footer__col-list">
-        <li><a href="/catalogo">Tina Tradicional</a></li>
-        <li><a href="/catalogo">Tina Jacuzzi</a></li>
-        <li><a href="/accesorios">Accesorios</a></li>
-        <li><a href="/catalogo">Kit DIY</a></li>
-        <li><a href="/catalogo">Spa XL — a medida</a></li>
-      </ul>
-    </div>
-
-    <div class="footer__col" data-accordion>
-      <button class="footer__col-head">
-        <span class="footer__col-title">Empresa</span>
-        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
-      </button>
-      <ul class="footer__col-list">
-        <li><a href="/convenios">Convenios</a></li>
-        <li><a href="#">Cobertura</a></li>
-        <li><a href="#">Garantía 3 años</a></li>
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="#">Contacto</a></li>
-      </ul>
-    </div>
-
-    <div class="footer__col" data-accordion>
-      <button class="footer__col-head">
-        <span class="footer__col-title">Ayuda</span>
-        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
-      </button>
-      <ul class="footer__col-list">
-        <li><a href="/terminos-y-condiciones-ducha-segura/">Términos y condiciones</a></li>
-        <li><a href="#">Política de privacidad</a></li>
-        <li><a href="#">Devoluciones</a></li>
-        <li><a href="#">Preguntas frecuentes</a></li>
-        <li><a href="#">¿Caso especial? Pedí presupuesto</a></li>
-      </ul>
     </div>
   </div>
 

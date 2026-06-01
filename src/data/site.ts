@@ -19,7 +19,7 @@ export const SITE = {
 
 // Mensajes rotativos del topbar. Copiados de legacy/index.html (const topbarMessages, ~1372–1376).
 export const TOPBAR_MESSAGES: string[] = [
-  '15% dcto. pagando con Banco Santander en Santiago y Gran Concepción',
+  '15% dcto. pagando con Banco Santander',
   'Hasta 24 cuotas sin interés con tarjeta de crédito',
-  'Despacho a RM, Valparaíso y Bío Bío — Instalación en 7–10 días hábiles',
+  'Despacho a RM, Valparaíso y Bío Bío',
 ];

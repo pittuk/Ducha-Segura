@@ -2,13 +2,15 @@
 // Header.astro — Cabecera del sitio + mobile menu drawer (legacy 636–672 + 1241–1265).
 // CSS de componente = legacy "Header" CSS (76–120) y "Mobile menu drawer" (554–566),
 // sin clases globales duplicadas.
+import { Image } from 'astro:assets';
+import logoAzul from '../assets/logo-azul.png';
 import { NAV } from '../data/site';
 const path = Astro.url.pathname;
 const isActive = (href: string) => href === '/' ? path === '/' : (path === href || path.startsWith(href + '/'));
 ---
 <header class="header">
   <a href="/" class="logo" aria-label="Ducha Segura — Inicio">
-    <img class="logo__circle" src="/images/Ducha segura logo azul.png" alt="" width="85" height="85" />
+    <Image class="logo__circle" src={logoAzul} alt="" width={85} height={85} densities={[2]} />
   </a>
 
   <nav class="nav" aria-label="Navegación principal">
@@ -32,15 +34,8 @@ const isActive = (href: string) => href === '/' ? path === '/' : (path === href 
   </nav>
 
   <div class="header__actions">
-    <div class="mode-toggle" role="group" aria-label="Modo de navegación">
-      <button class="mode-toggle__btn active" data-mode="user">Para mí mismo</button>
-      <button class="mode-toggle__btn" data-mode="caregiver">Para un familiar</button>
-    </div>
-    <button class="icon-btn hide-mobile" aria-label="Buscar productos">
+    <button class="icon-btn hide-mobile" id="searchTrigger" aria-label="Buscar productos" aria-expanded="false" aria-controls="searchOverlay">
       <svg class="ic" style="width:20px;height:20px"><use href="#i-search"/></svg>
-    </button>
-    <button class="icon-btn hide-mobile" aria-label="Mi cuenta">
-      <svg class="ic" style="width:20px;height:20px"><use href="#i-user"/></svg>
     </button>
     <button class="cart-trigger" id="cartTrigger" aria-label="Ver mi cotización" aria-expanded="false" aria-controls="drawer">
       <svg class="ic"><use href="#i-cart"/></svg>
@@ -58,7 +53,7 @@ const isActive = (href: string) => href === '/' ? path === '/' : (path === href 
 <aside class="menu-drawer" id="menuDrawer" aria-label="Menú principal">
   <div class="menu-drawer__head">
     <div class="logo">
-      <img class="logo__circle" src="/images/Ducha segura logo azul.png" alt="" width="85" height="85" />
+      <Image class="logo__circle" src={logoAzul} alt="" width={85} height={85} densities={[2]} />
       <div class="logo__txt">
         <span class="logo__name">Ducha Segura<sup>®</sup></span>
         <span class="logo__sub">CHILE</span>
@@ -78,14 +73,21 @@ const isActive = (href: string) => href === '/' ? path === '/' : (path === href 
       </>
     ))}
   </nav>
-  <div class="menu-drawer__mode">
-    <div class="cfg-label" style="margin-bottom:10px">Modo de navegación</div>
-    <div class="mode-toggle" style="display:flex;width:100%">
-      <button class="mode-toggle__btn active" data-mode="user" style="flex:1">Para mí</button>
-      <button class="mode-toggle__btn" data-mode="caregiver" style="flex:1">Familiar</button>
-    </div>
-  </div>
 </aside>
+
+<!-- Search overlay -->
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Buscar productos">
+  <div class="search-panel">
+    <div class="search-box">
+      <svg class="ic search-box__ic"><use href="#i-search"/></svg>
+      <input type="search" id="searchInput" class="search-box__input" placeholder="Busca un rebaje, kit o accesorio…" autocomplete="off" aria-label="Buscar productos" />
+      <button class="search-box__close" id="searchClose" aria-label="Cerrar buscador">
+        <svg class="ic"><use href="#i-close"/></svg>
+      </button>
+    </div>
+    <div class="search-results" id="searchResults" role="listbox" aria-label="Resultados"></div>
+  </div>
+</div>
 
 <style>
 /* Header (legacy 79–120) */
@@ -121,11 +123,6 @@ img.logo__circle{background:#fff;object-fit:contain}
 .header__actions{display:flex;align-items:center;gap:10px;margin-left:auto}
 @media (max-width:1024px){.header__actions{gap:6px}}
 
-.mode-toggle{display:inline-flex;gap:2px;padding:3px;background:var(--ds-bg-alt);border-radius:999px;font-size:12px;font-weight:600}
-@media (max-width:1024px){.mode-toggle{display:none}}
-.mode-toggle__btn{padding:6px 12px;color:var(--ds-text);border-radius:999px;transition:all .15s;white-space:nowrap}
-.mode-toggle__btn.active{background:var(--ds-blue);color:#fff}
-
 .icon-btn{color:var(--ds-text-strong);padding:10px;display:flex;border-radius:999px;transition:background .15s}
 .icon-btn:hover{background:var(--ds-bg-alt)}
 @media (max-width:1024px){.icon-btn.hide-mobile{display:none}}
@@ -152,9 +149,6 @@ img.logo__circle{background:#fff;object-fit:contain}
 .menu-drawer__nav a.active{color:var(--ds-blue);background:var(--ds-bg-alt)}
 .menu-drawer__nav a.menu-drawer__sub{padding-left:42px;font-size:15px;font-weight:500;color:var(--ds-text)}
 .menu-drawer__nav a.menu-drawer__sub::before{content:'└';margin-right:8px;color:var(--ds-text-soft, #9aa)}
-.menu-drawer__mode{padding:20px 24px;border-top:1px solid var(--ds-border)}
-/* Inside the mobile drawer the .mode-toggle should display flex */
-.menu-drawer .mode-toggle{display:flex}
 
 /* drawer__close is also used in the mobile header */
 .drawer__close{width:32px;height:32px;background:var(--ds-bg-alt);color:var(--ds-text-strong);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .15s}
@@ -162,4 +156,29 @@ img.logo__circle{background:#fff;object-fit:contain}
 .drawer__close .ic{width:16px;height:16px}
 
 .cfg-label{font-size:12px;font-weight:700;color:var(--ds-text-strong);text-transform:uppercase;letter-spacing:.06em}
+
+/* Search overlay */
+.search-overlay{position:fixed;inset:0;z-index:210;background:rgba(1,46,77,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
+.search-overlay.open{opacity:1;visibility:visible}
+.search-panel{position:absolute;top:0;left:0;right:0;background:#fff;box-shadow:var(--ds-shadow-lg);padding:20px 48px 24px;transform:translateY(-12px);transition:transform .22s cubic-bezier(.2,.8,.2,1);max-height:88vh;display:flex;flex-direction:column}
+.search-overlay.open .search-panel{transform:translateY(0)}
+@media (max-width:768px){.search-panel{padding:16px 16px 20px}}
+.search-box{display:flex;align-items:center;gap:12px;border:1px solid var(--ds-border);border-radius:999px;padding:10px 16px;background:var(--ds-bg-alt)}
+.search-box:focus-within{border-color:var(--ds-blue);background:#fff}
+.search-box__ic{width:20px;height:20px;color:var(--ds-text);flex-shrink:0}
+.search-box__input{flex:1;border:none;background:transparent;font-family:var(--ds-sans);font-size:17px;color:var(--ds-text-strong);outline:none}
+.search-box__input::placeholder{color:var(--ds-text-soft,#9aa)}
+.search-box__close{flex-shrink:0;color:var(--ds-text-strong);padding:6px;display:flex;border-radius:50%;transition:background .15s}
+.search-box__close:hover{background:#ececec}
+.search-box__close .ic{width:18px;height:18px}
+.search-results{margin-top:14px;overflow-y:auto;display:flex;flex-direction:column;gap:4px}
+.search-result{display:flex;align-items:center;gap:14px;padding:10px 12px;border-radius:12px;color:var(--ds-text-strong);transition:background .15s}
+.search-result:hover,.search-result.active{background:var(--ds-bg-alt)}
+.search-result__img{width:52px;height:52px;border-radius:10px;object-fit:cover;background:var(--ds-bg-alt);flex-shrink:0}
+.search-result__body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.search-result__name{font-size:15px;font-weight:600;line-height:1.25}
+.search-result__desc{font-size:13px;color:var(--ds-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-result__price{margin-left:auto;font-size:14px;font-weight:700;color:var(--ds-blue);white-space:nowrap;flex-shrink:0}
+.search-empty{padding:20px 12px;color:var(--ds-text);font-size:15px}
+.search-empty b{color:var(--ds-text-strong)}
 </style>

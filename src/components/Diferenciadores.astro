@@ -1,53 +1,70 @@
 ---
-// Diferenciadores.astro — "Por qué un Ducha Segura" section (legacy markup 1023–1038)
+// Diferenciadores.astro — "Seis razones técnicas" sobre fondo azul,
+// con la pieza al centro y 3 features a cada lado (diseño del cliente).
+const left = [
+  { pre: 'Producto', strong: 'Nacional', d: 'Pieza de fibra de vidrio reforzada de 5 mm de espesor, de color blanco, creada por arquitecto y con patente de propiedad intelectual.' },
+  { pre: 'Tecnología', strong: 'Antideslizante', d: 'Textura antideslizante incorporada de fábrica en su superficie, para prevenir caídas.' },
+  { strong: 'Piezas', post: 'a la Medida', d: 'Más de 11 piezas creadas en diferentes medidas (30, 40 y 50 cm de ancho), para responder a todo tipo de tinas.' },
+];
+const right = [
+  { pre: 'Inclinación', strong: 'Antiderrame', d: 'Todas nuestras piezas cuentan con una pequeña inclinación, la cual permite el retorno del agua al interior de la tina.' },
+  { pre: 'Pieza', strong: 'Segura', d: 'Sus cantos y vértices son redondeados para evitar golpes o heridas.' },
+  { strong: 'Garantía', post: 'de 3 años', d: 'Garantía otorgada una vez instalada la pieza por 3 años, siguiendo las reglas de uso y mantención.' },
+];
 ---
-<section class="section">
+<section class="section section--blue">
   <div class="container">
-    <div class="section-head reveal" style="max-width:720px">
-      <div class="kicker" style="margin-bottom:10px">Por qué un Ducha Segura</div>
+    <div class="section-head section-head--center reveal" style="max-width:760px;margin-left:auto;margin-right:auto">
+      <div class="kicker kicker--light" style="margin-bottom:10px">Por qué un Ducha Segura</div>
       <h2 class="h2">Seis razones técnicas, <span class="accent">una sola decisión.</span></h2>
     </div>
-    <div class="diff-grid reveal">
-      <div class="diff">
-        <div class="diff__icon"><svg class="ic"><use href="#i-factory"/></svg></div>
-        <div><h3 class="diff__t">Producto nacional</h3><p class="diff__d">Patente chilena, fibra de vidrio reforzada 5 mm.</p></div>
+
+    <div class="diff-layout reveal">
+      <div class="diff-col diff-col--left">
+        {left.map(f => (
+          <div class="diff-feat">
+            <h3 class="diff-feat__t">{f.pre && <span>{f.pre} </span>}<b>{f.strong}</b>{f.post && <span> {f.post}</span>}</h3>
+            <p class="diff-feat__d">{f.d}</p>
+          </div>
+        ))}
       </div>
-      <div class="diff">
-        <div class="diff__icon"><svg class="ic"><use href="#i-droplet"/></svg></div>
-        <div><h3 class="diff__t">Inclinación antiderrame</h3><p class="diff__d">Retorno del agua al interior de la tina.</p></div>
+
+      <div class="diff-media">
+        <img src="/images/NUEVA_1_sinfondo-3.png" alt="Pieza de rebaje de tina Ducha Segura" width="520" height="640" loading="lazy" />
       </div>
-      <div class="diff">
-        <div class="diff__icon"><svg class="ic"><use href="#i-shield"/></svg></div>
-        <div><h3 class="diff__t">Cantos seguros</h3><p class="diff__d">Vértices redondeados, sin riesgo de cortes.</p></div>
-      </div>
-      <div class="diff">
-        <div class="diff__icon"><svg class="ic"><use href="#i-ruler"/></svg></div>
-        <div><h3 class="diff__t">A la medida</h3><p class="diff__d">11 medidas (30, 40 y 50 cm de ancho) para cualquier tina.</p></div>
-      </div>
-      <div class="diff">
-        <div class="diff__icon"><svg class="ic"><use href="#i-wrench"/></svg></div>
-        <div><h3 class="diff__t">Sin obra</h3><p class="diff__d">No tocamos cañerías. Sin escombros ni filtración.</p></div>
-      </div>
-      <div class="diff">
-        <div class="diff__icon"><svg class="ic"><use href="#i-medal"/></svg></div>
-        <div><h3 class="diff__t">Garantía 3 años</h3><p class="diff__d">Garantía nacional, con instalación certificada.</p></div>
+
+      <div class="diff-col diff-col--right">
+        {right.map(f => (
+          <div class="diff-feat">
+            <h3 class="diff-feat__t">{f.pre && <span>{f.pre} </span>}<b>{f.strong}</b>{f.post && <span> {f.post}</span>}</h3>
+            <p class="diff-feat__d">{f.d}</p>
+          </div>
+        ))}
       </div>
     </div>
   </div>
 </section>
 
 <style>
-/* Diferenciadores (legacy 388–399) */
-.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);overflow:hidden}
-@media (max-width:768px){.diff-grid{grid-template-columns:1fr}}
-.diff{padding:32px 28px;background:#fff;display:flex;flex-direction:column;gap:14px;border-right:1px solid var(--ds-border);border-bottom:1px solid var(--ds-border);transition:background .15s}
-@media (max-width:768px){.diff{padding:24px 20px;border-right:0}}
-.diff:hover{background:#fafbfc}
-.diff:nth-child(3n){border-right:0}
-.diff:nth-last-child(-n+3){border-bottom:0}
-@media (max-width:768px){.diff{border-right:0}.diff:last-child{border-bottom:0}.diff:not(:last-child){border-bottom:1px solid var(--ds-border)}}
-.diff__icon{width:48px;height:48px;border-radius:12px;background:var(--ds-blue-soft);color:var(--ds-blue);display:flex;align-items:center;justify-content:center}
-.diff__icon .ic{width:24px;height:24px;stroke-width:1.8}
-.diff__t{margin:0;font-family:var(--ds-display);font-weight:700;font-size:18px;color:var(--ds-text-strong);letter-spacing:-.015em;line-height:1.2}
-.diff__d{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--ds-text)}
+/* Layout en 3 columnas: features · pieza · features */
+.diff-layout{display:grid;grid-template-columns:1fr minmax(260px,460px) 1fr;align-items:center;gap:32px;margin-top:48px}
+@media (max-width:980px){.diff-layout{grid-template-columns:1fr;gap:36px;margin-top:36px}}
+
+.diff-col{display:flex;flex-direction:column;gap:18px}
+@media (max-width:980px){.diff-col{gap:16px}}
+.diff-col--left{text-align:left}
+.diff-col--right{text-align:right}
+@media (max-width:980px){.diff-col--right{text-align:left}}
+
+.diff-media{display:flex;justify-content:center;align-items:center;order:0}
+@media (max-width:980px){.diff-media{order:-1}}
+.diff-media img{width:100%;max-width:460px;height:auto;display:block;filter:drop-shadow(0 30px 50px rgba(0,0,0,.22))}
+
+.diff-feat{padding:20px 22px;border:1px solid rgba(255,255,255,.22);border-radius:16px;background:rgba(255,255,255,.06);transition:background .15s,border-color .15s,transform .15s}
+.diff-feat:hover{background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.4)}
+@media (max-width:768px){.diff-feat{padding:16px 18px}}
+.diff-feat__t{margin:0;font-family:var(--ds-display);font-weight:400;font-size:23px;line-height:1.2;letter-spacing:-.01em;color:#fff}
+.diff-feat__t b{font-weight:700}
+@media (max-width:768px){.diff-feat__t{font-size:20px}}
+.diff-feat__d{margin:10px 0 0;font-size:15px;line-height:1.55;color:rgba(255,255,255,.88)}
 </style>

@@ -42,6 +42,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--ds-blue);outline-of
 .section--soft{background:var(--ds-blue-soft)}
 .section--alt{background:var(--ds-bg-alt)}
 .section--dark{background:var(--ds-blue-dark);color:#fff}
+.section--blue{background:var(--ds-blue);color:#fff}
 .section--xl{padding:120px 0}
 @media (max-width:768px){.section--xl{padding:72px 0}}
 
@@ -49,8 +50,11 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--ds-blue);outline-of
 @media (max-width:768px){.h2{font-size:34px}}
 .h2 .accent{color:var(--ds-blue)}
 .section--dark .h2{color:#fff}
+.section--blue .h2{color:#fff}
+.section--blue .h2 .accent{color:rgba(255,255,255,.7)}
 .lead{margin:16px 0 0;font-size:17px;line-height:1.55;color:var(--ds-text);max-width:520px}
 .section--dark .lead{color:rgba(255,255,255,.82)}
+.section--blue .lead{color:rgba(255,255,255,.85)}
 
 .section-head{margin-bottom:36px}
 .section-head--center{text-align:center;display:flex;flex-direction:column;align-items:center}
