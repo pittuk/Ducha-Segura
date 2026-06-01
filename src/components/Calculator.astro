@@ -117,6 +117,11 @@ import { SITE } from '../data/site';
   .calc-step__n{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
   .calc-step__l{font-size:14px;font-weight:600}
   .calc-chips{display:flex;gap:8px;flex-wrap:wrap}
+  /* Paso 4 (banco): los 4 chips en una sola fila en desktop. En móvil vuelven a envolver. */
+  @media (min-width:768px){
+    .calc-chips[data-calc="banco"]{flex-wrap:nowrap}
+    .calc-chips[data-calc="banco"] .calc-chip{flex:1 1 auto;min-width:0;justify-content:center;padding-left:12px;padding-right:12px;white-space:nowrap}
+  }
   .calc-chip{padding:10px 16px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius);font-size:13px;font-weight:600;display:inline-flex;align-items:center;transition:all .15s}
   .calc-chip:hover{background:rgba(255,255,255,.15)}
   .calc-chip.active{background:#fff;color:var(--ds-blue-dark);border-color:#fff}
@@ -126,7 +131,9 @@ import { SITE } from '../data/site';
   .calc-chip--wa:hover{background:rgba(37,211,102,.28)}
   .calc-chip--wa .ic{color:var(--ds-green-wa)}
   .calc-select{margin-top:10px;width:100%;padding:12px 14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius);color:#fff;font-family:var(--ds-sans);font-size:14px;font-weight:500;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='white' opacity='.7' d='M0 0h12L6 8z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
-  .calc-select option{background:#012E4D;color:#fff}
+  /* Las <option> se inyectan por JS (initCalculator), así que no reciben el scope
+     data-astro-* de Astro; :global() hace que la regla las alcance igual. */
+  .calc-select :global(option){background:#012E4D;color:#fff}
   .calc__panel{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.16);border-radius:var(--ds-radius-lg);padding:36px;display:flex;flex-direction:column;gap:20px;position:sticky;top:110px;align-self:start}
   @media (max-width:1024px){.calc__panel{position:static;padding:24px}}
   .calc__panel-l{font-size:12px;font-weight:600;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}

@@ -1,10 +1,6 @@
 ---
 import { REBAJES, ACCESORIOS } from '../data/productos';
 import ProductoCard from './ProductoCard.astro';
-// El grid destacado (.product-grid--single) está diseñado para EXACTAMENTE un producto.
-const featured = REBAJES.filter(p => p.featured).slice(0, 1);
-const featuredIds = new Set(featured.map(p => p.id));
-const regular = REBAJES.filter(p => !featuredIds.has(p.id));
 const accs = ACCESORIOS.slice(0, 4);
 ---
 <section class="section" id="productos">
@@ -18,10 +14,7 @@ const accs = ACCESORIOS.slice(0, 4);
     </div>
 
     <div class="product-grid reveal" id="productosGrid">
-      {regular.map(p => <ProductoCard producto={p} />)}
-    </div>
-    <div class="product-grid product-grid--single reveal" id="productosFeatured">
-      {featured.map(p => <ProductoCard producto={p} />)}
+      {REBAJES.map(p => <ProductoCard producto={p} />)}
     </div>
 
     <div class="acc-head reveal">

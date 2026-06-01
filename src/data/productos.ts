@@ -30,25 +30,7 @@ const wc: Producto[] = (data as Producto[]).map((p) => ({
   image: IMG_OVERRIDE[p.slug] ?? p.image,
 }));
 
-// Spa XL: no existe en WooCommerce. Producto a medida, con su propia ficha.
-const spaXl: Producto = {
-  id: 'spa-xl',
-  slug: 'rebaje-de-tina-spa-xl',
-  name: 'Rebaje de tina: Spa XL',
-  grupo: 'rebaje',
-  price: 0,
-  regularPrice: null,
-  salePrice: null,
-  priceLabel: 'A medida',
-  shortDescription: 'Para tinas grandes, ofuro y spa doméstico. Visita técnica previa y diseño a medida.',
-  descriptionHtml: '<p>El <strong>Rebaje de tina Spa XL</strong> está pensado para tinas de gran tamaño, ofuro y spa doméstico, donde la profundidad y el ancho requieren una adaptación especial.</p><p>Por sus dimensiones, cada proyecto parte con una <strong>visita técnica previa</strong> para evaluar la factibilidad y diseñar el rebaje a medida, manteniendo la seguridad y la estética del baño.</p><ul><li>Diseño a medida según tu tina</li><li>Visita técnica previa</li><li>Instalación incluida · garantía 3 años</li></ul>',
-  image: '/images/rebajes/Rebaje Tina Spa XL.webp',
-  images: ['/images/rebajes/Rebaje Tina Spa XL.webp'],
-  featured: true,
-  custom: true,
-};
-
-export const PRODUCTOS: Producto[] = [...wc, spaXl];
+export const PRODUCTOS: Producto[] = [...wc];
 
 export const REBAJES = PRODUCTOS.filter((p) => p.grupo === 'rebaje');
 export const KITS = PRODUCTOS.filter((p) => p.grupo === 'kit');

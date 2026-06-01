@@ -3,10 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import CategoryTabs from '../components/CategoryTabs.astro';
 import ProductoCard from '../components/ProductoCard.astro';
 import { REBAJES, KITS, ACCESORIOS } from '../data/productos';
-// Rebajes con el mismo layout que la home: 2 regulares + Spa XL (featured) a todo el ancho.
-const featured = REBAJES.filter(p => p.featured).slice(0, 1);
-const featuredIds = new Set(featured.map(p => p.id));
-const regular = REBAJES.filter(p => !featuredIds.has(p.id));
 ---
 <BaseLayout title="Catálogo — Ducha Segura®" description="Catálogo completo de rebajes de tina y accesorios de seguridad para baño.">
   <section class="section">
@@ -14,10 +10,7 @@ const regular = REBAJES.filter(p => !featuredIds.has(p.id));
       <div class="section-head"><h1 class="h2">Catálogo</h1><p class="lead">Rebajes y accesorios para un baño accesible.</p></div>
       <CategoryTabs categories={[{id:'rebajes',label:'Rebajes'},{id:'accesorios',label:'Accesorios'},{id:'kits',label:'Kits'}]} />
       <div class="product-grid">
-        {regular.map(p => <div data-cat-item="rebajes"><ProductoCard producto={p} /></div>)}
-      </div>
-      <div class="product-grid product-grid--single">
-        {featured.map(p => <div data-cat-item="rebajes"><ProductoCard producto={p} /></div>)}
+        {REBAJES.map(p => <div data-cat-item="rebajes"><ProductoCard producto={p} /></div>)}
       </div>
       <div class="prod-grid prod-grid--uniform" style="margin-top:32px">
         {KITS.map(p => <div data-cat-item="kits"><ProductoCard producto={p} /></div>)}
@@ -41,7 +34,6 @@ const regular = REBAJES.filter(p => !featuredIds.has(p.id));
 
     /* Colapsa una grilla cuando el filtro dejó todos sus ítems ocultos (evita huecos). */
     .product-grid:not(:has([data-cat-item]:not([hidden]))),
-    .product-grid--single:not(:has([data-cat-item]:not([hidden]))),
     .prod-grid:not(:has([data-cat-item]:not([hidden]))){display:none}
   </style>
 </BaseLayout>
