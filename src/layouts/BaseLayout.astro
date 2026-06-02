@@ -69,7 +69,8 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     import { initCart } from '../scripts/cart';
     import { initQuickView } from '../scripts/quickview';
     import { initSearch } from '../scripts/search';
-    document.addEventListener('astro:page-load', () => { initUI(); initCart(); initQuickView(); initSearch(); });
+    import { initCotizar } from '../scripts/cotizar';
+    document.addEventListener('astro:page-load', () => { initUI(); initCart(); initQuickView(); initSearch(); initCotizar(); });
   </script>
 </body>
 </html>

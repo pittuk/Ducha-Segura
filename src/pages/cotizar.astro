@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { TIPOS_TINA } from '../data/tinas';
+import { COMUNAS } from '../data/comunas';
+---
+<BaseLayout title="Completar cotización — Ducha Segura®" description="Completa los datos de tu cotización: tipo de tina, dirección de instalación y contacto.">
+  <section class="section">
+    <div class="container cotizar">
+      <header class="section-head">
+        <span class="kicker">Cotización</span>
+        <h1 class="h2">Completa tu cotización</h1>
+        <p class="lead">Revisa tu selección y déjanos tus datos. Te contactamos con la cotización final.</p>
+      </header>
+
+      <div class="cotizar__grid">
+        <!-- Resumen -->
+        <aside class="cotizar__summary" id="cotizarSummary" aria-live="polite">
+          <h2 class="cotizar__h">Tu selección</h2>
+          <div id="cotizarItems"></div>
+          <div class="cotizar__total"><span>Total estimado</span><span>$<span id="cotizarTotal">0</span></span></div>
+          <p class="cotizar__note">Precios referenciales. Envío + instalación incluidos. Sujeto a confirmación final.</p>
+        </aside>
+
+        <!-- Formulario -->
+        <form class="cotizar__form" id="cotizarForm" novalidate>
+          <div class="cotizar__empty" id="cotizarEmpty" style="display:none">
+            <p>Tu cotización está vacía.</p>
+            <a class="btn btn--primary" href="/catalogo">Ver catálogo</a>
+          </div>
+
+          <div id="cotizarFields">
+            <!-- Tipo de tina (solo si hay rebaje) -->
+            <fieldset class="cotizar__block" id="tinaBlock" style="display:none">
+              <legend class="cotizar__h">¿Cuál es tu tipo de tina?</legend>
+              <p class="cotizar__hint">Selecciona la tina que tienes hoy.</p>
+              <div class="tina-grid">
+                {TIPOS_TINA.map((t) => (
+                  <label class="tina-card">
+                    <input type="radio" name="tipoTina" value={t.id} />
+                    <img src={t.image} alt={t.name} loading="lazy" />
+                    <span class="tina-card__name">{t.name}{t.nota ? <small>{t.nota}</small> : null}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset class="cotizar__block">
+              <legend class="cotizar__h">Datos de contacto</legend>
+              <div class="cotizar__row">
+                <label>Nombre<input type="text" name="nombre" required autocomplete="name" /></label>
+                <label>Teléfono<input type="tel" name="telefono" required autocomplete="tel" /></label>
+              </div>
+              <label>Email<input type="email" name="email" required autocomplete="email" /></label>
+            </fieldset>
+
+            <fieldset class="cotizar__block">
+              <legend class="cotizar__h">Dirección de instalación</legend>
+              <label>Calle y número<input type="text" name="direccion" required autocomplete="street-address" /></label>
+              <div class="cotizar__row">
+                <label>Depto / Casa (opcional)<input type="text" name="depto" /></label>
+                <label>Región
+                  <select name="region" id="regionSel" required>
+                    <option value="">Selecciona…</option>
+                    {Object.keys(COMUNAS).map((r) => <option value={r}>{r}</option>)}
+                  </select>
+                </label>
+              </div>
+              <label>Comuna
+                <select name="comuna" id="comunaSel" required disabled>
+                  <option value="">Selecciona una región primero</option>
+                </select>
+              </label>
+              <label>Referencia (opcional)<input type="text" name="referencia" placeholder="Block, conserjería, etc." /></label>
+            </fieldset>
+
+            <fieldset class="cotizar__block">
+              <legend class="cotizar__h">Notas (opcional)</legend>
+              <textarea name="notas" rows="3" placeholder="Medidas del baño (ancho, largo, material), horario de contacto, etc."></textarea>
+            </fieldset>
+
+            <!-- honeypot anti-spam -->
+            <input type="text" name="website" tabindex="-1" autocomplete="off" class="cotizar__hp" aria-hidden="true" />
+
+            <p class="cotizar__error" id="cotizarError" role="alert" style="display:none"></p>
+            <button class="btn btn--primary btn--lg btn--full" id="cotizarSubmit" type="submit">Enviar cotización</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/json" id="comunasData" set:html={JSON.stringify(COMUNAS)}></script>
+</BaseLayout>
+
+<style>
+  .cotizar__grid{display:grid;grid-template-columns:340px 1fr;gap:32px;align-items:start}
+  @media (max-width:860px){.cotizar__grid{grid-template-columns:1fr}}
+  .cotizar__summary{background:var(--ds-bg-alt);border:1px solid var(--ds-border);border-radius:var(--ds-radius);padding:20px;position:sticky;top:120px}
+  @media (max-width:860px){.cotizar__summary{position:static}}
+  .cotizar__h{font-family:var(--ds-display);font-weight:700;font-size:18px;color:var(--ds-text-strong);margin:0 0 12px}
+  .cotizar__total{display:flex;justify-content:space-between;align-items:baseline;font-weight:700;color:var(--ds-text-strong);border-top:1px solid var(--ds-border);padding-top:12px;margin-top:8px;font-size:18px;font-variant-numeric:tabular-nums}
+  .cotizar__note{font-size:12px;color:var(--ds-text);margin:10px 0 0}
+  .cot-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--ds-border)}
+  .cot-item__media{width:44px;height:44px;border-radius:6px;overflow:hidden;background:#f4f4f2;flex-shrink:0}
+  .cot-item__media img{width:100%;height:100%;object-fit:cover}
+  .cot-item__name{font-size:13px;font-weight:700;color:var(--ds-text-strong);line-height:1.2}
+  .cot-item__meta{font-size:11px;color:var(--ds-text)}
+  .cotizar__block{border:1px solid var(--ds-border);border-radius:var(--ds-radius);padding:18px;margin:0 0 16px}
+  .cotizar__block legend{padding:0 6px}
+  .cotizar__row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:520px){.cotizar__row{grid-template-columns:1fr}}
+  .cotizar__form label{display:block;font-size:13px;font-weight:600;color:var(--ds-text-strong);margin:0 0 12px}
+  .cotizar__form input,.cotizar__form select,.cotizar__form textarea{display:block;width:100%;margin-top:5px;padding:10px 12px;border:1px solid var(--ds-border);border-radius:var(--ds-radius);font-family:var(--ds-sans);font-size:15px;font-weight:400;color:var(--ds-text-strong);background:#fff;outline:none;transition:border-color .15s}
+  .cotizar__form input:focus,.cotizar__form select:focus,.cotizar__form textarea:focus{border-color:var(--ds-blue)}
+  .cotizar__hint{font-size:13px;color:var(--ds-text);margin:0 0 12px}
+  .tina-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media (max-width:520px){.tina-grid{grid-template-columns:1fr 1fr}}
+  .tina-card{position:relative;border:2px solid var(--ds-border);border-radius:12px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s}
+  .tina-card:hover{border-color:var(--ds-blue)}
+  .tina-card input{position:absolute;opacity:0;pointer-events:none}
+  .tina-card:has(input:checked){border-color:var(--ds-blue);box-shadow:0 0 0 3px var(--ds-blue-soft)}
+  .tina-card img{width:100%;height:96px;object-fit:cover;background:#eef2f5}
+  .tina-card__name{padding:8px;font-size:12px;font-weight:700;color:var(--ds-text-strong);line-height:1.2}
+  .tina-card__name small{display:block;font-weight:500;color:var(--ds-text);font-size:11px;margin-top:2px}
+  .cotizar__hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+  .cotizar__error{background:#fde8e8;color:var(--ds-red,#c0392b);border-radius:var(--ds-radius);padding:10px 12px;font-size:13px;font-weight:600;margin:0 0 12px}
+  .cotizar__empty{text-align:center;padding:40px 0;color:var(--ds-text)}
+  .cotizar__empty .btn{margin-top:12px}
+</style>
