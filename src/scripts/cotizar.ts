@@ -9,6 +9,9 @@ const API_URL = import.meta.env.DEV
   ? 'http://localhost:8080/api/cotizacion.php'
   : '/api/cotizacion.php';
 
+// Evita re-cablear listeners si initCotizar corre dos veces sobre el mismo nodo.
+let _formNode: HTMLFormElement | null = null;
+
 function load(): CartItem[] {
   try {
     const raw: CartItem[] = JSON.parse(localStorage.getItem('ds_cart') || '[]');
@@ -18,7 +21,8 @@ function load(): CartItem[] {
 
 export function initCotizar(): void {
   const form = document.getElementById('cotizarForm') as HTMLFormElement | null;
-  if (!form) return; // no estamos en /cotizar
+  if (!form || form === _formNode) return; // no estamos en /cotizar, o ya cableado este nodo
+  _formNode = form;
 
   const items = load();
   const itemsEl = document.getElementById('cotizarItems');
