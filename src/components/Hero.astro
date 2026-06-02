@@ -76,6 +76,8 @@ const h = HERO_COPY.user;
 @media (max-width:768px){.hero__sub{font-size:17px}}
 .hero__ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
 .hero__trust{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+/* En mobile se ocultan el CTA secundario (WhatsApp) y los badges de confianza. */
+@media (max-width:768px){#heroCtaSecondary{display:none}.hero__trust{display:none}}
 
 .trust-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;font-size:13px;font-weight:500;border-radius:999px}
 .trust-pill--light{background:#fff;color:var(--ds-text-strong);border:1px solid var(--ds-border)}

@@ -3,6 +3,7 @@
 import * as Cart from '../lib/cart';
 import type { CartItem } from '../lib/cart';
 import { clp } from '../lib/format';
+import { INSTALLATION_FEE } from '../lib/pricing';
 import { escapeHtml } from './dom';
 
 const API_URL = import.meta.env.DEV
@@ -39,18 +40,31 @@ export function initCotizar(): void {
     return;
   }
 
-  // Resumen
+  // Resumen (sin descripción del producto: solo nombre, cantidad y precio)
   if (itemsEl) {
     itemsEl.innerHTML = items.map(i => `
       <div class="cot-item">
         <div class="cot-item__media">${i.image ? `<img src="${escapeHtml(i.image)}" alt="${escapeHtml(i.name)}">` : ''}</div>
-        <div>
+        <div class="cot-item__body">
           <div class="cot-item__name">${escapeHtml(i.name)}</div>
-          <div class="cot-item__meta">${escapeHtml(i.variant)} · Cant: ${i.qty} · $${clp(i.unitPrice * i.qty)}</div>
+          <div class="cot-item__line"><span>Cant: ${i.qty}</span><span class="cot-item__price">$${clp(i.unitPrice * i.qty)}</span></div>
         </div>
       </div>`).join('');
   }
-  if (totalEl) totalEl.textContent = clp(Cart.subtotal(items));
+
+  // Total con cargo opcional de instalación
+  const subtotal = Cart.subtotal(items);
+  const instalChk = document.getElementById('instalacionChk') as HTMLInputElement | null;
+  const instalLine = document.getElementById('cotInstalLine');
+  const instalAmount = document.getElementById('cotInstalAmount');
+  const recomputeTotal = () => {
+    const withInstal = !!instalChk?.checked;
+    if (instalLine) instalLine.style.display = withInstal ? '' : 'none';
+    if (instalAmount) instalAmount.textContent = clp(INSTALLATION_FEE);
+    if (totalEl) totalEl.textContent = clp(subtotal + (withInstal ? INSTALLATION_FEE : 0));
+  };
+  instalChk?.addEventListener('change', recomputeTotal);
+  recomputeTotal();
 
   // Tipo de tina solo si hay rebaje
   const needsTina = Cart.hasRebaje(items);
@@ -83,12 +97,14 @@ export function initCotizar(): void {
     }
 
     const fd = new FormData(form);
+    const instalacion = !!instalChk?.checked;
     const payload = {
       nombre: fd.get('nombre'), telefono: fd.get('telefono'), email: fd.get('email'),
       direccion: fd.get('direccion'), depto: fd.get('depto'), region: fd.get('region'),
       comuna: fd.get('comuna'), referencia: fd.get('referencia'), notas: fd.get('notas'),
       tipoTina: needsTina ? fd.get('tipoTina') : null,
-      total: Cart.subtotal(items),
+      instalacion,
+      total: subtotal + (instalacion ? INSTALLATION_FEE : 0),
       items: items.map(i => ({ id: i.id, name: i.name, variant: i.variant, grupo: i.grupo, qty: i.qty, unitPrice: i.unitPrice })),
     };
 

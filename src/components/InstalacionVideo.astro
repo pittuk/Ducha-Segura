@@ -1,7 +1,8 @@
 ---
 // InstalacionVideo.astro — Sección de video del proceso de instalación.
-// Reemplaza al antiguo configurador visual. El render vive en public/videos/DuchaSegura.mp4 (16:9, ~89s).
-// El still se muestra con el media-fragment #t=2 (frame de los 2s) — sin póster aparte.
+// Render en public/videos/DuchaSegura.webm (~17 MB, primario) con DuchaSegura.mp4 de
+// respaldo para Safari/iOS (que no siempre soportan WebM). El still es el frame de los 2s
+// (media-fragment #t=2 + seek en loadedmetadata como respaldo) — sin póster aparte.
 ---
 <section class="section section--alt" id="instalacion-video">
   <div class="container">
@@ -12,7 +13,10 @@
     </div>
 
     <div class="instvid reveal">
-      <video class="instvid__video" id="instVideo" preload="metadata" playsinline src="/videos/DuchaSegura.mp4#t=2"></video>
+      <video class="instvid__video" id="instVideo" preload="metadata" playsinline>
+        <source src="/videos/DuchaSegura.webm#t=2" type="video/webm" />
+        <source src="/videos/DuchaSegura.mp4#t=2" type="video/mp4" />
+      </video>
       <button class="instvid__play" id="instVideoPlay" aria-label="Reproducir video: Así instalamos tu rebaje"></button>
       <div class="instvid__caption">
         <div class="instvid__txt">Render del proceso de instalación · Ducha Segura®</div>
@@ -43,7 +47,13 @@
     const play = document.getElementById('instVideoPlay');
     if (!card || !video || !play || card.dataset.bound) return;
     card.dataset.bound = '1';
-    // El still es el frame de los 2s (#t=2). Al reproducir, arranca desde el inicio con controles.
+    // Still = frame de los 2s. Respaldo por si el media-fragment #t= se ignora en el <source>.
+    video.addEventListener('loadedmetadata', () => {
+      if (!card.classList.contains('playing') && video.currentTime < 1) {
+        try { video.currentTime = 2; } catch (_) {}
+      }
+    });
+    // Al reproducir, arranca desde el inicio con controles.
     play.addEventListener('click', () => {
       video.currentTime = 0;
       video.controls = true;

@@ -31,3 +31,6 @@ Thumbs.db
 
 # Backend PHP — credenciales reales (no commitear)
 public/api/config.php
+
+# Material fuente de prensa (pesado: Word/PDF/videos) — no va al repo
+docs/PRENSA/

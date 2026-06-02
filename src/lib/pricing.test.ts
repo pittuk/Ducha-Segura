@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { basePrice, discountAmount, finalPrice, installment } from './pricing';
+import { basePrice, discountAmount, finalPrice, installment, INSTALLATION_FEE } from './pricing';
 
 describe('pricing', () => {
   it('precio base por tipo y ancho', () => {
@@ -23,5 +23,9 @@ describe('pricing', () => {
 
   it('valor de cuota = final / nº cuotas redondeado (194.650 / 12 = 16.221)', () => {
     expect(installment(194650, 12)).toBe(16221);
+  });
+
+  it('cargo de instalación fijo = 30.000', () => {
+    expect(INSTALLATION_FEE).toBe(30000);
   });
 });
