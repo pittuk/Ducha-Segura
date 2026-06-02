@@ -58,7 +58,7 @@ export function initCalculator(): void {
     const cuotaVal = installment(final, state.cuotas);
 
     const cfgEl = $('#calcCfg');
-    if (cfgEl) cfgEl.textContent = `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'} · ${state.ancho} cm`;
+    if (cfgEl) cfgEl.textContent = `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Hidromasaje' : 'Tradicional'} · ${state.ancho} cm`;
 
     const locEl = $('#calcLoc');
     if (locEl) locEl.textContent = `${state.comuna}, ${state.region}`;
@@ -129,7 +129,7 @@ export function initCalculator(): void {
       window.dsCart.add({
         id: `calc-${state.tipo}-${state.ancho}-${state.banco}`,
         grupo: 'rebaje',
-        name: `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'}`,
+        name: `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Hidromasaje' : 'Tradicional'}`,
         variant: `${state.ancho} cm · ${state.comuna}, ${state.region}${discAmt > 0 ? ' · banco ' + state.banco : ''}`,
         unitPrice: final,
         label: `${state.tipo.toUpperCase()} ${state.ancho}`,

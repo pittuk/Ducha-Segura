@@ -9,7 +9,7 @@ export interface Convenio {
 }
 
 // Convenios vigentes (info real de duchasegura.cl/convenios). Precios normales de referencia:
-// Tina tradicional $365.000 · Jacuzzi/Hidromasaje $460.000. Descuentos NO acumulables entre sí.
+// Tina tradicional $365.000 · Hidromasaje $460.000. Descuentos NO acumulables entre sí.
 export const CONVENIOS: Convenio[] = [
   {
     name: 'Caja Los Andes',
@@ -18,7 +18,7 @@ export const CONVENIOS: Convenio[] = [
     descuento: '20%',
     detalle: [
       'Tina tradicional: $292.000 (normal $365.000)',
-      'Jacuzzi / Hidromasaje: $368.000 (normal $460.000)',
+      'Hidromasaje: $368.000 (normal $460.000)',
       'Hasta 24 cuotas sin interés con tarjeta de cualquier banco',
       'No acumulable con otras promociones',
     ],
@@ -43,7 +43,7 @@ export const CONVENIOS: Convenio[] = [
     descuento: '15%',
     detalle: [
       'Tina tradicional: $310.250 (normal $365.000) + barra cromada 40 cm con instalación',
-      'Jacuzzi / Hidromasaje: $391.000 (normal $460.000) + barra cromada 40 cm con instalación',
+      'Hidromasaje: $391.000 (normal $460.000) + barra cromada 40 cm con instalación',
       'Aplica con todo medio de pago · no acumulable',
     ],
     vigencia: 'hasta el 31/12/2026',
@@ -66,7 +66,7 @@ export const CONVENIOS: Convenio[] = [
     beneficiarios: 'Adultos mayores de Las Condes',
     descuento: '10%',
     detalle: [
-      'Opción A — 10% dcto.: Tina $328.500 · Jacuzzi $414.000',
+      'Opción A — 10% dcto.: Tina $328.500 · Hidromasaje $414.000',
       'Opción B — Rebaje + barra de 30 cm de acero inox + instalación: $365.000',
       'Aplica solo una de las dos opciones',
     ],
@@ -105,7 +105,7 @@ export const CONVENIOS: Convenio[] = [
     beneficiarios: 'Residentes de Ñuñoa con Tarjeta Vecino',
     descuento: '10%',
     detalle: [
-      'Opción A — 10% dcto.: Tina $328.500 · Jacuzzi $414.000',
+      'Opción A — 10% dcto.: Tina $328.500 · Hidromasaje $414.000',
       'Opción B — Rebaje + barra de 30 cm de acero inox + instalación: $365.000',
       'Presentar Tarjeta Vecino al solicitar',
     ],
@@ -130,7 +130,7 @@ export const CONVENIOS: Convenio[] = [
     beneficiarios: 'Residentes de La Reina con Tarjeta Ciudad',
     descuento: '10%',
     detalle: [
-      'Opción A — 10% dcto.: Tina $328.500 · Jacuzzi $414.000',
+      'Opción A — 10% dcto.: Tina $328.500 · Hidromasaje $414.000',
       'Opción B — Rebaje $365.000 + barra de 30 cm de acero inox gratis, con instalación',
     ],
     zona: 'RM',
@@ -142,7 +142,7 @@ export const CONVENIOS: Convenio[] = [
     beneficiarios: 'Socios del Estadio Español Chiguayante',
     descuento: '15%',
     detalle: [
-      'Opción A — 15% dcto.: Tina $310.250 · Jacuzzi $391.000',
+      'Opción A — 15% dcto.: Tina $310.250 · Hidromasaje $391.000',
       'Opción B — 15% dcto. en todos los accesorios complementarios',
       'Presentar perfil de la app institucional + cédula de identidad',
     ],
