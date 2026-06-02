@@ -1,6 +1,6 @@
 # Estado del proyecto — Ducha Segura® (sitio web)
 
-> **Última actualización:** 2026-05-28
+> **Última actualización:** 2026-06-02
 > **Propósito de este documento:** dejar registrado todo lo hecho para retomar mañana con contexto completo.
 
 ---
@@ -95,6 +95,47 @@ Bloque hecho tras la migración base (commits `8e34d98` → `e6d5b67`):
 - **Prensa real:** 5 logos en `public/images/prensa/` (LUN, Diario La Estrella, Radio Bío Bío, NexNews, Radio Festival de Valparaíso); datos en `src/data/prensa.ts`, render en `Prensa.astro`.
 - **Tipografía/UI:** títulos de calculadora y prefooter a **55px**; precio de tarjeta en **azul/bold** (diferenciado del nombre); subtítulos de ficha a 26px.
 - **Íconos:** logo de **WhatsApp relleno** (se veía roto porque el sistema `.ic` es de trazo; el glifo lleva `fill=currentColor` para anularlo) en todo el sitio; **redes del footer** con íconos reales (Instagram/Facebook/LinkedIn/X) en vez de texto. `src/components/Icons.astro` + `Footer.astro`.
+
+## 5c. Proceso de cotización + backend (ajustes-varios-4)
+
+Bloque hecho en la rama `ajustes-varios-4` (2026-06-02):
+
+### Front (Astro estático)
+
+- **Drawer con dos acciones** (`QuoteDrawer.astro`): se reemplazó el formulario inline de WhatsApp por dos botones: **"Continuar con la cotización"** (link a `/cotizar`) y **"Comprar"** (placeholder — muestra "Pago online próximamente"; habilitado solo si el carrito contiene únicamente kits/accesorios sin rebaje; deshabilitado si hay un rebaje).
+- **Página `/cotizar`** (`src/pages/cotizar.astro` + `src/scripts/cotizar.ts`): formulario de contacto + dirección de instalación (selector región → comunas dependiente desde `src/data/comunas.ts`) + notas. Cuando el carrito incluye un rebaje, aparece un selector condicional **"¿Cuál es tu tipo de tina?"** con 6 opciones visuales (imágenes desde `src/data/tinas.ts`; los archivos en `public/images/tinas/` son **placeholders — pendiente fotos reales**). Al enviar, hace un `fetch` POST al backend PHP; si todo sale bien, limpia el carrito y redirige a `/gracias-por-contactarnos`.
+- **Página `/gracias-por-contactarnos`**: confirmación con el número de cotización que llega en el parámetro `?id=`.
+- **`CartItem.grupo`** (`'rebaje' | 'kit' | 'accesorio'`): campo nuevo en el ítem del carrito; helpers `hasRebaje`, `canBuy` y `deriveGrupo` en `src/lib/cart.ts` (cubiertos con tests).
+- **Rename Jacuzzi → Hidromasaje**: solo en texto visible para el usuario (títulos, etiquetas, alt). Slugs, claves internas, rutas de imagen y contenido de blog **no se tocaron** (SEO). Implementado con `NAME_OVERRIDE` en `src/data/productos.ts` + edits en Calculator, products-media alt, rebaje-de-tina meta y convenios.
+
+### Backend (PHP + MySQL — se despliega junto con el sitio)
+
+El backend vive en `public/api/` y `public/admin/`, y se copia a `dist/` con `npm run build`.
+
+- **`public/api/cotizacion.php`** — endpoint POST JSON: valida el body, inserta en MySQL (transacción: `cotizaciones` + `cotizacion_items`), envía dos correos (cliente y gestor) vía PHPMailer. Un fallo de email NO bloquea la respuesta `{ok, id}`.
+- **`public/api/comprar.php`** — stub HTTP 501 `"coming_soon"` reservado para pagos online.
+- **`public/api/db.php`** — conexión PDO con helper `ds_config()`.
+- **`public/api/mailer.php`** — wrapper de PHPMailer (SMTP).
+- **`public/api/schema.sql`** — tablas: `cotizaciones`, `cotizacion_items`, `admin_users`.
+- **`public/api/config.example.php`** — plantilla comprometida en el repo; el archivo real (`config.php`) está en `.gitignore` y debe crearse en el servidor con credenciales reales.
+- **`public/api/.htaccess`** — bloquea acceso directo a includes, config y lib.
+- **PHPMailer vendorizado** en `public/api/lib/phpmailer/`.
+- **Panel de administración** (`public/admin/`):
+  - `login.php` / `logout.php` / `auth.php` — sesión PHP + CSRF con `hash_equals` + guardas de rol.
+  - `index.php` — listado de cotizaciones con filtros (estado, búsqueda) y paginación.
+  - `detalle.php` — detalle de cotización + cambio de estado.
+  - `export.php` — exporta a CSV con BOM UTF-8 y mitigación de inyección de fórmulas.
+  - `usuarios.php` — CRUD de usuarios (solo rol `admin`).
+  - `crear-admin.php` — script CLI para crear el primer usuario administrador.
+  - `styles.css` — estilos del panel.
+
+### Pendientes de este bloque
+
+- **Fotos reales de los tipos de tina** (`public/images/tinas/`): hoy son placeholders.
+- **"Comprar" (pago online)**: el botón existe pero apunta al stub 501. Implementar pagos → ver [`docs/PAYMENTS.md`](PAYMENTS.md).
+- **Credenciales reales (`config.php`)**: deben crearse en el servidor de Hostinger (nunca en el repo). Ver la sección de despliegue en `README.md`.
+
+---
 
 ## 6. Pendientes (para continuar)
 
