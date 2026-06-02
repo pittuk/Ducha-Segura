@@ -89,7 +89,7 @@ import { COMUNAS } from '../data/comunas';
     </div>
   </section>
 
-  <script type="application/json" id="comunasData" set:html={JSON.stringify(COMUNAS)}></script>
+  <script is:inline type="application/json" id="comunasData" set:html={JSON.stringify(COMUNAS)}></script>
 </BaseLayout>
 
 <style>

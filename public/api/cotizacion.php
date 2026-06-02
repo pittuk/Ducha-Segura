@@ -41,6 +41,8 @@ if (count($items) > 50) bad('too_many_items');
 $tieneRebaje = false;
 foreach ($items as $it) { if (($it['grupo'] ?? '') === 'rebaje') { $tieneRebaje = true; break; } }
 if ($tieneRebaje && !$tipoTina) bad('tipo_tina');
+$tinasValidas = ['acero-acrilica','hidromasaje','fierro-fundido','especial-1','especial-2','especial-3'];
+if ($tipoTina !== null && !in_array($tipoTina, $tinasValidas, true)) bad('tipo_tina_invalida');
 
 $pdo = ds_db();
 $pdo->beginTransaction();
@@ -88,7 +90,7 @@ ds_send_mail($email, $nombre, 'Recibimos tu cotización — Ducha Segura', ds_em
 
 // Gestor
 $dir = htmlspecialchars("$direccion" . ($depto ? ", $depto" : "") . " · $comuna, $region" . ($referencia ? " ($referencia)" : ""));
-ds_send_mail($cfg['manager_email'], 'Gestor Ducha Segura', "Nueva cotización #$id — $nombre", ds_email_layout(
+ds_send_mail($cfg['manager_email'], 'Gestor Ducha Segura', "Nueva cotización #$id — " . preg_replace('/[\r\n]+/', ' ', $nombre), ds_email_layout(
   "Nueva cotización #$id",
   "<p><b>Contacto:</b> " . htmlspecialchars($nombre) . " · " . htmlspecialchars($telefono) . " · " . htmlspecialchars($email) . "</p>"
   . "<p><b>Instalación:</b> $dir</p>"
