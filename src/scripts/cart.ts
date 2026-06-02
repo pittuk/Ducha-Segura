@@ -17,7 +17,7 @@ let items: CartItem[] = load();
 // Once-per-session guards for document/window listeners
 let _clickBound = false;
 let _escapeBound = false;
-let _quoteBound = false;
+let _buyBound = false;
 
 // Toast timer (module-level so it survives page swaps)
 let _toastTimer: ReturnType<typeof setTimeout> | null = null;
@@ -148,7 +148,7 @@ function renderCart(): void {
   const buyBlocked = document.getElementById('buyBlocked');
   if (buyBtn) {
     const canBuy = Cart.canBuy(items);
-    buyBtn.disabled = !canBuy;
+    buyBtn.setAttribute('aria-disabled', String(!canBuy));
     if (buyNote) buyNote.style.display = canBuy ? '' : 'none';
     if (buyBlocked) buyBlocked.style.display = (!canBuy && Cart.hasRebaje(items)) ? '' : 'none';
   }
@@ -218,14 +218,17 @@ function bindEscape(): void {
 
 // --- Botón "Comprar": placeholder de pagos (once per session) ---
 function bindBuyButton(): void {
-  if (_quoteBound) return;
-  _quoteBound = true;
+  if (_buyBound) return;
+  _buyBound = true;
 
   document.addEventListener('click', (e) => {
     const target = e.target as Element;
     if (!target.closest('#goComprar')) return;
     e.preventDefault();
-    if (!Cart.canBuy(items)) return;
+    if (!Cart.canBuy(items)) {
+      showToast('La compra online no está disponible junto a un rebaje. Continúa con la cotización.');
+      return;
+    }
     showToast('Pago online próximamente. Mientras tanto, continúa con la cotización.');
   });
 }

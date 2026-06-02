@@ -22,7 +22,7 @@
     <a class="btn btn--primary btn--full" id="goCotizar" href="/cotizar">
       Continuar con la cotización
     </a>
-    <button class="btn btn--secondary btn--full" id="goComprar" type="button" style="margin-top:8px">
+    <button class="btn btn--secondary btn--full" id="goComprar" type="button" aria-disabled="true" aria-describedby="buyNote buyBlocked">
       Comprar
     </button>
     <p class="drawer__buy-note" id="buyNote" style="display:none">Pago online próximamente.</p>
@@ -80,6 +80,7 @@
   .drawer__row--total .v{font-family:var(--ds-tnum);font-size:26px;font-weight:700;color:var(--ds-text-strong);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
   .drawer__note{font-size:12px;color:var(--ds-text);margin-bottom:10px;text-align:center}
   .drawer__buy-note{font-size:12px;color:var(--ds-text);margin:8px 0 0;text-align:center}
-  .btn--secondary:disabled{opacity:.5;cursor:not-allowed}
-  .btn--secondary:disabled:hover{background:#fff;transform:none}
+  #goComprar{margin-top:8px}
+  #goComprar[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
+  #goComprar[aria-disabled="true"]:hover{background:#fff;transform:none}
 </style>
