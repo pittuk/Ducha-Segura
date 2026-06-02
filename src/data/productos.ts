@@ -30,9 +30,16 @@ const NAME_OVERRIDE: Record<string, string> = {
   'rebaje-de-tina-jacuzzi': 'Rebaje de tina: Hidromasaje',
 };
 
+// Recategorizar productos (decisión del cliente; sobrevive a re-importar de WC).
+const GRUPO_OVERRIDE: Record<string, Grupo> = {
+  'juego-de-ducha-2-funciones': 'accesorio',
+  'kit-cortina-bano': 'accesorio',
+};
+
 const wc: Producto[] = (data as Producto[]).map((p) => ({
   ...p,
   name: NAME_OVERRIDE[p.slug] ?? p.name,
+  grupo: GRUPO_OVERRIDE[p.slug] ?? p.grupo,
   image: IMG_OVERRIDE[p.slug] ?? p.image,
 }));
 
