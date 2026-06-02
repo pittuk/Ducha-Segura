@@ -31,6 +31,7 @@ $notas = s($d['notas'] ?? '', 2000);
 $tipoTina = isset($d['tipoTina']) && $d['tipoTina'] !== null ? s($d['tipoTina'], 40) : null;
 // total lo calcula el front (sitio estático sin lógica de precios en servidor); valor informativo.
 $total = (int)($d['total'] ?? 0);
+$instalacion = !empty($d['instalacion']) ? 1 : 0;
 $items = is_array($d['items'] ?? null) ? $d['items'] : [];
 
 if ($nombre === '' || $telefono === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) bad('contacto');
@@ -48,9 +49,9 @@ $pdo = ds_db();
 $pdo->beginTransaction();
 try {
   $stmt = $pdo->prepare('INSERT INTO cotizaciones
-    (nombre,telefono,email,direccion,depto,region,comuna,referencia,tipo_tina,notas,total_estimado)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?)');
-  $stmt->execute([$nombre,$telefono,$email,$direccion,$depto ?: null,$region,$comuna,$referencia ?: null,$tipoTina,$notas ?: null,$total]);
+    (nombre,telefono,email,direccion,depto,region,comuna,referencia,tipo_tina,instalacion,notas,total_estimado)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)');
+  $stmt->execute([$nombre,$telefono,$email,$direccion,$depto ?: null,$region,$comuna,$referencia ?: null,$tipoTina,$instalacion,$notas ?: null,$total]);
   $id = (int)$pdo->lastInsertId();
 
   $istmt = $pdo->prepare('INSERT INTO cotizacion_items
@@ -93,7 +94,8 @@ $dir = htmlspecialchars("$direccion" . ($depto ? ", $depto" : "") . " · $comuna
 ds_send_mail($cfg['manager_email'], 'Gestor Ducha Segura', "Nueva cotización #$id — " . preg_replace('/[\r\n]+/', ' ', $nombre), ds_email_layout(
   "Nueva cotización #$id",
   "<p><b>Contacto:</b> " . htmlspecialchars($nombre) . " · " . htmlspecialchars($telefono) . " · " . htmlspecialchars($email) . "</p>"
-  . "<p><b>Instalación:</b> $dir</p>"
+  . "<p><b>Dirección:</b> $dir</p>"
+  . "<p><b>Instalación solicitada:</b> " . ($instalacion ? 'Sí (+$30.000)' : 'No') . "</p>"
   . ($tipoTina ? "<p><b>Tipo de tina:</b> " . htmlspecialchars($tipoTina) . "</p>" : "")
   . ($notas ? "<p><b>Notas:</b> " . htmlspecialchars($notas) . "</p>" : "")
   . "$tabla"

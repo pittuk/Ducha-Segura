@@ -17,8 +17,9 @@ import { COMUNAS } from '../data/comunas';
         <aside class="cotizar__summary" id="cotizarSummary" aria-live="polite">
           <h2 class="cotizar__h">Tu selección</h2>
           <div id="cotizarItems"></div>
+          <div class="cotizar__line" id="cotInstalLine" style="display:none"><span>Instalación</span><span>+$<span id="cotInstalAmount">0</span></span></div>
           <div class="cotizar__total"><span>Total estimado</span><span>$<span id="cotizarTotal">0</span></span></div>
-          <p class="cotizar__note">Precios referenciales. Envío + instalación incluidos. Sujeto a confirmación final.</p>
+          <p class="cotizar__note">Precios referenciales. Despacho incluido. Sujeto a confirmación final.</p>
         </aside>
 
         <!-- Formulario -->
@@ -74,6 +75,14 @@ import { COMUNAS } from '../data/comunas';
             </fieldset>
 
             <fieldset class="cotizar__block">
+              <legend class="cotizar__h">Instalación</legend>
+              <label class="cotizar__check">
+                <input type="checkbox" name="instalacion" id="instalacionChk" />
+                <span>Requiero instalación <strong>(+$30.000)</strong><small>Nuestro equipo instala el producto en tu domicilio.</small></span>
+              </label>
+            </fieldset>
+
+            <fieldset class="cotizar__block">
               <legend class="cotizar__h">Notas (opcional)</legend>
               <textarea name="notas" rows="3" placeholder="Medidas del baño (ancho, largo, material), horario de contacto, etc."></textarea>
             </fieldset>
@@ -100,11 +109,11 @@ import { COMUNAS } from '../data/comunas';
   .cotizar__h{font-family:var(--ds-display);font-weight:700;font-size:18px;color:var(--ds-text-strong);margin:0 0 12px}
   .cotizar__total{display:flex;justify-content:space-between;align-items:baseline;font-weight:700;color:var(--ds-text-strong);border-top:1px solid var(--ds-border);padding-top:12px;margin-top:8px;font-size:18px;font-variant-numeric:tabular-nums}
   .cotizar__note{font-size:12px;color:var(--ds-text);margin:10px 0 0}
-  .cot-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--ds-border)}
-  .cot-item__media{width:44px;height:44px;border-radius:6px;overflow:hidden;background:#f4f4f2;flex-shrink:0}
-  .cot-item__media img{width:100%;height:100%;object-fit:cover}
-  .cot-item__name{font-size:13px;font-weight:700;color:var(--ds-text-strong);line-height:1.2}
-  .cot-item__meta{font-size:11px;color:var(--ds-text)}
+  .cotizar__line{display:flex;justify-content:space-between;font-size:13px;color:var(--ds-text);margin-top:10px;font-variant-numeric:tabular-nums}
+  .cotizar__check{display:flex!important;align-items:flex-start;gap:10px;font-weight:600;margin:0!important}
+  .cotizar__check input{width:auto!important;margin:2px 0 0!important;flex-shrink:0}
+  .cotizar__check span{font-size:14px;color:var(--ds-text-strong)}
+  .cotizar__check small{display:block;font-weight:400;font-size:12px;color:var(--ds-text);margin-top:3px}
   .cotizar__block{border:1px solid var(--ds-border);border-radius:var(--ds-radius);padding:18px;margin:0 0 16px}
   .cotizar__block legend{padding:0 6px}
   .cotizar__row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -126,4 +135,16 @@ import { COMUNAS } from '../data/comunas';
   .cotizar__error{background:#fde8e8;color:var(--ds-red,#c0392b);border-radius:var(--ds-radius);padding:10px 12px;font-size:13px;font-weight:600;margin:0 0 12px}
   .cotizar__empty{text-align:center;padding:40px 0;color:var(--ds-text)}
   .cotizar__empty .btn{margin-top:12px}
+</style>
+
+<!-- is:global porque los ítems del resumen se inyectan por JS (innerHTML en cotizar.ts):
+     los estilos scoped de Astro NO los alcanzan. -->
+<style is:global>
+  .cot-item{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--ds-border)}
+  .cot-item__media{width:54px;height:54px;border-radius:8px;overflow:hidden;background:#fff;border:1px solid var(--ds-border);flex-shrink:0}
+  .cot-item__media img{width:100%;height:100%;object-fit:contain;display:block}
+  .cot-item__body{flex:1;min-width:0}
+  .cot-item__name{font-size:13px;font-weight:700;color:var(--ds-text-strong);line-height:1.25}
+  .cot-item__line{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:5px;font-size:12px;color:var(--ds-text)}
+  .cot-item__price{font-weight:700;color:var(--ds-text-strong);font-variant-numeric:tabular-nums}
 </style>

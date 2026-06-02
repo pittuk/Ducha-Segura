@@ -35,6 +35,7 @@ ds_header($u, 'list');
     <dt>Dirección</dt><dd><?= ds_e($c['direccion']) ?><?= $c['depto'] ? ', '.ds_e($c['depto']) : '' ?> · <?= ds_e($c['comuna']) ?>, <?= ds_e($c['region']) ?></dd>
     <?php if ($c['referencia']): ?><dt>Referencia</dt><dd><?= ds_e($c['referencia']) ?></dd><?php endif; ?>
     <?php if ($c['tipo_tina']): ?><dt>Tipo de tina</dt><dd><?= ds_e($c['tipo_tina']) ?></dd><?php endif; ?>
+    <dt>Instalación</dt><dd><?= !empty($c['instalacion']) ? 'Sí (+$30.000)' : 'No' ?></dd>
     <?php if ($c['notas']): ?><dt>Notas</dt><dd><?= nl2br(ds_e($c['notas'])) ?></dd><?php endif; ?>
   </dl>
 </div>

@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS cotizaciones (
   comuna        VARCHAR(80)  NOT NULL,
   referencia    VARCHAR(200) NULL,
   tipo_tina     VARCHAR(40)  NULL,
+  instalacion   TINYINT(1)   NOT NULL DEFAULT 0,
   notas         TEXT         NULL,
   total_estimado INT UNSIGNED NOT NULL DEFAULT 0,
   estado        ENUM('nueva','contactada','cotizada','cerrada') NOT NULL DEFAULT 'nueva',

@@ -10,6 +10,9 @@ export const BASE_PRICES: Record<Tipo, Record<Ancho, number>> = {
 /** Descuento porcentual por banco/convenio asociado. */
 export const DISCOUNTS: Record<Banco, number> = { santander: 15, chile: 20, losandes: 20, otro: 0 };
 
+/** Cargo fijo de instalación (CLP) cuando el cliente la solicita en la cotización. */
+export const INSTALLATION_FEE = 30000;
+
 export const BANCO_LABELS: Record<Banco, string> = { santander: 'Santander', chile: 'Banco de Chile', losandes: 'Caja Los Andes', otro: '' };
 
 export function basePrice(tipo: Tipo, ancho: Ancho): number {
