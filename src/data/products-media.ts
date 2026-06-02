@@ -16,6 +16,6 @@ export const PRODUCT_MEDIA: Record<string, ProductMedia> = {
   jacuzzi: {
     image: '/images/rebajes/Rebaje Tina Jacuzzi.webp',
     fit: 'cover',
-    alt: 'Tina jacuzzi en un baño, lista para rebaje',
+    alt: 'Tina hidromasaje en un baño, lista para rebaje',
   },
 };

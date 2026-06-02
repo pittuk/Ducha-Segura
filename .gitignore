@@ -28,3 +28,6 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+# Backend PHP — credenciales reales (no commitear)
+public/api/config.php

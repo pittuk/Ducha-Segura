@@ -8,7 +8,6 @@ import type { CartItem, NewItem } from '../lib/cart';
 import { clp } from '../lib/format';
 import { escapeHtml } from './dom';
 import { PRODUCTOS, ACCESORIOS, type Grupo } from '../data/productos';
-import { SITE } from '../data/site';
 
 const ID_PREFIX: Record<Grupo, string> = { rebaje: 'reb', kit: 'kit', accesorio: 'acc' };
 
@@ -18,14 +17,17 @@ let items: CartItem[] = load();
 // Once-per-session guards for document/window listeners
 let _clickBound = false;
 let _escapeBound = false;
-let _quoteBound = false;
+let _buyBound = false;
 
 // Toast timer (module-level so it survives page swaps)
 let _toastTimer: ReturnType<typeof setTimeout> | null = null;
 
 // --- Persistence ---
 function load(): CartItem[] {
-  try { return JSON.parse(localStorage.getItem('ds_cart') || '[]'); } catch (_) { return []; }
+  try {
+    const raw: CartItem[] = JSON.parse(localStorage.getItem('ds_cart') || '[]');
+    return raw.map(i => i.grupo ? i : { ...i, grupo: Cart.deriveGrupo(i.id) });
+  } catch (_) { return []; }
 }
 
 function save(): void {
@@ -140,6 +142,16 @@ function renderCart(): void {
   if (drawerSubtotal) drawerSubtotal.textContent = '$' + clp(sub);
   if (drawerTotal) drawerTotal.textContent = clp(sub);
   if (drawerFoot) drawerFoot.style.display = '';
+
+  const buyBtn = document.getElementById('goComprar') as HTMLButtonElement | null;
+  const buyNote = document.getElementById('buyNote');
+  const buyBlocked = document.getElementById('buyBlocked');
+  if (buyBtn) {
+    const canBuy = Cart.canBuy(items);
+    buyBtn.setAttribute('aria-disabled', String(!canBuy));
+    if (buyNote) buyNote.style.display = canBuy ? '' : 'none';
+    if (buyBlocked) buyBlocked.style.display = (!canBuy && Cart.hasRebaje(items)) ? '' : 'none';
+  }
 }
 
 // --- Toast (queries live nodes) ---
@@ -166,7 +178,7 @@ function bindDocumentClick(): void {
     if (addP) {
       const p = PRODUCTOS.find(x => x.slug === addP.dataset.addProducto);
       if (p && p.price > 0) {
-        add({ id: `${ID_PREFIX[p.grupo]}-${p.slug}`, name: p.name, variant: p.shortDescription, unitPrice: p.price, label: p.name, image: p.image });
+        add({ id: `${ID_PREFIX[p.grupo]}-${p.slug}`, name: p.name, variant: p.shortDescription, unitPrice: p.price, label: p.name, image: p.image, grupo: p.grupo });
       }
       return;
     }
@@ -204,45 +216,20 @@ function bindEscape(): void {
   });
 }
 
-// --- Quote form → WhatsApp (once per session, queries live node at call time) ---
-function bindQuoteForm(): void {
-  if (_quoteBound) return;
-  _quoteBound = true;
+// --- Botón "Comprar": placeholder de pagos (once per session) ---
+function bindBuyButton(): void {
+  if (_buyBound) return;
+  _buyBound = true;
 
   document.addEventListener('click', (e) => {
     const target = e.target as Element;
-    if (!target.closest('#sendQuote')) return;
+    if (!target.closest('#goComprar')) return;
     e.preventDefault();
-    const form = document.getElementById('quoteForm') as HTMLFormElement | null;
-    if (!form) return;
-    if (!form.reportValidity()) return;
-    if (items.length === 0) { showToast('Tu cotización está vacía'); return; }
-
-    const data = new FormData(form);
-    const nombre = data.get('nombre');
-    const telefono = data.get('telefono');
-    const email = data.get('email');
-    const mensaje = data.get('mensaje');
-
-    const lines = [
-      `*Solicitud de cotización — Ducha Segura*`,
-      ``,
-      `Nombre: ${nombre}`,
-      `Teléfono: ${telefono}`,
-      `Email: ${email}`,
-      mensaje ? `Datos del baño: ${mensaje}` : '',
-      ``,
-      `*Productos solicitados:*`,
-      ...items.map(i => `• ${i.name} — ${i.variant} — Cant: ${i.qty} — $${clp(i.unitPrice * i.qty)}`),
-      ``,
-      `Total estimado: $${clp(Cart.subtotal(items))}`,
-      ``,
-      `(Precios referenciales. Sujetos a confirmación final.)`,
-    ].filter(Boolean).join('\n');
-
-    const url = `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(lines)}`;
-    window.open(url, '_blank', 'noopener');
-    showToast('Abriendo WhatsApp para enviar tu cotización');
+    if (!Cart.canBuy(items)) {
+      showToast('La compra online no está disponible junto a un rebaje. Continúa con la cotización.');
+      return;
+    }
+    showToast('Pago online próximamente. Mientras tanto, continúa con la cotización.');
   });
 }
 
@@ -266,7 +253,7 @@ export function initCart(): void {
   // Ensure session-level listeners are registered exactly once
   bindDocumentClick();
   bindEscape();
-  bindQuoteForm();
+  bindBuyButton();
 
   // Always refresh badge + drawer state from localStorage on the new DOM
   renderCart();

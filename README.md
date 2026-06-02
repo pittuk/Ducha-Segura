@@ -41,5 +41,24 @@ El carrito de cotización persiste entre páginas (`localStorage` clave `ds_cart
 `npm run build` y publicar el contenido de `dist/` (sitio estático).
 Para activar pagos online en el futuro: ver [`docs/PAYMENTS.md`](docs/PAYMENTS.md).
 
+## Backend de cotizaciones (PHP + MySQL en Hostinger)
+
+El backend vive en `public/api/` y `public/admin/` y se copia a `dist/` con `npm run build`.
+
+### Dev local
+1. `npm run dev` (front en http://localhost:4321)
+2. `php -S localhost:8080 -t public` (API + admin)
+3. Copiar `public/api/config.example.php` → `public/api/config.php` y completar credenciales (MySQL local + SMTP). En dev, `cors_origin = http://localhost:4321`.
+4. Importar el esquema: `mysql -u <user> -p <db> < public/api/schema.sql`
+5. Crear admin: `php public/admin/crear-admin.php admin@duchasegura.cl "Admin" admin`
+
+### Producción (Hostinger)
+1. `npm run build` → subir `dist/` a `public_html` (incluye `api/` y `admin/`).
+   - ⚠️ **Si tienes un `public/api/config.php` local (dev), el build lo copia a `dist/api/config.php`.** Antes de subir, **borra `dist/api/config.php`** (o no subas ese archivo) para no pisar producción con credenciales de desarrollo. La config real se crea en el servidor (paso 3).
+2. Crear DB MySQL en hPanel; importar `public/api/schema.sql`.
+3. Crear `public_html/api/config.php` con credenciales reales (DB + SMTP del buzón del dominio; `cors_origin` = origen del sitio).
+4. Ejecutar el seed del primer admin (SSH `php` o insertar fila con hash).
+5. Verificar: enviar una cotización de prueba, revisar email y panel `/admin/`.
+
 ## Imágenes
 Las imágenes de producto usan placeholders de texto (igual que el sitio original). Reemplazarlas por fotos reales es una tarea de contenido posterior: copiar a `public/images/` y sustituir los placeholders en los componentes.

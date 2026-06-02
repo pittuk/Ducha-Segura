@@ -1,0 +1,6 @@
+# Sin listado de directorio. La autenticación real está en auth.php (sesión PHP).
+Options -Indexes
+# No servir archivos sensibles como texto si PHP fallara.
+<FilesMatch "\.(sql|md|inc)$">
+  Require all denied
+</FilesMatch>

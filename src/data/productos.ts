@@ -25,8 +25,14 @@ const IMG_OVERRIDE: Record<string, string> = {
   'rebaje-de-tina-jacuzzi': '/images/rebajes/Rebaje Tina Jacuzzi.webp',
 };
 
+// Renombrar el nombre VISIBLE (no el slug, que está indexado). Sobrevive a re-importar de WC.
+const NAME_OVERRIDE: Record<string, string> = {
+  'rebaje-de-tina-jacuzzi': 'Rebaje de tina: Hidromasaje',
+};
+
 const wc: Producto[] = (data as Producto[]).map((p) => ({
   ...p,
+  name: NAME_OVERRIDE[p.slug] ?? p.name,
   image: IMG_OVERRIDE[p.slug] ?? p.image,
 }));
 

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-label="Placeholder tina">
+  <rect width="320" height="200" fill="#eef2f5"/>
+  <rect x="40" y="70" width="240" height="80" rx="40" fill="#cdd8e0"/>
+  <text x="160" y="180" font-family="sans-serif" font-size="14" fill="#5b6b78" text-anchor="middle">borde irregular</text>
+</svg>

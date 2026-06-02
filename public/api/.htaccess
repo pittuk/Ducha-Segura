@@ -1,0 +1,18 @@
+# Bloquear acceso directo a includes y archivos sensibles
+<FilesMatch "\.(sql)$">
+  Require all denied
+</FilesMatch>
+<Files "config.php">
+  Require all denied
+</Files>
+<Files "config.example.php">
+  Require all denied
+</Files>
+<Files "db.php">
+  Require all denied
+</Files>
+<Files "mailer.php">
+  Require all denied
+</Files>
+# Bloquear la carpeta de librerías (PHPMailer)
+RedirectMatch 403 ^/api/lib/.*$
