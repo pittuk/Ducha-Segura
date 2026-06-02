@@ -1,0 +1,26 @@
+:root{--blue:#0072C0;--ink:#1d2b36;--border:#e3e8ec;--bg:#f5f7f9}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:var(--blue)}
+.login-body{display:flex;min-height:100vh;align-items:center;justify-content:center}
+.login-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px;width:320px;display:flex;flex-direction:column;gap:14px}
+.login-card h1{font-size:18px;margin:0 0 4px}
+.login-card label{display:block;font-size:13px;font-weight:bold}
+.login-card input{width:100%;margin-top:4px;padding:9px;border:1px solid var(--border);border-radius:6px}
+button{background:var(--blue);color:#fff;border:0;border-radius:6px;padding:10px 14px;font-weight:bold;cursor:pointer}
+button:hover{background:#005a99}
+.err{background:#fde8e8;color:#c0392b;padding:8px;border-radius:6px;font-size:13px;margin:0}
+.topbar{background:#fff;border-bottom:1px solid var(--border);padding:12px 20px;display:flex;justify-content:space-between;align-items:center}
+.topbar nav a{margin-right:14px;font-weight:bold;text-decoration:none}
+.wrap{max-width:1000px;margin:24px auto;padding:0 20px}
+table.list{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+table.list th,table.list td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);font-size:14px}
+table.list th{background:#fafbfc}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:bold}
+.b-nueva{background:#e3f0fb;color:#0072C0}.b-contactada{background:#fff4d6;color:#9a6b00}
+.b-cotizada{background:#e6f6ec;color:#1e7d40}.b-cerrada{background:#eceff1;color:#5b6b78}
+.filters{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.filters select,.filters input{padding:8px;border:1px solid var(--border);border-radius:6px}
+.card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:16px}
+.card h2{margin:0 0 10px;font-size:16px}
+.kv{display:grid;grid-template-columns:160px 1fr;gap:6px;font-size:14px}
+.kv dt{font-weight:bold}
