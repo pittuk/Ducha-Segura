@@ -17,7 +17,7 @@ export function initCalculator(): void {
     tipo: 'tradicional',
     ancho: 40,
     region: 'RM',
-    comuna: 'Las Condes',
+    comuna: 'Santiago', // se sobrescribe con COMUNAS['RM'][0] en fillComunas()
     banco: 'santander',
     cuotas: 12,
   };
