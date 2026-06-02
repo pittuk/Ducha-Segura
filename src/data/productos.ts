@@ -43,8 +43,8 @@ const wc: Producto[] = (data as Producto[]).map((p) => ({
   image: IMG_OVERRIDE[p.slug] ?? p.image,
 }));
 
-// Kits curados (no existen en WooCommerce). ⚠️ PLACEHOLDER: precios e imágenes
-// provisionales — reemplazar por los reales cuando el cliente los entregue.
+// Kits curados (no existen en WooCommerce). Imágenes reales; ⚠️ PRECIOS provisionales
+// (placeholder) — reemplazar por los reales cuando el cliente los entregue.
 const CURATED: Producto[] = [
   {
     id: 'kit-rebaje-40cm',
@@ -55,9 +55,9 @@ const CURATED: Producto[] = [
     regularPrice: null,
     salePrice: null,
     shortDescription: 'Pieza de rebaje de 40 cm para instalar tú mismo. Incluye manual paso a paso.',
-    descriptionHtml: '<p>Kit de rebaje de tina formato <strong>hágalo usted mismo</strong>: incluye la pieza de rebaje de 40 cm en fibra de vidrio reforzada y un manual de instalación paso a paso.</p><p><em>Precio e imagen provisionales — pendiente de actualización.</em></p>',
-    image: '/images/kits/kit-rebaje-40cm.svg',
-    images: ['/images/kits/kit-rebaje-40cm.svg'],
+    descriptionHtml: '<p>Kit de rebaje de tina formato <strong>hágalo usted mismo</strong>: incluye la pieza de rebaje de 40 cm en fibra de vidrio reforzada y un manual de instalación paso a paso.</p><p><em>Precio provisional — pendiente de actualización.</em></p>',
+    image: '/images/kits/kit rebaje 40 cm.webp',
+    images: ['/images/kits/kit rebaje 40 cm.webp'],
     custom: true,
   },
   {
@@ -69,9 +69,9 @@ const CURATED: Producto[] = [
     regularPrice: null,
     salePrice: null,
     shortDescription: 'Pieza de rebaje 40 cm + barra de seguridad de acero inoxidable de 40 cm.',
-    descriptionHtml: '<p>Incluye la pieza de rebaje de 40 cm y una <strong>barra de seguridad de acero inoxidable de 40 cm</strong> con sus elementos de fijación y guía de montaje.</p><p><em>Precio e imagen provisionales — pendiente de actualización.</em></p>',
-    image: '/images/kits/kit-rebaje-40cm-barra.svg',
-    images: ['/images/kits/kit-rebaje-40cm-barra.svg'],
+    descriptionHtml: '<p>Incluye la pieza de rebaje de 40 cm y una <strong>barra de seguridad de acero inoxidable de 40 cm</strong> con sus elementos de fijación y guía de montaje.</p><p><em>Precio provisional — pendiente de actualización.</em></p>',
+    image: '/images/kits/kit barra de acero inoxidable 40 cm.webp',
+    images: ['/images/kits/kit barra de acero inoxidable 40 cm.webp'],
     custom: true,
   },
   {
@@ -83,9 +83,9 @@ const CURATED: Producto[] = [
     regularPrice: null,
     salePrice: null,
     shortDescription: 'Pieza de rebaje 40 cm + barra inox 40 cm + silicona blanca acética para el sellado.',
-    descriptionHtml: '<p>Kit completo: pieza de rebaje de 40 cm, <strong>barra de acero inoxidable de 40 cm</strong> y <strong>silicona blanca acética</strong> para un sellado prolijo y duradero.</p><p><em>Precio e imagen provisionales — pendiente de actualización.</em></p>',
-    image: '/images/kits/kit-rebaje-40cm-barra-silicona.svg',
-    images: ['/images/kits/kit-rebaje-40cm-barra-silicona.svg'],
+    descriptionHtml: '<p>Kit completo: pieza de rebaje de 40 cm, <strong>barra de acero inoxidable de 40 cm</strong> y <strong>silicona blanca acética</strong> para un sellado prolijo y duradero.</p><p><em>Precio provisional — pendiente de actualización.</em></p>',
+    image: '/images/kits/kit barra de acero inoxidable 40 cm + silicona.webp',
+    images: ['/images/kits/kit barra de acero inoxidable 40 cm + silicona.webp'],
     custom: true,
   },
 ];
