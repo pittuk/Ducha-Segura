@@ -54,6 +54,7 @@ El backend vive en `public/api/` y `public/admin/` y se copia a `dist/` con `npm
 
 ### Producción (Hostinger)
 1. `npm run build` → subir `dist/` a `public_html` (incluye `api/` y `admin/`).
+   - ⚠️ **Si tienes un `public/api/config.php` local (dev), el build lo copia a `dist/api/config.php`.** Antes de subir, **borra `dist/api/config.php`** (o no subas ese archivo) para no pisar producción con credenciales de desarrollo. La config real se crea en el servidor (paso 3).
 2. Crear DB MySQL en hPanel; importar `public/api/schema.sql`.
 3. Crear `public_html/api/config.php` con credenciales reales (DB + SMTP del buzón del dominio; `cors_origin` = origen del sitio).
 4. Ejecutar el seed del primer admin (SSH `php` o insertar fila con hash).
