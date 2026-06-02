@@ -128,6 +128,7 @@ export function initCalculator(): void {
       const final = finalPrice(base, state.banco);
       window.dsCart.add({
         id: `calc-${state.tipo}-${state.ancho}-${state.banco}`,
+        grupo: 'rebaje',
         name: `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'}`,
         variant: `${state.ancho} cm · ${state.comuna}, ${state.region}${discAmt > 0 ? ' · banco ' + state.banco : ''}`,
         unitPrice: final,

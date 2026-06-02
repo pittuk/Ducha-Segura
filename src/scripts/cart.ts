@@ -25,7 +25,10 @@ let _toastTimer: ReturnType<typeof setTimeout> | null = null;
 
 // --- Persistence ---
 function load(): CartItem[] {
-  try { return JSON.parse(localStorage.getItem('ds_cart') || '[]'); } catch (_) { return []; }
+  try {
+    const raw: CartItem[] = JSON.parse(localStorage.getItem('ds_cart') || '[]');
+    return raw.map(i => i.grupo ? i : { ...i, grupo: Cart.deriveGrupo(i.id) });
+  } catch (_) { return []; }
 }
 
 function save(): void {
@@ -166,7 +169,7 @@ function bindDocumentClick(): void {
     if (addP) {
       const p = PRODUCTOS.find(x => x.slug === addP.dataset.addProducto);
       if (p && p.price > 0) {
-        add({ id: `${ID_PREFIX[p.grupo]}-${p.slug}`, name: p.name, variant: p.shortDescription, unitPrice: p.price, label: p.name, image: p.image });
+        add({ id: `${ID_PREFIX[p.grupo]}-${p.slug}`, name: p.name, variant: p.shortDescription, unitPrice: p.price, label: p.name, image: p.image, grupo: p.grupo });
       }
       return;
     }
