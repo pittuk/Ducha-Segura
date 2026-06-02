@@ -137,7 +137,42 @@ El backend vive en `public/api/` y `public/admin/`, y se copia a `dist/` con `np
 
 ---
 
+## 5d. Ajustes estéticos, kits y prensa (rama `ajustes-esteticos`, 2026-06-02)
+
+Mergeado en `main`. Conjunto de ajustes de UI/contenido y una pequeña feature (instalación):
+
+- **Video de instalación** (`InstalacionVideo.astro`): se cambió a `public/videos/DuchaSegura.webm` (~17 MB) como fuente primaria con `DuchaSegura.mp4` de respaldo (Safari/iOS). El frame de los 2s se mantiene como "póster" (media-fragment `#t=2` + seek en `loadedmetadata`).
+- **Imagen real del producto Hidromasaje**: `IMG_OVERRIDE['rebaje-de-tina-jacuzzi']` → `/images/rebajes/rebaje de tina hidromasaje.jpg` en `src/data/productos.ts`.
+- **Resumen de `/cotizar` corregido**: los ítems los inyecta JS, así que sus estilos pasaron a un `<style is:global>` (los *scoped* no los alcanzaban → se veían enormes y sin formato). Ahora: thumbnail chico, título/precio formateados y **sin la descripción** del producto.
+- **Check de instalación (+$30.000)**: nuevo checkbox "Requiero instalación" en `/cotizar`. La tarifa es `INSTALLATION_FEE` en `src/lib/pricing.ts` (con test). El total se recalcula en vivo y muestra una línea "Instalación". Backend: columna **`instalacion`** en `cotizaciones` (en `schema.sql`; se aplicó `ALTER` a la DB local), se persiste, aparece en el email al gestor y en `detalle.php`.
+- **Quitado "Despacho/Envío + instalación incluido"** del resumen de `/cotizar` y del drawer.
+- **"Cuatro pasos. Un solo día."** (`ComoFunciona.astro`): copy simplificado y directo (Cotiza · Elige tu pieza · Paga fácil · Instalamos en 1 día).
+- **3 kits de rebaje DIY** (curados, no vienen de WooCommerce) en `src/data/productos.ts` (array `CURATED`, grupo `kit`): "Kit Rebaje 40 cm", "+ barra 40 cm acero inox", "+ barra + silicona blanca acética". Imágenes reales en `public/images/kits/*.webp`. ⚠️ **Precios PLACEHOLDER** (99.000 / 129.000 / 139.000) — marcados en el archivo, reemplazar por los reales.
+- **Recategorización**: "Juego de Ducha 2 funciones" y "Kit de cortina" movidos de `kit` → `accesorio` vía `GRUPO_OVERRIDE` en `productos.ts` (sobrevive a re-importar de WC).
+- **9 entradas de prensa** (categoría **"Ducha Segura en medios"**) en `src/content/blog/prensa-*.md`, cada una con **enlace a la nota original al final**: Radio Festival, U. del Desarrollo, La Crónica, La Discusión, El Sur, LUN, La Estrella de Concepción, Entrevistas 2025 (Radio Agricultura + CHV + 24 Horas, combinada) y TVU/Hualpén (embed de YouTube). Recortes/fotos en `public/images/blog/prensa-*`. Los **videos pesados** del Ministerio NO se subieron. La carpeta fuente **`docs/PRENSA/` (≈912 MB) está en `.gitignore`**.
+- **Hero en mobile** (`Hero.astro`): se ocultan (≤768px) el CTA secundario "Habla con un ejecutivo" (`#heroCtaSecondary`) y los 3 badges de confianza (`.hero__trust`). En desktop siguen visibles.
+
+## 5e. Comunas oficiales completas (rama `ajustes-comunas`, 2026-06-02)
+
+- `src/data/comunas.ts` ahora trae las **listas oficiales completas**: **RM (52)**, **Valparaíso (38)** y **Bío Bío (33)**, con la ciudad principal primero (Santiago / Valparaíso / Concepción) y el resto alfabético. Aplica tanto al **calculador del home** como al selector región→comuna de **`/cotizar`** (ambos leen el mismo archivo). El default del calculador es `COMUNAS[region][0]`.
+
+## 5f. Entorno de desarrollo del backend (local, esta máquina)
+
+> El front es estático, pero el backend de cotizaciones es PHP+MySQL. Para probarlo localmente se instaló un entorno **portable** (sin admin). Detalle completo en la memoria `reference_backend-dev-env`.
+
+- **PHP 8.3.31** en `C:\tools\php\php.exe` (no está en PATH → usar ruta completa). Extensiones: pdo_mysql, openssl, mbstring, curl, fileinfo.
+- **MariaDB 11.4.12** en `C:\tools\mariadb\bin\` (datadir `C:\tools\mariadb\data`). DB de dev: `ducha_cotizaciones`, usuario `ducha` / `ducha_dev`, `127.0.0.1:3306`.
+- Correr: `& 'C:\tools\php\php.exe' -S localhost:8080 -t public` (API + admin) junto a `npm run dev` (front 4321). El `config.php` local (gitignored) ya apunta a esa DB; SMTP a localhost:1025 (no hay → los emails fallan rápido y NO bloquean `ok:true`).
+- Admin de dev: `admin@duchasegura.cl` / `admin1234`.
+
 ## 6. Pendientes (para continuar)
+
+> **Pendientes recientes (al cierre del 2026-06-02) — empezar por aquí:**
+> - **Precios reales de los 3 kits DIY** (hoy placeholder 99k/129k/139k en `src/data/productos.ts`, array `CURATED`).
+> - **Fotos reales de los 6 tipos de tina** (`public/images/tinas/` son placeholders SVG).
+> - **Prensa**: confirmar **fechas** dudosas (Radio Festival, Entrevistas 2025, TVU) y **verificar URLs** de CHV y 24 Horas (podrían venir cortadas del Word); los links de NexNews/izimedia son agregadores y quizá pidan acceso; LUN quedó enlazado a `lun.com` (no traía URL del artículo).
+> - **Despliegue del backend en Hostinger**: crear la DB MySQL + importar `public/api/schema.sql`, crear `config.php` real (DB + SMTP del dominio), sembrar el primer admin. ⚠️ Antes de subir `dist/`, **borrar `dist/api/config.php`** (el build copia el de dev). Guía en `README.md`.
+> - **"Comprar" (pago online)**: sigue como stub 501. Ver [`docs/PAYMENTS.md`](PAYMENTS.md).
 
 1. **Imágenes reales de producto/secciones.**
    - ✅ **Hecho: tarjetas de producto** (`ProductCard`). Las 3 (Tradicional, Jacuzzi, Spa XL) usan fotos reales en `public/images/rebajes/` vía `<img>`; mapeo `id → { image, fit, alt }` en `src/data/products-media.ts` (con fallback al placeholder). *(Se retiró el pipeline `<Image>`/`src/assets/productos` anterior.)* Spec/plan inicial: `docs/superpowers/{specs,plans}/2026-05-28-imagenes-reales-productos*`.
@@ -166,6 +201,8 @@ El backend vive en `public/api/` y `public/admin/`, y se copia a `dist/` con `np
 - [`docs/PAYMENTS.md`](PAYMENTS.md) — guía para activar pagos a futuro.
 - [`docs/superpowers/specs/2026-05-27-arquitectura-modular-astro-design.md`](superpowers/specs/2026-05-27-arquitectura-modular-astro-design.md) — diseño/spec aprobado.
 - [`docs/superpowers/plans/2026-05-27-arquitectura-modular-astro.md`](superpowers/plans/2026-05-27-arquitectura-modular-astro.md) — plan de implementación (17 tareas).
+- [`docs/superpowers/specs/2026-06-02-proceso-de-cotizacion-y-backend-design.md`](superpowers/specs/2026-06-02-proceso-de-cotizacion-y-backend-design.md) — spec del proceso de cotización + backend.
+- [`docs/superpowers/plans/2026-06-02-proceso-de-cotizacion-y-backend.md`](superpowers/plans/2026-06-02-proceso-de-cotizacion-y-backend.md) — plan de implementación (18 tareas, ejecutado).
 
 ## 8. Historial de commits (resumen)
 
