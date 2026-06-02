@@ -20,7 +20,7 @@ Esto reemplaza el formulario inline del drawer que enviaba directo a WhatsApp.
 
 **No-objetivos (esta entrega)**
 - Pago online real (Webpay/Flow/Mercado Pago). "Comprar" queda como placeholder "Próximamente" con el andamiaje reservado.
-- Imágenes reales de los 5 tipos de tina (se usan placeholders, renombrables/reemplazables).
+- Imágenes reales de los 6 tipos de tina (se usan placeholders, renombrables/reemplazables).
 - Reportería/analytics avanzada en el admin (más allá de listado + export CSV).
 
 ## 3. Decisiones tomadas (brainstorming)
@@ -101,17 +101,19 @@ Renderiza estático; el contenido dinámico (resumen + visibilidad del bloque ti
 - Endpoint configurable: en dev apunta a `http://localhost:8080/api/cotizacion.php` (php built-in server); en prod a `/api/cotizacion.php`. Resuelto por `import.meta.env.DEV` u origen.
 
 ### 5.5 Datos — `src/data/tinas.ts`
+**6 tipos** de tina (la pregunta es sobre la tina existente del cliente, distinta del producto rebaje):
 ```ts
-export interface TipoTina { id: string; name: string; image: string; }
+export interface TipoTina { id: string; name: string; nota?: string; image: string; }
 export const TIPOS_TINA: TipoTina[] = [
-  { id: 'tradicional', name: 'Tradicional',          image: '/images/tinas/tradicional.png' },
-  { id: 'jacuzzi',     name: 'Jacuzzi / Hidromasaje', image: '/images/tinas/jacuzzi.png' },
-  { id: 'esquinera',   name: 'Esquinera',             image: '/images/tinas/esquinera.png' },
-  { id: 'empotrada',   name: 'Empotrada en mueble',   image: '/images/tinas/empotrada.png' },
-  { id: 'exenta',      name: 'Exenta / pedestal',     image: '/images/tinas/exenta.png' },
+  { id: 'acero-acrilica',  name: 'Tina acero esmaltado o acrílica',           image: '/images/tinas/acero-acrilica.png' },
+  { id: 'hidromasaje',     name: 'Tina hidromasaje',                           image: '/images/tinas/hidromasaje.png' },
+  { id: 'fierro-fundido',  name: 'Tina fierro fundido',                        image: '/images/tinas/fierro-fundido.png' },
+  { id: 'especial-1',      name: 'Tina especial', nota: 'Borde grueso',        image: '/images/tinas/especial-1.png' },
+  { id: 'especial-2',      name: 'Tina especial', nota: 'Mampara o shower door', image: '/images/tinas/especial-2.png' },
+  { id: 'especial-3',      name: 'Tina especial', nota: 'Borde grueso irregular', image: '/images/tinas/especial-3.png' },
 ];
 ```
-Placeholders en `public/images/tinas/` (renombrables/reemplazables por el cliente).
+Placeholders en `public/images/tinas/` (renombrables/reemplazables por el cliente). El selector muestra `name` + `nota` cuando existe.
 
 ### 5.6 Página de gracias — `/gracias-por-contactarnos`
 `src/pages/gracias-por-contactarnos.astro`. Confirmación con el lineamiento del sitio + número de cotización si llega por query param. (Slug pendiente del WP original.)
@@ -145,6 +147,26 @@ Placeholders en `public/images/tinas/` (renombrables/reemplazables por el client
 - **`logout.php`**.
 - Layout PHP mínimo con CSS propio acorde al branding (no depende del bundle de Astro).
 
+### 5.10 Rename "Jacuzzi" → "Hidromasaje" (textos visibles, en todo el sitio)
+Cambiar el **nombre visible** del producto/UI de "Jacuzzi" a "Hidromasaje" (el cliente usa "Tina hidromasaje"). **Solo textos que ve el usuario.**
+
+**Sí se cambia (display):**
+- `src/data/productos.ts`: agregar `NAME_OVERRIDE` (patrón del `IMG_OVERRIDE` existente) → `'rebaje-de-tina-jacuzzi': 'Rebaje de tina: Hidromasaje'`. Así sobrevive a re-importar de WooCommerce. *(Ideal: el cliente también renombra el producto en WooCommerce; el override lo cubre mientras tanto.)*
+- `src/components/Calculator.astro`: label del chip "Jacuzzi" → "Hidromasaje" (atributo `data-value="jacuzzi"` **se mantiene**).
+- `src/scripts/calculator.ts`: textos generados `Rebaje Tina Jacuzzi` → `Rebaje Tina Hidromasaje` (la comparación `state.tipo === 'jacuzzi'` **se mantiene**).
+- `src/data/products-media.ts`: `alt` "Tina jacuzzi…" → "Tina hidromasaje…".
+- `src/pages/rebaje-de-tina.astro`: meta `description` "…y Jacuzzi" → "…e Hidromasaje".
+- `src/data/convenios.ts`: textos visibles "Jacuzzi" → "Hidromasaje" (normalizar "Jacuzzi / Hidromasaje" → "Hidromasaje").
+
+**NO se cambia (SEO / identificadores / assets):**
+- Slugs/URLs: `rebaje-de-tina-jacuzzi` (indexado).
+- Keys/ids internos: `Tipo = 'tradicional' | 'jacuzzi'` y tabla `BASE.jacuzzi` en `pricing.ts`, `data-value="jacuzzi"`, `state.tipo === 'jacuzzi'`.
+- Nombres de archivo de imagen: `Rebaje Tina Jacuzzi.webp`, carpeta `/images/productos/rebaje-de-tina-jacuzzi/`.
+- Claves de override que igualan al slug (`IMG_OVERRIDE['rebaje-de-tina-jacuzzi']`).
+- **Blog (.md):** contenido real indexado; no se toca (incluye un post cuyo slug contiene `jacuzzi-hidromasaje`).
+
+Verificación: tras el cambio, `grep` de "Jacuzzi"/"jacuzzi" solo debe quedar en slugs, keys, paths de imagen, blog y docs.
+
 ## 6. Manejo de errores
 - **Front**: validación HTML5 + JS antes de enviar; estado de loading en el botón; si el `fetch` falla o responde `ok:false`, muestra mensaje y conserva los datos del formulario y el carrito.
 - **Backend**: validación estricta server-side (no confía en el front); transacción para insertar cotización+items (rollback ante error); si la inserción funciona pero el email falla, se registra el fallo pero la cotización **igual queda guardada** y se responde `ok:true` (el gestor la verá en el panel). Códigos HTTP: 400 (validación), 405 (método), 500 (DB).
@@ -170,11 +192,12 @@ Placeholders en `public/images/tinas/` (renombrables/reemplazables por el client
 - Verificar envío de email y `.htaccess`.
 
 ## 10. Plan en 2 fases (un solo spec)
-- **Fase 1 — Front**: modelo `grupo` + `hasRebaje`/`canBuy` + tests; drawer con 2 botones; `/cotizar` + `src/scripts/cotizar.ts`; `src/data/tinas.ts` + placeholders; `/gracias-por-contactarnos`. (Verificable en el navegador; el envío puede mockearse hasta tener el backend.)
+- **Fase 1 — Front**: modelo `grupo` + `hasRebaje`/`canBuy` + tests; drawer con 2 botones; `/cotizar` + `src/scripts/cotizar.ts`; `src/data/tinas.ts` (6 tipos) + placeholders; `/gracias-por-contactarnos`; **rename Jacuzzi→Hidromasaje** (§5.10). (Verificable en el navegador; el envío puede mockearse hasta tener el backend.)
 - **Fase 2 — Backend**: `config`, `db`, `mailer`, `cotizacion.php`, `comprar.php`, `schema.sql`, panel admin, `crear-admin.php`, `.htaccess`; conectar el `fetch` de `/cotizar`; docs de deploy.
 
 ## 11. Requisitos a proveer por el cliente (al desplegar)
 - Credenciales MySQL de Hostinger (host/db/user/pass).
 - Buzón del dominio + credenciales SMTP (host/puerto/usuario/clave) y dirección "From".
 - Email del gestor para la copia.
-- (Después) Imágenes reales de los 5 tipos de tina y sus nombres definitivos.
+- (Después) Imágenes reales de los 6 tipos de tina y sus nombres definitivos.
+- (Recomendado) Renombrar el producto "Jacuzzi" a "Hidromasaje" en WooCommerce (el `NAME_OVERRIDE` lo cubre mientras tanto).
