@@ -1,8 +1,11 @@
+export type Grupo = 'rebaje' | 'kit' | 'accesorio';
+
 export interface CartItem {
   id: string;
   name: string;
   variant: string;
   label: string;
+  grupo: Grupo;        // categoría del producto (define cotizar vs comprar)
   image?: string;      // ruta de imagen en public/ (thumbnail); si falta, cae al label
   unitPrice: number;   // precio unitario (checkout-ready)
   qty: number;
@@ -35,4 +38,22 @@ export function count(cart: CartItem[]): number {
 
 export function hasItem(cart: CartItem[], id: string): boolean {
   return cart.some(i => i.id === id);
+}
+
+export function hasRebaje(cart: CartItem[]): boolean {
+  return cart.some(i => i.grupo === 'rebaje');
+}
+
+// Comprar solo está disponible si el carrito tiene productos y son todos
+// kits/accesorios (sin rebaje). Con un rebaje presente, va sí o sí a cotización.
+export function canBuy(cart: CartItem[]): boolean {
+  return cart.length > 0 && !hasRebaje(cart) &&
+    cart.every(i => i.grupo === 'kit' || i.grupo === 'accesorio');
+}
+
+// Fallback para items viejos de localStorage sin `grupo`: se deriva del prefijo del id.
+export function deriveGrupo(id: string): Grupo {
+  if (/^(reb|cfg|calc)-/.test(id)) return 'rebaje';
+  if (id.startsWith('kit-')) return 'kit';
+  return 'accesorio';
 }
