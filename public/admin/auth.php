@@ -7,7 +7,7 @@ function ds_csrf_token(): string {
   return $_SESSION['csrf'];
 }
 function ds_csrf_check(): void {
-  if (($_POST['csrf'] ?? '') !== ($_SESSION['csrf'] ?? null)) { http_response_code(403); exit('CSRF'); }
+  if (!hash_equals((string)($_SESSION['csrf'] ?? ''), (string)($_POST['csrf'] ?? ''))) { http_response_code(403); exit('CSRF'); }
 }
 function ds_user(): ?array { return $_SESSION['admin'] ?? null; }
 function ds_require_login(): array {
