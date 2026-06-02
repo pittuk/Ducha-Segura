@@ -18,5 +18,5 @@ return [
   ],
   'manager_email' => 'CAMBIAR@duchasegura.cl', // copia al gestor
   'site_url' => 'https://www.duchasegura.cl',
-  'cors_origin' => '*', // en prod, mismo origen; en dev permite localhost:4321
+  'cors_origin' => 'https://www.duchasegura.cl', // prod: tu dominio. En dev usa 'http://localhost:4321'. '*' permite cualquier origen (no recomendado).
 ];

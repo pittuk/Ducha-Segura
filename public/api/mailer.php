@@ -26,7 +26,7 @@ function ds_send_mail(string $toEmail, string $toName, string $subject, string $
     $mail->AltBody = strip_tags(str_replace(['<br>', '<br/>', '</p>'], "\n", $html));
     $mail->send();
     return true;
-  } catch (Exception $e) {
+  } catch (\Throwable $e) {
     error_log('ds_send_mail error: ' . $mail->ErrorInfo);
     return false;
   }

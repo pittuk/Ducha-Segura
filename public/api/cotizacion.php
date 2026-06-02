@@ -29,12 +29,14 @@ $comuna = s($d['comuna'] ?? '', 80);
 $referencia = s($d['referencia'] ?? '', 200);
 $notas = s($d['notas'] ?? '', 2000);
 $tipoTina = isset($d['tipoTina']) && $d['tipoTina'] !== null ? s($d['tipoTina'], 40) : null;
+// total lo calcula el front (sitio estático sin lógica de precios en servidor); valor informativo.
 $total = (int)($d['total'] ?? 0);
 $items = is_array($d['items'] ?? null) ? $d['items'] : [];
 
 if ($nombre === '' || $telefono === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) bad('contacto');
 if ($direccion === '' || $region === '' || $comuna === '') bad('direccion');
 if (count($items) === 0) bad('items');
+if (count($items) > 50) bad('too_many_items');
 
 $tieneRebaje = false;
 foreach ($items as $it) { if (($it['grupo'] ?? '') === 'rebaje') { $tieneRebaje = true; break; } }
