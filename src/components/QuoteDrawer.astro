@@ -19,19 +19,14 @@
     <div class="drawer__row drawer__row--total"><span class="l">Total estimado</span><span class="v">$<span id="drawerTotal">0</span></span></div>
     <div class="drawer__note">24 cuotas sin interés disponibles al confirmar.</div>
 
-    <form class="drawer__form" id="quoteForm">
-      <div class="drawer__form-row">
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <input type="tel" name="telefono" placeholder="Teléfono" required>
-      </div>
-      <input type="email" name="email" placeholder="Email" required>
-      <textarea name="mensaje" placeholder="Datos de tu baño (ancho, largo, material) — opcional"></textarea>
-    </form>
-
-    <button class="btn btn--primary btn--full" id="sendQuote">
-      <svg class="ic"><use href="#i-whatsapp"/></svg>
-      <span>Enviar cotización por WhatsApp</span>
+    <a class="btn btn--primary btn--full" id="goCotizar" href="/cotizar">
+      Continuar con la cotización
+    </a>
+    <button class="btn btn--secondary btn--full" id="goComprar" type="button" style="margin-top:8px">
+      Comprar
     </button>
+    <p class="drawer__buy-note" id="buyNote" style="display:none">Pago online próximamente.</p>
+    <p class="drawer__buy-note" id="buyBlocked" style="display:none">La compra online no está disponible junto a un rebaje. Continúa con la cotización.</p>
   </div>
 </aside>
 
@@ -84,9 +79,7 @@
   .drawer__row--total .l{font-size:14px;font-weight:700;color:var(--ds-text-strong)}
   .drawer__row--total .v{font-family:var(--ds-tnum);font-size:26px;font-weight:700;color:var(--ds-text-strong);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
   .drawer__note{font-size:12px;color:var(--ds-text);margin-bottom:10px;text-align:center}
-  .drawer__form{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
-  .drawer__form input,.drawer__form textarea{padding:8px 12px;border:1px solid var(--ds-border);border-radius:var(--ds-radius);font-family:var(--ds-sans);font-size:13px;color:var(--ds-text-strong);background:#fff;outline:none;transition:border-color .15s}
-  .drawer__form input:focus,.drawer__form textarea:focus{border-color:var(--ds-blue)}
-  .drawer__form textarea{resize:vertical;min-height:44px}
-  .drawer__form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .drawer__buy-note{font-size:12px;color:var(--ds-text);margin:8px 0 0;text-align:center}
+  .btn--secondary:disabled{opacity:.5;cursor:not-allowed}
+  .btn--secondary:disabled:hover{background:#fff;transform:none}
 </style>
