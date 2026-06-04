@@ -9,6 +9,7 @@ export interface TestimonioVideo {
 // Nota: el testimonio de la Sra. Lidia se usa en la sección "¿Cómo lo hacemos?".
 const DIR = '/videos/testimonios';
 export const TESTIMONIOS_VIDEO: TestimonioVideo[] = [
+  { src: `${DIR}/testimonio-sra-silvia-andalue.mp4`,  name: 'Sra. Silvia', location: 'San Pedro de la Paz', blurb: '¡Sin palabras! La visitamos en Andalué y nos recibió feliz.' },
   { src: `${DIR}/testimonio-arturo-salah.mp4`,        name: 'Arturo Salah',        blurb: 'Un cliente que se preocupa por su seguridad y la de los suyos.' },
   { src: `${DIR}/testimonio-marta.mp4`,               name: 'Marta',               blurb: 'El rebaje de tina que tanto se merecía.' },
   { src: `${DIR}/testimonio-fernando-gonzalez.mp4`,   name: 'Fernando González',   blurb: 'Decidió cuidar su seguridad antes de cualquier accidente.' },

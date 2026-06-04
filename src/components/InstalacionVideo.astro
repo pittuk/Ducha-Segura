@@ -1,25 +1,24 @@
 ---
 // InstalacionVideo.astro — Sección de video del proceso de instalación.
-// Render en public/videos/DuchaSegura.webm (~17 MB, primario) con DuchaSegura.mp4 de
-// respaldo para Safari/iOS (que no siempre soportan WebM). El still es el frame de los 2s
-// (media-fragment #t=2 + seek en loadedmetadata como respaldo) — sin póster aparte.
+// Usa public/videos/proceso-rebaje-de-tina-ducha-segura.mp4 (metraje real, horizontal).
+// El still es el frame de los 2s (media-fragment #t=2 + seek en loadedmetadata como
+// respaldo) — sin póster aparte.
 ---
 <section class="section section--alt" id="instalacion-video">
   <div class="container">
     <div class="instvid-head reveal">
       <div class="kicker">El proceso</div>
       <h2 class="h2">Así instalamos <span class="accent">tu rebaje.</span></h2>
-      <p class="lead">Un render del proceso completo: del corte de la tina al rebaje terminado. Sin obra, sin escombros, en un solo día.</p>
+      <p class="lead">El proceso completo: del corte de la tina al rebaje terminado. Sin obra, sin escombros, en <strong class="lead-em">menos de 2 horas</strong>.</p>
     </div>
 
     <div class="instvid reveal">
       <video class="instvid__video" id="instVideo" preload="metadata" playsinline>
-        <source src="/videos/DuchaSegura.webm#t=2" type="video/webm" />
-        <source src="/videos/DuchaSegura.mp4#t=2" type="video/mp4" />
+        <source src="/videos/proceso-rebaje-de-tina-ducha-segura.mp4#t=2" type="video/mp4" />
       </video>
       <button class="instvid__play" id="instVideoPlay" aria-label="Reproducir video: Así instalamos tu rebaje"></button>
       <div class="instvid__caption">
-        <div class="instvid__txt">Render del proceso de instalación · Ducha Segura®</div>
+        <div class="instvid__txt">Proceso de instalación del rebaje · Ducha Segura®</div>
       </div>
     </div>
   </div>
@@ -29,6 +28,7 @@
   .instvid-head{text-align:center;max-width:660px;margin:0 auto 36px}
   .instvid-head .kicker{margin-bottom:12px}
   .instvid-head .lead{margin-left:auto;margin-right:auto}
+  .lead-em{color:var(--ds-blue);font-weight:700}
   .instvid{position:relative;aspect-ratio:16/9;width:min(960px,100%);margin:0 auto;border-radius:var(--ds-radius-lg);overflow:hidden;box-shadow:var(--ds-shadow-lg);border:1px solid var(--ds-border);background:linear-gradient(135deg,var(--ds-blue-dark) 0%,var(--ds-blue) 100%)}
   .instvid__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
   .instvid__play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:88px;height:88px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(0,0,0,.3);transition:transform .2s,opacity .25s;cursor:pointer}

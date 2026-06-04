@@ -7,7 +7,7 @@
       <div class="reveal">
         <div class="kicker" style="margin-bottom:12px">El proceso</div>
         <h2 class="h2">¿Cómo lo hacemos? <span class="accent">No sacamos la tina.</span></h2>
-        <p class="lead">Adaptamos tu tina existente en el lugar, sin romper ni reemplazar.</p>
+        <p class="lead">Adaptamos tu tina existente en el lugar <strong class="lead-em">en menos de 2 horas</strong>.</p>
         <ul class="como__list">
           <li class="como__item">
             <svg class="ic como__check"><use href="#i-check"/></svg>
@@ -39,11 +39,11 @@
       </div>
       <div class="video-card">
         <video class="video-card__video" id="comoVideo" preload="metadata" playsinline>
-          <source src="/videos/testimonio-rebaje-de-tina-ducha-segura.mp4" type="video/mp4" />
+          <source src="/videos/testimonios/testimonio-sra-silvia-andalue.mp4" type="video/mp4" />
         </video>
-        <button class="video-card__play" id="comoVideoPlay" aria-label="Reproducir video: testimonio de la Sra. Lidia y su esposo, clientes de Ducha Segura®"></button>
+        <button class="video-card__play" id="comoVideoPlay" aria-label="Reproducir video: testimonio de la Sra. Silvia de Andalué, San Pedro de la Paz, clienta de Ducha Segura®"></button>
         <div class="video-card__caption">
-          <div class="video-card__txt">Testimonio · Sra. Lidia y su esposo — Rebaje de Tina Ducha Segura®</div>
+          <div class="video-card__txt">Testimonio · Sra. Silvia, San Pedro de la Paz — Ducha Segura®</div>
         </div>
       </div>
     </div>
@@ -54,6 +54,7 @@
 /* ¿Cómo funciona? — specific rules (legacy 229–246) */
 .como{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center}
 @media (max-width:1024px){.como{grid-template-columns:1fr;gap:40px}}
+.lead-em{color:var(--ds-blue);font-weight:700}
 .como__list{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
 .como__item{display:flex;gap:14px;padding:16px 18px;background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);align-items:flex-start;transition:transform .2s,box-shadow .2s,border-color .2s}
 .como__item:hover{transform:translateY(-2px);box-shadow:var(--ds-shadow);border-color:var(--ds-blue-soft)}
