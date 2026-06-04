@@ -34,7 +34,7 @@ import { TIPOS_TINA } from '../data/tinas';
               <legend class="cotizar__h">¿Cuál es tu tipo de tina?</legend>
               <p class="cotizar__hint">Selecciona la tina que tienes hoy.</p>
               <div class="tina-grid">
-                {TIPOS_TINA.map((t) => (
+                {TIPOS_TINA.filter((t) => t.id !== 'no-se').map((t) => (
                   <label class="tina-card">
                     <input type="radio" name="tipoTina" value={t.id} />
                     <img src={t.image} alt={t.name} loading="lazy" />
@@ -42,6 +42,15 @@ import { TIPOS_TINA } from '../data/tinas';
                   </label>
                 ))}
               </div>
+              <label class="tina-unsure">
+                <input type="radio" name="tipoTina" value="no-se" />
+                <svg class="ic tina-unsure__ic"><use href="#i-info"/></svg>
+                <span class="tina-unsure__txt">
+                  <strong>No sé qué tipo de tina tengo</strong>
+                  <small>No te preocupes: nuestros técnicos la identifican en la visita. Puedes continuar con tu cotización igual.</small>
+                </span>
+                <svg class="ic tina-unsure__arrow"><use href="#i-arrow"/></svg>
+              </label>
             </fieldset>
 
             <fieldset class="cotizar__block">
@@ -71,7 +80,17 @@ import { TIPOS_TINA } from '../data/tinas';
             <input type="text" name="website" tabindex="-1" autocomplete="off" class="cotizar__hp" aria-hidden="true" />
 
             <p class="cotizar__error" id="cotizarError" role="alert" style="display:none"></p>
-            <button class="btn btn--primary btn--lg btn--full" id="cotizarSubmit" type="submit">Enviar cotización</button>
+            <div class="cotizar__send">
+              <button class="btn btn--wa btn--lg btn--full" id="cotizarWa" type="button">
+                <svg class="ic"><use href="#i-whatsapp"/></svg>
+                <span>Enviar por WhatsApp</span>
+              </button>
+              <button class="btn btn--secondary btn--lg btn--full" id="cotizarSubmit" type="submit">
+                <svg class="ic"><use href="#i-mail"/></svg>
+                <span>Enviar por email</span>
+              </button>
+            </div>
+            <p class="cotizar__sendnote">Te responderemos por el canal que elijas.</p>
           </div>
         </form>
       </div>
@@ -106,11 +125,24 @@ import { TIPOS_TINA } from '../data/tinas';
   .tina-card:hover{border-color:var(--ds-blue)}
   .tina-card input{position:absolute;opacity:0;pointer-events:none}
   .tina-card:has(input:checked){border-color:var(--ds-blue);box-shadow:0 0 0 3px var(--ds-blue-soft)}
-  .tina-card img{width:100%;height:96px;object-fit:cover;background:#eef2f5}
+  .tina-card img{width:100%;height:auto;display:block}
   .tina-card__name{display:block;padding:10px 12px 12px;font-size:12px;font-weight:700;color:var(--ds-text-strong);line-height:1.2}
   .tina-card__name small{display:block;font-weight:500;color:var(--ds-text);font-size:11px;margin-top:3px}
+  /* "No sé qué tipo de tina" — botón sin imagen, llamativo */
+  .tina-unsure{position:relative;display:flex;align-items:center;gap:14px;margin-top:12px;padding:16px 18px;border:2px dashed var(--ds-blue);border-radius:12px;background:var(--ds-blue-soft);cursor:pointer;transition:box-shadow .15s,background .15s,border-color .15s}
+  .tina-unsure:hover{background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+  .tina-unsure input{position:absolute;opacity:0;pointer-events:none}
+  .tina-unsure:has(input:checked){border-style:solid;background:#fff;box-shadow:0 0 0 3px var(--ds-blue-soft)}
+  .tina-unsure__ic{width:30px;height:30px;min-width:30px;color:var(--ds-blue)}
+  .tina-unsure__txt{flex:1;display:flex;flex-direction:column;gap:3px}
+  .tina-unsure__txt strong{font-size:14px;font-weight:800;color:var(--ds-blue);line-height:1.2}
+  .tina-unsure__txt small{font-size:12px;color:var(--ds-text);line-height:1.4}
+  .tina-unsure__arrow{width:20px;height:20px;min-width:20px;color:var(--ds-blue);transition:transform .15s}
+  .tina-unsure:hover .tina-unsure__arrow{transform:translateX(3px)}
   .cotizar__hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
   .cotizar__error{background:#fde8e8;color:var(--ds-red,#c0392b);border-radius:var(--ds-radius);padding:10px 12px;font-size:13px;font-weight:600;margin:0 0 12px}
+  .cotizar__send{display:flex;flex-direction:column;gap:10px}
+  .cotizar__sendnote{text-align:center;font-size:12px;color:var(--ds-text);margin:12px 0 0}
   .cotizar__empty{text-align:center;padding:40px 0;color:var(--ds-text)}
   .cotizar__empty .btn{margin-top:12px}
 </style>

@@ -11,7 +11,7 @@ export const HERO_COPY: Record<Mode, HeroCopy> = {
     kicker: 'Patente chilena · +10 años en Chile',
     h1A: 'Rebaje para tinas.', h1B: 'Un acceso seguro.',
     sub: 'Adapta tu tina en un día. Sin obra, sin escombros, con garantía de 3 años.',
-    primary: 'Ver tinas y precios', secondary: 'Habla con un ejecutivo',
+    primary: 'Ver rebajes', secondary: 'Habla con un ejecutivo',
     pfKicker: '¿Listo para tu rebaje?', pfH2: 'Coordina hoy.', pfSub: 'Instalamos esta semana.',
   },
   caregiver: {

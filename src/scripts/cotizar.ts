@@ -83,76 +83,112 @@ export function initCotizar(): void {
   instalChk?.addEventListener('change', recomputeTotal);
   recomputeTotal();
 
-  // Envío
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  // ── Envío: dos canales (email / WhatsApp). Ambos guardan el lead en el backend. ──
+  const emailBtn = document.getElementById('cotizarSubmit') as HTMLButtonElement | null;
+  const waBtn = document.getElementById('cotizarWa') as HTMLButtonElement | null;
+
+  // Valida el formulario (honeypot, campos, tipo de tina). Devuelve el tipoTinaId
+  // ('' si no aplica) o null si la validación falla.
+  const validate = (): string | null => {
     if (errorEl) errorEl.style.display = 'none';
-
-    // honeypot
-    if ((form.elements.namedItem('website') as HTMLInputElement)?.value) return;
-
-    if (!form.reportValidity()) return;
+    if ((form.elements.namedItem('website') as HTMLInputElement)?.value) return null; // honeypot
+    if (!form.reportValidity()) return null;
     const tipoTinaId = needsTina ? (form.elements.namedItem('tipoTina') as RadioNodeList | null)?.value || '' : '';
-    if (needsTina && !tipoTinaId) {
-      showError(errorEl, 'Selecciona tu tipo de tina.');
-      return;
-    }
+    if (needsTina && !tipoTinaId) { showError(errorEl, 'Selecciona tu tipo de tina.'); return null; }
+    return tipoTinaId;
+  };
 
+  // Reúne el payload del backend y los datos para el mensaje de WhatsApp.
+  const collect = (tipoTinaId: string) => {
     const fd = new FormData(form);
     const nombre = String(fd.get('nombre') || '');
     const telefono = String(fd.get('telefono') || '');
     const notas = String(fd.get('notas') || '');
     const instalacion = offerInstal && !!instalChk?.checked;
     const total = subtotal + (instalacion ? INSTALLATION_FEE : 0);
+    const tinaName = tipoTinaId ? getTina(tipoTinaId)?.name : '';
     const payload = {
-      nombre, telefono, email: fd.get('email'),
-      notas,
+      nombre, telefono, email: fd.get('email'), notas,
       tipoTina: needsTina ? tipoTinaId : null,
-      instalacion,
-      total,
+      instalacion, total,
       items: items.map(i => ({ id: i.id, name: i.name, variant: i.variant, grupo: i.grupo, qty: i.qty, unitPrice: i.unitPrice })),
     };
+    return { payload, nombre, telefono, notas, instalacion, total, tinaName };
+  };
 
-    const btn = document.getElementById('cotizarSubmit') as HTMLButtonElement | null;
-    if (btn) { btn.disabled = true; btn.textContent = 'Enviando…'; }
+  // Canal EMAIL: envía, espera respuesta y redirige a gracias con el N°.
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const tipoTinaId = validate();
+    if (tipoTinaId === null) return;
+    const { payload } = collect(tipoTinaId);
+    setBtnLoading(emailBtn, 'Enviando…');
     try {
-      const res = await fetch(API_URL, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.ok) throw new Error(data.error || 'Error al enviar');
-      // Prepara un enlace de WhatsApp con la cotización para agilizar el contacto
-      // (lo usa la página de gracias). Se construye ANTES de limpiar el carrito.
-      const tinaName = tipoTinaId ? getTina(tipoTinaId)?.name : '';
-      saveWhatsappQuote(data.id, items, total, instalacion, nombre, telefono, tinaName, notas);
+      const data = await submitLead(payload, false);
       localStorage.removeItem('ds_cart');
-      window.location.href = `/gracias-por-contactarnos?id=${encodeURIComponent(data.id)}`;
-    } catch (err) {
+      window.location.href = `/gracias-por-contactarnos?id=${encodeURIComponent(String(data.id))}`;
+    } catch (_) {
       showError(errorEl, 'No pudimos enviar tu cotización. Revisa tu conexión e inténtalo de nuevo.');
-      if (btn) { btn.disabled = false; btn.textContent = 'Enviar cotización'; }
+      resetBtn(emailBtn);
     }
+  });
+
+  // Canal WHATSAPP: abre wa.me dentro del gesto del click (evita el bloqueo de popup),
+  // guarda el lead en segundo plano (keepalive) y redirige a gracias.
+  waBtn?.addEventListener('click', () => {
+    const tipoTinaId = validate();
+    if (tipoTinaId === null) return;
+    const c = collect(tipoTinaId);
+    const waUrl = buildWhatsappUrl(items, c.total, c.instalacion, c.nombre, c.telefono, c.tinaName, c.notas);
+    const win = window.open(waUrl, '_blank', 'noopener');
+    // Fallback: si el navegador bloqueó el popup, la página de gracias mostrará el botón.
+    if (!win) { try { sessionStorage.setItem('ds_wa_quote', waUrl); } catch (_) { /* */ } }
+    submitLead(c.payload, true).catch(() => { /* fire-and-forget: el lead viaja con keepalive */ });
+    localStorage.removeItem('ds_cart');
+    window.location.href = '/gracias-por-contactarnos';
   });
 }
 
-// Arma el enlace wa.me con el resumen de la cotización y lo guarda en sessionStorage
-// para que la página de gracias muestre el botón "Enviar por WhatsApp".
-function saveWhatsappQuote(
-  id: number | string, items: CartItem[], total: number, instalacion: boolean,
+// POST al backend. keepalive=true permite que la petición sobreviva a la navegación.
+async function submitLead(payload: unknown, keepalive: boolean): Promise<{ id: number | string }> {
+  const res = await fetch(API_URL, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload), keepalive,
+  });
+  const data = await res.json();
+  if (!res.ok || !data.ok) throw new Error(data.error || 'Error al enviar');
+  return data;
+}
+
+// Estado de carga del botón sin perder su ícono (guarda/restaura el texto del <span>).
+function setBtnLoading(btn: HTMLButtonElement | null, txt: string): void {
+  if (!btn) return;
+  btn.disabled = true;
+  const span = btn.querySelector('span');
+  if (span) { btn.dataset.label = span.textContent || ''; span.textContent = txt; }
+}
+function resetBtn(btn: HTMLButtonElement | null): void {
+  if (!btn) return;
+  btn.disabled = false;
+  const span = btn.querySelector('span');
+  if (span && btn.dataset.label) span.textContent = btn.dataset.label;
+}
+
+// Arma la URL wa.me con el resumen de la cotización (sin N°: el backend aún no respondió).
+function buildWhatsappUrl(
+  items: CartItem[], total: number, instalacion: boolean,
   nombre: string, telefono: string, tinaName: string | undefined, notas: string,
-): void {
+): string {
   const lineas = items
     .map(i => `• ${i.name}${i.variant ? ` (${i.variant})` : ''} x${i.qty} — $${clp(i.unitPrice * i.qty)}`)
     .join('\n');
-  const msg = `Hola Ducha Segura 👋 Envié la cotización N° ${id}.\n\n${lineas}\n`
+  const msg = `Hola Ducha Segura 👋 Quiero enviar mi cotización.\n\n${lineas}\n`
     + (instalacion ? `Instalación: Sí (+$${clp(INSTALLATION_FEE)})\n` : '')
     + `Total estimado: $${clp(total)}\n`
     + (tinaName ? `Tipo de tina: ${tinaName}\n` : '')
     + (notas ? `Notas: ${notas}\n` : '')
     + `\nMis datos: ${nombre} · ${telefono}`;
-  try {
-    sessionStorage.setItem('ds_wa_quote', `${SITE.whatsappUrl}?text=${encodeURIComponent(msg)}`);
-  } catch (_) { /* sessionStorage no disponible: el flujo por email sigue funcionando */ }
+  return `${SITE.whatsappUrl}?text=${encodeURIComponent(msg)}`;
 }
 
 function showError(el: HTMLElement | null, msg: string): void {
