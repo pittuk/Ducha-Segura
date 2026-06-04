@@ -8,7 +8,12 @@ use PHPMailer\PHPMailer\Exception;
 // Envía un email HTML. Devuelve true/false (no lanza: el caller decide).
 function ds_send_mail(string $toEmail, string $toName, string $subject, string $html): bool {
   $cfg = ds_config()['smtp'];
+  // SMTP sin configurar (sin host o sin usuario): no intentar enviar para evitar
+  // cuelgues. La cotización ya quedó guardada; el envío es opcional.
+  if (empty($cfg['host']) || empty($cfg['user'])) return false;
   $mail = new PHPMailer(true);
+  $mail->Timeout = 10;     // segundos: evita esperas largas si el SMTP no responde
+  $mail->SMTPAutoTLS = false;
   try {
     $mail->isSMTP();
     $mail->Host = $cfg['host'];
