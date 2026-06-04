@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { TIPOS_TINA } from '../data/tinas';
-import { COMUNAS } from '../data/comunas';
 ---
 <BaseLayout title="Completar cotización — Ducha Segura®" description="Completa los datos de tu cotización: tipo de tina, dirección de instalación y contacto.">
   <section class="section">
@@ -19,7 +18,7 @@ import { COMUNAS } from '../data/comunas';
           <div id="cotizarItems"></div>
           <div class="cotizar__line" id="cotInstalLine" style="display:none"><span>Instalación</span><span>+$<span id="cotInstalAmount">0</span></span></div>
           <div class="cotizar__total"><span>Total estimado</span><span>$<span id="cotizarTotal">0</span></span></div>
-          <p class="cotizar__note">Precios referenciales. Sujeto a confirmación final.</p>
+          <p class="cotizar__note">Precios referenciales. Sujeto a confirmación final. <strong id="cotizarNoteEnvio">El envío no está incluido.</strong></p>
         </aside>
 
         <!-- Formulario -->
@@ -54,27 +53,8 @@ import { COMUNAS } from '../data/comunas';
               <label>Email<input type="email" name="email" required autocomplete="email" /></label>
             </fieldset>
 
-            <fieldset class="cotizar__block">
-              <legend class="cotizar__h">Dirección de instalación</legend>
-              <label>Calle y número<input type="text" name="direccion" required autocomplete="street-address" /></label>
-              <div class="cotizar__row">
-                <label>Depto / Casa (opcional)<input type="text" name="depto" /></label>
-                <label>Región
-                  <select name="region" id="regionSel" required>
-                    <option value="">Selecciona…</option>
-                    {Object.keys(COMUNAS).map((r) => <option value={r}>{r}</option>)}
-                  </select>
-                </label>
-              </div>
-              <label>Comuna
-                <select name="comuna" id="comunaSel" required disabled>
-                  <option value="">Selecciona una región primero</option>
-                </select>
-              </label>
-              <label>Referencia (opcional)<input type="text" name="referencia" placeholder="Block, conserjería, etc." /></label>
-            </fieldset>
-
-            <fieldset class="cotizar__block">
+            <!-- Instalación: solo para kits/accesorios (se oculta si hay un rebaje). -->
+            <fieldset class="cotizar__block" id="instalBlock" style="display:none">
               <legend class="cotizar__h">Instalación</legend>
               <label class="cotizar__check">
                 <input type="checkbox" name="instalacion" id="instalacionChk" />
@@ -97,8 +77,6 @@ import { COMUNAS } from '../data/comunas';
       </div>
     </div>
   </section>
-
-  <script is:inline type="application/json" id="comunasData" set:html={JSON.stringify(COMUNAS)}></script>
 </BaseLayout>
 
 <style>
@@ -129,8 +107,8 @@ import { COMUNAS } from '../data/comunas';
   .tina-card input{position:absolute;opacity:0;pointer-events:none}
   .tina-card:has(input:checked){border-color:var(--ds-blue);box-shadow:0 0 0 3px var(--ds-blue-soft)}
   .tina-card img{width:100%;height:96px;object-fit:cover;background:#eef2f5}
-  .tina-card__name{padding:8px;font-size:12px;font-weight:700;color:var(--ds-text-strong);line-height:1.2}
-  .tina-card__name small{display:block;font-weight:500;color:var(--ds-text);font-size:11px;margin-top:2px}
+  .tina-card__name{display:block;padding:10px 12px 12px;font-size:12px;font-weight:700;color:var(--ds-text-strong);line-height:1.2}
+  .tina-card__name small{display:block;font-weight:500;color:var(--ds-text);font-size:11px;margin-top:3px}
   .cotizar__hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
   .cotizar__error{background:#fde8e8;color:var(--ds-red,#c0392b);border-radius:var(--ds-radius);padding:10px 12px;font-size:13px;font-weight:600;margin:0 0 12px}
   .cotizar__empty{text-align:center;padding:40px 0;color:var(--ds-text)}

@@ -32,5 +32,14 @@ Thumbs.db
 # Backend PHP — credenciales reales (no commitear)
 public/api/config.php
 
+# Credenciales de despliegue (SSH/FTP Hostinger) — NUNCA commitear
+CREDENCIALES*.md
+CREDENCIALES*.txt
+*.credentials
+deploy-secrets*
+
+# Paquete de despliegue (pesado)
+*.zip
+
 # Material fuente de prensa (pesado: Word/PDF/videos) — no va al repo
 docs/PRENSA/

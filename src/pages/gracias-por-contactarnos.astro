@@ -8,6 +8,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h1 class="h2">¡Gracias! Recibimos tu cotización</h1>
       <p class="lead gracias__lead">Un asesor de Ducha Segura te contactará a la brevedad con la cotización final. Te enviamos una copia a tu email.</p>
       <p class="gracias__id" id="graciasId" style="display:none"></p>
+
+      <div class="gracias__wa" id="graciasWa" style="display:none">
+        <p class="gracias__wa-txt">¿Quieres agilizar el contacto? Envíanos también tu cotización por WhatsApp.</p>
+        <a class="btn btn--wa btn--lg" id="graciasWaBtn" href="#" target="_blank" rel="noopener">
+          <svg class="ic"><use href="#i-whatsapp"/></svg>
+          <span>Enviar cotización por WhatsApp</span>
+        </a>
+      </div>
+
       <div class="gracias__actions">
         <a class="btn btn--primary btn--lg" href="/">Volver al inicio</a>
         <a class="btn btn--secondary btn--lg" href="/catalogo">Seguir viendo productos</a>
@@ -20,6 +29,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       const id = new URLSearchParams(window.location.search).get('id');
       const el = document.getElementById('graciasId');
       if (id && el) { el.textContent = `N° de cotización: ${id}`; el.style.display = ''; }
+
+      // Botón "Enviar por WhatsApp": el enlace lo dejó cotizar.ts en sessionStorage.
+      const wa = sessionStorage.getItem('ds_wa_quote');
+      const waBox = document.getElementById('graciasWa');
+      const waBtn = document.getElementById('graciasWaBtn') as HTMLAnchorElement | null;
+      if (wa && waBox && waBtn) {
+        waBtn.href = wa;
+        waBox.style.display = '';
+        sessionStorage.removeItem('ds_wa_quote');
+      }
     });
   </script>
 </BaseLayout>
@@ -30,5 +49,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .gracias__icon .ic{width:30px;height:30px}
   .gracias__lead{margin-left:auto;margin-right:auto}
   .gracias__id{font-weight:700;color:var(--ds-text-strong);margin-top:16px;font-variant-numeric:tabular-nums}
+  .gracias__wa{margin-top:28px;padding:20px;background:var(--ds-bg-alt);border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg)}
+  .gracias__wa-txt{margin:0 0 14px;font-size:15px;color:var(--ds-text-strong);font-weight:600}
   .gracias__actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
 </style>

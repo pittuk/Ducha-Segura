@@ -1,9 +1,12 @@
-// cotizar.ts — Página de cotización: hidrata resumen del carrito, comuna dependiente,
-// validación y envío al backend. Se inicializa en cada astro:page-load (solo si existe el form).
+// cotizar.ts — Página de cotización: hidrata resumen del carrito, validación y envío
+// al backend. Ya NO pide dirección ni instalación (se coordinan después). Se inicializa
+// en cada astro:page-load (solo si existe el form).
 import * as Cart from '../lib/cart';
 import type { CartItem } from '../lib/cart';
 import { clp } from '../lib/format';
 import { INSTALLATION_FEE } from '../lib/pricing';
+import { getTina } from '../data/tinas';
+import { SITE } from '../data/site';
 import { escapeHtml } from './dom';
 
 const API_URL = import.meta.env.DEV
@@ -52,35 +55,33 @@ export function initCotizar(): void {
       </div>`).join('');
   }
 
-  // Total con cargo opcional de instalación
   const subtotal = Cart.subtotal(items);
+  const needsTina = Cart.hasRebaje(items);
+
+  // Nota de envío/instalación: con rebaje van incluidos; con kits/accesorios el envío no.
+  const noteEnvio = document.getElementById('cotizarNoteEnvio');
+  if (noteEnvio) noteEnvio.textContent = needsTina ? 'Envío e instalación incluidos.' : 'El envío no está incluido.';
+
+  // Tipo de tina solo si hay rebaje
+  if (tinaBlock) tinaBlock.style.display = needsTina ? '' : 'none';
+
+  // Instalación: SOLO para kits/accesorios. Si hay un rebaje en el carrito, no aplica.
+  const instalBlock = document.getElementById('instalBlock');
   const instalChk = document.getElementById('instalacionChk') as HTMLInputElement | null;
   const instalLine = document.getElementById('cotInstalLine');
   const instalAmount = document.getElementById('cotInstalAmount');
+  const offerInstal = !needsTina; // sin rebaje => kits/accesorios
+  if (instalBlock) instalBlock.style.display = offerInstal ? '' : 'none';
+  if (!offerInstal && instalChk) instalChk.checked = false;
+
   const recomputeTotal = () => {
-    const withInstal = !!instalChk?.checked;
+    const withInstal = offerInstal && !!instalChk?.checked;
     if (instalLine) instalLine.style.display = withInstal ? '' : 'none';
     if (instalAmount) instalAmount.textContent = clp(INSTALLATION_FEE);
     if (totalEl) totalEl.textContent = clp(subtotal + (withInstal ? INSTALLATION_FEE : 0));
   };
   instalChk?.addEventListener('change', recomputeTotal);
   recomputeTotal();
-
-  // Tipo de tina solo si hay rebaje
-  const needsTina = Cart.hasRebaje(items);
-  if (tinaBlock) tinaBlock.style.display = needsTina ? '' : 'none';
-
-  // Comuna dependiente de región
-  const comunas = JSON.parse(document.getElementById('comunasData')?.textContent || '{}') as Record<string, string[]>;
-  const regionSel = document.getElementById('regionSel') as HTMLSelectElement | null;
-  const comunaSel = document.getElementById('comunaSel') as HTMLSelectElement | null;
-  regionSel?.addEventListener('change', () => {
-    if (!comunaSel) return;
-    const list = comunas[regionSel.value] || [];
-    comunaSel.innerHTML = '<option value="">Selecciona…</option>' +
-      list.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
-    comunaSel.disabled = list.length === 0;
-  });
 
   // Envío
   form.addEventListener('submit', async (e) => {
@@ -91,20 +92,24 @@ export function initCotizar(): void {
     if ((form.elements.namedItem('website') as HTMLInputElement)?.value) return;
 
     if (!form.reportValidity()) return;
-    if (needsTina && !(form.elements.namedItem('tipoTina') as RadioNodeList | null)?.value) {
+    const tipoTinaId = needsTina ? (form.elements.namedItem('tipoTina') as RadioNodeList | null)?.value || '' : '';
+    if (needsTina && !tipoTinaId) {
       showError(errorEl, 'Selecciona tu tipo de tina.');
       return;
     }
 
     const fd = new FormData(form);
-    const instalacion = !!instalChk?.checked;
+    const nombre = String(fd.get('nombre') || '');
+    const telefono = String(fd.get('telefono') || '');
+    const notas = String(fd.get('notas') || '');
+    const instalacion = offerInstal && !!instalChk?.checked;
+    const total = subtotal + (instalacion ? INSTALLATION_FEE : 0);
     const payload = {
-      nombre: fd.get('nombre'), telefono: fd.get('telefono'), email: fd.get('email'),
-      direccion: fd.get('direccion'), depto: fd.get('depto'), region: fd.get('region'),
-      comuna: fd.get('comuna'), referencia: fd.get('referencia'), notas: fd.get('notas'),
-      tipoTina: needsTina ? fd.get('tipoTina') : null,
+      nombre, telefono, email: fd.get('email'),
+      notas,
+      tipoTina: needsTina ? tipoTinaId : null,
       instalacion,
-      total: subtotal + (instalacion ? INSTALLATION_FEE : 0),
+      total,
       items: items.map(i => ({ id: i.id, name: i.name, variant: i.variant, grupo: i.grupo, qty: i.qty, unitPrice: i.unitPrice })),
     };
 
@@ -117,6 +122,10 @@ export function initCotizar(): void {
       });
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || 'Error al enviar');
+      // Prepara un enlace de WhatsApp con la cotización para agilizar el contacto
+      // (lo usa la página de gracias). Se construye ANTES de limpiar el carrito.
+      const tinaName = tipoTinaId ? getTina(tipoTinaId)?.name : '';
+      saveWhatsappQuote(data.id, items, total, instalacion, nombre, telefono, tinaName, notas);
       localStorage.removeItem('ds_cart');
       window.location.href = `/gracias-por-contactarnos?id=${encodeURIComponent(data.id)}`;
     } catch (err) {
@@ -124,6 +133,26 @@ export function initCotizar(): void {
       if (btn) { btn.disabled = false; btn.textContent = 'Enviar cotización'; }
     }
   });
+}
+
+// Arma el enlace wa.me con el resumen de la cotización y lo guarda en sessionStorage
+// para que la página de gracias muestre el botón "Enviar por WhatsApp".
+function saveWhatsappQuote(
+  id: number | string, items: CartItem[], total: number, instalacion: boolean,
+  nombre: string, telefono: string, tinaName: string | undefined, notas: string,
+): void {
+  const lineas = items
+    .map(i => `• ${i.name}${i.variant ? ` (${i.variant})` : ''} x${i.qty} — $${clp(i.unitPrice * i.qty)}`)
+    .join('\n');
+  const msg = `Hola Ducha Segura 👋 Envié la cotización N° ${id}.\n\n${lineas}\n`
+    + (instalacion ? `Instalación: Sí (+$${clp(INSTALLATION_FEE)})\n` : '')
+    + `Total estimado: $${clp(total)}\n`
+    + (tinaName ? `Tipo de tina: ${tinaName}\n` : '')
+    + (notas ? `Notas: ${notas}\n` : '')
+    + `\nMis datos: ${nombre} · ${telefono}`;
+  try {
+    sessionStorage.setItem('ds_wa_quote', `${SITE.whatsappUrl}?text=${encodeURIComponent(msg)}`);
+  } catch (_) { /* sessionStorage no disponible: el flujo por email sigue funcionando */ }
 }
 
 function showError(el: HTMLElement | null, msg: string): void {

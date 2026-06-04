@@ -15,7 +15,7 @@ const { producto: p } = Astro.props;
 const GRUPO: Record<Producto['grupo'], string> = { rebaje: 'Rebaje de tina', kit: 'Kit', accesorio: 'Accesorio' };
 const grupoLabel = GRUPO[p.grupo];
 const priceTxt = p.price > 0 ? `$${clp(p.price)}` : (p.priceLabel ?? 'Consultar');
-const fit = p.grupo === 'rebaje' ? 'cover' : 'contain';
+const fit = (p.grupo === 'rebaje' || p.grupo === 'kit') ? 'cover' : 'contain';
 const related = PRODUCTOS.filter((x) => x.grupo === p.grupo && x.slug !== p.slug).slice(0, 4);
 ---
 <BaseLayout title={`${p.name} — Ducha Segura®`} description={p.shortDescription || p.name} ogImage={p.image}>
@@ -45,7 +45,7 @@ const related = PRODUCTOS.filter((x) => x.grupo === p.grupo && x.slug !== p.slug
             <a class="btn btn--secondary btn--lg" href="/catalogo/">Ver catálogo</a>
           </div>
           <ul class="ficha__trust">
-            <li><svg class="ic"><use href="#i-check" /></svg>Instalación incluida</li>
+            {p.grupo === 'rebaje' && <li><svg class="ic"><use href="#i-check" /></svg>Instalación incluida</li>}
             <li><svg class="ic"><use href="#i-check" /></svg>Garantía 3 años</li>
             <li><svg class="ic"><use href="#i-check" /></svg>Producto nacional patentado</li>
           </ul>

@@ -13,7 +13,7 @@ export function initCalculator(): void {
   if (!select || (select as HTMLElement).dataset.bound) return;
   (select as HTMLElement).dataset.bound = '1';
 
-  const state: { tipo: Tipo; ancho: Ancho; region: Region; comuna: string; banco: Banco; cuotas: number } = {
+  const state: { tipo: Tipo; ancho: Ancho; region: Region | 'otra'; comuna: string; banco: Banco; cuotas: number } = {
     tipo: 'tradicional',
     ancho: 40,
     region: 'RM',
@@ -23,6 +23,13 @@ export function initCalculator(): void {
   };
 
   const fillComunas = (): void => {
+    // "Otra región": no tenemos lista de comunas; ofrecemos coordinar el despacho.
+    if (state.region === 'otra') {
+      select.innerHTML = '<option value="">Consulta el despacho a tu región</option>';
+      select.value = '';
+      state.comuna = 'Otra región';
+      return;
+    }
     select.innerHTML = COMUNAS[state.region]
       .map(c => `<option value="${c}">${c}</option>`)
       .join('');
@@ -58,10 +65,10 @@ export function initCalculator(): void {
     const cuotaVal = installment(final, state.cuotas);
 
     const cfgEl = $('#calcCfg');
-    if (cfgEl) cfgEl.textContent = `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Hidromasaje' : 'Tradicional'} · ${state.ancho} cm`;
+    if (cfgEl) cfgEl.textContent = `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'} · ${state.ancho} cm`;
 
     const locEl = $('#calcLoc');
-    if (locEl) locEl.textContent = `${state.comuna}, ${state.region}`;
+    if (locEl) locEl.textContent = state.region === 'otra' ? 'Otra región · consultar despacho' : `${state.comuna}, ${state.region}`;
 
     const strikeEl = $('#calcStrike') as HTMLElement | null;
     if (strikeEl) {
@@ -104,7 +111,7 @@ export function initCalculator(): void {
       const val = (chip as HTMLElement).dataset.value ?? '';
       if (group === 'tipo') state.tipo = val as Tipo;
       else if (group === 'ancho') state.ancho = parseInt(val, 10) as Ancho;
-      else if (group === 'region') { state.region = val as Region; fillComunas(); }
+      else if (group === 'region') { state.region = val as Region | 'otra'; fillComunas(); }
       else if (group === 'banco') state.banco = val as Banco;
       render();
     });
@@ -129,8 +136,8 @@ export function initCalculator(): void {
       window.dsCart.add({
         id: `calc-${state.tipo}-${state.ancho}-${state.banco}`,
         grupo: 'rebaje',
-        name: `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Hidromasaje' : 'Tradicional'}`,
-        variant: `${state.ancho} cm · ${state.comuna}, ${state.region}${discAmt > 0 ? ' · banco ' + state.banco : ''}`,
+        name: `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'}`,
+        variant: `${state.ancho} cm · ${state.region === 'otra' ? 'Otra región' : state.comuna + ', ' + state.region}${discAmt > 0 ? ' · banco ' + state.banco : ''}`,
         unitPrice: final,
         label: `${state.tipo.toUpperCase()} ${state.ancho}`,
         image: PRODUCT_MEDIA[state.tipo]?.image,

@@ -13,7 +13,11 @@ function openQV(el: HTMLElement): void {
   const img = document.getElementById('qvImg') as HTMLImageElement | null;
   if (img) { img.src = d.qvImg || ''; img.alt = d.qvName || ''; }
   const media = document.getElementById('qvMedia');
-  if (media) media.className = 'qv__media' + (d.qvGrupo === 'rebaje' ? '' : ' qv__media--contain');
+  const coversFull = d.qvGrupo === 'rebaje' || d.qvGrupo === 'kit';
+  if (media) media.className = 'qv__media' + (coversFull ? '' : ' qv__media--contain');
+  // "Instalación incluida" solo aplica a rebajes; en kits/accesorios se oculta.
+  const instalLi = document.getElementById('qvInstalLi');
+  if (instalLi) instalLi.style.display = d.qvGrupo === 'rebaje' ? '' : 'none';
   const name = document.getElementById('qvName');
   if (name) name.textContent = d.qvName || '';
   const priceEl = document.getElementById('qvPrice');

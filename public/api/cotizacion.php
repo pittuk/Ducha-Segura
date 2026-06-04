@@ -35,14 +35,14 @@ $instalacion = !empty($d['instalacion']) ? 1 : 0;
 $items = is_array($d['items'] ?? null) ? $d['items'] : [];
 
 if ($nombre === '' || $telefono === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) bad('contacto');
-if ($direccion === '' || $region === '' || $comuna === '') bad('direccion');
+// La dirección de instalación ya NO se pide en la cotización (se coordina después).
 if (count($items) === 0) bad('items');
 if (count($items) > 50) bad('too_many_items');
 
 $tieneRebaje = false;
 foreach ($items as $it) { if (($it['grupo'] ?? '') === 'rebaje') { $tieneRebaje = true; break; } }
 if ($tieneRebaje && !$tipoTina) bad('tipo_tina');
-$tinasValidas = ['acero-acrilica','hidromasaje','fierro-fundido','especial-1','especial-2','especial-3'];
+$tinasValidas = ['acero-acrilica','hidromasaje','fierro-fundido','especial-1','especial-2','especial-3','no-se'];
 if ($tipoTina !== null && !in_array($tipoTina, $tinasValidas, true)) bad('tipo_tina_invalida');
 
 $pdo = ds_db();
@@ -90,11 +90,15 @@ ds_send_mail($email, $nombre, 'Recibimos tu cotización — Ducha Segura', ds_em
 ));
 
 // Gestor
-$dir = htmlspecialchars("$direccion" . ($depto ? ", $depto" : "") . " · $comuna, $region" . ($referencia ? " ($referencia)" : ""));
+$dirLinea = '';
+if ($direccion !== '') {
+  $dir = htmlspecialchars("$direccion" . ($depto ? ", $depto" : "") . ($comuna || $region ? " · $comuna, $region" : "") . ($referencia ? " ($referencia)" : ""));
+  $dirLinea = "<p><b>Dirección:</b> $dir</p>";
+}
 ds_send_mail($cfg['manager_email'], 'Gestor Ducha Segura', "Nueva cotización #$id — " . preg_replace('/[\r\n]+/', ' ', $nombre), ds_email_layout(
   "Nueva cotización #$id",
   "<p><b>Contacto:</b> " . htmlspecialchars($nombre) . " · " . htmlspecialchars($telefono) . " · " . htmlspecialchars($email) . "</p>"
-  . "<p><b>Dirección:</b> $dir</p>"
+  . $dirLinea
   . "<p><b>Instalación solicitada:</b> " . ($instalacion ? 'Sí (+$30.000)' : 'No') . "</p>"
   . ($tipoTina ? "<p><b>Tipo de tina:</b> " . htmlspecialchars($tipoTina) . "</p>" : "")
   . ($notas ? "<p><b>Notas:</b> " . htmlspecialchars($notas) . "</p>" : "")

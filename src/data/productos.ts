@@ -26,9 +26,8 @@ const IMG_OVERRIDE: Record<string, string> = {
 };
 
 // Renombrar el nombre VISIBLE (no el slug, que está indexado). Sobrevive a re-importar de WC.
-const NAME_OVERRIDE: Record<string, string> = {
-  'rebaje-de-tina-jacuzzi': 'Rebaje de tina: Hidromasaje',
-};
+// (El rebaje de jacuzzi conserva el nombre "Jacuzzi" del JSON; no se sobrescribe.)
+const NAME_OVERRIDE: Record<string, string> = {};
 
 // Recategorizar productos (decisión del cliente; sobrevive a re-importar de WC).
 const GRUPO_OVERRIDE: Record<string, Grupo> = {
@@ -55,9 +54,9 @@ const CURATED: Producto[] = [
     regularPrice: null,
     salePrice: null,
     shortDescription: 'Pieza de rebaje de 40 cm para instalar tú mismo. Incluye manual paso a paso.',
-    descriptionHtml: '<p>Kit de rebaje de tina formato <strong>hágalo usted mismo</strong>: incluye la pieza de rebaje de 40 cm en fibra de vidrio reforzada y un manual de instalación paso a paso.</p><p><em>Precio provisional — pendiente de actualización.</em></p>',
-    image: '/images/kits/kit rebaje 40 cm.webp',
-    images: ['/images/kits/kit rebaje 40 cm.webp'],
+    descriptionHtml: '<p>Kit de rebaje de tina formato <strong>hágalo usted mismo</strong>: incluye la pieza de rebaje de 40 cm en fibra de vidrio reforzada y un manual de instalación paso a paso.</p>',
+    image: '/images/kits/Kit Rebaje 40 cm - DUCHA SEGURA.webp',
+    images: ['/images/kits/Kit Rebaje 40 cm - DUCHA SEGURA.webp'],
     custom: true,
   },
   {
@@ -69,9 +68,9 @@ const CURATED: Producto[] = [
     regularPrice: null,
     salePrice: null,
     shortDescription: 'Pieza de rebaje 40 cm + barra de seguridad de acero inoxidable de 40 cm.',
-    descriptionHtml: '<p>Incluye la pieza de rebaje de 40 cm y una <strong>barra de seguridad de acero inoxidable de 40 cm</strong> con sus elementos de fijación y guía de montaje.</p><p><em>Precio provisional — pendiente de actualización.</em></p>',
-    image: '/images/kits/kit barra de acero inoxidable 40 cm.webp',
-    images: ['/images/kits/kit barra de acero inoxidable 40 cm.webp'],
+    descriptionHtml: '<p>Incluye la pieza de rebaje de 40 cm y una <strong>barra de seguridad de acero inoxidable de 40 cm</strong> con sus elementos de fijación y guía de montaje.</p>',
+    image: '/images/kits/Kit Rebaje 40 cm + barra 40 cm acero inox - DUCHA SEGURA.webp',
+    images: ['/images/kits/Kit Rebaje 40 cm + barra 40 cm acero inox - DUCHA SEGURA.webp'],
     custom: true,
   },
   {
@@ -83,9 +82,9 @@ const CURATED: Producto[] = [
     regularPrice: null,
     salePrice: null,
     shortDescription: 'Pieza de rebaje 40 cm + barra inox 40 cm + silicona blanca acética para el sellado.',
-    descriptionHtml: '<p>Kit completo: pieza de rebaje de 40 cm, <strong>barra de acero inoxidable de 40 cm</strong> y <strong>silicona blanca acética</strong> para un sellado prolijo y duradero.</p><p><em>Precio provisional — pendiente de actualización.</em></p>',
-    image: '/images/kits/kit barra de acero inoxidable 40 cm + silicona.webp',
-    images: ['/images/kits/kit barra de acero inoxidable 40 cm + silicona.webp'],
+    descriptionHtml: '<p>Kit completo: pieza de rebaje de 40 cm, <strong>barra de acero inoxidable de 40 cm</strong> y <strong>silicona blanca acética</strong> para un sellado prolijo y duradero.</p>',
+    image: '/images/kits/Kit Rebaje 40 cm + barra 40 cm acero inox + silicona blanca acética - DUCHA SEGURA.webp',
+    images: ['/images/kits/Kit Rebaje 40 cm + barra 40 cm acero inox + silicona blanca acética - DUCHA SEGURA.webp'],
     custom: true,
   },
 ];
@@ -94,7 +93,30 @@ export const PRODUCTOS: Producto[] = [...wc, ...CURATED];
 
 export const REBAJES = PRODUCTOS.filter((p) => p.grupo === 'rebaje');
 export const KITS = PRODUCTOS.filter((p) => p.grupo === 'kit');
-export const ACCESORIOS = PRODUCTOS.filter((p) => p.grupo === 'accesorio');
+
+// Orden de accesorios: barras de seguridad primero (desde la de 40 cm), luego el resto.
+// Los slugs no listados aquí se mantienen al final en su orden original.
+const ACCESORIOS_ORDER: string[] = [
+  'barra-de-seguridad-40cm',
+  'barra-de-seguridad-60cm',
+  'barra-de-seguridad-76cm',
+  'barra-de-seguridad-30cm',
+  'barra-de-cromada-40cm',
+  'barra-abatible',
+  'barra-borde-tina',
+  'barra-muro-piso-60cm',
+];
+export const ACCESORIOS = (() => {
+  const list = PRODUCTOS.filter((p) => p.grupo === 'accesorio');
+  const rank = (slug: string, origIdx: number): number => {
+    const i = ACCESORIOS_ORDER.indexOf(slug);
+    return i === -1 ? ACCESORIOS_ORDER.length + origIdx : i;
+  };
+  return list
+    .map((p, idx) => ({ p, r: rank(p.slug, idx) }))
+    .sort((a, b) => a.r - b.r)
+    .map((x) => x.p);
+})();
 
 export const getProducto = (slug: string): Producto | undefined =>
   PRODUCTOS.find((p) => p.slug === slug);

@@ -13,7 +13,8 @@ export const TIPOS_TINA: TipoTina[] = [
   { id: 'fierro-fundido', name: 'Tina fierro fundido',             image: '/images/tinas/fierro-fundido.svg' },
   { id: 'especial-1',     name: 'Tina especial', nota: 'Borde grueso',            image: '/images/tinas/especial-1.svg' },
   { id: 'especial-2',     name: 'Tina especial', nota: 'Mampara o shower door',   image: '/images/tinas/especial-2.svg' },
-  { id: 'especial-3',     name: 'Tina especial', nota: 'Borde grueso irregular',  image: '/images/tinas/especial-3.svg' },
+  { id: 'especial-3',     name: 'Tina a medida', nota: 'Forma especial',          image: '/images/tinas/especial-3.svg' },
+  { id: 'no-se',          name: 'No sé qué tipo de tina es', nota: 'Te ayudamos',  image: '/images/tinas/no-se.svg' },
 ];
 
 export const TINA_IDS = TIPOS_TINA.map(t => t.id);
