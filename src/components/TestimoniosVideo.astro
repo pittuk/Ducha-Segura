@@ -1,0 +1,256 @@
+---
+import { TESTIMONIOS_VIDEO } from '../data/testimonios-video';
+const IG_URL = 'https://www.instagram.com/duchasegura_/';
+---
+<section class="section tvid">
+  <div class="container">
+    <div class="section-head section-head--center reveal" style="margin-bottom:26px">
+      <div class="kicker" style="margin-bottom:6px">Testimonios</div>
+      <h2 class="h2">Lo dicen nuestros clientes</h2>
+      <a class="tvid__ig" href={IG_URL} target="_blank" rel="noopener">
+        <svg class="ic"><use href="#i-instagram"/></svg>
+        <span>Síguenos en Instagram @duchasegura_</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="tvid__carousel reveal">
+    <div class="tvid__viewport">
+      <div class="tvid__track" id="tvidTrack">
+      {TESTIMONIOS_VIDEO.map((t, i) => (
+        <button class="tvid-card" type="button" data-index={i}
+          data-src={t.src} data-name={t.name} data-loc={t.location || ''} data-blurb={t.blurb}
+          aria-label={`Ver el testimonio de ${t.name}`}>
+          <video class="tvid-card__video" src={t.src} preload="metadata" muted loop playsinline></video>
+          <span class="tvid-card__play" aria-hidden="true"></span>
+          <span class="tvid-card__info">
+            <span class="tvid-card__name">{t.name}</span>
+            {t.location && <span class="tvid-card__loc">{t.location}</span>}
+          </span>
+        </button>
+      ))}
+      </div>
+    </div>
+    <div class="tvid__controls">
+      <button class="tvid__arrow tvid__arrow--prev" type="button" data-dir="-1" aria-label="Ver testimonios anteriores"><svg class="ic"><use href="#i-arrow"/></svg></button>
+      <button class="tvid__arrow tvid__arrow--next" type="button" data-dir="1" aria-label="Ver testimonios siguientes"><svg class="ic"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
+
+  <div class="tvid-modal" id="tvidModal" hidden>
+    <div class="tvid-modal__backdrop" data-close></div>
+    <button class="tvid-modal__close" type="button" data-close aria-label="Cerrar"><svg class="ic"><use href="#i-close"/></svg></button>
+    <button class="tvid-modal__nav tvid-modal__nav--prev" type="button" data-mdir="-1" aria-label="Anterior"><svg class="ic"><use href="#i-arrow"/></svg></button>
+    <div class="tvid-modal__stage">
+      <video class="tvid-modal__video" id="tvidModalVideo" controls playsinline></video>
+      <div class="tvid-modal__meta">
+        <div class="tvid-modal__name" id="tvidModalName"></div>
+        <div class="tvid-modal__blurb" id="tvidModalBlurb"></div>
+        <a class="tvid-modal__ig" href={IG_URL} target="_blank" rel="noopener"><svg class="ic"><use href="#i-instagram"/></svg><span>Ver más en Instagram</span></a>
+      </div>
+    </div>
+    <button class="tvid-modal__nav tvid-modal__nav--next" type="button" data-mdir="1" aria-label="Siguiente"><svg class="ic"><use href="#i-arrow"/></svg></button>
+  </div>
+</section>
+
+<style>
+.tvid{background:var(--ds-bg);overflow:hidden}
+.tvid__ig{display:inline-flex;align-items:center;gap:9px;margin-top:18px;padding:10px 18px;border-radius:999px;border:1px solid var(--ds-border);background:#fff;color:var(--ds-text-strong);font-weight:600;font-size:14px;text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s}
+.tvid__ig:hover{border-color:var(--ds-blue);box-shadow:0 6px 18px rgba(0,0,0,.08);transform:translateY(-1px)}
+.tvid__ig .ic{width:19px;height:19px;color:#d6336c}
+
+.tvid__carousel{position:relative}
+/* viewport estático: recorta + difumina los bordes (la máscara NO se mueve con el track) */
+.tvid__viewport{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+/* track: se desplaza horizontalmente vía transform (lerp suave), guiado por el scroll
+   vertical de la página, o por las flechas en modo manual. */
+.tvid__track{display:flex;gap:14px;padding:16px 40px 44px;will-change:transform}
+
+/* Flechas: centradas bajo el carrusel, diseño moderno (outline → relleno azul al hover) */
+.tvid__controls{display:flex;justify-content:center;gap:14px;margin-top:6px}
+.tvid__arrow{width:50px;height:50px;border-radius:50%;border:1.5px solid var(--ds-border);background:#fff;color:var(--ds-blue-dark);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .18s,color .18s,border-color .18s,transform .18s,box-shadow .18s}
+.tvid__arrow .ic{width:22px;height:22px}
+.tvid__arrow--prev .ic{transform:scaleX(-1)}
+.tvid__arrow:hover{background:var(--ds-blue);border-color:var(--ds-blue);color:#fff;transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,114,192,.28)}
+.tvid__arrow:active{transform:translateY(0)}
+
+.tvid-card{position:relative;flex:0 0 auto;width:250px;aspect-ratio:9/16;border:0;padding:0;margin:0;border-radius:18px;overflow:hidden;cursor:pointer;background:#0b1f2c;box-shadow:0 8px 24px rgba(0,0,0,.14);transition:transform .2s,box-shadow .2s}
+@media(max-width:768px){.tvid-card{width:190px;border-radius:14px}}
+.tvid-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.24)}
+.tvid-card__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.tvid-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(0,0,0,.72));pointer-events:none}
+.tvid-card__play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;z-index:2;transition:opacity .2s,transform .2s;box-shadow:0 6px 18px rgba(0,0,0,.28)}
+.tvid-card__play::after{content:'';width:0;height:0;border-left:17px solid var(--ds-blue);border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:5px}
+.tvid-card:hover .tvid-card__play{opacity:0;transform:translate(-50%,-50%) scale(.8)}
+.tvid-card__info{position:absolute;left:0;right:0;bottom:0;padding:14px;text-align:left;z-index:2;color:#fff}
+.tvid-card__name{display:block;font-weight:800;font-size:15px;line-height:1.18;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.tvid-card__loc{display:block;font-size:12px;opacity:.9;margin-top:2px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+
+/* Modal inmersivo (stories) */
+.tvid-modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center}
+.tvid-modal[hidden]{display:none}
+.tvid-modal__backdrop{position:absolute;inset:0;background:rgba(7,14,20,.88)}
+.tvid-modal__stage{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:14px}
+.tvid-modal__video{height:min(78vh,720px);max-width:92vw;aspect-ratio:9/16;background:#000;border-radius:14px;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+.tvid-modal__meta{text-align:center;color:#fff;max-width:440px;padding:0 16px}
+.tvid-modal__name{font-weight:800;font-size:18px}
+.tvid-modal__blurb{font-size:14px;opacity:.85;margin-top:4px;line-height:1.45}
+.tvid-modal__ig{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:9px 16px;border-radius:999px;background:#fff;color:var(--ds-text-strong);font-weight:700;font-size:13px;text-decoration:none}
+.tvid-modal__ig .ic{width:17px;height:17px;color:#d6336c}
+.tvid-modal__close{position:absolute;top:16px;right:18px;z-index:4;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.tvid-modal__close .ic{width:22px;height:22px}
+.tvid-modal__close:hover{background:rgba(255,255,255,.26)}
+.tvid-modal__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.tvid-modal__nav .ic{width:24px;height:24px}
+.tvid-modal__nav:hover{background:rgba(255,255,255,.26)}
+.tvid-modal__nav--prev{left:max(16px,3vw);transform:translateY(-50%) scaleX(-1)}
+.tvid-modal__nav--next{right:max(16px,3vw)}
+@media(max-width:768px){
+  .tvid-modal__nav{width:40px;height:40px;background:rgba(255,255,255,.1)}
+  .tvid-modal__nav--prev{left:6px}.tvid-modal__nav--next{right:6px}
+}
+</style>
+
+<script>
+  // Testimonios en video: preview en hover + modal tipo stories. Listeners de documento
+  // con bandera de módulo (no body.dataset) por las View Transitions de Astro.
+  let docBound = false;
+  let modalEl: HTMLElement | null = null;
+  let modalVideo: HTMLVideoElement | null = null;
+  let modalName: HTMLElement | null = null;
+  let modalBlurb: HTMLElement | null = null;
+  let cards: HTMLElement[] = [];
+  let current = -1;
+  // Carrusel guiado por el scroll vertical, con suavizado (lerp) para un movimiento
+  // lento y fluido. Las flechas activan el modo manual (deja de seguir el scroll).
+  let coupleTrack: HTMLElement | null = null;
+  let coupleViewport: HTMLElement | null = null;
+  let coupleCarousel: HTMLElement | null = null;
+  let maxOffset = 0;     // desplazamiento horizontal máximo (px)
+  let posCurrent = 0;    // posición actual (animada)
+  let posTarget = 0;     // posición objetivo
+  let rafId = 0;
+  let manual = false;    // true tras usar las flechas
+  const EASE = 0.06;        // suavizado del glide (más bajo = más blando)
+  const SCROLL_LEAD = 0.8;  // recorrido extra (× alto de viewport): más alto = más lento
+
+  const clampn = (v: number, a: number, b: number) => (v < a ? a : v > b ? b : v);
+
+  function recomputeMax(): void {
+    if (!coupleTrack || !coupleViewport) return;
+    maxOffset = Math.max(0, coupleTrack.scrollWidth - coupleViewport.clientWidth);
+  }
+  function scrollTarget(): number {
+    if (!coupleCarousel || maxOffset <= 0) return 0;
+    const rect = coupleCarousel.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const lead = vh * SCROLL_LEAD;
+    // p avanza a lo largo de un recorrido ampliado (vh + 2·lead) → menos px
+    // horizontales por cada px de scroll vertical = movimiento más lento.
+    const p = clampn((vh + lead - rect.top) / (rect.height + vh + 2 * lead), 0, 1);
+    return p * maxOffset;
+  }
+  function render(): void {
+    rafId = 0;
+    if (!coupleTrack) return;
+    if (!manual) posTarget = scrollTarget();
+    posTarget = clampn(posTarget, 0, maxOffset);
+    const diff = posTarget - posCurrent;
+    if (Math.abs(diff) > 0.3) {
+      posCurrent += diff * EASE;
+      rafId = requestAnimationFrame(render);
+    } else {
+      posCurrent = posTarget;
+    }
+    coupleTrack.style.transform = `translate3d(${(-posCurrent).toFixed(1)}px,0,0)`;
+  }
+  function requestRender(): void { if (!rafId) rafId = requestAnimationFrame(render); }
+  function onCoupleScroll(): void { if (!manual) requestRender(); }
+  function goManual(dir: number): void {
+    if (!coupleTrack || !cards.length) return;
+    manual = true;
+    const w = cards[0].getBoundingClientRect().width + 14;
+    posTarget = clampn(posCurrent + dir * w * 1.6, 0, maxOffset);
+    requestRender();
+  }
+
+  function openModal(i: number): void {
+    if (!modalEl || !modalVideo || i < 0 || i >= cards.length) return;
+    current = i;
+    const c = cards[i];
+    modalVideo.src = c.dataset.src || '';
+    if (modalName) modalName.textContent = c.dataset.name || '';
+    if (modalBlurb) modalBlurb.textContent = c.dataset.blurb || '';
+    modalEl.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    modalVideo.currentTime = 0;
+    void modalVideo.play().catch(() => {});
+  }
+  function closeModal(): void {
+    if (!modalEl || !modalVideo) return;
+    modalVideo.pause();
+    modalVideo.removeAttribute('src');
+    modalVideo.load();
+    modalEl.hidden = true;
+    document.documentElement.style.overflow = '';
+    current = -1;
+  }
+  function step(d: number): void {
+    if (current >= 0 && cards.length) openModal((current + d + cards.length) % cards.length);
+  }
+
+  function initTvid(): void {
+    const section = document.querySelector<HTMLElement>('.tvid');
+    if (!section) { coupleTrack = coupleViewport = coupleCarousel = null; return; }
+    const track = section.querySelector<HTMLElement>('.tvid__track');
+    if (!track || track.dataset.bound) return;
+    track.dataset.bound = '1';
+
+    modalEl = section.querySelector<HTMLElement>('.tvid-modal');
+    modalVideo = section.querySelector<HTMLVideoElement>('#tvidModalVideo');
+    modalName = section.querySelector<HTMLElement>('#tvidModalName');
+    modalBlurb = section.querySelector<HTMLElement>('#tvidModalBlurb');
+    cards = Array.from(track.querySelectorAll<HTMLElement>('.tvid-card'));
+
+    cards.forEach((card, i) => {
+      const v = card.querySelector<HTMLVideoElement>('video');
+      if (v) {
+        card.addEventListener('mouseenter', () => { void v.play().catch(() => {}); });
+        card.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
+      }
+      card.addEventListener('click', () => openModal(i));
+    });
+
+    // Carrusel guiado por scroll (suave). Las flechas pasan a modo manual.
+    coupleTrack = track;
+    coupleViewport = section.querySelector<HTMLElement>('.tvid__viewport');
+    coupleCarousel = section.querySelector<HTMLElement>('.tvid__carousel');
+    manual = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    posCurrent = 0; posTarget = 0;
+    recomputeMax();
+    requestRender();
+    // Recalcular tras el layout final (fuentes/medios).
+    setTimeout(() => { recomputeMax(); requestRender(); }, 300);
+    section.querySelectorAll<HTMLElement>('.tvid__arrow').forEach(btn =>
+      btn.addEventListener('click', () => goManual(Number(btn.dataset.dir) || 1)));
+
+    if (modalEl) {
+      modalEl.querySelectorAll<HTMLElement>('[data-close]').forEach(el => el.addEventListener('click', closeModal));
+      modalEl.querySelectorAll<HTMLElement>('[data-mdir]').forEach(el =>
+        el.addEventListener('click', () => step(Number(el.dataset.mdir) || 1)));
+    }
+
+    if (!docBound) {
+      docBound = true;
+      document.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (!modalEl || modalEl.hidden) return;
+        if (e.key === 'Escape') closeModal();
+        else if (e.key === 'ArrowRight') step(1);
+        else if (e.key === 'ArrowLeft') step(-1);
+      });
+      window.addEventListener('scroll', onCoupleScroll, { passive: true });
+      window.addEventListener('resize', () => { recomputeMax(); requestRender(); });
+    }
+  }
+  document.addEventListener('astro:page-load', initTvid);
+</script>
