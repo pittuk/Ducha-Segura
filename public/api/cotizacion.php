@@ -4,7 +4,16 @@ require_once __DIR__ . '/mailer.php';
 
 $cfg = ds_config();
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: ' . $cfg['cors_origin']);
+// CORS: refleja el Origin solo si está en la lista permitida (cors_origin puede ser
+// string o array). Así no se emite un origen no autorizado ni '*' por accidente.
+$allowed = (array)($cfg['cors_origin'] ?? []);
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if (in_array('*', $allowed, true)) {
+  header('Access-Control-Allow-Origin: *');
+} elseif ($origin !== '' && in_array($origin, $allowed, true)) {
+  header('Access-Control-Allow-Origin: ' . $origin);
+  header('Vary: Origin');
+}
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 
