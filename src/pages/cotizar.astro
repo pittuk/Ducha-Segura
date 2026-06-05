@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { TIPOS_TINA } from '../data/tinas';
+import { REGIONES } from '../data/regiones';
 ---
 <BaseLayout title="Completar cotización — Ducha Segura®" description="Completa los datos de tu cotización: tipo de tina, dirección de instalación y contacto.">
   <section class="section">
@@ -18,7 +19,7 @@ import { TIPOS_TINA } from '../data/tinas';
           <div id="cotizarItems"></div>
           <div class="cotizar__line" id="cotInstalLine" style="display:none"><span>Instalación</span><span>+$<span id="cotInstalAmount">0</span></span></div>
           <div class="cotizar__total"><span>Total estimado</span><span>$<span id="cotizarTotal">0</span></span></div>
-          <p class="cotizar__note">Precios referenciales. Sujeto a confirmación final. <strong id="cotizarNoteEnvio">El envío no está incluido.</strong></p>
+          <p class="cotizar__note">Precios referenciales, IVA incluido. Sujeto a confirmación final. <strong id="cotizarNoteEnvio">El envío no está incluido.</strong></p>
         </aside>
 
         <!-- Formulario -->
@@ -60,6 +61,23 @@ import { TIPOS_TINA } from '../data/tinas';
                 <label>Teléfono<input type="tel" name="telefono" required autocomplete="tel" /></label>
               </div>
               <label>Email<input type="email" name="email" required autocomplete="email" /></label>
+            </fieldset>
+
+            <fieldset class="cotizar__block">
+              <legend class="cotizar__h">Ubicación de instalación</legend>
+              <div class="cotizar__row">
+                <label>Región
+                  <select name="region" id="cotRegion" required autocomplete="address-level1">
+                    <option value="" disabled selected>Selecciona tu región</option>
+                    {REGIONES.map((r) => <option value={r.nombre}>{r.nombre}</option>)}
+                  </select>
+                </label>
+                <label>Comuna
+                  <select name="comuna" id="cotComuna" required autocomplete="address-level2" disabled>
+                    <option value="" disabled selected>Primero elige tu región</option>
+                  </select>
+                </label>
+              </div>
             </fieldset>
 
             <!-- Instalación: solo para kits/accesorios (se oculta si hay un rebaje). -->
