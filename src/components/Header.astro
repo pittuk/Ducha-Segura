@@ -9,7 +9,7 @@ const path = Astro.url.pathname;
 const isActive = (href: string) => href === '/' ? path === '/' : (path === href || path.startsWith(href + '/'));
 ---
 <header class="header">
-  <a href="/" class="logo" aria-label="Ducha Segura — Inicio">
+  <a href="/" class="logo" aria-label="Ducha Segura® — Inicio">
     <Image class="logo__circle" src={logoAzul} alt="" width={85} height={85} densities={[2]} />
   </a>
 
@@ -55,7 +55,7 @@ const isActive = (href: string) => href === '/' ? path === '/' : (path === href 
     <div class="logo">
       <Image class="logo__circle" src={logoAzul} alt="" width={85} height={85} densities={[2]} />
       <div class="logo__txt">
-        <span class="logo__name">Ducha Segura<sup>®</sup></span>
+        <span class="logo__name">Ducha Segura®<sup>®</sup></span>
         <span class="logo__sub">CHILE</span>
       </div>
     </div>

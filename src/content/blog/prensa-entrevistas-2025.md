@@ -1,6 +1,6 @@
 ---
 title: "Ducha Segura® en la prensa 2025: Radio Agricultura, CHV y 24 Horas"
-cat: "Ducha Segura en medios"
+cat: "Ducha Segura® en medios"
 date: "2025"
 pubdate: "2025-08-01T00:00:00"
 excerpt: "Durante 2025, Radio Agricultura, Chilevisión y 24 Horas destacaron a Ducha Segura® como una solución chilena para prevenir caídas de adultos mayores en el baño."
@@ -17,5 +17,5 @@ draft: false
 <p>«Es uno de los accidentes más frecuentes en adultos mayores: crean solución para evitar caídas en duchas».</p>
 <p><a href="https://www.chilevision.cl/noticias/te-ayuda/es-uno-de-los-accidentes-mas-frecuentes-en-adultos-mayores-crean" target="_blank" rel="noopener">Ver la nota en Chilevisión →</a></p>
 <h2 class="wp-block-heading">24 Horas</h2>
-<p>«Ducha Segura: el emprendimiento que busca evitar caídas de personas mayores o con movilidad reducida».</p>
+<p>«Ducha Segura®: el emprendimiento que busca evitar caídas de personas mayores o con movilidad reducida».</p>
 <p><a href="https://www.24horas.cl/tendencias/bienestar/ducha-segura-el-emprendimiento-que-busca-evitar-caidas-de-personas-mayores" target="_blank" rel="noopener">Ver la nota en 24 Horas →</a></p>

@@ -2,8 +2,8 @@ export interface NavItem { label: string; href: string; children?: NavItem[]; }
 
 export const NAV: NavItem[] = [
   { label: 'Inicio', href: '/' },
-  { label: 'Rebajes', href: '/rebaje-de-tina' },
   { label: 'Catálogo', href: '/catalogo', children: [
+    { label: 'Rebajes', href: '/rebaje-de-tina' },
     { label: 'Accesorios', href: '/accesorios' },
     { label: 'Kits', href: '/kits' },
   ] },

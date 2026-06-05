@@ -4,10 +4,10 @@ export interface PrensaItem {
                     // muestra un placeholder con `name` (onerror); al subir el logo real
                     // con este nombre, aparece solo sin tocar código.
   excerpt: string;  // frase corta para el tooltip
-  href: string;     // nota interna en el sitio (entrada de blog "Ducha Segura en medios")
+  href: string;     // nota interna en el sitio (entrada de blog "Ducha Segura® en medios")
 }
 
-// Medios reales que han cubierto a Ducha Segura. Cada ítem enlaza a su nota en el blog.
+// Medios reales que han cubierto a Ducha Segura®. Cada ítem enlaza a su nota en el blog.
 // Logos en public/images/prensa/ (ver spec para los que faltan por subir).
 export const PRENSA: PrensaItem[] = [
   { name: 'Las Últimas Noticias', logo: '/images/prensa/logo-lun.png',

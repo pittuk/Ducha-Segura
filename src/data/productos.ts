@@ -94,13 +94,13 @@ export const PRODUCTOS: Producto[] = [...wc, ...CURATED];
 export const REBAJES = PRODUCTOS.filter((p) => p.grupo === 'rebaje');
 export const KITS = PRODUCTOS.filter((p) => p.grupo === 'kit');
 
-// Orden de accesorios: barras de seguridad primero (desde la de 40 cm), luego el resto.
-// Los slugs no listados aquí se mantienen al final en su orden original.
+// Orden de accesorios: barras de seguridad estrictamente por tamaño (menor → mayor),
+// luego el resto de las barras. Los slugs no listados aquí quedan al final en su orden original.
 const ACCESORIOS_ORDER: string[] = [
+  'barra-de-seguridad-30cm',
   'barra-de-seguridad-40cm',
   'barra-de-seguridad-60cm',
   'barra-de-seguridad-76cm',
-  'barra-de-seguridad-30cm',
   'barra-de-cromada-40cm',
   'barra-abatible',
   'barra-borde-tina',

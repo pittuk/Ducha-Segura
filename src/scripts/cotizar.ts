@@ -204,7 +204,7 @@ function buildWhatsappUrl(
     .map(i => `• ${i.name}${i.variant ? ` (${i.variant})` : ''} x${i.qty} — $${clp(i.unitPrice * i.qty)}`)
     .join('\n');
   const ubicacion = [comuna, region].filter(Boolean).join(', ');
-  const msg = `Hola Ducha Segura 👋 Quiero enviar mi cotización.\n\n${lineas}\n`
+  const msg = `Hola Ducha Segura® 👋 Quiero enviar mi cotización.\n\n${lineas}\n`
     + (instalacion ? `Instalación: Sí (+$${clp(INSTALLATION_FEE)})\n` : '')
     + `Total estimado: $${clp(total)}\n`
     + (tinaName ? `Tipo de tina: ${tinaName}\n` : '')
