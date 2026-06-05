@@ -1,6 +1,6 @@
 ---
 // InstalacionVideo.astro — Sección de video del proceso de instalación.
-// Usa public/videos/proceso-rebaje-de-tina-ducha-segura.mp4 (metraje real, horizontal).
+// Usa public/videos/ducha-segura.webm (metraje real, horizontal).
 // El still es el frame de los 2s (media-fragment #t=2 + seek en loadedmetadata como
 // respaldo) — sin póster aparte.
 ---
@@ -14,7 +14,7 @@
 
     <div class="instvid reveal">
       <video class="instvid__video" id="instVideo" preload="metadata" playsinline>
-        <source src="/videos/proceso-rebaje-de-tina-ducha-segura.mp4#t=2" type="video/mp4" />
+        <source src="/videos/ducha-segura.webm#t=2" type="video/webm" />
       </video>
       <button class="instvid__play" id="instVideoPlay" aria-label="Reproducir video: Así instalamos tu rebaje"></button>
       <div class="instvid__caption">

@@ -12,7 +12,7 @@ import { REBAJES } from '../data/productos';
       <div class="logo">
         <Image class="logo__circle" src={logoAzul} alt="Ducha Segura®" width={85} height={85} densities={[2]} />
       </div>
-      <p class="footer__about">+10 años fabricando rebajes para tina en Chile. Producto nacional patentado. Garantía 3 años con instalación incluida.</p>
+      <p class="footer__about">+6 años fabricando rebajes para tina en Chile. Producto nacional patentado. Garantía 3 años.</p>
       <div class="footer__socials">
         <a href="https://instagram.com/duchasegura_" target="_blank" rel="noopener" class="footer__social" aria-label="Instagram"><svg class="ic"><use href="#i-instagram" /></svg></a>
         <a href="https://facebook.com/Ducha-Segura-699654674213794" target="_blank" rel="noopener" class="footer__social" aria-label="Facebook"><svg class="ic"><use href="#i-facebook" /></svg></a>
@@ -66,6 +66,18 @@ import { REBAJES } from '../data/productos';
         </div>
       </div>
     </div>
+
+    <div class="footer__col" data-accordion>
+      <button class="footer__col-head">
+        <span class="footer__col-title">Ayuda</span>
+        <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
+      </button>
+      <ul class="footer__col-list">
+        <li><a href="/terminos-y-condiciones-ducha-segura/">Términos y Condiciones</a></li>
+        <li><a href="/politicas-de-privacidad/">Políticas de Privacidad</a></li>
+        <li><a href="/preguntas-frecuentes/">Preguntas Frecuentes</a></li>
+      </ul>
+    </div>
   </div>
 
   <div class="footer__bottom">
@@ -73,8 +85,8 @@ import { REBAJES } from '../data/productos';
       <div>© 2026 Ducha Segura® CHILE · Desarrollado por Agenciados.</div>
       <div class="footer__bottom-links">
         <a href="/terminos-y-condiciones-ducha-segura/">Términos</a>
-        <a href="#">Privacidad</a>
-        <a href="#">Cookies</a>
+        <a href="/politicas-de-privacidad/">Privacidad</a>
+        <a href="/preguntas-frecuentes/">Preguntas frecuentes</a>
       </div>
     </div>
   </div>
@@ -83,7 +95,7 @@ import { REBAJES } from '../data/productos';
 <style>
 /* Footer (legacy 469–495) */
 .footer{background:#fff;color:var(--ds-text)}
-.footer__inner{max-width:var(--ds-container);margin:0 auto;padding:64px var(--ds-pad) 32px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px}
+.footer__inner{max-width:var(--ds-container);margin:0 auto;padding:64px var(--ds-pad) 32px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:40px}
 @media (max-width:1024px){.footer__inner{grid-template-columns:1fr;gap:0;padding:48px 20px 24px}}
 .footer__brand{margin-bottom:0}
 @media (max-width:1024px){.footer__brand{margin-bottom:32px}}

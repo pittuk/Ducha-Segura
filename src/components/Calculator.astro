@@ -1,15 +1,33 @@
 ---
 import { SITE } from '../data/site';
+
+// Lista de convenios para el CTA "¿Qué convenio aplica para ti?" (solo nombres,
+// en el orden indicado: La Reina arriba → Santander abajo).
+const CONVENIOS_CTA = [
+  'La Reina',
+  'Colina Vecinos',
+  'Las Condes',
+  'Ñuñoa',
+  'Providencia',
+  'Estadio Español',
+  'Sura',
+  'Caja Los Andes',
+  'Penta Vida',
+  'Chile Cuida',
+  'Banco Chile',
+  'Santander',
+];
 ---
 <!-- ============================================================
-     Calculadora (STAR)
+     Calculadora (STAR) — configurador de rebaje + promoción de convenios.
+     Ya no calcula precio: destaca el 20% de descuento por convenios.
      ============================================================ -->
 <section class="section section--xl calc" id="calculadora">
   <div class="container">
     <div class="calc__grid">
       <div class="calc__left">
         <div class="reveal">
-          <div class="kicker kicker--light" style="margin-bottom:14px">Calculadora de presupuesto</div>
+          <div class="kicker kicker--light" style="margin-bottom:14px">Configura tu rebaje</div>
           <h2 class="calc__h2">¿Cuánto cuesta tu rebaje?</h2>
         </div>
 
@@ -27,11 +45,12 @@ import { SITE } from '../data/site';
             <button class="calc-chip" data-value="30">30 cm</button>
             <button class="calc-chip active" data-value="40">40 cm</button>
             <button class="calc-chip" data-value="50">50 cm</button>
+            <button class="calc-chip" data-value="no-se">No sé</button>
           </div>
         </div>
 
         <div class="calc-step reveal">
-          <div class="calc-step__head"><span class="calc-step__n">3</span><span class="calc-step__l">Comuna de instalación</span></div>
+          <div class="calc-step__head"><span class="calc-step__n">3</span><span class="calc-step__l">Región / Comuna</span></div>
           <div class="calc-chips" data-calc="region">
             <button class="calc-chip active" data-value="RM">RM</button>
             <button class="calc-chip" data-value="Valparaíso">Valparaíso</button>
@@ -42,14 +61,13 @@ import { SITE } from '../data/site';
         </div>
 
         <div class="calc-step reveal">
-          <div class="calc-step__head"><span class="calc-step__n">4</span><span class="calc-step__l">Banco de pago (opcional)</span></div>
-          <div class="calc-chips" data-calc="banco">
-            <button class="calc-chip active" data-value="santander" data-disc="15">Santander <span class="calc-chip__dc">-15%</span></button>
-            <button class="calc-chip" data-value="chile" data-disc="20">Banco de Chile <span class="calc-chip__dc">-20%</span></button>
-            <button class="calc-chip" data-value="losandes" data-disc="20">Caja Los Andes <span class="calc-chip__dc">-20%</span></button>
-            <a class="calc-chip calc-chip--wa" href={SITE.whatsappUrl} target="_blank" rel="noopener">
-              <svg class="ic" style="width:14px;height:14px;margin-right:6px"><use href="#i-whatsapp"/></svg>Otros convenios
-            </a>
+          <div class="calc-step__head"><span class="calc-step__n">4</span><span class="calc-step__l">Convenios</span></div>
+          <div class="conv-promo">
+            <p class="conv-promo__txt">Contamos con <strong>convenios</strong> con bancos, cajas, municipios y aseguradoras como canales de <strong>descuento</strong>.</p>
+            <select class="calc-select" aria-label="Convenio">
+              <option value="" disabled selected>¿Qué convenio aplica para ti?</option>
+              {CONVENIOS_CTA.map((c) => <option value={c}>{c}</option>)}
+            </select>
           </div>
         </div>
       </div>
@@ -61,32 +79,10 @@ import { SITE } from '../data/site';
           <div class="calc__loc" id="calcLoc">Las Condes, RM</div>
         </div>
 
-        <div class="calc__price-zone">
-          <div class="calc__total-row">
-            <span style="font-size:13px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.06em">Total</span>
-            <span class="calc__strike" id="calcStrike">$229.000</span>
-          </div>
-          <div class="calc__total">
-            <span class="calc__total-n">$<span id="calcTotal">194.650</span></span>
-          </div>
-          <div class="calc__save" id="calcSave">
-            <svg class="ic" style="width:13px;height:13px;stroke-width:2.5"><use href="#i-zap"/></svg>
-            <span id="calcSaveTxt">Ahorras $34.350 con Santander</span>
-          </div>
-          <div class="calc__iva">IVA incluido</div>
-          <div class="calc__region-note" id="calcRegionNote" style="display:none">
-            <svg class="ic" style="width:14px;height:14px;stroke-width:2.5;flex-shrink:0"><use href="#i-info"/></svg>
-            <span>Consulta por el servicio en tu región, el precio puede variar.</span>
-          </div>
-        </div>
-
-        <div>
-          <div class="calc__cuotas-head">
-            <span class="calc__cuotas-l">O en cuotas</span>
-            <span class="calc__cuotas-r"><span id="calcCuotasN">12</span> cuotas sin interés</span>
-          </div>
-          <input type="range" min="3" max="24" step="3" value="12" id="calcCuotasRange" aria-label="Número de cuotas">
-          <div class="calc__cuotas-amt"><span id="calcCuotasN2">12</span> × <span>$<span id="calcCuotaAmt">16.221</span></span></div>
+        <div class="calc__promo">
+          <div class="calc__promo-top">Hasta</div>
+          <div class="calc__promo-num">20<span>%</span></div>
+          <div class="calc__promo-txt">de descuento con nuestros convenios</div>
         </div>
 
         <button class="btn btn--on-light btn--lg btn--full" id="calcAdd">
@@ -123,45 +119,48 @@ import { SITE } from '../data/site';
   .calc-step__n{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
   .calc-step__l{font-size:14px;font-weight:600}
   .calc-chips{display:flex;gap:8px;flex-wrap:wrap}
-  /* Paso 4 (banco): los 4 chips en una sola fila en desktop. En móvil vuelven a envolver. */
-  @media (min-width:768px){
-    .calc-chips[data-calc="banco"]{flex-wrap:nowrap}
-    .calc-chips[data-calc="banco"] .calc-chip{flex:1 1 auto;min-width:0;justify-content:center;padding-left:12px;padding-right:12px;white-space:nowrap}
-  }
   .calc-chip{padding:10px 16px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius);font-size:13px;font-weight:600;display:inline-flex;align-items:center;transition:all .15s}
   .calc-chip:hover{background:rgba(255,255,255,.15)}
   .calc-chip.active{background:#fff;color:var(--ds-blue-dark);border-color:#fff}
-  .calc-chip__dc{margin-left:6px;padding:2px 6px;background:var(--ds-red);color:#fff;font-size:10px;font-weight:700;border-radius:4px}
-  .calc-chip.active .calc-chip__dc{background:rgba(0,0,0,.1);color:var(--ds-red)}
-  .calc-chip--wa{text-decoration:none;background:rgba(37,211,102,.16);border-color:rgba(37,211,102,.5)}
-  .calc-chip--wa:hover{background:rgba(37,211,102,.28)}
-  .calc-chip--wa .ic{color:var(--ds-green-wa)}
   .calc-select{margin-top:10px;width:100%;padding:12px 14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius);color:#fff;font-family:var(--ds-sans);font-size:14px;font-weight:500;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='white' opacity='.7' d='M0 0h12L6 8z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
   /* Las <option> se inyectan por JS (initCalculator), así que no reciben el scope
      data-astro-* de Astro; :global() hace que la regla las alcance igual. */
   .calc-select :global(option){background:#012E4D;color:#fff}
-  .calc__panel{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.16);border-radius:var(--ds-radius-lg);padding:36px;display:flex;flex-direction:column;gap:20px;position:sticky;top:110px;align-self:start}
+
+  /* Convenios (paso 4) — bloque destacado con CTA que despliega la lista */
+  .conv-promo{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius-lg);padding:18px 20px}
+  .conv-promo__txt{margin:0 0 14px;font-size:15px;line-height:1.5;color:rgba(255,255,255,.9)}
+  .conv-promo__txt strong{color:#fff;font-weight:700}
+
+  .calc__panel{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.16);border-radius:var(--ds-radius-lg);padding:36px;display:flex;flex-direction:column;gap:24px;position:sticky;top:110px;align-self:start}
   @media (max-width:1024px){.calc__panel{position:static;padding:24px}}
   .calc__panel-l{font-size:12px;font-weight:600;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
   .calc__cfg{font-family:var(--ds-display);font-weight:700;font-size:22px;line-height:1.2;color:#fff}
   .calc__loc{margin-top:4px;font-size:14px;color:rgba(255,255,255,.7)}
-  .calc__price-zone{padding:20px 0;border-top:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15)}
-  .calc__total-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-  .calc__strike{font-family:var(--ds-tnum);font-size:16px;color:rgba(255,255,255,.55);text-decoration:line-through;font-variant-numeric:tabular-nums}
-  .calc__total{display:flex;align-items:flex-start;gap:4px;margin-top:4px}
-  .calc__total-n{font-family:var(--ds-tnum);font-weight:700;font-size:72px;line-height:.92;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
-  @media (max-width:768px){.calc__total-n{font-size:52px}}
-  .calc__save{margin-top:10px;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--ds-red);border-radius:999px;font-size:12px;font-weight:700}
-  .calc__iva{margin-top:10px;font-size:12px;font-weight:600;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.06em}
-  .calc__region-note{margin-top:10px;display:flex;align-items:center;gap:7px;font-size:12.5px;line-height:1.4;color:rgba(255,255,255,.9);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:8px 11px}
-  .calc__region-note .ic{color:#fff}
-  .calc__cuotas-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
-  .calc__cuotas-l{font-size:13px;color:rgba(255,255,255,.85);font-weight:600}
-  .calc__cuotas-r{font-family:var(--ds-tnum);font-size:13px;color:rgba(255,255,255,.65);font-variant-numeric:tabular-nums}
-  .calc__cuotas-amt{margin-top:8px;font-family:var(--ds-tnum);font-size:28px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-  input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:rgba(255,255,255,.2);border-radius:999px;outline:none;accent-color:#fff}
-  input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
-  input[type="range"]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
+
+  /* Promo 20% — reemplaza la zona de precio. Número GIGANTE con movimiento:
+     destello (shine) + pulso (scale) + brillo (glow). */
+  .calc__promo{text-align:center;padding:30px 8px;border-top:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15)}
+  .calc__promo-top{font-size:15px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.2em;opacity:.85}
+  .calc__promo-num{
+    display:inline-block;font-family:var(--ds-display);font-weight:800;
+    font-size:clamp(96px,16vw,176px);line-height:.82;letter-spacing:-.05em;margin:8px 0;
+    /* padding horizontal: con background-clip:text el degradado solo se pinta dentro del
+       área del elemento; sin esto el glifo "%" se corta por la derecha. */
+    padding:0 .16em;
+    background:linear-gradient(100deg,#fff 0%,#bfe0ff 25%,#fff 50%,#bfe0ff 75%,#fff 100%);
+    background-size:220% 100%;-webkit-background-clip:text;background-clip:text;
+    color:transparent;-webkit-text-fill-color:transparent;
+    animation:promoShine 3.4s linear infinite, promoPulse 2.8s ease-in-out infinite, promoGlow 2.8s ease-in-out infinite;
+    will-change:transform,filter,background-position;
+  }
+  .calc__promo-num span{font-size:.46em;vertical-align:super;margin-left:3px}
+  .calc__promo-txt{font-size:18px;font-weight:700;color:#fff;max-width:260px;margin:10px auto 0;line-height:1.35}
+  @keyframes promoShine{0%{background-position:220% 0}100%{background-position:-220% 0}}
+  @keyframes promoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  @keyframes promoGlow{0%,100%{filter:drop-shadow(0 8px 18px rgba(120,190,255,.25))}50%{filter:drop-shadow(0 10px 34px rgba(170,215,255,.65))}}
+  @media (prefers-reduced-motion:reduce){.calc__promo-num{animation:none;filter:drop-shadow(0 8px 24px rgba(150,200,255,.4))}}
+
   .calc__pays{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:.7;font-size:11px;color:#fff;font-weight:500}
   .calc__note{position:relative;margin:40px 0 0;text-align:center;font-size:15px;color:rgba(255,255,255,.8)}
   .calc__note a{color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px}

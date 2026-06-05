@@ -17,10 +17,10 @@ draft: false
 
 <li>Etapa de diagnóstico: Se evalúa la viabilidad técnica de las obras vía correo o Whatsapp, necesitarás entregar fotografías y detalles.<br></li>
 
-<li>Aprobación y calendarización: Una vez que desde Ducha Segura se de el visto bueno, se agenda una fecha para realizar el rebaje.<br></li>
+<li>Aprobación y calendarización: Una vez que desde Ducha Segura® se de el visto bueno, se agenda una fecha para realizar el rebaje.<br></li>
 
 <li>Obras previas y a trabajar: Se comienza despejando el área de trabajo y se protege la zona, luego se acude al lugar de las obras y se definen detalles técnicos con el cliente.<br></li>
 
 <li>Terminaciones y entrega: Se realizan los cortes en la tina, luego los sellados, retiro de escombros y limpieza final. ¡Sólo tendrás que esperar 24 horas para usar tu nueva tina! </li></ol><div style="height:100px" aria-hidden="true" class="wp-block-spacer"></div><figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
-<iframe title="Testimonio Clientes - Ducha Segura" width="1020" height="574" src="https://www.youtube.com/embed/N9b1C88euqA?feature=oembed&#038;enablejsapi=1&#038;origin=https://duchasegura.cl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe title="Testimonio Clientes - Ducha Segura®" width="1020" height="574" src="https://www.youtube.com/embed/N9b1C88euqA?feature=oembed&#038;enablejsapi=1&#038;origin=https://duchasegura.cl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div></figure><p>¿Qué esperas para hacer de tu baño un espacio más seguro? La integridad y seriedad de nuestro servicio es reconocida por nuestros clientes. Confía en nosotros y contáctanos a través de nuestros canales digitales, o contáctanos al <a href="https://api.whatsapp.com/send/?phone=56934044939&amp;text=Hola%2C+deseo+hacer+una+consulta...&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noreferrer noopener">+56934044939</a>.</p>

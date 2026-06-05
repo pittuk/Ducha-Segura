@@ -1,31 +1,27 @@
 import { $, $$ } from './dom';
-import { clp } from '../lib/format';
-import {
-  basePrice, discountAmount, finalPrice, installment,
-  BANCO_LABELS,
-  type Tipo, type Ancho, type Banco,
-} from '../lib/pricing';
+import { basePrice, type Tipo, type Ancho } from '../lib/pricing';
 import { COMUNAS, type Region } from '../data/comunas';
 import { PRODUCT_MEDIA } from '../data/products-media';
 
+// Configurador del rebaje en el home. Ya NO calcula/muestra precio (la sección destaca
+// el 20% por convenios); solo arma la configuración y la agrega a la cotización con su
+// precio base (referencial; "no sé" usa el ancho de 40 cm como referencia).
 export function initCalculator(): void {
   const select = $('#calcComuna') as HTMLSelectElement | null;
   if (!select || (select as HTMLElement).dataset.bound) return;
   (select as HTMLElement).dataset.bound = '1';
 
-  const state: { tipo: Tipo; ancho: Ancho; region: Region | 'otra'; comuna: string; banco: Banco; cuotas: number } = {
+  const state: { tipo: Tipo; ancho: Ancho | 'no-se'; region: Region | 'otra'; comuna: string } = {
     tipo: 'tradicional',
     ancho: 40,
     region: 'RM',
     comuna: 'Santiago', // se sobrescribe con COMUNAS['RM'][0] en fillComunas()
-    banco: 'santander',
-    cuotas: 12,
   };
 
   const fillComunas = (): void => {
-    // "Otra región": no tenemos lista de comunas; ofrecemos coordinar el despacho.
+    // "Otra región": no tenemos lista de comunas; ofrecemos coordinar el servicio.
     if (state.region === 'otra') {
-      select.innerHTML = '<option value="">Consulta el despacho a tu región</option>';
+      select.innerHTML = '<option value="">Consultar por servicio en tu región</option>';
       select.value = '';
       state.comuna = 'Otra región';
       return;
@@ -38,74 +34,18 @@ export function initCalculator(): void {
   };
   fillComunas();
 
-  let displayed = 0;
-
-  const animate = (from: number, to: number): void => {
-    const start = performance.now();
-    const dur = 380;
-    const tick = (t: number): void => {
-      const k = Math.min(1, (t - start) / dur);
-      const eased = 1 - Math.pow(1 - k, 3);
-      const v = Math.round(from + (to - from) * eased);
-      const totalEl = $('#calcTotal');
-      if (totalEl) totalEl.textContent = clp(v);
-      if (k < 1) {
-        requestAnimationFrame(tick);
-      } else {
-        displayed = to;
-      }
-    };
-    requestAnimationFrame(tick);
-  };
+  const anchoLabel = (): string => (state.ancho === 'no-se' ? 'ancho a confirmar' : `${state.ancho} cm`);
 
   const render = (): void => {
-    const base = basePrice(state.tipo, state.ancho);
-    const discAmt = discountAmount(base, state.banco);
-    const final = finalPrice(base, state.banco);
-    const cuotaVal = installment(final, state.cuotas);
-
     const cfgEl = $('#calcCfg');
-    if (cfgEl) cfgEl.textContent = `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'} · ${state.ancho} cm`;
+    if (cfgEl) cfgEl.textContent = `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'} · ${anchoLabel()}`;
 
     const locEl = $('#calcLoc');
-    if (locEl) locEl.textContent = state.region === 'otra' ? 'Otra región · consultar despacho' : `${state.comuna}, ${state.region}`;
-
-    // "Otra región": el precio mostrado es referencial; el servicio a esa región se cotiza aparte.
-    const regionNoteEl = $('#calcRegionNote') as HTMLElement | null;
-    if (regionNoteEl) regionNoteEl.style.display = state.region === 'otra' ? '' : 'none';
-
-    const strikeEl = $('#calcStrike') as HTMLElement | null;
-    if (strikeEl) {
-      strikeEl.textContent = '$' + clp(base);
-      strikeEl.style.display = discAmt > 0 ? '' : 'none';
-    }
-
-    animate(displayed, final);
-
-    const saveEl = $('#calcSave') as HTMLElement | null;
-    const saveTxtEl = $('#calcSaveTxt');
-    if (saveEl && saveTxtEl) {
-      if (discAmt > 0) {
-        saveEl.style.display = '';
-        saveTxtEl.textContent = `Ahorras $${clp(discAmt)} con ${BANCO_LABELS[state.banco]}`;
-      } else {
-        saveEl.style.display = 'none';
-      }
-    }
-
-    const cuotasNEl = $('#calcCuotasN');
-    if (cuotasNEl) cuotasNEl.textContent = String(state.cuotas);
-
-    const cuotasN2El = $('#calcCuotasN2');
-    if (cuotasN2El) cuotasN2El.textContent = String(state.cuotas);
-
-    const cuotaAmtEl = $('#calcCuotaAmt');
-    if (cuotaAmtEl) cuotaAmtEl.textContent = clp(cuotaVal);
+    if (locEl) locEl.textContent = state.region === 'otra' ? 'Otra región · consultar servicio' : `${state.comuna}, ${state.region}`;
   };
 
   $$('[data-calc] .calc-chip').forEach(chip => {
-    // Chips sin data-value (ej. el enlace "Otros convenios" → WhatsApp) no son
-    // selectores: dejamos que el navegador siga el href sin tocar el estado.
+    // Chips sin data-value no son selectores: dejamos pasar el comportamiento por defecto.
     if ((chip as HTMLElement).dataset.value === undefined) return;
     chip.addEventListener('click', () => {
       const group = (chip as HTMLElement).parentElement?.getAttribute('data-calc');
@@ -114,46 +54,30 @@ export function initCalculator(): void {
       chip.classList.add('active');
       const val = (chip as HTMLElement).dataset.value ?? '';
       if (group === 'tipo') state.tipo = val as Tipo;
-      else if (group === 'ancho') state.ancho = parseInt(val, 10) as Ancho;
+      else if (group === 'ancho') state.ancho = val === 'no-se' ? 'no-se' : (parseInt(val, 10) as Ancho);
       else if (group === 'region') { state.region = val as Region | 'otra'; fillComunas(); }
-      else if (group === 'banco') state.banco = val as Banco;
       render();
     });
   });
 
   select.addEventListener('change', () => { state.comuna = select.value; render(); });
 
-  const rangeEl = $('#calcCuotasRange') as HTMLInputElement | null;
-  if (rangeEl) {
-    rangeEl.addEventListener('input', (e) => {
-      state.cuotas = parseInt((e.target as HTMLInputElement).value, 10);
-      render();
-    });
-  }
-
   const addEl = $('#calcAdd');
   if (addEl) {
     addEl.addEventListener('click', () => {
-      const base = basePrice(state.tipo, state.ancho);
-      const discAmt = discountAmount(base, state.banco);
-      const final = finalPrice(base, state.banco);
+      const anchoNum: Ancho = state.ancho === 'no-se' ? 40 : state.ancho;
+      const ubic = state.region === 'otra' ? 'Otra región' : `${state.comuna}, ${state.region}`;
       window.dsCart.add({
-        id: `calc-${state.tipo}-${state.ancho}-${state.banco}`,
+        id: `calc-${state.tipo}-${state.ancho}`,
         grupo: 'rebaje',
         name: `Rebaje Tina ${state.tipo === 'jacuzzi' ? 'Jacuzzi' : 'Tradicional'}`,
-        variant: `${state.ancho} cm · ${state.region === 'otra' ? 'Otra región' : state.comuna + ', ' + state.region}${discAmt > 0 ? ' · banco ' + state.banco : ''}`,
-        unitPrice: final,
+        variant: `${anchoLabel()} · ${ubic}`,
+        unitPrice: basePrice(state.tipo, anchoNum),
         label: `${state.tipo.toUpperCase()} ${state.ancho}`,
         image: PRODUCT_MEDIA[state.tipo]?.image,
       });
     });
   }
 
-  // Initial paint
-  const initBase = basePrice('tradicional', 40);
-  const initFinal = finalPrice(initBase, 'santander');
-  const totalEl = $('#calcTotal');
-  if (totalEl) totalEl.textContent = clp(initFinal);
-  displayed = initFinal;
   render();
 }

@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Prose from '../components/Prose.astro';
+
+// ⚠️ BORRADOR — revisar/ajustar con el cliente y/o asesoría legal antes de publicar.
+const actualizado = '5 de junio de 2026';
+const html = `
+<h1>Políticas de Privacidad</h1>
+<p><em>Última actualización: ${actualizado}</em></p>
+
+<p>En <strong>Ducha Segura®</strong> respetamos tu privacidad y nos comprometemos a proteger los
+datos personales que compartes con nosotros. Esta política explica qué información recopilamos,
+con qué finalidad y cuáles son tus derechos, conforme a la Ley N° 19.628 sobre Protección de la
+Vida Privada de Chile.</p>
+
+<h2>Responsable de los datos</h2>
+<p>Ducha Segura® CHILE. Contacto: <a href="mailto:contacto@duchasegura.cl">contacto@duchasegura.cl</a>
+· +56 9 3404 4939.</p>
+
+<h2>Qué datos recopilamos</h2>
+<ul>
+  <li>Datos de contacto que nos entregas al cotizar: nombre, teléfono y correo electrónico.</li>
+  <li>Ubicación referencial de instalación: región y comuna.</li>
+  <li>Detalles de tu solicitud: tipo de tina, productos seleccionados y notas.</li>
+  <li>Datos de navegación: mediante cookies y herramientas de analítica (ver más abajo).</li>
+</ul>
+
+<h2>Con qué finalidad los usamos</h2>
+<ul>
+  <li>Contactarte, elaborar tu cotización y coordinar la visita o instalación.</li>
+  <li>Responder consultas y brindar soporte por los canales que elijas (correo o WhatsApp).</li>
+  <li>Mejorar nuestro sitio y servicios.</li>
+</ul>
+
+<h2>Con quién compartimos tus datos</h2>
+<p>No vendemos ni arrendamos tus datos personales. Solo los compartimos con proveedores que nos
+ayudan a operar (por ejemplo, servicios de correo y alojamiento web), quienes los tratan según
+nuestras instrucciones y la normativa vigente.</p>
+
+<h2>Cookies y analítica</h2>
+<p>Utilizamos cookies y herramientas de medición (como Google Analytics, mediante Google Tag
+Manager) para entender el uso del sitio y mejorar la experiencia. Puedes desactivar las cookies
+desde la configuración de tu navegador.</p>
+
+<h2>Conservación de los datos</h2>
+<p>Conservamos tus datos solo por el tiempo necesario para cumplir las finalidades descritas o
+mientras exista una relación comercial, salvo que la ley exija un plazo distinto.</p>
+
+<h2>Tus derechos</h2>
+<p>Puedes solicitar el acceso, la rectificación, la eliminación o la oposición al tratamiento de
+tus datos escribiéndonos a <a href="mailto:contacto@duchasegura.cl">contacto@duchasegura.cl</a>.</p>
+
+<h2>Cambios a esta política</h2>
+<p>Podemos actualizar esta política para reflejar cambios legales u operativos. Publicaremos la
+versión vigente en esta misma página con su fecha de actualización.</p>
+`;
+---
+<BaseLayout title="Políticas de Privacidad — Ducha Segura®" description="Cómo Ducha Segura® recopila, usa y protege tus datos personales conforme a la Ley 19.628.">
+  <section class="section">
+    <div class="container" style="max-width:820px">
+      <Prose html={html} />
+    </div>
+  </section>
+</BaseLayout>
