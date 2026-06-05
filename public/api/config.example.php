@@ -1,5 +1,11 @@
 <?php
 // Copia este archivo a config.php y completa con credenciales reales (NO commitear config.php).
+//
+// UBICACIÓN RECOMENDADA (producción): coloca config.php FUERA del web root, un nivel
+// sobre public_html (ej.: ~/domains/duchasegura.cl/config.php). db.php lo busca ahí
+// automáticamente. Como fallback (dev) también funciona junto a este archivo, en /api,
+// donde el .htaccess ya lo bloquea por HTTP. Alternativa: define la variable de entorno
+// DS_CONFIG_PATH con la ruta absoluta al config.php.
 return [
   'db' => [
     'host' => 'localhost',
@@ -18,5 +24,7 @@ return [
   ],
   'manager_email' => 'CAMBIAR@duchasegura.cl', // copia al gestor
   'site_url' => 'https://www.duchasegura.cl',
-  'cors_origin' => 'https://www.duchasegura.cl', // prod: tu dominio. En dev usa 'http://localhost:4321'. '*' permite cualquier origen (no recomendado).
+  // Orígenes permitidos para CORS. Acepta string o array. Solo se refleja el Origin de
+  // la petición si está en esta lista. En dev agrega 'http://localhost:4321'. Evita '*'.
+  'cors_origin' => ['https://www.duchasegura.cl', 'https://duchasegura.cl'],
 ];

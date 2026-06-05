@@ -3,8 +3,22 @@
 function ds_config(): array {
   static $cfg = null;
   if ($cfg === null) {
-    $path = __DIR__ . '/config.php';
-    if (!file_exists($path)) {
+    // Busca config.php en orden de preferencia. Lo ideal en producción es tenerlo
+    // FUERA del web root (las opciones 1 y 2): así los secretos no quedan dentro
+    // de public_html y no dependen únicamente del .htaccess para no servirse.
+    //   1) Ruta explícita vía variable de entorno DS_CONFIG_PATH.
+    //   2) Un nivel sobre el web root (p. ej. ~/domains/<dominio>/config.php).
+    //   3) Junto a este archivo (dev local / fallback; ya está denegado por .htaccess).
+    $candidates = array_filter([
+      getenv('DS_CONFIG_PATH') ?: null,
+      __DIR__ . '/../../config.php',   // fuera del web root (no accesible por HTTP)
+      __DIR__ . '/config.php',         // fallback dentro de /api
+    ]);
+    $path = null;
+    foreach ($candidates as $candidate) {
+      if (is_file($candidate)) { $path = $candidate; break; }
+    }
+    if ($path === null) {
       http_response_code(500);
       header('Content-Type: application/json');
       echo json_encode(['ok' => false, 'error' => 'config_missing']);
