@@ -70,6 +70,10 @@ export function initCalculator(): void {
     const locEl = $('#calcLoc');
     if (locEl) locEl.textContent = state.region === 'otra' ? 'Otra región · consultar despacho' : `${state.comuna}, ${state.region}`;
 
+    // "Otra región": el precio mostrado es referencial; el servicio a esa región se cotiza aparte.
+    const regionNoteEl = $('#calcRegionNote') as HTMLElement | null;
+    if (regionNoteEl) regionNoteEl.style.display = state.region === 'otra' ? '' : 'none';
+
     const strikeEl = $('#calcStrike') as HTMLElement | null;
     if (strikeEl) {
       strikeEl.textContent = '$' + clp(base);

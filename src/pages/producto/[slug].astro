@@ -31,6 +31,7 @@ const related = PRODUCTOS.filter((x) => x.grupo === p.grupo && x.slug !== p.slug
           <span class="kicker">{grupoLabel}</span>
           <h1 class="h2 ficha__name">{p.name}</h1>
           <div class="ficha__price">{priceTxt}</div>
+          {p.price > 0 && <div class="ficha__iva">IVA incluido</div>}
           {p.shortDescription && <p class="ficha__short">{p.shortDescription}</p>}
           <div class="ficha__actions">
             {p.price > 0 ? (
@@ -82,6 +83,7 @@ const related = PRODUCTOS.filter((x) => x.grupo === p.grupo && x.slug !== p.slug
     .ficha__info{display:flex;flex-direction:column;gap:14px}
     .ficha__name{margin:4px 0 0}
     .ficha__price{font-family:var(--ds-tnum);font-weight:700;font-size:34px;color:var(--ds-blue);font-variant-numeric:tabular-nums}
+    .ficha__iva{margin-top:-8px;font-size:12px;font-weight:600;color:var(--ds-text);text-transform:uppercase;letter-spacing:.05em}
     .ficha__short{margin:0;font-size:15px;line-height:1.55;color:var(--ds-text)}
     .ficha__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
     .ficha__trust{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px}

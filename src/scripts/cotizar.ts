@@ -6,6 +6,7 @@ import type { CartItem } from '../lib/cart';
 import { clp } from '../lib/format';
 import { INSTALLATION_FEE } from '../lib/pricing';
 import { getTina } from '../data/tinas';
+import { REGIONES } from '../data/regiones';
 import { SITE } from '../data/site';
 import { escapeHtml } from './dom';
 
@@ -83,6 +84,22 @@ export function initCotizar(): void {
   instalChk?.addEventListener('change', recomputeTotal);
   recomputeTotal();
 
+  // ── Ubicación: select de región → al elegir, se llena el de comuna (cascada). ──
+  const regionSel = document.getElementById('cotRegion') as HTMLSelectElement | null;
+  const comunaSel = document.getElementById('cotComuna') as HTMLSelectElement | null;
+  regionSel?.addEventListener('change', () => {
+    if (!comunaSel) return;
+    const region = REGIONES.find(r => r.nombre === regionSel.value);
+    if (!region) {
+      comunaSel.innerHTML = '<option value="" disabled selected>Primero elige tu región</option>';
+      comunaSel.disabled = true;
+      return;
+    }
+    comunaSel.innerHTML = '<option value="" disabled selected>Selecciona tu comuna</option>'
+      + region.comunas.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+    comunaSel.disabled = false;
+  });
+
   // ── Envío: dos canales (email / WhatsApp). Ambos guardan el lead en el backend. ──
   const emailBtn = document.getElementById('cotizarSubmit') as HTMLButtonElement | null;
   const waBtn = document.getElementById('cotizarWa') as HTMLButtonElement | null;
@@ -104,16 +121,19 @@ export function initCotizar(): void {
     const nombre = String(fd.get('nombre') || '');
     const telefono = String(fd.get('telefono') || '');
     const notas = String(fd.get('notas') || '');
+    const region = String(fd.get('region') || '');
+    const comuna = String(fd.get('comuna') || '');
     const instalacion = offerInstal && !!instalChk?.checked;
     const total = subtotal + (instalacion ? INSTALLATION_FEE : 0);
     const tinaName = tipoTinaId ? getTina(tipoTinaId)?.name : '';
     const payload = {
       nombre, telefono, email: fd.get('email'), notas,
+      region, comuna,
       tipoTina: needsTina ? tipoTinaId : null,
       instalacion, total,
       items: items.map(i => ({ id: i.id, name: i.name, variant: i.variant, grupo: i.grupo, qty: i.qty, unitPrice: i.unitPrice })),
     };
-    return { payload, nombre, telefono, notas, instalacion, total, tinaName };
+    return { payload, nombre, telefono, notas, region, comuna, instalacion, total, tinaName };
   };
 
   // Canal EMAIL: envía, espera respuesta y redirige a gracias con el N°.
@@ -139,7 +159,7 @@ export function initCotizar(): void {
     const tipoTinaId = validate();
     if (tipoTinaId === null) return;
     const c = collect(tipoTinaId);
-    const waUrl = buildWhatsappUrl(items, c.total, c.instalacion, c.nombre, c.telefono, c.tinaName, c.notas);
+    const waUrl = buildWhatsappUrl(items, c.total, c.instalacion, c.nombre, c.telefono, c.tinaName, c.notas, c.region, c.comuna);
     const win = window.open(waUrl, '_blank', 'noopener');
     // Fallback: si el navegador bloqueó el popup, la página de gracias mostrará el botón.
     if (!win) { try { sessionStorage.setItem('ds_wa_quote', waUrl); } catch (_) { /* */ } }
@@ -178,14 +198,17 @@ function resetBtn(btn: HTMLButtonElement | null): void {
 function buildWhatsappUrl(
   items: CartItem[], total: number, instalacion: boolean,
   nombre: string, telefono: string, tinaName: string | undefined, notas: string,
+  region: string, comuna: string,
 ): string {
   const lineas = items
     .map(i => `• ${i.name}${i.variant ? ` (${i.variant})` : ''} x${i.qty} — $${clp(i.unitPrice * i.qty)}`)
     .join('\n');
+  const ubicacion = [comuna, region].filter(Boolean).join(', ');
   const msg = `Hola Ducha Segura 👋 Quiero enviar mi cotización.\n\n${lineas}\n`
     + (instalacion ? `Instalación: Sí (+$${clp(INSTALLATION_FEE)})\n` : '')
     + `Total estimado: $${clp(total)}\n`
     + (tinaName ? `Tipo de tina: ${tinaName}\n` : '')
+    + (ubicacion ? `Ubicación: ${ubicacion}\n` : '')
     + (notas ? `Notas: ${notas}\n` : '')
     + `\nMis datos: ${nombre} · ${telefono}`;
   return `${SITE.whatsappUrl}?text=${encodeURIComponent(msg)}`;
