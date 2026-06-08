@@ -22,7 +22,7 @@ export interface Producto {
 // Imágenes curadas para rebajes (elegidas por el cliente; mejores que las de WC).
 const IMG_OVERRIDE: Record<string, string> = {
   'rebaje-de-tina-tradicional': '/images/rebajes/Rebaje Tina Tradicional.webp',
-  'rebaje-de-tina-jacuzzi': '/images/rebajes/rebaje de tina hidromasaje.jpg',
+  'rebaje-de-tina-jacuzzi': '/images/rebajes/Rebaje Tina Jacuzzi.webp',
 };
 
 // Renombrar el nombre VISIBLE (no el slug, que está indexado). Sobrevive a re-importar de WC.

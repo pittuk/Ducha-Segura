@@ -66,6 +66,7 @@ const CONVENIOS_CTA = [
             <p class="conv-promo__txt">Contamos con <strong>convenios</strong> con bancos, cajas, municipios y aseguradoras como canales de <strong>descuento</strong>.</p>
             <select class="calc-select" aria-label="Convenio">
               <option value="" disabled selected>¿Qué convenio aplica para ti?</option>
+              <option value="sin-convenio">No tengo convenio</option>
               {CONVENIOS_CTA.map((c) => <option value={c}>{c}</option>)}
             </select>
           </div>
