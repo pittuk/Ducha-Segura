@@ -15,9 +15,6 @@ function openQV(el: HTMLElement): void {
   const media = document.getElementById('qvMedia');
   const coversFull = d.qvGrupo === 'rebaje' || d.qvGrupo === 'kit';
   if (media) media.className = 'qv__media' + (coversFull ? '' : ' qv__media--contain');
-  // "Instalación incluida" solo aplica a rebajes; en kits/accesorios se oculta.
-  const instalLi = document.getElementById('qvInstalLi');
-  if (instalLi) instalLi.style.display = d.qvGrupo === 'rebaje' ? '' : 'none';
   const name = document.getElementById('qvName');
   if (name) name.textContent = d.qvName || '';
   const priceEl = document.getElementById('qvPrice');

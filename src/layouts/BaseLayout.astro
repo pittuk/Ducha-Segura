@@ -18,12 +18,14 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  hidePrefooter?: boolean;   // oculta el CTA pre-footer global (ej. Kits usa su propio banner)
 }
 
 const {
   title,
-  description = 'Ducha Segura® — Rebajes de tina para acceso seguro. Producto nacional patentado. Instalación en 1 día. Garantía 3 años.',
+  description = 'Ducha Segura® — Rebajes de tina para acceso seguro. Producto nacional patentado. Garantía 3 años.',
   ogImage = '/images/Ducha segura logo azul.png',
+  hidePrefooter = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -69,7 +71,7 @@ const ogImageUrl = new URL(ogImage, Astro.site);
   <main id="main">
     <slot />
   </main>
-  <PrefooterCta />
+  {!hidePrefooter && <PrefooterCta />}
   <Footer />
   <WhatsappFab />
   <Toast />

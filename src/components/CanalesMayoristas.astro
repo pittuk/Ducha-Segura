@@ -1,0 +1,38 @@
+---
+// CanalesMayoristas.astro — Franja de canales de distribución mayorista.
+// IMPORTANTE: Sodimac, Easy y Mercado Libre NO son colaboradores ni patrocinadores:
+// son canales de distribución mayorista del producto. El copy lo deja explícito.
+const CANALES = [
+  { name: 'Sodimac', logo: '/images/logos-distribuidores/logo sodimac homecenter.png' },
+  { name: 'Easy', logo: '/images/logos-distribuidores/Easy-Logo.svg.png' },
+  { name: 'Mercado Libre', logo: '/images/logos-distribuidores/mercado-libre-logo-2.png' },
+];
+---
+<section class="section canales" aria-label="Canales de distribución mayorista">
+  <div class="container">
+    <div class="section-head section-head--center reveal" style="max-width:720px;margin-left:auto;margin-right:auto">
+      <div class="kicker" style="margin-bottom:10px">Canales de distribución mayorista</div>
+      <h2 class="h2">También distribuimos a través de <span class="accent">estos canales.</span></h2>
+      <p class="lead">No son patrocinadores ni colaboradores: son <strong>canales de distribución mayorista</strong> de nuestro producto.</p>
+    </div>
+
+    <div class="canales__row reveal">
+      {CANALES.map((c) => (
+        <div class="canal-plate" title={`${c.name} — canal de distribución mayorista`}>
+          <img src={c.logo} alt={`${c.name} — canal de distribución mayorista de Ducha Segura®`} loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .canales{background:var(--ds-bg-alt)}
+  .canales__row{display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;gap:20px;margin-top:36px}
+  @media (max-width:768px){.canales__row{gap:14px;margin-top:28px}}
+  /* Placa blanca con el logo del canal centrado y contenido (object-fit:contain). */
+  .canal-plate{flex:1 1 220px;max-width:280px;min-height:120px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);box-shadow:var(--ds-shadow);padding:24px 28px;transition:transform .2s,box-shadow .2s}
+  .canal-plate:hover{transform:translateY(-3px);box-shadow:var(--ds-shadow-lg)}
+  .canal-plate img{max-height:56px;max-width:100%;width:auto;object-fit:contain;display:block}
+  @media (max-width:768px){.canal-plate{min-height:96px;padding:18px 22px}.canal-plate img{max-height:42px}}
+</style>

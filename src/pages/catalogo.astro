@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CategoryTabs from '../components/CategoryTabs.astro';
 import ProductoCard from '../components/ProductoCard.astro';
+import KitMayorista from '../components/KitMayorista.astro';
 import { REBAJES, KITS, ACCESORIOS } from '../data/productos';
 ---
 <BaseLayout title="Catálogo — Ducha Segura®" description="Catálogo completo de rebajes de tina y accesorios de seguridad para baño.">
@@ -12,6 +13,7 @@ import { REBAJES, KITS, ACCESORIOS } from '../data/productos';
       <div class="product-grid">
         {REBAJES.map(p => <div data-cat-item="rebajes"><ProductoCard producto={p} /></div>)}
       </div>
+      <div data-cat-item="kits" class="cat-mayorista" style="margin-top:32px"><KitMayorista /></div>
       <div class="prod-grid prod-grid--uniform" style="margin-top:32px">
         {KITS.map(p => <div data-cat-item="kits"><ProductoCard producto={p} /></div>)}
         {ACCESORIOS.map(p => <div data-cat-item="accesorios"><ProductoCard producto={p} /></div>)}

@@ -1,13 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductoCard from '../components/ProductoCard.astro';
+import KitMayorista from '../components/KitMayorista.astro';
 import { KITS } from '../data/productos';
 ---
-<BaseLayout title="Kits — Ducha Segura®" description="Kits de rebaje de tina: combos de rebaje con barra, cortina, antideslizante y puerta estanca.">
+<BaseLayout title="Kits — Ducha Segura®" description="Kits de rebaje de tina: combos de rebaje con barra, cortina, antideslizante y puerta estanca." hidePrefooter>
   <section class="section">
     <div class="container">
       <div class="section-head"><h1 class="h2">Kits</h1><p class="lead">Combos listos para un baño seguro.</p></div>
       <div class="prod-grid">{KITS.map(p => <ProductoCard producto={p} />)}</div>
     </div>
   </section>
+  <KitMayorista variant="prefooter" bgImage="/images/rebajes/rebaje tina tradicional despues ducha segura.webp" />
 </BaseLayout>
