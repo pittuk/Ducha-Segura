@@ -1,5 +1,6 @@
 ---
 import { PRENSA } from '../data/prensa';
+import { asset } from '../lib/asset';
 // Duplicamos la lista para que el marquee haga loop continuo (translateX -50%).
 const items = [...PRENSA, ...PRENSA];
 ---
@@ -15,7 +16,7 @@ const items = [...PRENSA, ...PRENSA];
       {items.map((p, i) => (
         <a class="prensa-cell" href={p.href} aria-label={`Leer nota: ${p.name}`} aria-hidden={i >= PRENSA.length ? 'true' : undefined} tabindex={i >= PRENSA.length ? -1 : undefined}>
           <span class="prensa-cell__media">
-            <img class="prensa-cell__logo" src={p.logo} alt={p.name} loading="lazy"
+            <img class="prensa-cell__logo" src={asset(p.logo)} alt={p.name} loading="lazy"
               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
             <span class="prensa-cell__name" style="display:none">{p.name}</span>
           </span>

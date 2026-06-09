@@ -1,11 +1,12 @@
 ---
 import type { Convenio } from '../data/convenios';
+import { asset } from '../lib/asset';
 interface Props { convenio: Convenio; }
 const { convenio: c } = Astro.props;
 ---
 <article class="conv-card">
   <div class="conv-card__head">
-    <div class="conv-card__logo"><img src={c.logo} alt={c.name} loading="lazy" /></div>
+    <div class="conv-card__logo"><img src={asset(c.logo)} alt={c.name} loading="lazy" /></div>
     <span class="conv-card__badge">{c.descuento} dcto.</span>
   </div>
   <h3 class="conv-card__name">{c.name}</h3>

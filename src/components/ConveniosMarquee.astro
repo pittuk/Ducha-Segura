@@ -1,5 +1,6 @@
 ---
 import { CONVENIOS } from '../data/convenios';
+import { asset } from '../lib/asset';
 const items = [...CONVENIOS, ...CONVENIOS];
 ---
 <section class="convenios" aria-label="Convenios vigentes">
@@ -9,7 +10,7 @@ const items = [...CONVENIOS, ...CONVENIOS];
   <div class="marquee">
     <div class="marquee__track" id="conveniosTrack">
       {items.map(c => (
-        <div class="convenio-chip"><img src={c.logo} alt={c.name} loading="lazy" /></div>
+        <div class="convenio-chip"><img src={asset(c.logo)} alt={c.name} loading="lazy" /></div>
       ))}
     </div>
   </div>

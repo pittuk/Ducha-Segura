@@ -5,6 +5,7 @@ import ProductoCard from '../../components/ProductoCard.astro';
 import { PRODUCTOS, type Producto } from '../../data/productos';
 import { SITE } from '../../data/site';
 import { clp } from '../../lib/format';
+import { asset } from '../../lib/asset';
 
 export function getStaticPaths() {
   return PRODUCTOS.map((p) => ({ params: { slug: p.slug }, props: { producto: p } }));
@@ -25,7 +26,7 @@ const related = PRODUCTOS.filter((x) => x.grupo === p.grupo && x.slug !== p.slug
 
       <div class="ficha">
         <div class:list={['ficha__media', `ficha__media--${fit}`]}>
-          <img src={p.image} alt={p.name} loading="eager" />
+          <img src={asset(p.image)} alt={p.name} loading="eager" />
         </div>
         <div class="ficha__info">
           <span class="kicker">{grupoLabel}</span>

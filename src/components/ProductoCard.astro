@@ -1,9 +1,11 @@
 ---
 import type { Producto } from '../data/productos';
 import { clp } from '../lib/format';
+import { asset } from '../lib/asset';
 interface Props { producto: Producto; }
 const { producto: p } = Astro.props;
 const href = `/producto/${p.slug}/`;
+const img = asset(p.image);
 const priceTxt = p.price > 0 ? `${p.grupo === 'rebaje' ? 'Desde ' : ''}$${clp(p.price)}` : (p.priceLabel ?? 'Consultar');
 const fit = (p.grupo === 'rebaje' || p.grupo === 'kit') ? 'cover' : 'contain';
 const extract = (p.descriptionHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 220);
@@ -11,7 +13,7 @@ const extract = (p.descriptionHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/
 <article class:list={['prod-card', { 'prod-card--featured': p.featured }]}>
   <div class:list={['prod-card__media', `prod-card__media--${fit}`]}>
     <a href={href} class="prod-card__imglink" aria-label={p.name}>
-      <img src={p.image} alt={p.name} loading="lazy" />
+      <img src={img} alt={p.name} loading="lazy" />
     </a>
     <button
       class="prod-card__qv"
@@ -22,7 +24,7 @@ const extract = (p.descriptionHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/
       data-qv-price={String(p.price)}
       data-qv-pricelabel={p.priceLabel ?? ''}
       data-qv-grupo={p.grupo}
-      data-qv-img={p.image}
+      data-qv-img={img}
       data-qv-desc={p.shortDescription}
       data-qv-extract={extract}
       aria-label={`Vista rápida de ${p.name}`}

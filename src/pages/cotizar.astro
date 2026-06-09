@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { TIPOS_TINA } from '../data/tinas';
 import { REGIONES } from '../data/regiones';
+import { asset } from '../lib/asset';
 ---
 <BaseLayout title="Completar cotización — Ducha Segura®" description="Completa los datos de tu cotización: tipo de tina, dirección de instalación y contacto.">
   <section class="section">
@@ -38,7 +39,7 @@ import { REGIONES } from '../data/regiones';
                 {TIPOS_TINA.filter((t) => t.id !== 'no-se').map((t) => (
                   <label class="tina-card">
                     <input type="radio" name="tipoTina" value={t.id} />
-                    <img src={t.image} alt={t.name} loading="lazy" />
+                    <img src={asset(t.image)} alt={t.name} loading="lazy" />
                     <span class="tina-card__name">{t.name}{t.nota ? <small>{t.nota}</small> : null}</span>
                   </label>
                 ))}
