@@ -36,7 +36,10 @@ const extract = (p.descriptionHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/
   <div class="prod-card__body">
     <h3 class="prod-card__name"><a href={href}>{p.name}</a></h3>
     <div class="prod-card__foot">
-      <span class="prod-card__price">{priceTxt}</span>
+      <span class="prod-card__pricewrap">
+        <span class="prod-card__price">{priceTxt}</span>
+        {p.price > 0 && <span class="prod-card__iva">IVA incluido</span>}
+      </span>
       {p.price > 0 ? (
         <button class="btn btn--primary btn--sm" type="button" data-add-producto={p.slug}>
           <svg class="ic"><use href="#i-plus" /></svg><span>Agregar</span>
@@ -68,6 +71,8 @@ const extract = (p.descriptionHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/
   .prod-card__name a{color:var(--ds-text-strong)}
   .prod-card__name a:hover{color:var(--ds-blue)}
   .prod-card__foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .prod-card__pricewrap{display:flex;flex-direction:column;gap:1px;line-height:1.1}
   .prod-card__price{font-family:var(--ds-tnum);font-weight:800;font-size:19px;color:var(--ds-blue);font-variant-numeric:tabular-nums}
+  .prod-card__iva{font-size:11px;font-weight:500;color:var(--ds-text);text-transform:uppercase;letter-spacing:.04em}
   .prod-card--featured .prod-card__price{font-size:22px}
 </style>

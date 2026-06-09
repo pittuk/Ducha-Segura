@@ -1,63 +1,84 @@
 ---
 // KitMayorista.astro — CTA de venta mayorista (compra por pallet / representación de la marca).
-// Estética de franja oscura tipo pre-footer, pero con bloque CENTRADO y jerarquía tipográfica
-// clara (kicker → titular grande → bajada → fila de botones).
+// Diseño tipo "split" como la sección del 20%: foto de fondo (bodega con cajas Ducha Segura®
+// a la izquierda) + degradado azul oscuro→transparente de izquierda a derecha. El TEXTO va a la
+// IZQUIERDA sobre la zona oscura (donde están las CAJAS); las estanterías de la derecha se ven
+// en la zona transparente.
 // variant:
-//   'banner'    → tarjeta contenida con bordes redondeados (catálogo, dentro de .container).
-//   'prefooter' → franja full-bleed que reemplaza el CTA pre-footer (página de Kits).
+//   'prefooter' → franja full-bleed (catálogo y página de Kits).
+//   'banner'    → tarjeta contenida con bordes redondeados.
 import { SITE } from '../data/site';
 import { asset } from '../lib/asset';
 interface Props { variant?: 'banner' | 'prefooter'; bgImage?: string; }
-const { variant = 'banner', bgImage } = Astro.props;
-const bgUrl = bgImage ? asset(bgImage) : undefined;
+const {
+  variant = 'prefooter',
+  bgImage = '/images/rebajes/Ducha Segura - Compra por pallet y representa la marca.webp',
+} = Astro.props;
+const bgUrl = asset(bgImage);
 const msg = 'Hola, me interesa la Opción Mayorista de Ducha Segura® (compra por pallet / representación de la marca). ¿Me pueden cotizar por volumen?';
 const waUrl = `${SITE.whatsappUrl}?text=${encodeURIComponent(msg)}`;
 ---
-<section class:list={['kitmay', `kitmay--${variant}`, { 'kitmay--hasbg': bgImage }, 'reveal']}>
-  {bgUrl && <div class="kitmay__bg" style={`background-image:url('${bgUrl}')`} aria-hidden="true"></div>}
-  {bgImage && <div class="kitmay__overlay" aria-hidden="true"></div>}
-  <div class="kitmay__inner">
-    <div class="kicker kicker--light kitmay__kicker">Opción mayorista</div>
-    <h2 class="kitmay__h2">Compra por pallet y representa la marca</h2>
-    <p class="kitmay__sub">Precios por volumen para distribuidores y retail. Conviértete en representante de Ducha Segura® en tu zona y vende un producto nacional patentado, con garantía de 3 años.</p>
-    <div class="kitmay__ctas">
-      <a href={waUrl} target="_blank" rel="noopener" class="btn btn--on-light btn--lg">
-        <svg class="ic"><use href="#i-whatsapp"/></svg>
-        <span>Cotizar como mayorista</span>
-      </a>
-      <a href="tel:+56934044939" class="btn btn--ghost btn--lg">
-        <svg class="ic"><use href="#i-phone"/></svg>
-        <span>Llámanos</span>
-      </a>
+<section class:list={['kitmay', `kitmay--${variant}`, 'reveal']}>
+  <div class="kitmay__bg" style={`background-image:url('${bgUrl}')`} aria-hidden="true"></div>
+  <div class="kitmay__overlay" aria-hidden="true"></div>
+  <div class="kitmay__container">
+    <div class="kitmay__grid">
+      <div class="kitmay__text">
+        <div class="kicker kicker--light kitmay__kicker">Opción mayorista</div>
+        <h2 class="kitmay__h2">Compra por pallet y representa la marca</h2>
+        <p class="kitmay__sub">Precios por volumen para distribuidores y retail. Conviértete en representante de Ducha Segura® en tu zona y vende un producto nacional patentado.</p>
+        <div class="kitmay__ctas">
+          <a href={waUrl} target="_blank" rel="noopener" class="btn btn--on-light btn--lg">
+            <svg class="ic"><use href="#i-whatsapp"/></svg>
+            <span>Cotizar como mayorista</span>
+          </a>
+          <a href="tel:+56934044939" class="btn btn--ghost btn--lg">
+            <svg class="ic"><use href="#i-phone"/></svg>
+            <span>Llámanos</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .kitmay{background:var(--ds-blue-dark);color:#fff;position:relative;overflow:hidden}
-  /* Glow suave centrado-superior, como acento de luz sobre el azul sólido. */
-  .kitmay::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:760px;height:760px;background:radial-gradient(circle,var(--ds-blue) 0%,transparent 62%);opacity:.4;filter:blur(50px);pointer-events:none}
+  .kitmay{position:relative;overflow:hidden;color:#fff;background:var(--ds-blue-dark)}
+  /* Foto encuadrada a la izquierda para mostrar las cajas con la marca. */
+  .kitmay__bg{position:absolute;inset:0;background-size:cover;background-position:left center;z-index:0}
+  /* Degradado: azul oscuro (izq, texto + cajas) → transparente (der, estanterías visibles). */
+  .kitmay__overlay{position:absolute;inset:0;z-index:1;
+    background:linear-gradient(to right,
+      var(--ds-blue-dark) 0%,
+      rgba(1,46,77,.9) 34%,
+      rgba(1,46,77,.5) 52%,
+      rgba(1,46,77,.06) 70%,
+      transparent 88%);}
 
-  /* Fondo con foto + overlay azul (mismo recurso que Diferenciadores) para mantener legible el texto. */
-  .kitmay__bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
-  .kitmay__overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(1,46,77,.94) 0%,rgba(1,46,77,.82) 55%,rgba(0,114,192,.55) 100%);z-index:1}
-  .kitmay--hasbg::before{display:none}            /* con foto, el glow sobra */
-  .kitmay--hasbg .kitmay__inner{z-index:2}
-  .kitmay__inner{position:relative;max-width:680px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center}
-  .kitmay__kicker{margin:0 0 16px}
+  .kitmay__container{position:relative;z-index:2;max-width:var(--ds-container);margin:0 auto;padding-left:var(--ds-pad);padding-right:var(--ds-pad)}
+  .kitmay__grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .kitmay__text{grid-column:1;max-width:520px;margin-right:auto}
+  @media (max-width:768px){
+    .kitmay__grid{grid-template-columns:1fr}
+    .kitmay__text{grid-column:auto;max-width:none;margin-right:0}
+    /* En móvil la foto queda detrás del bloque → oscurecer parejo para legibilidad. */
+    .kitmay__overlay{background:linear-gradient(to bottom,rgba(1,46,77,.72) 0%,rgba(1,46,77,.88) 55%,rgba(1,46,77,.95) 100%)}
+  }
+
+  .kitmay__kicker{margin:0 0 14px}
   .kitmay__h2{margin:0;font-family:var(--ds-display);font-weight:800;line-height:1.06;letter-spacing:-.03em;color:#fff}
-  .kitmay__sub{margin:20px 0 0;line-height:1.6;color:rgba(255,255,255,.78);max-width:560px}
-  .kitmay__ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .kitmay__sub{margin:18px 0 0;line-height:1.6;color:rgba(255,255,255,.85)}
+  .kitmay__ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
   @media (max-width:520px){.kitmay__ctas{width:100%;flex-direction:column}.kitmay__ctas .btn{width:100%}}
 
-  /* Variante contenida (catálogo) */
-  .kitmay--banner{border-radius:var(--ds-radius-lg);padding:56px 32px}
-  .kitmay--banner .kitmay__h2{font-size:clamp(28px,4vw,36px)}
-  .kitmay--banner .kitmay__sub{font-size:16px}
-
-  /* Variante full-bleed (reemplaza el CTA pre-footer en Kits) */
-  .kitmay--prefooter{padding:104px 24px}
+  /* Variante full-bleed (catálogo y Kits) */
+  .kitmay--prefooter{padding:104px 0}
   .kitmay--prefooter .kitmay__h2{font-size:clamp(34px,5vw,52px)}
   .kitmay--prefooter .kitmay__sub{font-size:18px}
-  @media (max-width:768px){.kitmay--prefooter{padding:72px 20px}}
+  @media (max-width:768px){.kitmay--prefooter{padding:72px 0}}
+
+  /* Variante contenida (tarjeta) */
+  .kitmay--banner{border-radius:var(--ds-radius-lg);padding:72px 0}
+  .kitmay--banner .kitmay__h2{font-size:clamp(28px,4vw,36px)}
+  .kitmay--banner .kitmay__sub{font-size:16px}
 </style>

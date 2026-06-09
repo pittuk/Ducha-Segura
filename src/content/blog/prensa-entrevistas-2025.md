@@ -5,6 +5,7 @@ date: "2025"
 pubdate: "2025-08-01T00:00:00"
 excerpt: "Durante 2025, Radio Agricultura, Chilevisión y 24 Horas destacaron a Ducha Segura® como una solución chilena para prevenir caídas de adultos mayores en el baño."
 seoDescription: "Radio Agricultura, CHV y 24 Horas destacan a Ducha Segura®, la solución chilena que adapta tinas de baño para evitar caídas de adultos mayores."
+image: "/images/blog/prensa-entrevistas-2025/24horas-ducha-segura.png"
 label: "EN MEDIOS"
 bg: "#1f6f8b"
 draft: false

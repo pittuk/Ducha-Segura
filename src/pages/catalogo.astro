@@ -5,21 +5,27 @@ import ProductoCard from '../components/ProductoCard.astro';
 import KitMayorista from '../components/KitMayorista.astro';
 import { REBAJES, KITS, ACCESORIOS } from '../data/productos';
 ---
-<BaseLayout title="Catálogo — Ducha Segura®" description="Catálogo completo de rebajes de tina y accesorios de seguridad para baño.">
+<BaseLayout title="Catálogo — Ducha Segura®" description="Catálogo completo de rebajes de tina y accesorios de seguridad para baño." hidePrefooter>
   <section class="section">
     <div class="container">
       <div class="section-head"><h1 class="h2">Catálogo</h1><p class="lead">Rebajes y accesorios para un baño accesible.</p></div>
-      <CategoryTabs categories={[{id:'rebajes',label:'Rebajes'},{id:'accesorios',label:'Accesorios'},{id:'kits',label:'Kits'}]} />
+      <CategoryTabs categories={[{id:'rebajes',label:'Rebajes'},{id:'kits',label:'Kits'},{id:'accesorios',label:'Accesorios'}]} />
+      <!-- Rebajes: 2 por fila -->
       <div class="product-grid">
         {REBAJES.map(p => <div data-cat-item="rebajes"><ProductoCard producto={p} /></div>)}
       </div>
-      <div data-cat-item="kits" class="cat-mayorista" style="margin-top:32px"><KitMayorista /></div>
-      <div class="prod-grid prod-grid--uniform" style="margin-top:32px">
+      <!-- Kits: los 3 en una fila -->
+      <div class="prod-grid prod-grid--uniform prod-grid--3" style="margin-top:32px">
         {KITS.map(p => <div data-cat-item="kits"><ProductoCard producto={p} /></div>)}
+      </div>
+      <!-- Accesorios: columnas de 3 -->
+      <div class="prod-grid prod-grid--uniform prod-grid--3" style="margin-top:32px">
         {ACCESORIOS.map(p => <div data-cat-item="accesorios"><ProductoCard producto={p} /></div>)}
       </div>
     </div>
   </section>
+  <!-- Opción mayorista al final: misma franja full-bleed que la página de Kits. -->
+  <KitMayorista variant="prefooter" />
   <script>
     import { initCatalogFilter } from '../scripts/catalog-filter';
     document.addEventListener('astro:page-load', initCatalogFilter);
@@ -33,6 +39,11 @@ import { REBAJES, KITS, ACCESORIOS } from '../data/productos';
     .prod-grid--uniform{grid-auto-rows:1fr}
     .prod-grid--uniform > [data-cat-item]{display:contents}
     .prod-grid--uniform > [data-cat-item][hidden]{display:none}
+
+    /* Kits y accesorios: 3 columnas fijas (→ 2 en tablet, 1 en móvil). */
+    .prod-grid--3{grid-template-columns:repeat(3,1fr)}
+    @media (max-width:768px){.prod-grid--3{grid-template-columns:1fr 1fr}}
+    @media (max-width:480px){.prod-grid--3{grid-template-columns:1fr}}
 
     /* Colapsa una grilla cuando el filtro dejó todos sus ítems ocultos (evita huecos). */
     .product-grid:not(:has([data-cat-item]:not([hidden]))),

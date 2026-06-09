@@ -3,6 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ConvenioCard from '../components/ConvenioCard.astro';
 import { CONVENIOS } from '../data/convenios';
 import { SITE } from '../data/site';
+
+// Ordenar de mayor a menor descuento (20% → 15% → 10%). Orden estable: a igual
+// descuento, conserva el orden de la fuente.
+const pct = (c: typeof CONVENIOS[number]) => parseInt(c.descuento, 10) || 0;
+const conveniosOrdenados = [...CONVENIOS].sort((a, b) => pct(b) - pct(a));
 ---
 <BaseLayout title="Convenios y descuentos — Ducha Segura®" description="Convenios vigentes con bancos, seguros, cajas de compensación y municipios. Descuentos en el rebaje de tina.">
   <section class="section">
@@ -13,7 +18,7 @@ import { SITE } from '../data/site';
       </div>
 
       <div class="conv-grid">
-        {CONVENIOS.map(c => <ConvenioCard convenio={c} />)}
+        {conveniosOrdenados.map(c => <ConvenioCard convenio={c} />)}
       </div>
 
       <div class="conv-cta">
