@@ -7,8 +7,8 @@ export const NAV: NavItem[] = [
     { label: 'Accesorios', href: '/accesorios' },
     { label: 'Kits', href: '/kits' },
   ] },
-  { label: 'Blog', href: '/blog' },
   { label: 'Convenios', href: '/convenios' },
+  { label: 'Blog', href: '/blog' },
 ];
 
 export const SITE = {
@@ -19,7 +19,7 @@ export const SITE = {
 
 // Mensajes rotativos del topbar. Copiados de legacy/index.html (const topbarMessages, ~1372–1376).
 export const TOPBAR_MESSAGES: string[] = [
-  '15% dcto. pagando con Banco Santander',
+  '20% de descuento pagando con Banco de Chile',
   'Hasta 24 cuotas sin interés con tarjeta de crédito',
-  'Despacho a RM, Valparaíso y Bío Bío',
+  'Servicios en RM, Valparaíso, Biobío y otras regiones',
 ];

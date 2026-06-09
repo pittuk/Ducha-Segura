@@ -3,10 +3,11 @@
 // IMPORTANTE: Sodimac, Easy y Mercado Libre NO son colaboradores ni patrocinadores:
 // son canales de distribución mayorista del producto. El copy lo deja explícito.
 import { asset } from '../lib/asset';
-const CANALES = [
-  { name: 'Sodimac', logo: '/images/logos-distribuidores/logo sodimac homecenter.png' },
+// `url` opcional: si existe, la placa es un enlace al producto en ese canal (Easy aún sin URL).
+const CANALES: { name: string; logo: string; url?: string }[] = [
+  { name: 'Sodimac', logo: '/images/logos-distribuidores/logo sodimac homecenter.png', url: 'https://www.sodimac.cl/sodimac-cl/articulo/140150241/servicio-rebaje-de-tina-pieza-instalacion/140150242' },
   { name: 'Easy', logo: '/images/logos-distribuidores/Easy-Logo.svg.png' },
-  { name: 'Mercado Libre', logo: '/images/logos-distribuidores/mercado-libre-logo-2.png' },
+  { name: 'Mercado Libre', logo: '/images/logos-distribuidores/mercado-libre-logo-2.png', url: 'https://www.mercadolibre.cl/rebaje-de-tina/up/MLCU3502483241' },
 ];
 ---
 <section class="section canales" aria-label="Canales de distribución mayorista">
@@ -19,9 +20,15 @@ const CANALES = [
 
     <div class="canales__row reveal">
       {CANALES.map((c) => (
-        <div class="canal-plate" title={`${c.name} — canal de distribución mayorista`}>
-          <img src={asset(c.logo)} alt={`${c.name} — canal de distribución mayorista de Ducha Segura®`} loading="lazy" />
-        </div>
+        c.url ? (
+          <a class="canal-plate canal-plate--link" href={c.url} target="_blank" rel="noopener" title={`Ver en ${c.name}`} aria-label={`Ver el rebaje de tina en ${c.name} (se abre en una pestaña nueva)`}>
+            <img src={asset(c.logo)} alt={`${c.name} — canal de distribución mayorista de Ducha Segura®`} loading="lazy" />
+          </a>
+        ) : (
+          <div class="canal-plate" title={`${c.name} — canal de distribución mayorista`}>
+            <img src={asset(c.logo)} alt={`${c.name} — canal de distribución mayorista de Ducha Segura®`} loading="lazy" />
+          </div>
+        )
       ))}
     </div>
   </div>
@@ -34,6 +41,8 @@ const CANALES = [
   /* Placa blanca con el logo del canal centrado y contenido (object-fit:contain). */
   .canal-plate{flex:1 1 220px;max-width:280px;min-height:120px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);box-shadow:var(--ds-shadow);padding:24px 28px;transition:transform .2s,box-shadow .2s}
   .canal-plate:hover{transform:translateY(-3px);box-shadow:var(--ds-shadow-lg)}
+  .canal-plate--link{cursor:pointer}
+  .canal-plate--link:focus-visible{outline:2px solid var(--ds-blue);outline-offset:2px}
   .canal-plate img{max-height:56px;max-width:100%;width:auto;object-fit:contain;display:block}
   @media (max-width:768px){.canal-plate{min-height:96px;padding:18px 22px}.canal-plate img{max-height:42px}}
 </style>

@@ -27,7 +27,9 @@ const IMG_OVERRIDE: Record<string, string> = {
 
 // Renombrar el nombre VISIBLE (no el slug, que está indexado). Sobrevive a re-importar de WC.
 // (El rebaje de jacuzzi conserva el nombre "Jacuzzi" del JSON; no se sobrescribe.)
-const NAME_OVERRIDE: Record<string, string> = {};
+const NAME_OVERRIDE: Record<string, string> = {
+  'barra-de-cromada-40cm': 'Barra cromada 40cm',
+};
 
 // Recategorizar productos (decisión del cliente; sobrevive a re-importar de WC).
 const GRUPO_OVERRIDE: Record<string, Grupo> = {
@@ -42,15 +44,14 @@ const wc: Producto[] = (data as Producto[]).map((p) => ({
   image: IMG_OVERRIDE[p.slug] ?? p.image,
 }));
 
-// Kits curados (no existen en WooCommerce). Imágenes reales; ⚠️ PRECIOS provisionales
-// (placeholder) — reemplazar por los reales cuando el cliente los entregue.
+// Kits curados (no existen en WooCommerce). Imágenes reales. Precios reales entregados por el cliente.
 const CURATED: Producto[] = [
   {
     id: 'kit-rebaje-40cm',
     slug: 'kit-rebaje-40cm',
     name: 'Kit Rebaje 40 cm',
     grupo: 'kit',
-    price: 99000, // PLACEHOLDER
+    price: 154700,
     regularPrice: null,
     salePrice: null,
     shortDescription: 'Pieza de rebaje de 40 cm para instalar tú mismo. Incluye manual paso a paso.',
@@ -64,7 +65,7 @@ const CURATED: Producto[] = [
     slug: 'kit-rebaje-40cm-barra',
     name: 'Kit Rebaje 40 cm + barra 40 cm acero inox',
     grupo: 'kit',
-    price: 129000, // PLACEHOLDER
+    price: 205000,
     regularPrice: null,
     salePrice: null,
     shortDescription: 'Pieza de rebaje 40 cm + barra de seguridad de acero inoxidable de 40 cm.',
@@ -78,11 +79,11 @@ const CURATED: Producto[] = [
     slug: 'kit-rebaje-40cm-barra-silicona',
     name: 'Kit Rebaje 40 cm + barra 40 cm acero inox + silicona blanca acética',
     grupo: 'kit',
-    price: 139000, // PLACEHOLDER
+    price: 215000,
     regularPrice: null,
     salePrice: null,
-    shortDescription: 'Pieza de rebaje 40 cm + barra inox 40 cm + silicona blanca acética para el sellado.',
-    descriptionHtml: '<p>Kit completo: pieza de rebaje de 40 cm, <strong>barra de acero inoxidable de 40 cm</strong> y <strong>silicona blanca acética</strong> para un sellado prolijo y duradero.</p>',
+    shortDescription: 'Pieza de rebaje 40 cm + barra inox 40 cm + silicona blanca acética de 280 ml para el sellado.',
+    descriptionHtml: '<p>Kit completo: pieza de rebaje de 40 cm, <strong>barra de acero inoxidable de 40 cm</strong> y <strong>silicona blanca acética de 280 ml</strong> para un sellado prolijo y duradero.</p>',
     image: '/images/kits/Kit Rebaje 40 cm + barra 40 cm acero inox + silicona blanca acética - DUCHA SEGURA.webp',
     images: ['/images/kits/Kit Rebaje 40 cm + barra 40 cm acero inox + silicona blanca acética - DUCHA SEGURA.webp'],
     custom: true,

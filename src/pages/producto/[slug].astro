@@ -47,7 +47,7 @@ const related = PRODUCTOS.filter((x) => x.grupo === p.grupo && x.slug !== p.slug
             <a class="btn btn--secondary btn--lg" href="/catalogo/">Ver catálogo</a>
           </div>
           <ul class="ficha__trust">
-            <li><svg class="ic"><use href="#i-check" /></svg>Garantía 3 años</li>
+            <li><svg class="ic"><use href="#i-check" /></svg>{p.grupo === 'rebaje' ? 'Garantía 3 años' : 'Garantía mínima legal'}</li>
             <li><svg class="ic"><use href="#i-check" /></svg>Producto nacional patentado</li>
           </ul>
         </div>

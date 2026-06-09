@@ -1,154 +1,85 @@
 ---
 import { SITE } from '../data/site';
+import { asset } from '../lib/asset';
 
-// Lista de convenios para el CTA "¿Qué convenio aplica para ti?" (solo nombres,
-// en el orden indicado: La Reina arriba → Santander abajo).
-const CONVENIOS_CTA = [
-  'La Reina',
-  'Colina Vecinos',
-  'Las Condes',
-  'Ñuñoa',
-  'Providencia',
-  'Estadio Español',
-  'Sura',
-  'Caja Los Andes',
-  'Penta Vida',
-  'Chile Cuida',
-  'Banco Chile',
-  'Santander',
-];
+// Oferta del 20% en rebaje de tina (reemplaza a la antigua calculadora/configurador).
+// Layout a 2 columnas: texto a la izquierda sobre la zona oscura del degradado; la foto
+// (tina jacuzzi con rebaje) se ve a la derecha, donde el degradado se vuelve transparente.
+const bgUrl = asset('/images/rebajes/rebaje-tina-jacuzzi-20-descuento.webp');
+const waMsg = 'Hola, quiero aprovechar el 20% de descuento en el rebaje de tina. ¿Me pueden ayudar?';
+const waUrl = `${SITE.whatsappUrl}?text=${encodeURIComponent(waMsg)}`;
 ---
 <!-- ============================================================
-     Calculadora (STAR) — configurador de rebaje + promoción de convenios.
-     Ya no calcula precio: destaca el 20% de descuento por convenios.
+     Oferta 20% (STAR) — bloque promocional del rebaje de tina.
      ============================================================ -->
 <section class="section section--xl calc" id="calculadora">
+  <div class="calc__bg" style={`background-image:url('${bgUrl}')`} aria-hidden="true"></div>
+  <div class="calc__overlay" aria-hidden="true"></div>
   <div class="container">
     <div class="calc__grid">
-      <div class="calc__left">
-        <div class="reveal">
-          <div class="kicker kicker--light" style="margin-bottom:14px">Configura tu rebaje</div>
-          <h2 class="calc__h2">¿Cuánto cuesta tu rebaje?</h2>
-        </div>
-
-        <div class="calc-step reveal">
-          <div class="calc-step__head"><span class="calc-step__n">1</span><span class="calc-step__l">Tipo de tina</span></div>
-          <div class="calc-chips" data-calc="tipo">
-            <button class="calc-chip active" data-value="tradicional">Tradicional</button>
-            <button class="calc-chip" data-value="jacuzzi">Jacuzzi</button>
-          </div>
-        </div>
-
-        <div class="calc-step reveal">
-          <div class="calc-step__head"><span class="calc-step__n">2</span><span class="calc-step__l">Ancho del rebaje</span></div>
-          <div class="calc-chips" data-calc="ancho">
-            <button class="calc-chip" data-value="30">30 cm</button>
-            <button class="calc-chip active" data-value="40">40 cm</button>
-            <button class="calc-chip" data-value="50">50 cm</button>
-            <button class="calc-chip" data-value="no-se">No sé</button>
-          </div>
-        </div>
-
-        <div class="calc-step reveal">
-          <div class="calc-step__head"><span class="calc-step__n">3</span><span class="calc-step__l">Región / Comuna</span></div>
-          <div class="calc-chips" data-calc="region">
-            <button class="calc-chip active" data-value="RM">RM</button>
-            <button class="calc-chip" data-value="Valparaíso">Valparaíso</button>
-            <button class="calc-chip" data-value="Bío Bío">Bío Bío</button>
-            <button class="calc-chip" data-value="otra">Otra región</button>
-          </div>
-          <select class="calc-select" id="calcComuna" aria-label="Comuna"></select>
-        </div>
-
-        <div class="calc-step reveal">
-          <div class="calc-step__head"><span class="calc-step__n">4</span><span class="calc-step__l">Convenios</span></div>
-          <div class="conv-promo">
-            <p class="conv-promo__txt">Contamos con <strong>convenios</strong> con bancos, cajas, municipios y aseguradoras como canales de <strong>descuento</strong>.</p>
-            <select class="calc-select" aria-label="Convenio">
-              <option value="" disabled selected>¿Qué convenio aplica para ti?</option>
-              <option value="sin-convenio">No tengo convenio</option>
-              {CONVENIOS_CTA.map((c) => <option value={c}>{c}</option>)}
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="calc__panel reveal">
-        <div>
-          <div class="calc__panel-l">Tu configuración</div>
-          <div class="calc__cfg" id="calcCfg">Rebaje Tina Tradicional · 40 cm</div>
-          <div class="calc__loc" id="calcLoc">Las Condes, RM</div>
-        </div>
-
+      <div class="calc__text reveal">
         <div class="calc__promo">
           <div class="calc__promo-top">Hasta</div>
           <div class="calc__promo-num">20<span>%</span></div>
-          <div class="calc__promo-txt">de descuento con nuestros convenios</div>
+          <div class="calc__promo-txt">de descuento en tu rebaje de tina</div>
         </div>
 
-        <button class="btn btn--on-light btn--lg btn--full" id="calcAdd">
-          <span>Agregar a mi cotización</span>
-          <svg class="ic"><use href="#i-arrow"/></svg>
-        </button>
+        <p class="calc__pays">Con todo medio de pago · hasta 24 cuotas sin interés</p>
+        <p class="calc__regions">
+          <svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-pin"/></svg>
+          Servicios en RM, Valparaíso, Biobío y otras regiones
+        </p>
 
-        <div class="calc__pays">
-          <span>Webpay</span><span>·</span><span>MercadoPago</span><span>·</span><span>Khipu</span><span>·</span><span>Transferencia</span>
+        <div class="calc__ctas">
+          <a class="btn btn--on-light btn--lg" href={waUrl} target="_blank" rel="noopener">
+            <svg class="ic"><use href="#i-whatsapp"/></svg>
+            <span>Quiero mi 20%</span>
+          </a>
+          <a class="btn btn--ghost btn--lg" href="/convenios">
+            <span>Ver convenios</span>
+            <svg class="ic"><use href="#i-arrow"/></svg>
+          </a>
         </div>
       </div>
     </div>
-
-    <p class="calc__note reveal">
-      Si tienes dudas, <a href={SITE.whatsappUrl} target="_blank" rel="noopener">contacta con un ejecutivo</a>.
-    </p>
   </div>
 </section>
 
 <style>
   /* ==========================================================================
-     Calculadora
+     Oferta 20% (rebaje de tina) — 2 columnas con foto de fondo + degradado
      ========================================================================== */
-  .calc{background:linear-gradient(135deg,var(--ds-blue-dark) 0%,var(--ds-blue) 100%);color:#fff;position:relative;overflow:hidden}
-  .calc::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 0 0,rgba(255,255,255,.06) 1px,transparent 1px);background-size:24px 24px;opacity:.5;pointer-events:none}
-  .calc__grid{display:grid;grid-template-columns:5fr 4fr;gap:56px;align-items:stretch;position:relative}
-  @media (max-width:1024px){.calc__grid{grid-template-columns:1fr;gap:32px}}
-  .calc__left{display:flex;flex-direction:column;gap:28px}
-  .calc__h2{margin:0;font-family:var(--ds-display);font-weight:800;font-size:55px;line-height:1.05;letter-spacing:-.03em;color:#fff}
-  @media (max-width:768px){.calc__h2{font-size:clamp(32px,8vw,42px)}}
-  .calc__lead{margin-top:16px;margin-bottom:0;font-size:18px;line-height:1.5;color:rgba(255,255,255,.82);max-width:420px}
-  @media (max-width:768px){.calc__lead{font-size:16px}}
-  .calc-step__head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-  .calc-step__n{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
-  .calc-step__l{font-size:14px;font-weight:600}
-  .calc-chips{display:flex;gap:8px;flex-wrap:wrap}
-  .calc-chip{padding:10px 16px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius);font-size:13px;font-weight:600;display:inline-flex;align-items:center;transition:all .15s}
-  .calc-chip:hover{background:rgba(255,255,255,.15)}
-  .calc-chip.active{background:#fff;color:var(--ds-blue-dark);border-color:#fff}
-  .calc-select{margin-top:10px;width:100%;padding:12px 14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius);color:#fff;font-family:var(--ds-sans);font-size:14px;font-weight:500;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='white' opacity='.7' d='M0 0h12L6 8z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
-  /* Las <option> se inyectan por JS (initCalculator), así que no reciben el scope
-     data-astro-* de Astro; :global() hace que la regla las alcance igual. */
-  .calc-select :global(option){background:#012E4D;color:#fff}
+  .calc{position:relative;overflow:hidden;color:#fff;background:var(--ds-blue-dark)}
+  /* Foto de fondo: encuadre a la derecha para mostrar la tina/jacuzzi y el ventanal. */
+  .calc__bg{position:absolute;inset:0;background-size:cover;background-position:right bottom;z-index:0}
+  /* Degradado azul oscuro (izquierda) → transparente (derecha): el texto queda sobre lo oscuro. */
+  .calc__overlay{position:absolute;inset:0;z-index:1;
+    background:linear-gradient(to right,
+      var(--ds-blue-dark) 0%,
+      rgba(1,46,77,.94) 30%,
+      rgba(1,46,77,.62) 52%,
+      rgba(1,46,77,.18) 72%,
+      transparent 88%);}
+  .calc .container{position:relative;z-index:2}
 
-  /* Convenios (paso 4) — bloque destacado con CTA que despliega la lista */
-  .conv-promo{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:var(--ds-radius-lg);padding:18px 20px}
-  .conv-promo__txt{margin:0 0 14px;font-size:15px;line-height:1.5;color:rgba(255,255,255,.9)}
-  .conv-promo__txt strong{color:#fff;font-weight:700}
+  .calc__grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  @media (max-width:768px){.calc__grid{grid-template-columns:1fr}}
+  /* En móvil la foto queda detrás de todo el bloque → reforzar el oscurecido para legibilidad. */
+  @media (max-width:768px){
+    .calc__overlay{background:linear-gradient(to bottom,rgba(1,46,77,.92) 0%,rgba(1,46,77,.86) 60%,rgba(1,46,77,.9) 100%)}
+  }
 
-  .calc__panel{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.16);border-radius:var(--ds-radius-lg);padding:36px;display:flex;flex-direction:column;gap:24px;position:sticky;top:110px;align-self:start}
-  @media (max-width:1024px){.calc__panel{position:static;padding:24px}}
-  .calc__panel-l{font-size:12px;font-weight:600;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
-  .calc__cfg{font-family:var(--ds-display);font-weight:700;font-size:22px;line-height:1.2;color:#fff}
-  .calc__loc{margin-top:4px;font-size:14px;color:rgba(255,255,255,.7)}
+  .calc__text{max-width:520px}
 
-  /* Promo 20% — reemplaza la zona de precio. Número GIGANTE con movimiento:
-     destello (shine) + pulso (scale) + brillo (glow). */
-  .calc__promo{text-align:center;padding:30px 8px;border-top:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15)}
+  /* Promo 20% — número GIGANTE con movimiento: destello (shine) + pulso (scale) + brillo (glow). */
+  .calc__promo{text-align:left}
   .calc__promo-top{font-size:15px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.2em;opacity:.85}
   .calc__promo-num{
     display:inline-block;font-family:var(--ds-display);font-weight:800;
-    font-size:clamp(96px,16vw,176px);line-height:.82;letter-spacing:-.05em;margin:8px 0;
+    font-size:clamp(88px,13vw,164px);line-height:.82;letter-spacing:-.05em;margin:6px 0;
     /* padding horizontal: con background-clip:text el degradado solo se pinta dentro del
        área del elemento; sin esto el glifo "%" se corta por la derecha. */
-    padding:0 .16em;
+    padding:0 .16em 0 0;
     background:linear-gradient(100deg,#fff 0%,#bfe0ff 25%,#fff 50%,#bfe0ff 75%,#fff 100%);
     background-size:220% 100%;-webkit-background-clip:text;background-clip:text;
     color:transparent;-webkit-text-fill-color:transparent;
@@ -156,20 +87,16 @@ const CONVENIOS_CTA = [
     will-change:transform,filter,background-position;
   }
   .calc__promo-num span{font-size:.46em;vertical-align:super;margin-left:3px}
-  .calc__promo-txt{font-size:18px;font-weight:700;color:#fff;max-width:260px;margin:10px auto 0;line-height:1.35}
+  .calc__promo-txt{font-size:clamp(20px,2.6vw,26px);font-weight:700;color:#fff;max-width:340px;margin:4px 0 0;line-height:1.3}
   @keyframes promoShine{0%{background-position:220% 0}100%{background-position:-220% 0}}
-  @keyframes promoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
-  @keyframes promoGlow{0%,100%{filter:drop-shadow(0 8px 18px rgba(120,190,255,.25))}50%{filter:drop-shadow(0 10px 34px rgba(170,215,255,.65))}}
+  @keyframes promoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes promoGlow{0%,100%{filter:drop-shadow(0 8px 18px rgba(120,190,255,.25))}50%{filter:drop-shadow(0 10px 34px rgba(170,215,255,.6))}}
   @media (prefers-reduced-motion:reduce){.calc__promo-num{animation:none;filter:drop-shadow(0 8px 24px rgba(150,200,255,.4))}}
 
-  .calc__pays{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:.7;font-size:11px;color:#fff;font-weight:500}
-  .calc__note{position:relative;margin:40px 0 0;text-align:center;font-size:15px;color:rgba(255,255,255,.8)}
-  .calc__note a{color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px}
-  .calc__note a:hover{opacity:.85}
-  @media (max-width:1024px){.calc__note{margin-top:28px}}
-</style>
+  .calc__pays{margin:26px 0 0;font-size:17px;font-weight:600;color:#fff}
+  .calc__regions{display:inline-flex;align-items:center;gap:8px;margin:12px 0 0;font-size:15px;color:rgba(255,255,255,.85)}
+  .calc__regions .ic{flex-shrink:0}
 
-<script>
-  import { initCalculator } from '../scripts/calculator';
-  document.addEventListener('astro:page-load', initCalculator);
-</script>
+  .calc__ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+  @media (max-width:520px){.calc__ctas{width:100%;flex-direction:column}.calc__ctas .btn{width:100%}}
+</style>
