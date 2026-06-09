@@ -2,6 +2,7 @@
 // CanalesMayoristas.astro — Franja de canales de distribución mayorista.
 // IMPORTANTE: Sodimac, Easy y Mercado Libre NO son colaboradores ni patrocinadores:
 // son canales de distribución mayorista del producto. El copy lo deja explícito.
+import { asset } from '../lib/asset';
 const CANALES = [
   { name: 'Sodimac', logo: '/images/logos-distribuidores/logo sodimac homecenter.png' },
   { name: 'Easy', logo: '/images/logos-distribuidores/Easy-Logo.svg.png' },
@@ -19,7 +20,7 @@ const CANALES = [
     <div class="canales__row reveal">
       {CANALES.map((c) => (
         <div class="canal-plate" title={`${c.name} — canal de distribución mayorista`}>
-          <img src={c.logo} alt={`${c.name} — canal de distribución mayorista de Ducha Segura®`} loading="lazy" />
+          <img src={asset(c.logo)} alt={`${c.name} — canal de distribución mayorista de Ducha Segura®`} loading="lazy" />
         </div>
       ))}
     </div>

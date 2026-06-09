@@ -2,6 +2,9 @@
 // Diferenciadores.astro — "Seis razones técnicas" sobre una foto de baño con overlay
 // azul. La PIEZA va al centro y alrededor 3 razones a cada lado. Cada razón es un
 // acordeón (<details>): al hacer clic se despliega su descripción.
+import { asset } from '../lib/asset';
+const bgImg = asset('/images/rebajes/Rebaje Tina Tradicional.webp');
+const piezaImg = asset('/images/NUEVA_1_sinfondo-3.png');
 const left = [
   { icon: 'i-factory', t: 'Producto Nacional', d: 'Pieza de fibra de vidrio reforzada de 5mm de espesor, de color blanco, creada por arquitecto y con patente de propiedad intelectual.' },
   { icon: 'i-shield',  t: 'Tecnología Antideslizante', d: 'Textura antideslizante incorporada de fábrica en su superficie, para prevenir caídas.' },
@@ -14,7 +17,7 @@ const right = [
 ];
 ---
 <section class="section section--blue diff">
-  <div class="diff__bg" aria-hidden="true"></div>
+  <div class="diff__bg" style={`background-image:url('${bgImg}')`} aria-hidden="true"></div>
   <div class="diff__overlay" aria-hidden="true"></div>
   <div class="container diff__inner">
     <div class="section-head section-head--center reveal" style="max-width:760px;margin-left:auto;margin-right:auto">
@@ -37,7 +40,7 @@ const right = [
       </div>
 
       <div class="diff-media">
-        <img src="/images/NUEVA_1_sinfondo-3.png" alt="Pieza de rebaje de tina Ducha Segura®" width="520" height="640" loading="lazy" />
+        <img src={piezaImg} alt="Pieza de rebaje de tina Ducha Segura®" width="520" height="640" loading="lazy" />
       </div>
 
       <div class="diff-col diff-col--right">
@@ -59,7 +62,8 @@ const right = [
 <style>
 .diff{position:relative;overflow:hidden}
 /* Foto de fondo + overlay azul para mantener legible el texto blanco y resaltar la pieza */
-.diff__bg{position:absolute;inset:0;background-image:url('/images/rebajes/Rebaje Tina Tradicional.webp');background-size:cover;background-position:center;z-index:0}
+/* background-image se setea inline (asset() con ?v=hash). */
+.diff__bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
 .diff__overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,46,77,.92) 0%,rgba(1,46,77,.86) 100%);z-index:1}
 .diff__inner{position:relative;z-index:2}
 

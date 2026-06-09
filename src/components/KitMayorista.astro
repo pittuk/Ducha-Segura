@@ -6,13 +6,15 @@
 //   'banner'    → tarjeta contenida con bordes redondeados (catálogo, dentro de .container).
 //   'prefooter' → franja full-bleed que reemplaza el CTA pre-footer (página de Kits).
 import { SITE } from '../data/site';
+import { asset } from '../lib/asset';
 interface Props { variant?: 'banner' | 'prefooter'; bgImage?: string; }
 const { variant = 'banner', bgImage } = Astro.props;
+const bgUrl = bgImage ? asset(bgImage) : undefined;
 const msg = 'Hola, me interesa la Opción Mayorista de Ducha Segura® (compra por pallet / representación de la marca). ¿Me pueden cotizar por volumen?';
 const waUrl = `${SITE.whatsappUrl}?text=${encodeURIComponent(msg)}`;
 ---
 <section class:list={['kitmay', `kitmay--${variant}`, { 'kitmay--hasbg': bgImage }, 'reveal']}>
-  {bgImage && <div class="kitmay__bg" style={`background-image:url('${bgImage}')`} aria-hidden="true"></div>}
+  {bgUrl && <div class="kitmay__bg" style={`background-image:url('${bgUrl}')`} aria-hidden="true"></div>}
   {bgImage && <div class="kitmay__overlay" aria-hidden="true"></div>}
   <div class="kitmay__inner">
     <div class="kicker kicker--light kitmay__kicker">Opción mayorista</div>
