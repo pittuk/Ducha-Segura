@@ -84,6 +84,7 @@ export async function processImage(src, dest, wmBuffer, cfg = DEFAULT_CFG) {
   const meta = await sharp(src).metadata();
   const W = meta.width;
   const H = meta.height;
+  if (!W || !H) throw new Error(`Imagen sin dimensiones legibles: ${src}`);
 
   const stampW = Math.min(Math.round(W * cfg.widthPct), Math.round(H * 0.5));
   const margin = Math.round(W * cfg.marginPct);
@@ -145,26 +146,37 @@ export async function run(cfg = DEFAULT_CFG) {
   const wmBuffer = await fs.readFile(WM_SRC);
   let stamped = 0;
   let copied = 0;
+  let failed = 0;
   for (const folder of FOLDERS) {
     for await (const src of walk(join(ORIGINALS_ROOT, folder))) {
       const dest = publicTarget(src);
       const name = src.replace(/\\/g, '/').split('/').pop();
-      if (shouldWatermark(name, EXTS, SKIP)) {
-        await processImage(src, dest, wmBuffer, cfg);
-        stamped++;
-      } else {
-        await copyVerbatim(src, dest);
-        copied++;
+      try {
+        if (shouldWatermark(name, EXTS, SKIP)) {
+          await processImage(src, dest, wmBuffer, cfg);
+          stamped++;
+        } else {
+          await copyVerbatim(src, dest);
+          copied++;
+        }
+      } catch (err) {
+        failed++;
+        console.error(`✗ Falló: ${src}\n  ${err.message}`);
       }
     }
   }
-  console.log(`Marca de agua: ${stamped} imágenes marcadas, ${copied} copiadas verbatim.`);
+  console.log(`Marca de agua: ${stamped} marcadas, ${copied} copiadas, ${failed} con error.`);
+  return { stamped, copied, failed };
 }
 
 // Guard de CLI: ejecutar run() solo si se invoca directamente.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  run().catch((err) => {
-    console.error(err);
-    process.exit(1);
-  });
+  run()
+    .then(({ failed }) => {
+      if (failed > 0) process.exit(1);
+    })
+    .catch((err) => {
+      console.error(err);
+      process.exit(1);
+    });
 }
