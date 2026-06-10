@@ -63,4 +63,10 @@ describe('publicTarget', () => {
   it('normaliza separadores de Windows', () => {
     expect(publicTarget('originales\\kits\\c.webp')).toBe('public/images/kits/c.webp');
   });
+  it('no confunde un prefijo falso (boundary de carpeta)', () => {
+    expect(publicTarget('originales_extra/a.webp')).toBe('public/images/originales_extra/a.webp');
+  });
+  it('rutas fuera de originales caen bajo public/images', () => {
+    expect(publicTarget('otro/a.webp')).toBe('public/images/otro/a.webp');
+  });
 });
