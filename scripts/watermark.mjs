@@ -23,6 +23,8 @@ export const DEFAULT_CFG = {
 const FOLDERS = ['productos', 'tinas', 'kits', 'rebajes'];
 // Subconjunto que efectivamente lleva marca de agua; el resto se copia verbatim (sin sello).
 const WATERMARK_FOLDERS = ['productos', 'kits'];
+// Overrides de configuración por carpeta (se fusionan sobre el cfg base).
+const FOLDER_CFG = { kits: { widthPct: 0.15 } };
 const EXTS = ['.png', '.webp', '.jpg', '.jpeg'];
 const SKIP = []; // patrones RegExp de exclusión (vacío: se marca todo lo raster)
 const WM_SRC = 'public/images/Ducha-segura-logo-blanco-marca-de-agua.webp';
@@ -92,11 +94,11 @@ export async function processImage(src, dest, wmBuffer, cfg = DEFAULT_CFG) {
   const stampW = Math.min(Math.round(W * cfg.widthPct), Math.round(H * 0.5));
   const margin = Math.round(W * cfg.marginPct);
 
-  // Sampleo de luminancia de la esquina inf-IZQUIERDA (aplana transparencias sobre blanco).
+  // Sampleo de luminancia de la esquina inf-derecha (aplana transparencias sobre blanco).
   const regionW = Math.min(stampW, W);
   const regionH = Math.min(stampW, H);
   const region = {
-    left: Math.min(margin, Math.max(0, W - regionW)),
+    left: Math.max(0, W - regionW - margin),
     top: Math.max(0, H - regionH - margin),
     width: regionW,
     height: regionH,
@@ -111,8 +113,8 @@ export async function processImage(src, dest, wmBuffer, cfg = DEFAULT_CFG) {
 
   const stamp = await buildStamp(wmBuffer, stampW, color, cfg);
   const sm = await sharp(stamp).metadata();
-  // Esquina inferior-IZQUIERDA, con margen.
-  const left = Math.min(margin, Math.max(0, W - sm.width));
+  // Esquina inferior-derecha, con margen.
+  const left = Math.max(0, W - sm.width - margin);
   const top = Math.max(0, H - sm.height - margin);
 
   await fs.mkdir(dirname(dest), { recursive: true });
@@ -153,12 +155,13 @@ export async function run(cfg = DEFAULT_CFG) {
   let failed = 0;
   for (const folder of FOLDERS) {
     const watermarkThisFolder = WATERMARK_FOLDERS.includes(folder);
+    const folderCfg = { ...cfg, ...(FOLDER_CFG[folder] || {}) };
     for await (const src of walk(join(ORIGINALS_ROOT, folder))) {
       const dest = publicTarget(src);
       const name = src.replace(/\\/g, '/').split('/').pop();
       try {
         if (watermarkThisFolder && shouldWatermark(name, EXTS, SKIP)) {
-          await processImage(src, dest, wmBuffer, cfg);
+          await processImage(src, dest, wmBuffer, folderCfg);
           stamped++;
         } else {
           await copyVerbatim(src, dest);

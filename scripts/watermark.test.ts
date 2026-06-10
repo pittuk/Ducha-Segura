@@ -35,13 +35,13 @@ describe('processImage', () => {
     expect(m.height).toBe(600);
   });
 
-  it('modifica los píxeles de la esquina inferior-izquierda (el sello existe)', async () => {
+  it('modifica los píxeles de la esquina inferior-derecha (el sello existe)', async () => {
     const src = join(dir, 'claro.png');
     const out = join(dir, 'out-claro2.png');
     await processImage(src, out, wmBuffer, DEFAULT_CFG);
-    // muestra un parche dentro del sello (esquina inf-izquierda); ya no debe ser blanco puro
+    // muestra un parche dentro del sello (esquina inf-derecha); ya no debe ser blanco puro
     const patch = await sharp(out)
-      .extract({ left: 85, top: 475, width: 30, height: 30 })
+      .extract({ left: 670, top: 475, width: 30, height: 30 })
       .flatten({ background: '#ffffff' })
       .resize(1, 1)
       .raw()
