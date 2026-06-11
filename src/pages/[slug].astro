@@ -3,6 +3,7 @@
 // del WordPress original. El listado vive en /blog.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { blogPostingNode } from '../lib/seo';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -16,6 +17,7 @@ const { data } = post;
   title={`${data.title} — Ducha Segura®`}
   description={data.seoDescription || data.excerpt}
   ogImage={data.image || undefined}
+  schema={blogPostingNode(Astro.site!, data, post.id)}
 >
   <article class="section">
     <div class="container" style="max-width:880px">

@@ -13,23 +13,33 @@ import Toast from '../components/Toast.astro';
 import QuoteDrawer from '../components/QuoteDrawer.astro';
 import QuickView from '../components/QuickView.astro';
 import { ClientRouter } from 'astro:transitions';
+import { organizationGraph, type JsonLdNode } from '../lib/seo';
 
 interface Props {
   title: string;
   description?: string;
   ogImage?: string;
   hidePrefooter?: boolean;   // oculta el CTA pre-footer global (ej. Kits usa su propio banner)
+  schema?: JsonLdNode | JsonLdNode[];   // nodos JSON-LD propios de la página (Product, FAQPage, etc.)
 }
 
 const {
   title,
   description = 'Ducha Segura® — Rebajes de tina para acceso seguro. Producto nacional patentado. Garantía 3 años.',
-  ogImage = '/images/Ducha segura logo azul.png',
+  ogImage = '/images/og-default.png',
   hidePrefooter = false,
+  schema,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
+
+// Un único bloque @graph: Organization/WebSite global + nodos de la página.
+const pageNodes = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [...organizationGraph(Astro.site!), ...pageNodes],
+};
 ---
 <!doctype html>
 <html lang="es">
@@ -54,6 +64,13 @@ const ogImageUrl = new URL(ogImage, Astro.site);
   <meta property="og:image" content={ogImageUrl} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content="Ducha Segura®" />
+  <meta property="og:locale" content="es_CL" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageUrl} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=PT+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet" />

@@ -6,6 +6,7 @@ import { PRODUCTOS, type Producto } from '../../data/productos';
 import { SITE } from '../../data/site';
 import { clp } from '../../lib/format';
 import { asset } from '../../lib/asset';
+import { productNode, breadcrumbNode } from '../../lib/seo';
 
 export function getStaticPaths() {
   return PRODUCTOS.map((p) => ({ params: { slug: p.slug }, props: { producto: p } }));
@@ -18,8 +19,16 @@ const grupoLabel = GRUPO[p.grupo];
 const priceTxt = p.price > 0 ? `$${clp(p.price)}` : (p.priceLabel ?? 'Consultar');
 const fit = (p.grupo === 'rebaje' || p.grupo === 'kit') ? 'cover' : 'contain';
 const related = PRODUCTOS.filter((x) => x.grupo === p.grupo && x.slug !== p.slug).slice(0, 4);
+
+const schema = [
+  productNode(Astro.site!, p),
+  breadcrumbNode(Astro.site!, [
+    { name: 'Catálogo', path: '/catalogo/' },
+    { name: p.name },
+  ]),
+];
 ---
-<BaseLayout title={`${p.name} — Ducha Segura®`} description={p.shortDescription || p.name} ogImage={p.image}>
+<BaseLayout title={`${p.name} — Ducha Segura®`} description={p.shortDescription || p.name} ogImage={p.image} schema={schema}>
   <section class="section">
     <div class="container">
       <nav class="ficha__crumbs" aria-label="Migas de pan"><a href="/catalogo/">Catálogo</a><span aria-hidden="true">›</span><span>{grupoLabel}</span></nav>

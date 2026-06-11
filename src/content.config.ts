@@ -8,6 +8,7 @@ const blog = defineCollection({
     cat: z.string(),
     date: z.string(),
     pubdate: z.string().optional(),       // ISO, para ordenar por fecha real
+    modified: z.string().optional(),      // ISO, fecha de última edición real (dateModified en schema)
     excerpt: z.string(),
     seoDescription: z.string().optional(), // meta description (Yoast)
     image: z.string().optional(),          // ruta local de la imagen destacada
