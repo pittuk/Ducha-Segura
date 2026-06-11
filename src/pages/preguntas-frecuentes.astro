@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../data/site';
+import { faqNode } from '../lib/seo';
 
 // ⚠️ BORRADOR de FAQ — revisar/ajustar contenidos con el cliente.
 const FAQ: { q: string; a: string }[] = [
@@ -46,7 +47,7 @@ const FAQ: { q: string; a: string }[] = [
   },
 ];
 ---
-<BaseLayout title="Preguntas Frecuentes — Ducha Segura®" description="Resolvemos las dudas más comunes sobre el rebaje de tina de Ducha Segura®: instalación, garantía, cobertura, convenios y más.">
+<BaseLayout title="Preguntas Frecuentes — Ducha Segura®" description="Resolvemos las dudas más comunes sobre el rebaje de tina de Ducha Segura®: instalación, garantía, cobertura, convenios y más." schema={faqNode(FAQ)}>
   <section class="section">
     <div class="container faq">
       <header class="section-head">
