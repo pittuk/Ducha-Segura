@@ -13,6 +13,7 @@ npm run dev      # http://localhost:4321/
 npm test         # Vitest (lógica de pricing/cart)
 npm run build    # genera dist/ → desplegar en Hostinger
 ```
+`build` corre `prebuild` (`scripts/watermark.mjs`) automáticamente: marca de agua sobre las imágenes. Para regenerar solo las marcas: `npm run watermark`.
 Node: `18.20.8 || ^20.3.0 || >=22.0.0`.
 
 ## Arquitectura (resumen)
