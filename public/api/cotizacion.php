@@ -99,10 +99,15 @@ ds_send_mail($email, $nombre, 'Recibimos tu cotización — Ducha Segura', ds_em
 ));
 
 // Gestor
+// Ubicación: el form de /cotizar manda región + comuna (sin dirección). Mostrar siempre
+// que haya alguno; si en el futuro vuelve a pedirse dirección, se incluye completa.
+$ubic = trim(($comuna !== '' ? $comuna : '') . ($comuna !== '' && $region !== '' ? ', ' : '') . ($region !== '' ? $region : ''));
 $dirLinea = '';
 if ($direccion !== '') {
-  $dir = htmlspecialchars("$direccion" . ($depto ? ", $depto" : "") . ($comuna || $region ? " · $comuna, $region" : "") . ($referencia ? " ($referencia)" : ""));
+  $dir = htmlspecialchars($direccion . ($depto ? ", $depto" : "") . ($ubic !== '' ? " · $ubic" : "") . ($referencia ? " ($referencia)" : ""));
   $dirLinea = "<p><b>Dirección:</b> $dir</p>";
+} elseif ($ubic !== '') {
+  $dirLinea = "<p><b>Ubicación:</b> " . htmlspecialchars($ubic) . "</p>";
 }
 ds_send_mail($cfg['manager_email'], 'Gestor Ducha Segura', "Nueva cotización #$id — " . preg_replace('/[\r\n]+/', ' ', $nombre), ds_email_layout(
   "Nueva cotización #$id",
