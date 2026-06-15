@@ -22,7 +22,8 @@ return [
     'from_email' => 'cotizaciones@duchasegura.cl',
     'from_name' => 'Ducha Segura',
   ],
-  'manager_email' => 'CAMBIAR@duchasegura.cl', // copia al gestor
+  // Destinatario(s) de la notificación al gestor. Acepta string o array (notifica a todos).
+  'manager_email' => ['contacto@duchasegura.cl', 'luis@agenciados.cl'],
   'site_url' => 'https://www.duchasegura.cl',
   // Orígenes permitidos para CORS. Acepta string o array. Solo se refleja el Origin de
   // la petición si está en esta lista. En dev agrega 'http://localhost:4321'. Evita '*'.
