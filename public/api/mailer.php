@@ -5,8 +5,9 @@ require_once __DIR__ . '/lib/phpmailer/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Envía un email HTML. Devuelve true/false (no lanza: el caller decide).
-function ds_send_mail(string $toEmail, string $toName, string $subject, string $html): bool {
+// Envía un email HTML. $to acepta un string o un array de correos (notifica a todos).
+// Devuelve true/false (no lanza: el caller decide).
+function ds_send_mail($to, string $toName, string $subject, string $html): bool {
   $cfg = ds_config()['smtp'];
   // SMTP sin configurar (sin host o sin usuario): no intentar enviar para evitar
   // cuelgues. La cotización ya quedó guardada; el envío es opcional.
@@ -24,7 +25,12 @@ function ds_send_mail(string $toEmail, string $toName, string $subject, string $
     $mail->Port = (int)$cfg['port'];
     $mail->CharSet = 'UTF-8';
     $mail->setFrom($cfg['from_email'], $cfg['from_name']);
-    $mail->addAddress($toEmail, $toName);
+    $hasRecipient = false;
+    foreach ((array)$to as $addr) {
+      $addr = trim((string)$addr);
+      if ($addr !== '') { $mail->addAddress($addr, $toName); $hasRecipient = true; }
+    }
+    if (!$hasRecipient) return false; // sin destinatarios: nada que enviar
     $mail->isHTML(true);
     $mail->Subject = $subject;
     $mail->Body = $html;
