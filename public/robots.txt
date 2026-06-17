@@ -1,3 +1,6 @@
+# Decisión consciente (TC-15): se permite el acceso a TODOS los crawlers, incluidos
+# los de IA generativa (GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot,
+# Google-Extended). Favorece la citación de Ducha Segura en respuestas generativas.
 User-agent: *
 Allow: /
 

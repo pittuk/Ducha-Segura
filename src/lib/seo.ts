@@ -53,6 +53,20 @@ export function organizationGraph(site: URL): JsonLdNode[] {
         latitude: '-33.4068',
         longitude: '-70.5754',
       },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '09:00',
+          closes: '18:00',
+        },
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: 'Saturday',
+          opens: '09:00',
+          closes: '14:00',
+        },
+      ],
       priceRange: '$$',
       // Reseñas reales del perfil de Google (sincronizadas con la sección Testimonios).
       aggregateRating: {
