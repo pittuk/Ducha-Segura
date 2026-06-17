@@ -10,7 +10,7 @@ export interface Testimonio {
 
 // Agregados del perfil de Google (mostrados en el encabezado de la sección).
 export const REVIEWS_RATING = 5.0;
-export const REVIEWS_TOTAL = 439;
+export const REVIEWS_TOTAL = 441;
 
 export const TESTIMONIOS: Testimonio[] = [
   { name: 'María Gabriela Triozzi Sierra', meta: 'Junio 2026',
