@@ -4,6 +4,7 @@
 // nodos que cada página aporte vía la prop `schema`.
 import type { Producto } from '../data/productos';
 import { asset } from './asset';
+import { REVIEWS_RATING, REVIEWS_TOTAL } from '../data/testimonios';
 
 export type JsonLdNode = Record<string, unknown>;
 
@@ -43,6 +44,15 @@ export function organizationGraph(site: URL): JsonLdNode[] {
         'Región de Valparaíso',
         'Región del Biobío',
       ],
+      priceRange: '$$',
+      // Reseñas reales del perfil de Google (sincronizadas con la sección Testimonios).
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: REVIEWS_RATING.toFixed(1),
+        reviewCount: String(REVIEWS_TOTAL),
+        bestRating: '5',
+        worstRating: '1',
+      },
       sameAs: [
         'https://instagram.com/duchasegura_',
         'https://facebook.com/Ducha-Segura-699654674213794',

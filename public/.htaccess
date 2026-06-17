@@ -1,0 +1,7 @@
+# TC-01 — Canonical de host: redirige no-www → www (301).
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^duchasegura\.cl$ [NC]
+RewriteRule ^(.*)$ https://www.duchasegura.cl/$1 [R=301,L]
+
+# TC-02 — Sitemap único: /sitemap.xml → /sitemap-index.xml (el canónico que declara robots.txt).
+RewriteRule ^sitemap\.xml$ /sitemap-index.xml [R=301,L]
