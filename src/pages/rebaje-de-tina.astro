@@ -4,14 +4,38 @@ import ProductoCard from '../components/ProductoCard.astro';
 import InstalacionVideo from '../components/InstalacionVideo.astro';
 import Calculator from '../components/Calculator.astro';
 import { REBAJES } from '../data/productos';
+
+// Guías del blog enlazadas como "spokes" del hub "rebaje de tina" (TC-11 hub-and-spoke).
+const GUIAS = [
+  { href: '/que-es-el-rebaje-de-tinas-de-bano/', label: '¿Qué es el rebaje de tina?' },
+  { href: '/todo-sobre-la-instalacion-de-tu-rebaje-para-tinas/', label: 'Cómo es la instalación del rebaje' },
+  { href: '/adultos-mayores-prefieren-el-rebaje-de-tina-el-metodo-favorito-para-banos-seguros/', label: 'Por qué los adultos mayores prefieren el rebaje de tina' },
+  { href: '/por-que-el-cambio-de-banera-por-ducha-no-es-la-mejor-forma-de-hacer-tu-tina-mas-accesible/', label: 'Rebaje de tina vs. cambiar la tina por ducha' },
+  { href: '/rebaje-de-tina-hagalo-usted-mismo-la-nueva-solucion-diy-de-ducha-segura/', label: 'Rebaje de tina DIY: hágalo usted mismo' },
+];
 ---
 <BaseLayout title="Rebajes de tina — Ducha Segura®" description="Rebajes de tina Tradicional e Hidromasaje. Producto nacional patentado, garantía 3 años.">
   <section class="section">
     <div class="container">
       <div class="section-head"><h1 class="h2">Rebajes de tina</h1><p class="lead">Elige el rebaje según tu tina.</p></div>
+      <p class="pillar-intro">El <strong>rebaje de tina</strong> es la adaptación que rebaja la pared lateral de tu tina actual para crear un acceso bajo y seguro, <strong>sin demoler ni reemplazar la tina</strong>. Está pensado para <strong>adultos mayores y personas con movilidad reducida</strong> que ya no pueden levantar la pierna sobre el borde. Lo instalamos a domicilio en <strong>menos de 2 horas</strong>, con <strong>garantía de 3 años</strong> y cobertura en la Región Metropolitana, Valparaíso y Biobío.</p>
       <div class="product-grid">{REBAJES.map(p => <ProductoCard producto={p} />)}</div>
     </div>
   </section>
   <Calculator />
   <InstalacionVideo />
+  <section class="section">
+    <div class="container">
+      <h2 class="h2">Guías sobre el rebaje de tina</h2>
+      <ul class="guias">
+        {GUIAS.map(g => <li><a href={g.href}>{g.label}</a></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <style>
+    .pillar-intro{max-width:780px;margin:0 0 28px;font-size:17px;line-height:1.65;color:var(--ds-text)}
+    .guias{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px;max-width:780px}
+    .guias a{color:var(--ds-blue);font-weight:600}
+  </style>
 </BaseLayout>
