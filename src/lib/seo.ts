@@ -10,6 +10,10 @@ export type JsonLdNode = Record<string, unknown>;
 
 const NAME = 'Ducha Segura®';
 
+// Texto plano a partir de HTML, para usar descripciones ricas en Product.description.
+const stripHtml = (html: string) =>
+  html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+
 // URL absoluta a partir de una ruta de /public (respeta el cache-busting de asset()).
 const abs = (site: URL, path: string) => new URL(asset(path), site).href;
 
@@ -44,6 +48,11 @@ export function organizationGraph(site: URL): JsonLdNode[] {
         'Región de Valparaíso',
         'Región del Biobío',
       ],
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: '-33.4068',
+        longitude: '-70.5754',
+      },
       priceRange: '$$',
       // Reseñas reales del perfil de Google (sincronizadas con la sección Testimonios).
       aggregateRating: {
@@ -87,7 +96,7 @@ export function productNode(site: URL, p: Producto): JsonLdNode {
     '@type': 'Product',
     '@id': `${url}#product`,
     name: p.name,
-    description: p.shortDescription || p.name,
+    description: (p.descriptionHtml ? stripHtml(p.descriptionHtml) : '') || p.shortDescription || p.name,
     image: abs(site, p.image),
     brand: { '@type': 'Brand', name: NAME },
     url,
