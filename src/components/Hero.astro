@@ -66,6 +66,9 @@ const beforeImg = asset('/images/rebajes/rebaje tina tradicional antes ducha seg
 @media (max-width:768px){.slider__label--after{left:16px;bottom:90px}}
 .slider__handle{position:absolute;top:0;bottom:0;width:2px;background:#fff;box-shadow:0 0 18px rgba(0,0,0,.35);transform:translateX(-1px);pointer-events:none}
 .slider__knob{position:absolute;top:50%;width:44px;height:44px;margin-left:-22px;margin-top:-22px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,.3);color:var(--ds-blue);pointer-events:none}
+/* En mobile el título queda anclado abajo y tapaba el knob centrado; se sube a la
+   zona libre superior (donde además el arrastre sí responde, sin texto encima). */
+@media (max-width:768px){.slider__knob{top:33%}}
 .slider__hint{position:absolute;top:28px;right:32px;padding:8px 14px;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:600;border-radius:999px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;gap:6px;pointer-events:none}
 @media (max-width:768px){.slider__hint{top:20px;right:20px}}
 .hero__overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(1,46,77,.55) 0%,rgba(0,114,192,.15) 60%,transparent 100%);pointer-events:none}
