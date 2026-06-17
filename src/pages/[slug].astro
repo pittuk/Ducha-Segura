@@ -27,7 +27,11 @@ const { data } = post;
         <img class="post-hero" src={data.image} alt={data.title} width="760" height="428" loading="eager" />
       )}
       <div class="prose" set:html={post.body} />
-      <p style="margin-top:40px"><a href="/blog" class="see-all">← Volver al blog</a></p>
+      <aside class="post-cta">
+        <h2>¿Quieres un baño más seguro?</h2>
+        <p>El <a href="/rebaje-de-tina/">rebaje de tina</a> crea un acceso bajo y seguro para adultos mayores y personas con movilidad reducida, instalado a domicilio en menos de 2 horas y con garantía de 3 años. <a href="/cotizar/">Cotiza tu rebaje de tina</a> sin costo o revisa el <a href="/catalogo/">catálogo de accesorios de seguridad para el baño</a>.</p>
+      </aside>
+      <p style="margin-top:32px"><a href="/blog" class="see-all">← Volver al blog</a></p>
     </div>
   </article>
 </BaseLayout>
@@ -44,4 +48,8 @@ const { data } = post;
   .prose :global(figure){margin:20px 0}
   .prose :global(iframe){max-width:100%;border-radius:var(--ds-radius)}
   .prose :global(.wp-block-embed__wrapper){position:relative}
+  .post-cta{margin-top:40px;padding:24px 28px;background:var(--ds-blue-soft,#eef6fc);border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg)}
+  .post-cta h2{font-family:var(--ds-display);font-size:22px;line-height:1.2;color:var(--ds-text-strong);margin:0 0 8px}
+  .post-cta p{margin:0;font-size:16px;line-height:1.6;color:var(--ds-text)}
+  .post-cta a{color:var(--ds-blue);font-weight:600;text-decoration:underline}
 </style>

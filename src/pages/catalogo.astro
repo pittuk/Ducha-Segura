@@ -9,6 +9,7 @@ import { REBAJES, KITS, ACCESORIOS } from '../data/productos';
   <section class="section">
     <div class="container">
       <div class="section-head"><h1 class="h2">Catálogo de rebajes y accesorios</h1><p class="lead">Rebajes y accesorios para un baño accesible.</p></div>
+      <p class="pillar-intro">Adaptamos tu baño para hacerlo accesible y seguro. Aquí encuentras los <a href="/rebaje-de-tina/">rebajes de tina</a> —que crean un acceso bajo sin cambiar la tina— y los <strong>accesorios de seguridad</strong> (barras de apoyo, asientos de tina, bancos de transferencia y antideslizantes) pensados para <strong>adultos mayores y personas con movilidad reducida</strong>. Instalación a domicilio con garantía; <a href="/cotizar/">cotiza sin costo</a>.</p>
       <CategoryTabs categories={[{id:'rebajes',label:'Rebajes'},{id:'kits',label:'Kits'},{id:'accesorios',label:'Accesorios'}]} />
       <!-- Rebajes: 2 por fila -->
       <div class="product-grid">
@@ -48,5 +49,8 @@ import { REBAJES, KITS, ACCESORIOS } from '../data/productos';
     /* Colapsa una grilla cuando el filtro dejó todos sus ítems ocultos (evita huecos). */
     .product-grid:not(:has([data-cat-item]:not([hidden]))),
     .prod-grid:not(:has([data-cat-item]:not([hidden]))){display:none}
+
+    .pillar-intro{max-width:820px;margin:0 0 24px;font-size:16px;line-height:1.6;color:var(--ds-text)}
+    .pillar-intro a{color:var(--ds-blue);font-weight:600}
   </style>
 </BaseLayout>
