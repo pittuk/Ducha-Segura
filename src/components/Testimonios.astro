@@ -1,8 +1,8 @@
 ---
 import { TESTIMONIOS, REVIEWS_RATING, REVIEWS_TOTAL } from '../data/testimonios';
 
-// Iniciales server-side (primera letra de cada palabra, máx. 2) + estrellas por reseña.
-const withInitials = TESTIMONIOS.map(t => ({
+// 5 reseñas para el layout 2 arriba / 3 abajo. Iniciales server-side.
+const reviews = TESTIMONIOS.slice(0, 5).map(t => ({
   ...t,
   stars: t.stars ?? 5,
   initials: t.name.split(' ').map((w: string) => w[0]).slice(0, 2).join(''),
@@ -15,7 +15,7 @@ const totalStr = REVIEWS_TOTAL.toLocaleString('es-CL');
     <div class="section-head section-head--row reveal">
       <div>
         <div class="kicker" style="margin-bottom:10px">Lo que dicen quienes ya viven con un Ducha Segura®</div>
-        <h2 class="h2">{ratingStr} de 5 <span class="accent">en {totalStr} reseñas de Google.</span></h2>
+        <h2 class="h2"><span id="revRating">{ratingStr}</span> de 5 <span class="accent">en <span id="revTotal">{totalStr}</span> reseñas de Google.</span></h2>
       </div>
       <div class="trust-strip">
         <svg class="ic"><use href="#i-star"/></svg>
@@ -23,43 +23,114 @@ const totalStr = REVIEWS_TOTAL.toLocaleString('es-CL');
       </div>
     </div>
     <div class="test-grid reveal" id="testGrid">
-      {withInitials.map(t => (
+      {reviews.map(t => (
         <article class="test-card">
-          <div class="test-card__head">
+          <div class="test-card__stars" aria-label={`${t.stars} de 5 estrellas`}>
+            {Array.from({length: 5}).map((_, i) => (
+              <svg class={`ic ${i < t.stars ? 'on' : 'off'}`}><use href="#i-star"/></svg>
+            ))}
+          </div>
+          <p class="test-card__text">{t.text}</p>
+          <div class="test-card__foot">
             <div class="test-card__avatar">{t.initials}</div>
-            <div class="test-card__who">
-              <div class="test-card__name">{t.name}</div>
-              <div class="test-card__city">{t.meta}</div>
-            </div>
-            <div class="test-card__stars" aria-label={`${t.stars} de 5 estrellas`}>
-              {Array.from({length: t.stars}).map(() => (
-                <svg class="ic"><use href="#i-star"/></svg>
-              ))}
+            <div class="test-card__name">{t.name}</div>
+            <div class="test-card__src">
+              <span>{t.meta}</span>
+              <svg class="g-ic" viewBox="0 0 48 48" aria-label="Google">
+                <path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>
+                <path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/>
+                <path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34A21.99 21.99 0 0 0 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z"/>
+                <path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/>
+              </svg>
             </div>
           </div>
-          <p class="test-card__text">"{t.text}"</p>
         </article>
       ))}
     </div>
   </div>
 </section>
 
-<style>
-/* Testimonios (legacy 416–431) */
-.test-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media (max-width:768px){.test-grid{grid-template-columns:1fr}}
-.test-card{padding:28px;background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);display:flex;flex-direction:column;gap:14px;transition:transform .2s,box-shadow .2s}
-@media (max-width:768px){.test-card{padding:22px}}
+<script>
+// Enhancement progresivo: reemplaza las reseñas estáticas (SSR) por las vivas de Google
+// vía /api/reviews.php (proxy cacheado). Si falla, se queda el contenido estático.
+const API_URL = import.meta.env.DEV
+  ? 'http://localhost:8080/api/reviews.php'
+  : '/api/reviews.php';
+
+type Review = { name: string; meta: string; text: string; stars: number };
+
+const GOOGLE_ICON =
+  '<svg class="g-ic" viewBox="0 0 48 48" aria-label="Google">' +
+  '<path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>' +
+  '<path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/>' +
+  '<path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34A21.99 21.99 0 0 0 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z"/>' +
+  '<path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>';
+
+function stars(n: number) {
+  return Array.from({ length: 5 }, (_, i) =>
+    `<svg class="ic ${i < n ? 'on' : 'off'}"><use href="#i-star"/></svg>`).join('');
+}
+function card(t: Review) {
+  const initials = t.name.split(' ').map(w => w[0]).slice(0, 2).join('');
+  const esc = (s: string) => s.replace(/[&<>"]/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+  return `<article class="test-card">
+      <div class="test-card__stars" aria-label="${t.stars} de 5 estrellas">${stars(t.stars)}</div>
+      <p class="test-card__text">${esc(t.text)}</p>
+      <div class="test-card__foot">
+        <div class="test-card__avatar">${esc(initials)}</div>
+        <div class="test-card__name">${esc(t.name)}</div>
+        <div class="test-card__src"><span>${esc(t.meta)}</span>${GOOGLE_ICON}</div>
+      </div>
+    </article>`;
+}
+
+async function loadReviews() {
+  const grid = document.getElementById('testGrid');
+  if (!grid) return;
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    if (!data?.ok || !Array.isArray(data.reviews) || data.reviews.length === 0) return;
+    grid.innerHTML = data.reviews.slice(0, 5).map(card).join('');
+    const r = document.getElementById('revRating');
+    const tot = document.getElementById('revTotal');
+    if (r && data.rating) r.textContent = Number(data.rating).toLocaleString('es-CL', { minimumFractionDigits: 1 });
+    if (tot && data.total) tot.textContent = Number(data.total).toLocaleString('es-CL');
+  } catch {
+    /* sin conexión / endpoint caído → se mantiene el contenido estático */
+  }
+}
+
+document.addEventListener('astro:page-load', loadReviews);
+</script>
+
+<style is:global>
+/* Global (NO scoped): las tarjetas vivas las inyecta el script con innerHTML y no
+   llevan el atributo de scope de Astro; con CSS scoped quedarían sin estilo. */
+/* Testimonios — grilla 2 arriba / 3 abajo (6 columnas: top span 3, bottom span 2) */
+.test-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.test-card:nth-child(1),.test-card:nth-child(2){grid-column:span 3}
+.test-card:nth-child(n+3){grid-column:span 2}
+@media (max-width:860px){
+  .test-grid{grid-template-columns:1fr 1fr}
+  .test-card{grid-column:auto !important}
+}
+@media (max-width:560px){.test-grid{grid-template-columns:1fr}}
+
+.test-card{padding:24px;background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);display:flex;flex-direction:column;gap:14px;transition:transform .2s,box-shadow .2s}
 .test-card:hover{transform:translateY(-2px);box-shadow:var(--ds-shadow)}
-.test-card__head{display:flex;align-items:center;gap:14px}
-.test-card__avatar{width:44px;height:44px;border-radius:50%;background:var(--ds-blue-soft);display:flex;align-items:center;justify-content:center;font-family:var(--ds-display);font-weight:700;font-size:16px;color:var(--ds-blue);flex-shrink:0}
-.test-card__who{flex:1}
-.test-card__name{font-size:14px;font-weight:700;color:var(--ds-text-strong)}
-.test-card__city{font-size:12px;color:var(--ds-text)}
-.test-card__stars{display:flex;gap:2px;color:var(--ds-blue)}
-.test-card__stars .ic{width:14px;height:14px;fill:var(--ds-blue);stroke-width:1.4}
-.test-card__text{margin:0;font-size:16px;line-height:1.55;color:var(--ds-text-strong)}
-@media (max-width:768px){.test-card__text{font-size:15px}}
+.test-card__stars{display:flex;gap:3px}
+.test-card__stars .ic{width:18px;height:18px;stroke-width:0}
+.test-card__stars .ic.on{fill:#fbbc04;color:#fbbc04}
+.test-card__stars .ic.off{fill:#dadce0;color:#dadce0}
+/* Clamp para que la tarjeta no se dispare con reseñas muy largas */
+.test-card__text{margin:0;font-size:15px;line-height:1.55;color:var(--ds-text-strong);flex:1;display:-webkit-box;-webkit-line-clamp:8;line-clamp:8;-webkit-box-orient:vertical;overflow:hidden}
+.test-card__foot{display:flex;align-items:center;gap:12px;margin-top:auto}
+.test-card__avatar{width:40px;height:40px;border-radius:50%;background:var(--ds-blue-soft);display:flex;align-items:center;justify-content:center;font-family:var(--ds-display);font-weight:700;font-size:14px;color:var(--ds-blue);flex-shrink:0}
+.test-card__name{font-size:14px;font-weight:700;color:var(--ds-text-strong);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.test-card__src{display:flex;align-items:center;gap:6px;flex-shrink:0;font-size:12px;color:#80868b}
+.test-card__src .g-ic{width:15px;height:15px}
 .trust-strip{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--ds-bg-alt);border:1px solid var(--ds-border);border-radius:999px;font-size:12px;font-weight:600}
 .trust-strip .ic{width:14px;height:14px;stroke-width:2;color:var(--ds-blue)}
 </style>
