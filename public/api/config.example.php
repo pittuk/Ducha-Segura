@@ -25,6 +25,16 @@ return [
   // Destinatario(s) de la notificación al gestor. Acepta string o array (notifica a todos).
   'manager_email' => ['contacto@duchasegura.cl', 'luis@agenciados.cl'],
   'site_url' => 'https://www.duchasegura.cl',
+  // Google Places API (New) para las reseñas auto-actualizables (reviews.php).
+  // api_key: key de Google Cloud con "Places API (New)" habilitada y facturación activa.
+  //          Restringir por IP del servidor (es server-side, no la expongas como key web).
+  // place_id: ID del perfil de Ducha Segura (ej. "ChIJ..."). Ver Place ID Finder de Google.
+  // Google devuelve como máximo 5 reseñas; cache_ttl en segundos (24h por defecto).
+  'google_places' => [
+    'api_key'   => 'CAMBIAR',
+    'place_id'  => 'CAMBIAR',
+    'cache_ttl' => 86400,
+  ],
   // Orígenes permitidos para CORS. Acepta string o array. Solo se refleja el Origin de
   // la petición si está en esta lista. En dev agrega 'http://localhost:4321'. Evita '*'.
   'cors_origin' => ['https://www.duchasegura.cl', 'https://duchasegura.cl'],
