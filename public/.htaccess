@@ -5,3 +5,6 @@ RewriteRule ^(.*)$ https://www.duchasegura.cl/$1 [R=301,L]
 
 # TC-02 — Sitemap único: /sitemap.xml → /sitemap-index.xml (el canónico que declara robots.txt).
 RewriteRule ^sitemap\.xml$ /sitemap-index.xml [R=301,L]
+
+# TC-03 — QR impreso: la ruta del PDF en el WordPress viejo → PDF en la raíz nueva (301).
+RewriteRule ^wp-content/uploads/2025/04/Manual-instalacion-piezas_V2-4\.pdf$ /Manual-instalacion-piezas_V2-4.pdf [R=301,L]
