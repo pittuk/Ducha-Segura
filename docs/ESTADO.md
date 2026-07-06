@@ -56,7 +56,7 @@ Sitio Web/
 
 > **Slugs alineados con WordPress** (para preservar indexación): `/rebaje-de-tina`, `/accesorios`, `/convenios`, `/blog`, `/terminos-y-condiciones-ducha-segura`, `/accion-social` y `/` coinciden con los slugs reales del WP. `/kits` y `/catalogo` son **nuevos** (no existían en WP).
 >
-> **Páginas WP portadas con contenido real** (vía `scripts/import-pages.mjs`, extrae el contenido de Elementor y lo limpia → `src/data/paginas/<slug>.{html,meta.json}`, renderizado con el componente `Prose`): `/terminos-y-condiciones-ducha-segura`, `/accion-social`.
+> **Páginas WP portadas con contenido real** (contenido de Elementor ya extraído y limpiado en `src/data/paginas/<slug>.{html,meta.json}`, renderizado con el componente `Prose`; el script de importación de una sola vez fue eliminado tras usarse): `/terminos-y-condiciones-ducha-segura`, `/accion-social`.
 > **Páginas WP aún pendientes:** `/cotizar/`, `/finalizar-cotizacion/`, `/gracias-por-contactarnos/`.
 
 > **Blog — URLs:** los posts se sirven en la **raíz** `/<slug>/` (vía `src/pages/[slug].astro`), igual que en el WordPress original, para **preservar la indexación**. El listado vive en `/blog`. Las páginas estáticas (`/rebaje-de-tina`, `/accesorios`, etc.) tienen prioridad sobre la ruta dinámica.
