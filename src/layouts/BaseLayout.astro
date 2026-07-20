@@ -2,6 +2,7 @@
 // BaseLayout.astro — Layout base del sitio. Incluye tokens, reset, iconos, topbar,
 // header, prefooter, footer y el script de inicialización de UI global.
 import '../styles/tokens.css';
+import '../styles/fonts.css';
 import '../styles/base.css';
 import Icons from '../components/Icons.astro';
 import Topbar from '../components/Topbar.astro';
@@ -14,6 +15,7 @@ import QuoteDrawer from '../components/QuoteDrawer.astro';
 import QuickView from '../components/QuickView.astro';
 import { ClientRouter } from 'astro:transitions';
 import { organizationGraph, type JsonLdNode } from '../lib/seo';
+import { asset } from '../lib/asset';
 
 interface Props {
   title: string;
@@ -21,6 +23,7 @@ interface Props {
   ogImage?: string;
   hidePrefooter?: boolean;   // oculta el CTA pre-footer global (ej. Kits usa su propio banner)
   schema?: JsonLdNode | JsonLdNode[];   // nodos JSON-LD propios de la página (Product, FAQPage, etc.)
+  preloadImage?: string;   // ruta /public de la imagen LCP above-the-fold (ej. fondo del hero) → preload
 }
 
 const {
@@ -29,7 +32,11 @@ const {
   ogImage = '/images/og-default.png',
   hidePrefooter = false,
   schema,
+  preloadImage,
 } = Astro.props;
+
+// El fondo del hero es un background-image (se descubre tarde) → preload explícito para el LCP.
+const preloadImageUrl = preloadImage ? asset(preloadImage) : null;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
@@ -74,9 +81,11 @@ const jsonLd = {
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImageUrl} />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=PT+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet" />
+  <!-- Fuentes auto-hospedadas (src/styles/fonts.css). Elimina el dominio externo de la ruta
+       crítica; preload solo de las 2 latinas above-the-fold para minimizar swap (LCP + CLS). -->
+  <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/poppins-800-latin.woff2" as="font" type="font/woff2" crossorigin />
+  {preloadImageUrl && <link rel="preload" href={preloadImageUrl} as="image" fetchpriority="high" />}
   <ClientRouter />
 </head>
 <body>
