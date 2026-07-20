@@ -19,7 +19,7 @@ const GUIAS = [
     <div class="container">
       <div class="section-head"><h1 class="h2">Rebajes de tina</h1><p class="lead">Elige el rebaje según tu tina.</p></div>
       <p class="pillar-intro">El <strong>rebaje de tina</strong> es la adaptación que rebaja la pared lateral de tu tina actual para crear un acceso bajo y seguro, <strong>sin demoler ni reemplazar la tina</strong>. Está pensado para <strong>adultos mayores y personas con movilidad reducida</strong> que ya no pueden levantar la pierna sobre el borde. Lo instalamos a domicilio en <strong>menos de 2 horas</strong>, con <strong>garantía de 3 años</strong> y cobertura en la Región Metropolitana, Valparaíso y Biobío.</p>
-      <div class="product-grid">{REBAJES.map(p => <ProductoCard producto={p} />)}</div>
+      <div class="product-grid">{REBAJES.map((p, i) => <ProductoCard producto={p} priority={i === 0} />)}</div>
     </div>
   </section>
   <Calculator />

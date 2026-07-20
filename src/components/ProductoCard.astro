@@ -2,8 +2,8 @@
 import type { Producto } from '../data/productos';
 import { clp } from '../lib/format';
 import { asset } from '../lib/asset';
-interface Props { producto: Producto; }
-const { producto: p } = Astro.props;
+interface Props { producto: Producto; priority?: boolean; }  // priority: primera card above-the-fold (LCP) → carga ansiosa
+const { producto: p, priority = false } = Astro.props;
 const href = `/producto/${p.slug}/`;
 const img = asset(p.image);
 const priceTxt = p.price > 0 ? `${p.grupo === 'rebaje' ? 'Desde ' : ''}$${clp(p.price)}` : (p.priceLabel ?? 'Consultar');
@@ -13,7 +13,7 @@ const extract = (p.descriptionHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/
 <article class:list={['prod-card', { 'prod-card--featured': p.featured }]}>
   <div class:list={['prod-card__media', `prod-card__media--${fit}`]}>
     <a href={href} class="prod-card__imglink" aria-label={p.name}>
-      <img src={img} alt={p.name} loading="lazy" />
+      <img src={img} alt={p.name} loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} />
     </a>
     <button
       class="prod-card__qv"

@@ -20,6 +20,18 @@ const priceTxt = p.price > 0 ? `$${clp(p.price)}` : (p.priceLabel ?? 'Consultar'
 const fit = (p.grupo === 'rebaje' || p.grupo === 'kit') ? 'cover' : 'contain';
 const related = PRODUCTOS.filter((x) => x.grupo === p.grupo && x.slug !== p.slug).slice(0, 4);
 
+// Meta description dedicada por grupo. shortDescription en rebajes/kits es un disclaimer de
+// precio ("*Precio sujeto a…"), inútil como meta description → generamos una con keyword + valor.
+const shortClean = p.shortDescription?.trim().startsWith('*') ? '' : p.shortDescription?.trim();
+const META_DESC: Record<Producto['grupo'], string> = {
+  rebaje: `${p.name} — acceso bajo y seguro a tu tina actual, sin demolerla. Instalación a domicilio, producto nacional patentado y garantía de 3 años.`,
+  kit: `${p.name} — rebaja tu tina para un baño accesible y seguro. Producto nacional patentado, con garantía y despacho a todo Chile.`,
+  accesorio: shortClean
+    ? `${shortClean} ${p.name} de Ducha Segura® para un baño más seguro y accesible.`
+    : `${p.name} para un baño más seguro y accesible. Ducha Segura®, producto nacional con despacho a todo Chile.`,
+};
+const metaDesc = META_DESC[p.grupo].replace(/\s+/g, ' ').trim();
+
 const schema = [
   productNode(Astro.site!, p),
   breadcrumbNode(Astro.site!, [
@@ -28,7 +40,7 @@ const schema = [
   ]),
 ];
 ---
-<BaseLayout title={`${p.name} — Ducha Segura®`} description={p.shortDescription || p.name} ogImage={p.image} schema={schema}>
+<BaseLayout title={`${p.name} — Ducha Segura®`} description={metaDesc} ogImage={p.image} schema={schema}>
   <section class="section">
     <div class="container">
       <nav class="ficha__crumbs" aria-label="Migas de pan"><a href="/catalogo/">Catálogo</a><span aria-hidden="true">›</span><span>{grupoLabel}</span></nav>
