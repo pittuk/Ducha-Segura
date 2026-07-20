@@ -24,6 +24,7 @@ interface Props {
   hidePrefooter?: boolean;   // oculta el CTA pre-footer global (ej. Kits usa su propio banner)
   schema?: JsonLdNode | JsonLdNode[];   // nodos JSON-LD propios de la página (Product, FAQPage, etc.)
   preloadImage?: string;   // ruta /public de la imagen LCP above-the-fold (ej. fondo del hero) → preload
+  preloadImageMobile?: string;   // variante móvil de la imagen LCP → preload solo en pantallas chicas
 }
 
 const {
@@ -33,10 +34,13 @@ const {
   hidePrefooter = false,
   schema,
   preloadImage,
+  preloadImageMobile,
 } = Astro.props;
 
 // El fondo del hero es un background-image (se descubre tarde) → preload explícito para el LCP.
+// Con variante móvil, cada preload lleva `media` para que cada viewport baje solo la suya.
 const preloadImageUrl = preloadImage ? asset(preloadImage) : null;
+const preloadImageMobileUrl = preloadImageMobile ? asset(preloadImageMobile) : null;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
@@ -85,7 +89,8 @@ const jsonLd = {
        crítica; preload solo de las 2 latinas above-the-fold para minimizar swap (LCP + CLS). -->
   <link rel="preload" href="/fonts/inter-400-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/poppins-800-latin.woff2" as="font" type="font/woff2" crossorigin />
-  {preloadImageUrl && <link rel="preload" href={preloadImageUrl} as="image" fetchpriority="high" />}
+  {preloadImageUrl && <link rel="preload" href={preloadImageUrl} as="image" fetchpriority="high" media={preloadImageMobileUrl ? '(min-width:769px)' : undefined} />}
+  {preloadImageMobileUrl && <link rel="preload" href={preloadImageMobileUrl} as="image" fetchpriority="high" media="(max-width:768px)" />}
   <ClientRouter />
 </head>
 <body>
