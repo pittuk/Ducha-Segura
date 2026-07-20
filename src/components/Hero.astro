@@ -5,11 +5,14 @@ import { asset } from '../lib/asset';
 const h = HERO_COPY.user;
 const afterImg = asset('/images/rebajes/rebaje tina tradicional despues ducha segura.webp');
 const beforeImg = asset('/images/rebajes/rebaje tina tradicional antes ducha segura.webp');
+// Variantes móviles (900px, ~13KB) para no servir 1920px full-bleed en pantallas chicas → LCP.
+const afterImgSm = asset('/images/rebajes/rebaje tina tradicional despues ducha segura-sm.webp');
+const beforeImgSm = asset('/images/rebajes/rebaje tina tradicional antes ducha segura-sm.webp');
 ---
 <section class="hero" aria-label="Presentación principal">
   <div class="slider" id="slider" role="region" aria-label="Comparador antes y después">
-    <div class="slider__layer slider__after" style={`background-image:url('${afterImg}')`} aria-hidden="true"></div>
-    <div class="slider__layer slider__before" id="sliderBefore" style={`clip-path:polygon(0 0,50% 0,50% 100%,0 100%);-webkit-clip-path:polygon(0 0,50% 0,50% 100%,0 100%);background-image:url('${beforeImg}')`} aria-hidden="true"></div>
+    <div class="slider__layer slider__after" style={`--bg:url('${afterImg}');--bg-sm:url('${afterImgSm}')`} aria-hidden="true"></div>
+    <div class="slider__layer slider__before" id="sliderBefore" style={`clip-path:polygon(0 0,50% 0,50% 100%,0 100%);-webkit-clip-path:polygon(0 0,50% 0,50% 100%,0 100%);--bg:url('${beforeImg}');--bg-sm:url('${beforeImgSm}')`} aria-hidden="true"></div>
     <div class="slider__handle" id="sliderHandle" style="left:50%">
       <div class="slider__label slider__label--before">Antes</div>
       <div class="slider__label slider__label--after">Después</div>
@@ -58,8 +61,9 @@ const beforeImg = asset('/images/rebajes/rebaje tina tradicional antes ducha seg
 .hero{position:relative;height:720px;overflow:hidden;background:var(--ds-blue-dark)}
 @media (max-width:768px){.hero{height:640px}}
 .slider{position:absolute;inset:0;cursor:col-resize;overflow:hidden;user-select:none;-webkit-user-select:none}
-.slider__layer{position:absolute;inset:0;background-size:cover;background-position:center bottom}
-/* background-image se setea inline (asset() con ?v=hash para cache-busting de la CDN). */
+.slider__layer{position:absolute;inset:0;background-size:cover;background-position:center bottom;background-image:var(--bg)}
+/* --bg / --bg-sm se setean inline (asset() con ?v=hash). Móvil usa la variante liviana (900px). */
+@media (max-width:768px){.slider__layer{background-image:var(--bg-sm)}}
 .slider__after{background-color:#6d8a99}
 .slider__before{background-color:#6d5a48;filter:grayscale(1)}
 .slider__label{position:absolute;top:24px;padding:6px 12px;font-family:var(--ds-sans);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;white-space:nowrap}
