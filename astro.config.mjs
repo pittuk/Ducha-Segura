@@ -10,5 +10,9 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://www.duchasegura.cl',
   output: 'static',
+  // Inlinea todo el CSS en <style> → elimina los requests render-blocking (~480ms bajo 4G).
+  // El CSS es chico y gzipea bien; el trade-off (no cachear CSS entre páginas) lo compensa
+  // el foco en LCP de landing. Ver ronda 3 SEO móvil.
+  build: { inlineStylesheets: 'always' },
   integrations: [sitemap()],
 });
