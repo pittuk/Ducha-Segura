@@ -8,3 +8,21 @@ RewriteRule ^sitemap\.xml$ /sitemap-index.xml [R=301,L]
 
 # TC-03 — QR impreso: la ruta del PDF en el WordPress viejo → PDF en la raíz nueva (301).
 RewriteRule ^wp-content/uploads/2025/04/Manual-instalacion-piezas_V2-4\.pdf$ /Manual-instalacion-piezas_V2-4.pdf [R=301,L]
+
+# Caché de estáticos (Lighthouse: "tiempos de almacenamiento en caché eficientes").
+# Assets con hash en el nombre (/_astro/) e imágenes con ?v= → inmutables a 1 año.
+# El HTML NO se cachea: es lo que trae las URLs nuevas tras cada deploy.
+<IfModule mod_headers.c>
+  # Fuentes y bundles hasheados: nombre único por build → inmutables.
+  <FilesMatch "\.(woff2|js|css)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Imágenes: 30 días. NO inmutables — varias se sirven sin fingerprint `?v=`
+  # (ver asset() en src/lib/asset.ts), y un año dejaría versiones viejas pegadas.
+  <FilesMatch "\.(webp|png|jpe?g|svg)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
