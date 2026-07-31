@@ -60,27 +60,42 @@ const jsonLd = {
   <!-- Progressive enhancement: marca `js` para gatear la animación .reveal.
        Sin JS, el contenido .reveal se muestra de inmediato (no queda invisible). -->
   <script is:inline>document.documentElement.classList.add('js')</script>
-  <!-- Google Tag Manager -->
-  <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-WRGMCKWC');</script>
-  <!-- End Google Tag Manager -->
-  <!-- TikTok Pixel -->
+  <!-- Terceros (GTM + TikTok Pixel) fuera de la ruta crítica.
+       ponytail: arrancan en la primera interacción o 1,5 s después de `load`, lo que ocurra
+       primero. Sacarlos del head libera ancho de banda para el LCP y ~370 KiB de JS del TBT.
+       Costo: un rebote en <1,5 s sin interacción no se registra. -->
   <script is:inline>
-  !function (w, d, t) {
-    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-  var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-  ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+  (function (w, d) {
+    var booted = false;
+    function boot() {
+      if (booted) return; booted = true;
 
-    ttq.load('D9MH9ERC77U97D5Q36KG');
-    // ponytail: el script del head no se re-ejecuta en los swaps de View Transitions,
-    // así que la pageview va en astro:page-load (dispara también en la carga inicial).
-    document.addEventListener('astro:page-load', function(){ ttq.page(); });
-  }(window, document, 'ttq');
+      // Google Tag Manager
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(w,d,'script','dataLayer','GTM-WRGMCKWC');
+
+      // TikTok Pixel
+      !function (w, d, t) {
+        w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+      var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+      ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+
+        ttq.load('D9MH9ERC77U97D5Q36KG');
+        ttq.page();
+        // El script del head no se re-ejecuta en los swaps de View Transitions → pageview por evento.
+        d.addEventListener('astro:page-load', function () { ttq.page(); });
+      }(w, d, 'ttq');
+    }
+
+    ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(function (ev) {
+      w.addEventListener(ev, boot, { once: true, passive: true });
+    });
+    w.addEventListener('load', function () { setTimeout(boot, 1500); });
+  })(window, document);
   </script>
-  <!-- End TikTok Pixel -->
   <meta name="description" content={description} />
   <meta name="theme-color" content="#0072C0" />
   <title>{title}</title>
