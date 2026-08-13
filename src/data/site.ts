@@ -7,6 +7,7 @@ export const NAV: NavItem[] = [
     { label: 'Accesorios', href: '/accesorios' },
     { label: 'Kits', href: '/kits' },
   ] },
+  { label: 'Instalación', href: '/instalacion-de-rebaje-de-tina' },
   { label: 'Convenios', href: '/convenios' },
   { label: 'Blog', href: '/blog' },
 ];
