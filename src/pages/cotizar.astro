@@ -34,12 +34,20 @@ import { asset } from '../lib/asset';
             <!-- Tipo de tina (solo si hay rebaje) -->
             <fieldset class="cotizar__block" id="tinaBlock" style="display:none">
               <legend class="cotizar__h">¿Cuál es tu tipo de tina?</legend>
-              <p class="cotizar__hint">Selecciona la tina que tienes hoy.</p>
+              <p class="cotizar__hint">Selecciona la tina que tienes hoy. Pasa el cursor sobre la foto para ver cómo queda con el rebaje. <a href="/tipos-de-tina">¿Cuál es tu tipo de tina?</a></p>
               <div class="tina-grid">
                 {TIPOS_TINA.filter((t) => t.id !== 'no-se').map((t) => (
                   <label class="tina-card">
                     <input type="radio" name="tipoTina" value={t.id} />
-                    <img src={asset(t.image)} alt={t.name} loading="lazy" />
+                    <span class="tina-card__media">
+                      <img src={asset(t.image)} alt={t.name} loading="lazy" />
+                      {t.imageAfter ? (
+                        <>
+                          <img class="tina-card__after" src={asset(t.imageAfter)} alt={`${t.name} con el rebaje instalado`} loading="lazy" />
+                          <span class="tina-card__tag" aria-hidden="true">Después</span>
+                        </>
+                      ) : null}
+                    </span>
                     <span class="tina-card__name">{t.name}{t.nota ? <small>{t.nota}</small> : null}</span>
                   </label>
                 ))}
@@ -145,6 +153,17 @@ import { asset } from '../lib/asset';
   .tina-card input{position:absolute;opacity:0;pointer-events:none}
   .tina-card:has(input:checked){border-color:var(--ds-blue);box-shadow:0 0 0 3px var(--ds-blue-soft)}
   .tina-card img{width:100%;height:auto;display:block}
+  /* Antes/después: la foto "después" se superpone en hover, foco o selección (en táctil, al seleccionar). */
+  .tina-card__media{position:relative;display:block}
+  .tina-card__after{position:absolute;inset:0;height:100%;object-fit:cover;opacity:0;transition:opacity .2s}
+  .tina-card:hover .tina-card__after,
+  .tina-card:focus-within .tina-card__after,
+  .tina-card:has(input:checked) .tina-card__after{opacity:1}
+  .tina-card__tag{position:absolute;left:8px;top:8px;padding:3px 8px;border-radius:999px;background:var(--ds-blue);color:#fff;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;opacity:0;transition:opacity .2s}
+  .tina-card:hover .tina-card__tag,
+  .tina-card:focus-within .tina-card__tag,
+  .tina-card:has(input:checked) .tina-card__tag{opacity:1}
+  @media (prefers-reduced-motion:reduce){.tina-card__after,.tina-card__tag{transition:none}}
   .tina-card__name{display:block;padding:10px 12px 12px;font-size:12px;font-weight:700;color:var(--ds-text-strong);line-height:1.2}
   .tina-card__name small{display:block;font-weight:500;color:var(--ds-text);font-size:11px;margin-top:3px}
   /* "No sé qué tipo de tina" — botón sin imagen, llamativo */

@@ -1,0 +1,169 @@
+---
+// tipos-de-tina.astro — Guía de los 6 tipos de tina con antes/después del rebaje.
+// Fuente de datos: src/data/tinas.ts (la misma que usa el selector de /cotizar).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { TIPOS_TINA } from '../data/tinas';
+import { SITE } from '../data/site';
+import { asset } from '../lib/asset';
+import { faqNode } from '../lib/seo';
+
+const TIPOS = TIPOS_TINA.filter((t) => t.id !== 'no-se');
+
+const FAQ: { q: string; a: string }[] = [
+  { q: '¿Qué pasa si no sé qué tipo de tina tengo?', a: 'No es un problema: puedes cotizar igual. El técnico identifica el material y la forma en la visita, y si algo no calza te lo decimos antes de instalar.' },
+  { q: '¿Se puede rebajar cualquier tina?', a: 'Rebajamos tinas de acero esmaltado, acrílicas, de fierro fundido, de hidromasaje y tinas especiales o a medida. En bordes muy anchos o formas poco comunes confirmamos la factibilidad con fotos y medidas.' },
+  { q: '¿El rebaje daña la tina o las cañerías?', a: 'No. Se corta solo una sección del borde con la tina en su lugar: no se retira la tina ni se tocan las cañerías, y el contorno queda sellado para que no haya filtraciones.' },
+  { q: '¿Cómo les mando fotos de mi tina?', a: 'Por WhatsApp. Una foto de frente y otra del borde bastan para decirte qué tipo de tina tienes y qué rebaje corresponde.' },
+];
+---
+<BaseLayout
+  title="¿Cuál es tu tipo de tina? Antes y después del rebaje — Ducha Segura®"
+  description="Identifica tu tina: acero esmaltado, acrílica, fierro fundido, hidromasaje o especial. Mira el antes y después del rebaje en cada tipo y cómo la adaptamos sin obras."
+  schema={faqNode(FAQ)}
+>
+  <section class="section">
+    <div class="container">
+      <header class="section-head section-head--center tt-intro">
+        <span class="kicker">Guía rápida</span>
+        <h1 class="h2">¿Cuál es tu tipo de tina?</h1>
+        <p class="lead">Casi todas las tinas se pueden rebajar. Saber cuál tienes nos ayuda a cotizar bien y a llegar con la pieza correcta. Acá están los 6 tipos que más vemos, con el <strong class="tt-em">antes y después</strong> del rebaje instalado.</p>
+      </header>
+      <p class="tt-hint">Pasa el cursor sobre cada foto (o tócala en el celular) para ver el resultado.</p>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <ul class="tt-list">
+        {TIPOS.map((t) => (
+          <li class="tt-item reveal">
+            <button class="tt-media" type="button" aria-pressed="false" aria-label={`Ver el antes y después de la ${t.name.toLowerCase()}`}>
+              <img class="tt-media__img" src={asset(t.image)} alt={`${t.name} antes del rebaje`} loading="lazy" />
+              {t.imageAfter ? (
+                <img class="tt-media__img tt-media__img--after" src={asset(t.imageAfter)} alt={`${t.name} con el rebaje instalado`} loading="lazy" />
+              ) : null}
+              <span class="tt-media__tag tt-media__tag--before">Antes</span>
+              <span class="tt-media__tag tt-media__tag--after">Después</span>
+            </button>
+            <div class="tt-body">
+              <h2 class="tt-name">{t.name}{t.nota ? <span class="tt-nota">{t.nota}</span> : null}</h2>
+              {t.comoReconocerla ? (
+                <p class="tt-p"><strong>Cómo reconocerla.</strong> {t.comoReconocerla}</p>
+              ) : null}
+              {t.conRebaje ? (
+                <p class="tt-p"><strong>Con el rebaje.</strong> {t.conRebaje}</p>
+              ) : null}
+              <a class="tt-link" href={`/cotizar`}>Cotizar con esta tina<svg class="ic"><use href="#i-arrow"/></svg></a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container tt-narrow">
+      <div class="tt-unsure">
+        <svg class="ic tt-unsure__ic"><use href="#i-info"/></svg>
+        <div>
+          <h2 class="tt-unsure__t">¿No cuadra con ninguna?</h2>
+          <p class="tt-p">Mándanos una foto de frente y otra del borde de tu tina por WhatsApp y te decimos qué tipo es y qué rebaje corresponde. Si prefieres, cotiza igual y marca “No sé qué tipo de tina tengo”: el técnico la identifica en la visita.</p>
+          <div class="tt-cta">
+            <a href={SITE.whatsappUrl} class="btn btn--primary btn--lg" target="_blank" rel="noopener"><span>Enviar foto por WhatsApp</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+            <a href="/cotizar" class="btn btn--ghost-dark btn--lg"><span>Cotizar mi rebaje</span></a>
+          </div>
+        </div>
+      </div>
+      <p class="tt-note">¿Quieres ver cómo es el trabajo en tu casa? Revisa la <a href="/instalacion-de-rebaje-de-tina">instalación paso a paso</a>.</p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container tt-narrow">
+      <header class="section-head">
+        <span class="kicker">Ayuda</span>
+        <h2 class="h2">Dudas frecuentes</h2>
+      </header>
+      <div class="tt-faq">
+        {FAQ.map((item) => (
+          <details class="tt-faq__item">
+            <summary class="tt-faq__q">
+              <span>{item.q}</span>
+              <svg class="ic tt-faq__chevron"><use href="#i-chevron"/></svg>
+            </summary>
+            <p class="tt-faq__a">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // ponytail: toque = alternar antes/después (en desktop lo hace el :hover del CSS).
+  // Bandera de módulo (no body.dataset): el body se reemplaza en cada View Transition.
+  let bound = false;
+  function bind() {
+    if (bound) return;
+    bound = true;
+    document.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement)?.closest('.tt-media');
+      if (!btn) return;
+      const on = btn.getAttribute('aria-pressed') === 'true';
+      btn.setAttribute('aria-pressed', on ? 'false' : 'true');
+    });
+  }
+  bind();
+</script>
+
+<style>
+  .tt-intro{max-width:780px;margin-left:auto;margin-right:auto}
+  .tt-em{color:var(--ds-blue);font-weight:700}
+  .tt-narrow{max-width:820px}
+  .tt-hint{margin:18px 0 0;text-align:center;font-size:14.5px;color:var(--ds-text)}
+
+  .tt-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:22px}
+  .tt-item{display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:24px;align-items:center;background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);padding:20px}
+  @media (max-width:820px){.tt-item{grid-template-columns:1fr;gap:16px}}
+
+  .tt-media{position:relative;display:block;width:100%;padding:0;border:0;border-radius:var(--ds-radius);overflow:hidden;cursor:pointer;background:var(--ds-bg-alt);line-height:0}
+  .tt-media:focus-visible{outline:2px solid var(--ds-blue);outline-offset:2px}
+  .tt-media__img{width:100%;height:auto;display:block}
+  .tt-media__img--after{position:absolute;inset:0;height:100%;object-fit:cover;opacity:0;transition:opacity .25s}
+  .tt-media:hover .tt-media__img--after,
+  .tt-media[aria-pressed="true"] .tt-media__img--after{opacity:1}
+
+  .tt-media__tag{position:absolute;top:10px;left:10px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;line-height:1.4;transition:opacity .25s}
+  .tt-media__tag--before{background:rgba(255,255,255,.92);color:var(--ds-text-strong)}
+  .tt-media__tag--after{background:var(--ds-blue);color:#fff;opacity:0}
+  .tt-media:hover .tt-media__tag--before,
+  .tt-media[aria-pressed="true"] .tt-media__tag--before{opacity:0}
+  .tt-media:hover .tt-media__tag--after,
+  .tt-media[aria-pressed="true"] .tt-media__tag--after{opacity:1}
+  @media (prefers-reduced-motion:reduce){.tt-media__img--after,.tt-media__tag{transition:none}}
+
+  .tt-name{margin:0 0 10px;font-family:var(--ds-display);font-size:22px;color:var(--ds-text-strong);line-height:1.25}
+  .tt-nota{display:block;font-family:var(--ds-sans);font-size:14px;font-weight:500;color:var(--ds-text);margin-top:4px}
+  .tt-p{margin:0 0 10px;font-size:15.5px;line-height:1.6;color:var(--ds-text)}
+  .tt-p strong{color:var(--ds-text-strong)}
+  .tt-link{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-size:15px;font-weight:700;color:var(--ds-blue)}
+  .tt-link .ic{width:16px;height:16px}
+  .tt-link:hover{text-decoration:underline}
+
+  .tt-unsure{display:flex;gap:16px;align-items:flex-start;border:2px dashed var(--ds-blue);border-radius:var(--ds-radius-lg);background:var(--ds-blue-soft);padding:24px}
+  @media (max-width:520px){.tt-unsure{flex-direction:column;padding:20px}}
+  .tt-unsure__ic{width:32px;height:32px;min-width:32px;color:var(--ds-blue)}
+  .tt-unsure__t{margin:0 0 8px;font-family:var(--ds-display);font-size:20px;color:var(--ds-text-strong);line-height:1.3}
+  .tt-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+  .tt-note{margin:22px 0 0;font-size:15px;line-height:1.6;color:var(--ds-text)}
+
+  .tt-faq{display:flex;flex-direction:column;gap:12px;margin-top:28px}
+  .tt-faq__item{border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);background:#fff;overflow:hidden;transition:border-color .15s,box-shadow .15s}
+  .tt-faq__item[open]{border-color:var(--ds-blue-soft);box-shadow:var(--ds-shadow)}
+  .tt-faq__q{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none;padding:18px 20px;font-family:var(--ds-display);font-weight:700;font-size:18px;color:var(--ds-text-strong);line-height:1.3}
+  .tt-faq__q::-webkit-details-marker{display:none}
+  .tt-faq__q:focus-visible{outline:2px solid var(--ds-blue);outline-offset:2px}
+  .tt-faq__chevron{width:20px;height:20px;min-width:20px;stroke-width:2.5;color:var(--ds-blue);transition:transform .2s}
+  .tt-faq__item[open] .tt-faq__chevron{transform:rotate(180deg)}
+  .tt-faq__a{margin:0;padding:0 20px 20px;font-size:15.5px;line-height:1.6;color:var(--ds-text)}
+</style>

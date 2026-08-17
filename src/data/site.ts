@@ -7,7 +7,10 @@ export const NAV: NavItem[] = [
     { label: 'Accesorios', href: '/accesorios' },
     { label: 'Kits', href: '/kits' },
   ] },
-  { label: 'Instalación', href: '/instalacion-de-rebaje-de-tina' },
+  { label: 'Instalación', href: '/instalacion-de-rebaje-de-tina', children: [
+    { label: 'Cómo instalamos', href: '/instalacion-de-rebaje-de-tina' },
+    { label: '¿Cuál es tu tipo de tina?', href: '/tipos-de-tina' },
+  ] },
   { label: 'Convenios', href: '/convenios' },
   { label: 'Blog', href: '/blog' },
 ];
