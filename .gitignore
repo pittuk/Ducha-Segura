@@ -43,3 +43,6 @@ deploy-secrets*
 
 # Material fuente de prensa (pesado: Word/PDF/videos) — no va al repo
 docs/PRENSA/
+
+# PNG fuente de las fotos de tinas (pesados) — al repo va solo el .webp derivado
+originales/tinas-fuente/
