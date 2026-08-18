@@ -48,6 +48,15 @@ const { data } = post;
   .prose :global(figure){margin:20px 0}
   .prose :global(iframe){max-width:100%;border-radius:var(--ds-radius)}
   .prose :global(.wp-block-embed__wrapper){position:relative}
+  /* tablas de contenido (p.ej. tarifas de convenios) */
+  .prose :global(.table-wrap){overflow-x:auto;margin:0 0 20px}
+  .prose :global(table){width:100%;border-collapse:collapse;font-size:16px;background:var(--ds-bg);border:1px solid var(--ds-border);border-radius:var(--ds-radius);overflow:hidden}
+  .prose :global(th),.prose :global(td){padding:12px 14px;text-align:left;border-bottom:1px solid var(--ds-border)}
+  .prose :global(thead th){background:var(--ds-blue);color:#fff;font-weight:600;border-bottom:none}
+  .prose :global(td:not(:first-child)){white-space:nowrap}
+  .prose :global(tbody tr:nth-child(even)){background:var(--ds-bg-alt)}
+  .prose :global(tbody tr:last-child td){border-bottom:none}
+  .prose :global(td:not(:first-child)),.prose :global(thead th:not(:first-child)){text-align:right}
   .post-cta{margin-top:40px;padding:24px 28px;background:var(--ds-blue-soft,#eef6fc);border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg)}
   .post-cta h2{font-family:var(--ds-display);font-size:22px;line-height:1.2;color:var(--ds-text-strong);margin:0 0 8px}
   .post-cta p{margin:0;font-size:16px;line-height:1.6;color:var(--ds-text)}
