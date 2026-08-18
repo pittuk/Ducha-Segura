@@ -46,3 +46,6 @@ docs/PRENSA/
 
 # PNG fuente de las fotos de tinas (pesados) — al repo va solo el .webp derivado
 originales/tinas-fuente/
+
+# Paquetes de subida (SFTP): se regeneran desde dist/
+deploy/
