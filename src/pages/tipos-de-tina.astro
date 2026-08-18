@@ -26,7 +26,7 @@ const FAQ: { q: string; a: string }[] = [
       <header class="section-head section-head--center tt-intro">
         <span class="kicker">Guía rápida</span>
         <h1 class="h2">¿Cuál es tu tipo de tina?</h1>
-        <p class="lead">Casi todas las tinas se pueden rebajar. Saber cuál tienes nos ayuda a cotizar bien y a llegar con la pieza correcta. Acá están los 6 tipos que más vemos, con el <strong class="tt-em">antes y después</strong> del rebaje instalado.</p>
+        <p class="lead">Todas las tinas se pueden rebajar. Saber cuál tienes nos ayuda a cotizar bien y a llegar con la pieza correcta. Acá están los 6 tipos que más vemos, con el <strong class="tt-em">antes y después</strong> del rebaje instalado.</p>
       </header>
       <p class="tt-hint">Pasa el cursor sobre cada foto (o tócala en el celular) para ver el resultado.</p>
     </div>
@@ -57,6 +57,7 @@ const FAQ: { q: string; a: string }[] = [
                 <span>Cotizar con esta tina</span><svg class="ic"><use href="#i-arrow"/></svg>
               </a>
             </div>
+            <p class="tt-ref"><strong>Imagen referencial:</strong> el corte de la tina existente y la posición de la pieza pueden ir en todo el borde de la tina. Sujeto a factibilidad técnica y asesoramiento en terreno.</p>
           </li>
         ))}
       </ul>
@@ -120,6 +121,7 @@ const FAQ: { q: string; a: string }[] = [
 
 <style>
   .tt-intro{max-width:780px;margin-left:auto;margin-right:auto}
+  .tt-intro .lead{text-align:justify;text-wrap:pretty}
   .tt-em{color:var(--ds-blue);font-weight:700}
   .tt-narrow{max-width:820px}
   .tt-hint{margin:18px 0 0;text-align:center;font-size:14.5px;color:var(--ds-text)}
@@ -149,6 +151,7 @@ const FAQ: { q: string; a: string }[] = [
   .tt-p{margin:0 0 10px;font-size:15.5px;line-height:1.6;color:var(--ds-text)}
   .tt-p strong{color:var(--ds-text-strong)}
   .tt-quote{margin-top:6px;align-self:start}
+  .tt-ref{grid-column:1/-1;margin:0;font-size:12px;font-style:italic;line-height:1.45;color:var(--ds-text);opacity:.65}
 
   .tt-unsure{display:flex;gap:16px;align-items:flex-start;border:2px dashed var(--ds-blue);border-radius:var(--ds-radius-lg);background:var(--ds-blue-soft);padding:24px}
   @media (max-width:520px){.tt-unsure{flex-direction:column;padding:20px}}
