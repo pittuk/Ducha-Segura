@@ -53,7 +53,9 @@ const FAQ: { q: string; a: string }[] = [
               {t.conRebaje ? (
                 <p class="tt-p"><strong>Con el rebaje.</strong> {t.conRebaje}</p>
               ) : null}
-              <a class="tt-link" href={`/cotizar`}>Cotizar con esta tina<svg class="ic"><use href="#i-arrow"/></svg></a>
+              <a class="btn btn--primary btn--sm tt-quote" href={`/cotizar?tina=${t.id}`} data-add-producto={t.id === 'hidromasaje' ? 'rebaje-de-tina-jacuzzi' : 'rebaje-de-tina-tradicional'}>
+                <span>Cotizar con esta tina</span><svg class="ic"><use href="#i-arrow"/></svg>
+              </a>
             </div>
           </li>
         ))}
@@ -146,9 +148,7 @@ const FAQ: { q: string; a: string }[] = [
   .tt-nota{display:block;font-family:var(--ds-sans);font-size:14px;font-weight:500;color:var(--ds-text);margin-top:4px}
   .tt-p{margin:0 0 10px;font-size:15.5px;line-height:1.6;color:var(--ds-text)}
   .tt-p strong{color:var(--ds-text-strong)}
-  .tt-link{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-size:15px;font-weight:700;color:var(--ds-blue)}
-  .tt-link .ic{width:16px;height:16px}
-  .tt-link:hover{text-decoration:underline}
+  .tt-quote{margin-top:6px;align-self:start}
 
   .tt-unsure{display:flex;gap:16px;align-items:flex-start;border:2px dashed var(--ds-blue);border-radius:var(--ds-radius-lg);background:var(--ds-blue-soft);padding:24px}
   @media (max-width:520px){.tt-unsure{flex-direction:column;padding:20px}}
