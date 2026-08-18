@@ -66,6 +66,14 @@ export function initCotizar(): void {
   // Tipo de tina solo si hay rebaje
   if (tinaBlock) tinaBlock.style.display = needsTina ? '' : 'none';
 
+  // Preselección desde /tipos-de-tina ("Cotizar con esta tina" → /cotizar?tina=<id>).
+  const wanted = new URLSearchParams(location.search).get('tina');
+  if (needsTina && wanted) {
+    const radios = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="tipoTina"]'));
+    const hit = radios.find(r => r.value === wanted);
+    if (hit) hit.checked = true;
+  }
+
   // Instalación: SOLO para kits/accesorios. Si hay un rebaje en el carrito, no aplica.
   const instalBlock = document.getElementById('instalBlock');
   const instalChk = document.getElementById('instalacionChk') as HTMLInputElement | null;
