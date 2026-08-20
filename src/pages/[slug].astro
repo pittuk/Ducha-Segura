@@ -4,6 +4,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { blogPostingNode } from '../lib/seo';
+import { asset } from '../lib/asset';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -24,7 +25,7 @@ const { data } = post;
       <span class="kicker">{data.cat} · {data.date}</span>
       <h1 class="h2" style="margin-top:10px">{data.title}</h1>
       {data.image && (
-        <img class="post-hero" src={data.image} alt={data.title} width="760" height="428" loading="eager" />
+        <img class="post-hero" src={asset(data.image)} alt={data.title} width="760" height="428" loading="eager" />
       )}
       <div class="prose" set:html={post.body} />
       <aside class="post-cta">
