@@ -5,7 +5,7 @@ date: "27 abr 2022"
 pubdate: "2022-04-26T22:05:25"
 excerpt: "Características de la fibra de vidrio La fibra de vidrio se caracteriza por su transparencia, su alta dureza, su flexibilidad y por ser un buen aislante térmico. Cuando se encuentra en estado de fundi"
 seoDescription: "La fibra de vidrio se caracteriza por su transparencia, su alta dureza, su flexibilidad y por ser un buen aislante térmico."
-image: "/images/blog/fibra-de-vidrio-un-material-resistente-y-seguro-ducha-segura-chile/Opera-Captura-de-pantalla_2022-10-27_175540_fibra_de_vidrio_fiberglass.jpg"
+image: "/images/blog/fibra-de-vidrio-un-material-resistente-y-seguro-ducha-segura-chile/caracteristicas-fibra-de-vidrio.webp"
 label: "BLOG"
 draft: false
 ---
