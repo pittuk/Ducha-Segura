@@ -17,8 +17,8 @@ export const NAV: NavItem[] = [
 
 export const SITE = {
   name: 'Ducha Segura®',
-  whatsappNumber: '56934044939',
-  whatsappUrl: 'https://wa.me/56934044939',
+  whatsappNumber: '56965945008',
+  whatsappUrl: 'https://wa.me/56965945008',
 };
 
 // Mensajes rotativos del topbar. Copiados de legacy/index.html (const topbarMessages, ~1372–1376).
