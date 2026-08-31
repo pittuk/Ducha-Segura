@@ -34,7 +34,7 @@ export function organizationGraph(site: URL): JsonLdNode[] {
       description:
         'Rebajes de tina para acceso seguro al baño. Producto nacional patentado, instalación a domicilio y garantía de 3 años.',
       email: 'contacto@duchasegura.cl',
-      telephone: '+56 9 6594 5008',
+      telephone: '+56 9 3404 4939',
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Alonso de Córdova 5255',
@@ -85,7 +85,7 @@ export function organizationGraph(site: URL): JsonLdNode[] {
       ],
       contactPoint: {
         '@type': 'ContactPoint',
-        telephone: '+56 9 6594 5008',
+        telephone: '+56 9 3404 4939',
         email: 'contacto@duchasegura.cl',
         contactType: 'customer service',
         areaServed: 'CL',

@@ -5,6 +5,7 @@
 import { Image } from 'astro:assets';
 import logoAzul from '../assets/logo-azul.png';
 import { REBAJES } from '../data/productos';
+import { SITE } from '../data/site';
 ---
 <footer class="footer">
   <div class="footer__inner">
@@ -53,9 +54,10 @@ import { REBAJES } from '../data/productos';
         <span class="footer__col-toggle"><svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-plus"/></svg></span>
       </button>
       <div class="footer__col-list footer__contact">
-        <div class="footer__contact-row">
+        <div class="footer__contact-row footer__contact-row--phone">
           <svg class="ic"><use href="#i-phone"/></svg>
-          <a href="tel:+56965945008" style="color:var(--ds-text-strong);font-weight:600">+56 9 6594 5008</a>
+          <a href={`tel:${SITE.phoneNumber}`} style="color:var(--ds-text-strong);font-weight:600">{SITE.phoneDisplay}</a>
+          <span class="footer__contact-note">({SITE.phoneNote})</span>
         </div>
         <div class="footer__contact-row">
           <svg class="ic"><use href="#i-info"/></svg>
@@ -111,6 +113,10 @@ import { REBAJES } from '../data/productos';
 .footer__contact{display:flex;flex-direction:column;gap:6px;font-size:13px}
 .footer__contact-row{display:flex;align-items:center;gap:8px}
 .footer__contact-row .ic{width:14px;height:14px;stroke-width:2;color:var(--ds-blue)}
+/* El número nunca se parte; si no cabe, "(Solo llamadas)" baja a la línea siguiente. */
+.footer__contact-row--phone{flex-wrap:wrap}
+.footer__contact-row--phone a{white-space:nowrap}
+.footer__contact-note{font-size:11px;color:var(--ds-text)}
 .footer__col{border-top:0;padding:0}
 @media (max-width:1024px){.footer__col{border-top:1px solid var(--ds-border);padding:16px 0}}
 .footer__col-head{display:flex;align-items:center;justify-content:space-between;background:transparent;padding:0;width:100%;margin-bottom:14px;text-align:left}

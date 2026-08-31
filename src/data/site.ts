@@ -19,6 +19,10 @@ export const SITE = {
   name: 'Ducha Segura®',
   whatsappNumber: '56965945008',
   whatsappUrl: 'https://wa.me/56965945008',
+  // Línea telefónica: solo llamadas (no recibe WhatsApp, ese es whatsappNumber).
+  phoneNumber: '+56934044939',
+  phoneDisplay: '+56 9 3404 4939',
+  phoneNote: 'Solo llamadas',
 };
 
 // Mensajes rotativos del topbar. Copiados de legacy/index.html (const topbarMessages, ~1372–1376).
