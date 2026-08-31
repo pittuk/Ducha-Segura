@@ -32,11 +32,12 @@ const waUrl = `${SITE.whatsappUrl}?text=${encodeURIComponent(msg)}`;
             <svg class="ic"><use href="#i-whatsapp"/></svg>
             <span>Cotizar como mayorista</span>
           </a>
-          <a href="tel:+56965945008" class="btn btn--ghost btn--lg">
+          <a href={`tel:${SITE.phoneNumber}`} class="btn btn--ghost btn--lg">
             <svg class="ic"><use href="#i-phone"/></svg>
-            <span>Llámanos</span>
+            <span>Llámanos {SITE.phoneDisplay}</span>
           </a>
         </div>
+        <p class="kitmay__note">{SITE.phoneNote}. Para mensajes usa el WhatsApp.</p>
       </div>
     </div>
   </div>
@@ -69,6 +70,7 @@ const waUrl = `${SITE.whatsappUrl}?text=${encodeURIComponent(msg)}`;
   .kitmay__h2{margin:0;font-family:var(--ds-display);font-weight:800;line-height:1.06;letter-spacing:-.03em;color:#fff}
   .kitmay__sub{margin:18px 0 0;line-height:1.6;color:rgba(255,255,255,.85)}
   .kitmay__ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+  .kitmay__note{margin:12px 0 0;font-size:13px;color:rgba(255,255,255,.7)}
   @media (max-width:520px){.kitmay__ctas{width:100%;flex-direction:column}.kitmay__ctas .btn{width:100%}}
 
   /* Variante full-bleed (catálogo y Kits) */
