@@ -5,6 +5,11 @@
 // "prestador independiente" o "aliado comercial" — nunca términos de vínculo laboral.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../data/site';
+import { asset } from '../lib/asset';
+
+// Misma pieza que muestra el home (Diferenciadores), pero en webp: el PNG original
+// (NUEVA_1_sinfondo-3.png) pesa 650 KB y acá es el LCP; este webp pesa 40 KB.
+const piezaImg = asset('/images/pieza-rebaje-ducha-segura.webp');
 
 const BENEFICIOS: { icon: string; t: string; d: string }[] = [
   { icon: 'i-user', t: 'Demanda de clientes asegurada', d: 'Nosotros hacemos el marketing y captamos a los clientes en tu región; tú ejecutas la instalación.' },
@@ -42,21 +47,27 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
   <!-- 1. Hero -->
   <section class="section section--dark part-hero">
     <div class="container part-hero__inner">
-      <span class="kicker part-hero__kicker">Red nacional de Partners</span>
-      <h1 class="h2 part-hero__title">¿Eres instalador y quieres <span class="part-hero__em">aumentar tus ingresos?</span></h1>
-      <p class="lead part-hero__lead">Convierte tu experiencia en un negocio rentable. Súmate como <strong>Partner Local de Ducha Segura®</strong>, accede a proyectos en tu ciudad y opera con un modelo probado de alta demanda. Pioneros en el rebaje de tina en Chile.</p>
-      <div class="part-hero__cta">
-        <a class="btn btn--primary btn--lg" href="#postular">Quiero ser Partner / Postular mi zona</a>
-        <a class="btn btn--wa btn--lg" href={waPartner} target="_blank" rel="noopener">
-          <svg class="ic"><use href="#i-whatsapp"/></svg>
-          <span>Consultar por WhatsApp</span>
-        </a>
+      <div class="part-hero__copy">
+        <span class="kicker part-hero__kicker">Red nacional de Partners</span>
+        <h1 class="h2 part-hero__title">¿Eres instalador y quieres <span class="part-hero__em">aumentar tus ingresos?</span></h1>
+        <p class="lead part-hero__lead">Convierte tu experiencia en un negocio rentable. Súmate como <strong>Partner Local de Ducha Segura®</strong>, accede a proyectos en tu ciudad y opera con un modelo probado de alta demanda. Pioneros en el rebaje de tina en Chile.</p>
+        <div class="part-hero__cta">
+          <a class="btn btn--primary btn--lg" href="#postular">Quiero ser Partner / Postular mi zona</a>
+          <a class="btn btn--wa btn--lg" href={waPartner} target="_blank" rel="noopener">
+            <svg class="ic"><use href="#i-whatsapp"/></svg>
+            <span>Consultar por WhatsApp</span>
+          </a>
+        </div>
+        <ul class="part-hero__facts">
+          <li><strong>+6 años</strong><span>de marca en el mercado</span></li>
+          <li><strong>Producto patentado</strong><span>de fabricación nacional</span></li>
+          <li><strong>Cobertura nacional</strong><span>zonas en convocatoria</span></li>
+        </ul>
       </div>
-      <ul class="part-hero__facts">
-        <li><strong>+6 años</strong><span>de marca en el mercado</span></li>
-        <li><strong>Producto patentado</strong><span>de fabricación nacional</span></li>
-        <li><strong>Cobertura nacional</strong><span>zonas en convocatoria</span></li>
-      </ul>
+
+      <div class="part-hero__media">
+        <img src={piezaImg} alt="Pieza de rebaje de tina Ducha Segura®, el producto que instalan nuestros Partners" width="620" height="620" fetchpriority="high" />
+      </div>
     </div>
   </section>
 
@@ -80,7 +91,35 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
     </div>
   </section>
 
-  <!-- 3. Cobertura -->
+  <!-- 3. Capacitación e insumos -->
+  <section class="section section--soft">
+    <div class="container part-cap">
+      <div class="part-cap__media reveal">
+        <!-- Video vertical (720x1280). Controles nativos: no necesita JS.
+             El poster es el frame del segundo 11.2 ("Se trabaja sobre la misma tina"),
+             extraído del propio video con ffmpeg. -->
+        <video class="part-cap__video" controls preload="metadata" playsinline
+               poster={asset('/videos/capacitacion-instaladores-poster.webp')}>
+          <source src={asset('/videos/capacitacion-instaladores-ducha-segura.mp4')} type="video/mp4" />
+          Tu navegador no puede reproducir este video.
+        </video>
+      </div>
+
+      <div class="part-cap__copy reveal">
+        <span class="kicker">Todo puesto por la marca</span>
+        <h2 class="h2">Te capacitamos y te pasamos <span class="accent">todos los insumos.</span></h2>
+        <p class="lead">No necesitas invertir en aprender por tu cuenta ni salir a buscar materiales: capacitamos a cada Partner en la técnica de Ducha Segura® y le entregamos todo lo necesario para ejecutar el servicio.</p>
+        <ul class="part-cap__list">
+          <li><svg class="ic"><use href="#i-check"/></svg><span><strong>Capacitación completa</strong> en la técnica de corte, instalación y sellado, con los estándares de la marca.</span></li>
+          <li><svg class="ic"><use href="#i-check"/></svg><span><strong>Todos los insumos</strong> necesarios para la instalación del servicio: la pieza y los materiales de trabajo.</span></li>
+          <li><svg class="ic"><use href="#i-check"/></svg><span><strong>Acompañamiento técnico</strong> durante tus primeras instalaciones y soporte permanente después.</span></li>
+        </ul>
+        <a class="btn btn--primary btn--lg" href="#postular">Quiero capacitarme y postular</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Cobertura -->
   <section class="section section--alt">
     <div class="container">
       <header class="section-head section-head--center">
@@ -106,7 +145,7 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
     </div>
   </section>
 
-  <!-- 4. Formulario -->
+  <!-- 5. Formulario -->
   <section class="section" id="postular">
     <div class="container part-form-wrap">
       <header class="section-head section-head--center">
@@ -157,17 +196,23 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
 </BaseLayout>
 
 <style>
-  /* Hero */
-  .part-hero__inner{max-width:820px;margin:0 auto;text-align:center}
+  /* Hero: dos columnas (copy + pieza). En móvil se apila y la imagen queda arriba. */
+  .part-hero__inner{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+  @media (max-width:900px){.part-hero__inner{grid-template-columns:1fr;gap:28px}}
   .part-hero__kicker{color:rgba(255,255,255,.75)}
   .part-hero__title{margin:8px 0 0}
   .part-hero__em{color:#4db4f0}
-  .part-hero__lead{margin:16px auto 0;max-width:680px}
-  .part-hero__cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
-  .part-hero__facts{list-style:none;margin:40px 0 0;padding:0;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-  .part-hero__facts li{flex:1 1 200px;max-width:240px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--ds-radius-lg);padding:16px}
+  .part-hero__lead{margin:16px 0 0;max-width:560px}
+  .part-hero__cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .part-hero__facts{list-style:none;margin:36px 0 0;padding:0;display:flex;gap:12px;flex-wrap:wrap}
+  .part-hero__facts li{flex:1 1 160px;max-width:240px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--ds-radius-lg);padding:16px}
   .part-hero__facts strong{display:block;font-family:var(--ds-display);font-size:17px;color:#fff}
   .part-hero__facts span{display:block;font-size:13px;color:rgba(255,255,255,.72);margin-top:4px}
+  /* El PNG viene recortado (fondo transparente): un halo suave lo despega del azul. */
+  .part-hero__media{position:relative;display:flex;align-items:center;justify-content:center}
+  .part-hero__media::before{content:'';position:absolute;width:min(520px,80%);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(77,180,240,.22),transparent 70%)}
+  .part-hero__media img{position:relative;width:100%;max-width:560px;height:auto;display:block;filter:drop-shadow(0 24px 40px rgba(0,0,0,.35))}
+  @media (max-width:900px){.part-hero__media{order:-1}.part-hero__media img{max-width:380px}}
 
   /* Beneficios */
   .part-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
@@ -179,6 +224,17 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
   .part-card__ic .ic{width:24px;height:24px}
   .part-card__t{font-family:var(--ds-display);font-size:17px;font-weight:700;color:var(--ds-text-strong);margin:0 0 8px;line-height:1.25}
   .part-card__d{font-size:14px;line-height:1.55;color:var(--ds-text);margin:0}
+
+  /* Capacitación e insumos: video vertical (9:16) + copy */
+  .part-cap{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:center}
+  @media (max-width:900px){.part-cap{grid-template-columns:1fr;gap:28px}}
+  .part-cap__media{display:flex;justify-content:center}
+  .part-cap__video{width:100%;max-width:320px;aspect-ratio:9/16;display:block;border-radius:var(--ds-radius-lg);box-shadow:var(--ds-shadow-lg);background:var(--ds-blue-dark);object-fit:cover}
+  .part-cap__copy .lead{margin-top:14px}
+  .part-cap__list{list-style:none;margin:24px 0 28px;padding:0;display:flex;flex-direction:column;gap:14px}
+  .part-cap__list li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.55;color:var(--ds-text)}
+  .part-cap__list .ic{width:20px;height:20px;min-width:20px;margin-top:2px;color:var(--ds-blue);stroke-width:2.5}
+  .part-cap__list strong{color:var(--ds-text-strong)}
 
   /* Cobertura */
   .part-zonas{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
