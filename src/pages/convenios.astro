@@ -6,7 +6,8 @@ import { SITE } from '../data/site';
 
 // Ordenar de mayor a menor descuento (20% → 15% → 10%). Orden estable: a igual
 // descuento, conserva el orden de la fuente.
-const pct = (c: typeof CONVENIOS[number]) => parseInt(c.descuento, 10) || 0;
+// El badge puede traer texto ("hasta 20%"), por eso se extrae el primer número.
+const pct = (c: typeof CONVENIOS[number]) => Number(c.descuento.match(/\d+/)?.[0] ?? 0);
 const conveniosOrdenados = [...CONVENIOS].sort((a, b) => pct(b) - pct(a));
 ---
 <BaseLayout title="Convenios y descuentos — Ducha Segura®" description="Convenios vigentes con bancos, seguros, cajas de compensación y municipios. Descuentos en el rebaje de tina.">

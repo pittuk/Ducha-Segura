@@ -3,11 +3,10 @@
 // IMPORTANTE: Sodimac, Easy y Mercado Libre NO son colaboradores ni patrocinadores:
 // son canales de distribución mayorista del producto. El copy lo deja explícito.
 import { asset } from '../lib/asset';
-// `url` opcional: si existe, la placa es un enlace al producto en ese canal (Easy aún sin URL).
+// `url` opcional: si existe, la placa es un enlace al producto en ese canal.
 const CANALES: { name: string; logo: string; url?: string }[] = [
   { name: 'Sodimac', logo: '/images/logos-distribuidores/logo sodimac homecenter.png', url: 'https://www.sodimac.cl/sodimac-cl/articulo/140150241/servicio-rebaje-de-tina-pieza-instalacion/140150242' },
-  // ponytail: Easy oculto temporalmente a pedido del cliente; restaurar esta línea cuando vuelva.
-  // { name: 'Easy', logo: '/images/logos-distribuidores/Easy-Logo.svg.png' },
+  { name: 'Easy', logo: '/images/logos-distribuidores/Easy-Logo.svg.png', url: 'https://www.easy.cl/adecuacion-tina-para-facil-acceso-10012413/p' },
   { name: 'Mercado Libre', logo: '/images/logos-distribuidores/mercado-libre-logo-2.png', url: 'https://www.mercadolibre.cl/rebaje-de-tina/up/MLCU3502483241' },
 ];
 ---
