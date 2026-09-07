@@ -146,7 +146,8 @@ const jsonLd = {
     import { initQuickView } from '../scripts/quickview';
     import { initSearch } from '../scripts/search';
     import { initCotizar } from '../scripts/cotizar';
-    document.addEventListener('astro:page-load', () => { initUI(); initCart(); initQuickView(); initSearch(); initCotizar(); });
+    import { initPostulacion } from '../scripts/postulacion';
+    document.addEventListener('astro:page-load', () => { initUI(); initCart(); initQuickView(); initSearch(); initCotizar(); initPostulacion(); });
   </script>
 </body>
 </html>

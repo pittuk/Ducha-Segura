@@ -1,0 +1,211 @@
+---
+// instaladores.astro — Landing de captación de Partners Locales (instaladores y
+// prestadores de servicios independientes). Enfoque comercial: oportunidad de negocio
+// con demanda ya generada por la marca. IMPORTANTE (legal): siempre "Partner",
+// "prestador independiente" o "aliado comercial" — nunca términos de vínculo laboral.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../data/site';
+
+const BENEFICIOS: { icon: string; t: string; d: string }[] = [
+  { icon: 'i-user', t: 'Demanda de clientes asegurada', d: 'Nosotros hacemos el marketing y captamos a los clientes en tu región; tú ejecutas la instalación.' },
+  { icon: 'i-medal', t: 'Capacitación y certificación', d: 'Te capacitamos en la técnica operativa y en los estándares de la marca para que quedes 100% listo para operar desde el primer día.' },
+  { icon: 'i-zap', t: 'Autonomía e independencia', d: 'Gestionas tus tiempos y tu agenda operando como prestador independiente, con el respaldo de una marca líder.' },
+  { icon: 'i-shield', t: 'Soporte comercial y garantía', d: 'Cuentas con nuestro acompañamiento técnico y con el respaldo de garantía que le da confianza al cliente final.' },
+];
+
+const ZONAS: { zona: string; territorios: { region: string; comunas: string[] }[] }[] = [
+  { zona: 'Zona Norte', territorios: [
+    { region: 'Arica y Parinacota', comunas: ['Arica'] },
+    { region: 'Tarapacá', comunas: ['Iquique', 'Alto Hospicio'] },
+    { region: 'Antofagasta', comunas: ['Antofagasta', 'Calama', 'Tocopilla'] },
+    { region: 'Atacama', comunas: ['Copiapó', 'Vallenar'] },
+    { region: 'Coquimbo', comunas: ['La Serena', 'Coquimbo', 'Ovalle', 'Illapel'] },
+  ] },
+  { zona: 'Zona Centro', territorios: [
+    { region: 'O’Higgins', comunas: ['Rancagua', 'Machalí', 'Rengo', 'San Fernando', 'Pichilemu'] },
+    { region: 'Maule', comunas: ['Talca', 'Curicó', 'Linares', 'Constitución'] },
+    { region: 'Ñuble y Biobío', comunas: ['Chillán', 'Los Ángeles'] },
+  ] },
+  { zona: 'Zona Sur', territorios: [
+    { region: 'Los Ríos', comunas: ['Valdivia', 'La Unión', 'Río Bueno'] },
+    { region: 'Los Lagos', comunas: ['Osorno', 'Puerto Montt', 'Puerto Varas', 'Castro', 'Ancud'] },
+    { region: 'Magallanes', comunas: ['Punta Arenas', 'Puerto Natales'] },
+  ] },
+];
+
+const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha Segura® 👋 Quiero información para ser Partner instalador en mi zona.');
+---
+<BaseLayout
+  title="Sé Partner de Ducha Segura® — Red nacional de instaladores"
+  description="¿Eres instalador? Súmate como Partner Local de Ducha Segura®: clientes captados por la marca en tu ciudad, capacitación y certificación, y un modelo probado de alta demanda. Postula tu zona."
+>
+  <!-- 1. Hero -->
+  <section class="section section--dark part-hero">
+    <div class="container part-hero__inner">
+      <span class="kicker part-hero__kicker">Red nacional de Partners</span>
+      <h1 class="h2 part-hero__title">¿Eres instalador y quieres <span class="part-hero__em">aumentar tus ingresos?</span></h1>
+      <p class="lead part-hero__lead">Convierte tu experiencia en un negocio rentable. Súmate como <strong>Partner Local de Ducha Segura®</strong>, accede a proyectos en tu ciudad y opera con un modelo probado de alta demanda. Pioneros en el rebaje de tina en Chile.</p>
+      <div class="part-hero__cta">
+        <a class="btn btn--primary btn--lg" href="#postular">Quiero ser Partner / Postular mi zona</a>
+        <a class="btn btn--wa btn--lg" href={waPartner} target="_blank" rel="noopener">
+          <svg class="ic"><use href="#i-whatsapp"/></svg>
+          <span>Consultar por WhatsApp</span>
+        </a>
+      </div>
+      <ul class="part-hero__facts">
+        <li><strong>+6 años</strong><span>de marca en el mercado</span></li>
+        <li><strong>Producto patentado</strong><span>de fabricación nacional</span></li>
+        <li><strong>Cobertura nacional</strong><span>zonas en convocatoria</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 2. Beneficios -->
+  <section class="section">
+    <div class="container">
+      <header class="section-head section-head--center">
+        <span class="kicker">Modelo de negocio</span>
+        <h2 class="h2">Por qué sumar tu negocio a <span class="accent">Ducha Segura®</span></h2>
+        <p class="lead">Un modelo llave en mano: la marca genera la demanda y te entrega la técnica; tú operas con tu propio negocio.</p>
+      </header>
+      <div class="part-grid">
+        {BENEFICIOS.map((b) => (
+          <article class="part-card reveal">
+            <span class="part-card__ic"><svg class="ic"><use href={`#${b.icon}`}/></svg></span>
+            <h3 class="part-card__t">{b.t}</h3>
+            <p class="part-card__d">{b.d}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Cobertura -->
+  <section class="section section--alt">
+    <div class="container">
+      <header class="section-head section-head--center">
+        <span class="kicker">Convocatoria abierta</span>
+        <h2 class="h2">Cobertura y territorios disponibles</h2>
+        <p class="lead">Estas son las zonas donde estamos incorporando Partners. Si tu ciudad no aparece, postula igual: evaluamos nuevas aperturas.</p>
+      </header>
+      <div class="part-zonas">
+        {ZONAS.map((z) => (
+          <article class="part-zona reveal">
+            <h3 class="part-zona__t">{z.zona}</h3>
+            <ul class="part-zona__list">
+              {z.territorios.map((t) => (
+                <li>
+                  <strong class="part-zona__region">{t.region}</strong>
+                  <span class="part-zona__comunas">{t.comunas.map((c) => <span class="part-chip">{c}</span>)}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Formulario -->
+  <section class="section" id="postular">
+    <div class="container part-form-wrap">
+      <header class="section-head section-head--center">
+        <span class="kicker">Postulación</span>
+        <h2 class="h2">Postula tu zona y evalúa tu incorporación a la red</h2>
+        <p class="lead">Completa el formulario y nuestro equipo comercial te contactará para revisar la disponibilidad de tu territorio.</p>
+      </header>
+
+      <form class="part-form" id="postulacionForm" novalidate>
+        <div class="part-form__row">
+          <label>Nombre y apellido<input type="text" name="nombre" required autocomplete="name" /></label>
+          <label>Teléfono / WhatsApp<input type="tel" name="telefono" required autocomplete="tel" /></label>
+        </div>
+        <label>Ciudad / Región donde operas<input type="text" name="zona" required autocomplete="address-level2" placeholder="Ej.: Valdivia, Los Ríos" /></label>
+        <label>¿Cuentas con herramientas y medio de transporte propio?
+          <select name="herramientas" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+        <label>Experiencia previa en servicios, instalaciones o remodelación
+          <textarea name="experiencia" rows="4" placeholder="Cuéntanos brevemente en qué rubros has trabajado y hace cuánto tiempo."></textarea>
+        </label>
+
+        <!-- honeypot anti-spam -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="part-form__hp" aria-hidden="true" />
+
+        <p class="part-form__error" id="postulacionError" role="alert" style="display:none"></p>
+        <button class="btn btn--primary btn--lg btn--full" id="postulacionSubmit" type="submit">
+          <svg class="ic"><use href="#i-mail"/></svg>
+          <span>Enviar postulación</span>
+        </button>
+        <p class="part-form__legal">La incorporación es como <strong>prestador de servicios independiente</strong> o aliado comercial: no constituye una relación laboral de dependencia con Ducha Segura®. Al enviar aceptas nuestras <a href="/politicas-de-privacidad/">políticas de privacidad</a>.</p>
+      </form>
+
+      <div class="part-ok" id="postulacionOk" style="display:none" role="status">
+        <div class="part-ok__ic"><svg class="ic"><use href="#i-check"/></svg></div>
+        <h3 class="part-ok__t">¡Recibimos tu postulación!</h3>
+        <p class="part-ok__d">Nuestro equipo comercial revisará la disponibilidad de tu territorio y te contactará al teléfono que nos dejaste.</p>
+        <a class="btn btn--wa btn--lg" href={waPartner} target="_blank" rel="noopener">
+          <svg class="ic"><use href="#i-whatsapp"/></svg>
+          <span>Escríbenos por WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .part-hero__inner{max-width:820px;margin:0 auto;text-align:center}
+  .part-hero__kicker{color:rgba(255,255,255,.75)}
+  .part-hero__title{margin:8px 0 0}
+  .part-hero__em{color:#4db4f0}
+  .part-hero__lead{margin:16px auto 0;max-width:680px}
+  .part-hero__cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+  .part-hero__facts{list-style:none;margin:40px 0 0;padding:0;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .part-hero__facts li{flex:1 1 200px;max-width:240px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--ds-radius-lg);padding:16px}
+  .part-hero__facts strong{display:block;font-family:var(--ds-display);font-size:17px;color:#fff}
+  .part-hero__facts span{display:block;font-size:13px;color:rgba(255,255,255,.72);margin-top:4px}
+
+  /* Beneficios */
+  .part-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media (max-width:1024px){.part-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:560px){.part-grid{grid-template-columns:1fr}}
+  .part-card{background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);padding:26px 22px;box-shadow:var(--ds-shadow);transition:transform .2s,box-shadow .2s}
+  .part-card:hover{transform:translateY(-3px);box-shadow:var(--ds-shadow-lg)}
+  .part-card__ic{width:48px;height:48px;border-radius:12px;background:var(--ds-blue-soft);color:var(--ds-blue);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+  .part-card__ic .ic{width:24px;height:24px}
+  .part-card__t{font-family:var(--ds-display);font-size:17px;font-weight:700;color:var(--ds-text-strong);margin:0 0 8px;line-height:1.25}
+  .part-card__d{font-size:14px;line-height:1.55;color:var(--ds-text);margin:0}
+
+  /* Cobertura */
+  .part-zonas{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media (max-width:900px){.part-zonas{grid-template-columns:1fr}}
+  .part-zona{background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);padding:24px}
+  .part-zona__t{font-family:var(--ds-display);font-size:18px;font-weight:800;color:var(--ds-blue);margin:0 0 16px;padding-bottom:12px;border-bottom:2px solid var(--ds-blue-soft)}
+  .part-zona__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+  .part-zona__region{display:block;font-size:13px;font-weight:800;color:var(--ds-text-strong);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+  .part-zona__comunas{display:flex;flex-wrap:wrap;gap:6px}
+  .part-chip{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--ds-blue-soft);color:var(--ds-blue-hover);font-size:12px;font-weight:600}
+
+  /* Formulario */
+  .part-form-wrap{max-width:680px}
+  .part-form label{display:block;font-size:13px;font-weight:600;color:var(--ds-text-strong);margin:0 0 16px}
+  .part-form input,.part-form select,.part-form textarea{display:block;width:100%;margin-top:5px;padding:10px 12px;border:1px solid var(--ds-border);border-radius:var(--ds-radius);font-family:var(--ds-sans);font-size:15px;font-weight:400;color:var(--ds-text-strong);background:#fff;outline:none;transition:border-color .15s}
+  .part-form input:focus,.part-form select:focus,.part-form textarea:focus{border-color:var(--ds-blue)}
+  .part-form__row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:520px){.part-form__row{grid-template-columns:1fr}}
+  .part-form__hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+  .part-form__error{background:#fde8e8;color:var(--ds-red);border-radius:var(--ds-radius);padding:10px 12px;font-size:13px;font-weight:600;margin:0 0 12px}
+  .part-form__legal{font-size:12px;color:var(--ds-text);margin:16px 0 0;text-align:center;line-height:1.5}
+  .part-form__legal a{color:var(--ds-blue);text-decoration:underline}
+
+  /* Confirmación (reemplaza al formulario tras enviar) */
+  .part-ok{text-align:center;background:var(--ds-blue-soft);border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);padding:36px 24px}
+  .part-ok__ic{width:60px;height:60px;margin:0 auto 18px;border-radius:50%;background:#fff;color:var(--ds-blue);display:flex;align-items:center;justify-content:center}
+  .part-ok__ic .ic{width:28px;height:28px}
+  .part-ok__t{font-family:var(--ds-display);font-size:22px;font-weight:800;color:var(--ds-text-strong);margin:0 0 10px}
+  .part-ok__d{font-size:15px;color:var(--ds-text);margin:0 0 20px;line-height:1.6}
+</style>

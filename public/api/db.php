@@ -42,3 +42,19 @@ function ds_db(): PDO {
   }
   return $pdo;
 }
+
+// CORS: refleja el Origin solo si está en la lista permitida (cors_origin puede ser
+// string o array). Así no se emite un origen no autorizado ni '*' por accidente.
+// $methods se usa tal cual en Access-Control-Allow-Methods.
+function ds_cors(string $methods = 'POST, OPTIONS'): void {
+  $allowed = (array)(ds_config()['cors_origin'] ?? []);
+  $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+  if (in_array('*', $allowed, true)) {
+    header('Access-Control-Allow-Origin: *');
+  } elseif ($origin !== '' && in_array($origin, $allowed, true)) {
+    header('Access-Control-Allow-Origin: ' . $origin);
+    header('Vary: Origin');
+  }
+  header('Access-Control-Allow-Headers: Content-Type');
+  header('Access-Control-Allow-Methods: ' . $methods);
+}

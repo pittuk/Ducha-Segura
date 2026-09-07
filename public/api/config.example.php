@@ -24,6 +24,9 @@ return [
   ],
   // Destinatario(s) de la notificación al gestor. Acepta string o array (notifica a todos).
   'manager_email' => ['contacto@duchasegura.cl', 'luis@agenciados.cl'],
+  // Destinatario(s) de las postulaciones de instaladores (/instaladores). Opcional:
+  // si no se define, postulacion.php usa su destinatario por defecto.
+  'partners_email' => 'orellanalandaur@gmail.com',
   'site_url' => 'https://www.duchasegura.cl',
   // Google Places API (New) para las reseñas auto-actualizables (reviews.php).
   // api_key: key de Google Cloud con "Places API (New)" habilitada y facturación activa.

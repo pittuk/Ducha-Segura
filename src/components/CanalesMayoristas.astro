@@ -3,11 +3,10 @@
 // IMPORTANTE: Sodimac, Easy y Mercado Libre NO son colaboradores ni patrocinadores:
 // son canales de distribución mayorista del producto. El copy lo deja explícito.
 import { asset } from '../lib/asset';
-// `url` opcional: si existe, la placa es un enlace al producto en ese canal (Easy aún sin URL).
+// `url` opcional: si existe, la placa es un enlace al producto en ese canal.
 const CANALES: { name: string; logo: string; url?: string }[] = [
   { name: 'Sodimac', logo: '/images/logos-distribuidores/logo sodimac homecenter.png', url: 'https://www.sodimac.cl/sodimac-cl/articulo/140150241/servicio-rebaje-de-tina-pieza-instalacion/140150242' },
-  // ponytail: Easy oculto temporalmente a pedido del cliente; restaurar esta línea cuando vuelva.
-  // { name: 'Easy', logo: '/images/logos-distribuidores/Easy-Logo.svg.png' },
+  { name: 'Easy', logo: '/images/logos-distribuidores/Easy-Logo.svg.png', url: 'https://www.easy.cl/adecuacion-tina-para-facil-acceso-10012413/p' },
   { name: 'Mercado Libre', logo: '/images/logos-distribuidores/mercado-libre-logo-2.png', url: 'https://www.mercadolibre.cl/rebaje-de-tina/up/MLCU3502483241' },
 ];
 ---
@@ -23,11 +22,11 @@ const CANALES: { name: string; logo: string; url?: string }[] = [
       {CANALES.map((c) => (
         c.url ? (
           <a class="canal-plate canal-plate--link" href={c.url} target="_blank" rel="noopener" title={`Ver en ${c.name}`} aria-label={`Ver el rebaje de tina en ${c.name} (se abre en una pestaña nueva)`}>
-            <img src={asset(c.logo)} alt={`${c.name} — canal de distribución mayorista de Ducha Segura®`} loading="lazy" />
+            <img data-canal={c.name} src={asset(c.logo)} alt={`${c.name} — canal de distribución mayorista de Ducha Segura®`} loading="lazy" />
           </a>
         ) : (
           <div class="canal-plate" title={`${c.name} — canal de distribución mayorista`}>
-            <img src={asset(c.logo)} alt={`${c.name} — canal de distribución mayorista de Ducha Segura®`} loading="lazy" />
+            <img data-canal={c.name} src={asset(c.logo)} alt={`${c.name} — canal de distribución mayorista de Ducha Segura®`} loading="lazy" />
           </div>
         )
       ))}
@@ -45,5 +44,8 @@ const CANALES: { name: string; logo: string; url?: string }[] = [
   .canal-plate--link{cursor:pointer}
   .canal-plate--link:focus-visible{outline:2px solid var(--ds-blue);outline-offset:2px}
   .canal-plate img{max-height:56px;max-width:100%;width:auto;object-fit:contain;display:block}
-  @media (max-width:768px){.canal-plate{min-height:96px;padding:18px 22px}.canal-plate img{max-height:42px}}
+  /* El logo de Mercado Libre es mas alto que los otros: se baja para que la fila se vea pareja. */
+  .canal-plate img[data-canal="Mercado Libre"]{max-height:44px}
+  .canal-plate img[data-canal="Easy"]{max-height:66px}
+  @media (max-width:768px){.canal-plate{min-height:96px;padding:18px 22px}.canal-plate img{max-height:42px}.canal-plate img[data-canal="Mercado Libre"]{max-height:33px}.canal-plate img[data-canal="Easy"]{max-height:50px}}
 </style>
