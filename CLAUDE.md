@@ -24,7 +24,7 @@ Node: `18.20.8 || ^20.3.0 || >=22.0.0`.
 - `src/data/` — **fuente única de datos** (`productos`, `convenios`, `comunas`, `regiones`, `tinas`, `prensa`, `testimonios`, `testimonios-video`, `products-media`, `hero`, `site`). Cambiar contenido/precios aquí. Los productos salen de WooCommerce vía `scripts/import-woo.mjs` → `productos.json` (wrapper `productos.ts` con tipos/overrides + curados que no están en WC).
 - `src/lib/` — **lógica pura testeada**: `pricing.ts`, `cart.ts`, `format.ts`, `seo.ts`, `asset.ts`. `payments/` reservado (sin implementar).
 - `src/scripts/` — JS de cliente (DOM/glue): `ui.ts`, `cart.ts`, `calculator.ts`, `cotizar.ts`, `catalog-filter.ts`, `search.ts`, `quickview.ts`, `dom.ts`.
-- `public/api/` — **backend PHP**: `cotizacion.php` (POST → MySQL + email vía PHPMailer), `comprar.php` (stub 501 pagos), `db.php` (PDO), `mailer.php`, `schema.sql`, `config.example.php` (el real `config.php` está gitignored). `public/admin/` — panel (login/CSRF, listado, detalle, export CSV, usuarios).
+- `public/api/` — **backend PHP**: `cotizacion.php` (POST → MySQL + email vía PHPMailer), `postulacion.php` (POST de `/instaladores` → tabla `postulaciones` + aviso al gestor), `comprar.php` (stub 501 pagos), `db.php` (PDO + `ds_cors()`), `mailer.php`, `schema.sql`, `config.example.php` (el real `config.php` está gitignored). `public/admin/` — panel (login/CSRF, listado, detalle, export CSV, usuarios).
 - `src/components/`, `src/layouts/BaseLayout.astro`, `src/pages/` (rutas), `src/content/blog/` (Markdown, ~50 posts reales importados de WordPress), `src/styles/` (`tokens.css` + `base.css`).
 
 ## Convenciones / cosas a respetar

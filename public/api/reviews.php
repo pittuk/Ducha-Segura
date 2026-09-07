@@ -8,16 +8,7 @@ require_once __DIR__ . '/db.php';
 $cfg = ds_config();
 header('Content-Type: application/json; charset=utf-8');
 
-// CORS: refleja el Origin solo si está permitido (igual patrón que cotizacion.php).
-$allowed = (array)($cfg['cors_origin'] ?? []);
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-if (in_array('*', $allowed, true)) {
-  header('Access-Control-Allow-Origin: *');
-} elseif ($origin !== '' && in_array($origin, $allowed, true)) {
-  header('Access-Control-Allow-Origin: ' . $origin);
-  header('Vary: Origin');
-}
-header('Access-Control-Allow-Methods: GET, OPTIONS');
+ds_cors('GET, OPTIONS');
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 
 $g = $cfg['google_places'] ?? [];

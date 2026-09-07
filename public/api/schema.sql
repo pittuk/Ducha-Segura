@@ -42,3 +42,17 @@ CREATE TABLE IF NOT EXISTS admin_users (
   rol           ENUM('admin','gestor') NOT NULL DEFAULT 'gestor',
   creado_en     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Postulaciones a la Red de Partners (instaladores independientes) — /instaladores
+CREATE TABLE IF NOT EXISTS postulaciones (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nombre       VARCHAR(120) NOT NULL,
+  telefono     VARCHAR(40)  NOT NULL,
+  zona         VARCHAR(160) NOT NULL,
+  herramientas TINYINT(1)   NOT NULL DEFAULT 0,
+  experiencia  TEXT         NULL,
+  estado       ENUM('nueva','contactada','aprobada','descartada') NOT NULL DEFAULT 'nueva',
+  creado_en    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_estado (estado),
+  INDEX idx_creado (creado_en)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
