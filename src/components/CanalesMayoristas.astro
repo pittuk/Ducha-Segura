@@ -46,5 +46,6 @@ const CANALES: { name: string; logo: string; url?: string }[] = [
   .canal-plate img{max-height:56px;max-width:100%;width:auto;object-fit:contain;display:block}
   /* El logo de Mercado Libre es mas alto que los otros: se baja para que la fila se vea pareja. */
   .canal-plate img[data-canal="Mercado Libre"]{max-height:44px}
-  @media (max-width:768px){.canal-plate{min-height:96px;padding:18px 22px}.canal-plate img{max-height:42px}.canal-plate img[data-canal="Mercado Libre"]{max-height:33px}}
+  .canal-plate img[data-canal="Easy"]{max-height:66px}
+  @media (max-width:768px){.canal-plate{min-height:96px;padding:18px 22px}.canal-plate img{max-height:42px}.canal-plate img[data-canal="Mercado Libre"]{max-height:33px}.canal-plate img[data-canal="Easy"]{max-height:50px}}
 </style>
