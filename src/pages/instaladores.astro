@@ -5,6 +5,11 @@
 // "prestador independiente" o "aliado comercial" — nunca términos de vínculo laboral.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../data/site';
+import { asset } from '../lib/asset';
+
+// Misma pieza que muestra el home (Diferenciadores), pero en webp: el PNG original
+// (NUEVA_1_sinfondo-3.png) pesa 650 KB y acá es el LCP; este webp pesa 40 KB.
+const piezaImg = asset('/images/pieza-rebaje-ducha-segura.webp');
 
 const BENEFICIOS: { icon: string; t: string; d: string }[] = [
   { icon: 'i-user', t: 'Demanda de clientes asegurada', d: 'Nosotros hacemos el marketing y captamos a los clientes en tu región; tú ejecutas la instalación.' },
@@ -42,21 +47,27 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
   <!-- 1. Hero -->
   <section class="section section--dark part-hero">
     <div class="container part-hero__inner">
-      <span class="kicker part-hero__kicker">Red nacional de Partners</span>
-      <h1 class="h2 part-hero__title">¿Eres instalador y quieres <span class="part-hero__em">aumentar tus ingresos?</span></h1>
-      <p class="lead part-hero__lead">Convierte tu experiencia en un negocio rentable. Súmate como <strong>Partner Local de Ducha Segura®</strong>, accede a proyectos en tu ciudad y opera con un modelo probado de alta demanda. Pioneros en el rebaje de tina en Chile.</p>
-      <div class="part-hero__cta">
-        <a class="btn btn--primary btn--lg" href="#postular">Quiero ser Partner / Postular mi zona</a>
-        <a class="btn btn--wa btn--lg" href={waPartner} target="_blank" rel="noopener">
-          <svg class="ic"><use href="#i-whatsapp"/></svg>
-          <span>Consultar por WhatsApp</span>
-        </a>
+      <div class="part-hero__copy">
+        <span class="kicker part-hero__kicker">Red nacional de Partners</span>
+        <h1 class="h2 part-hero__title">¿Eres instalador y quieres <span class="part-hero__em">aumentar tus ingresos?</span></h1>
+        <p class="lead part-hero__lead">Convierte tu experiencia en un negocio rentable. Súmate como <strong>Partner Local de Ducha Segura®</strong>, accede a proyectos en tu ciudad y opera con un modelo probado de alta demanda. Pioneros en el rebaje de tina en Chile.</p>
+        <div class="part-hero__cta">
+          <a class="btn btn--primary btn--lg" href="#postular">Quiero ser Partner / Postular mi zona</a>
+          <a class="btn btn--wa btn--lg" href={waPartner} target="_blank" rel="noopener">
+            <svg class="ic"><use href="#i-whatsapp"/></svg>
+            <span>Consultar por WhatsApp</span>
+          </a>
+        </div>
+        <ul class="part-hero__facts">
+          <li><strong>+6 años</strong><span>de marca en el mercado</span></li>
+          <li><strong>Producto patentado</strong><span>de fabricación nacional</span></li>
+          <li><strong>Cobertura nacional</strong><span>zonas en convocatoria</span></li>
+        </ul>
       </div>
-      <ul class="part-hero__facts">
-        <li><strong>+6 años</strong><span>de marca en el mercado</span></li>
-        <li><strong>Producto patentado</strong><span>de fabricación nacional</span></li>
-        <li><strong>Cobertura nacional</strong><span>zonas en convocatoria</span></li>
-      </ul>
+
+      <div class="part-hero__media">
+        <img src={piezaImg} alt="Pieza de rebaje de tina Ducha Segura®, el producto que instalan nuestros Partners" width="620" height="620" fetchpriority="high" />
+      </div>
     </div>
   </section>
 
@@ -157,17 +168,23 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
 </BaseLayout>
 
 <style>
-  /* Hero */
-  .part-hero__inner{max-width:820px;margin:0 auto;text-align:center}
+  /* Hero: dos columnas (copy + pieza). En móvil se apila y la imagen queda arriba. */
+  .part-hero__inner{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+  @media (max-width:900px){.part-hero__inner{grid-template-columns:1fr;gap:28px}}
   .part-hero__kicker{color:rgba(255,255,255,.75)}
   .part-hero__title{margin:8px 0 0}
   .part-hero__em{color:#4db4f0}
-  .part-hero__lead{margin:16px auto 0;max-width:680px}
-  .part-hero__cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
-  .part-hero__facts{list-style:none;margin:40px 0 0;padding:0;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-  .part-hero__facts li{flex:1 1 200px;max-width:240px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--ds-radius-lg);padding:16px}
+  .part-hero__lead{margin:16px 0 0;max-width:560px}
+  .part-hero__cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .part-hero__facts{list-style:none;margin:36px 0 0;padding:0;display:flex;gap:12px;flex-wrap:wrap}
+  .part-hero__facts li{flex:1 1 160px;max-width:240px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:var(--ds-radius-lg);padding:16px}
   .part-hero__facts strong{display:block;font-family:var(--ds-display);font-size:17px;color:#fff}
   .part-hero__facts span{display:block;font-size:13px;color:rgba(255,255,255,.72);margin-top:4px}
+  /* El PNG viene recortado (fondo transparente): un halo suave lo despega del azul. */
+  .part-hero__media{position:relative;display:flex;align-items:center;justify-content:center}
+  .part-hero__media::before{content:'';position:absolute;width:min(520px,80%);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(77,180,240,.22),transparent 70%)}
+  .part-hero__media img{position:relative;width:100%;max-width:560px;height:auto;display:block;filter:drop-shadow(0 24px 40px rgba(0,0,0,.35))}
+  @media (max-width:900px){.part-hero__media{order:-1}.part-hero__media img{max-width:380px}}
 
   /* Beneficios */
   .part-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
