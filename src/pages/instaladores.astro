@@ -91,7 +91,33 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
     </div>
   </section>
 
-  <!-- 3. Cobertura -->
+  <!-- 3. Capacitación e insumos -->
+  <section class="section section--soft">
+    <div class="container part-cap">
+      <div class="part-cap__media reveal">
+        <!-- Video vertical (720x1280). Controles nativos: no necesita JS. #t=1 deja
+             un frame como still en vez de un rectángulo negro. -->
+        <video class="part-cap__video" controls preload="metadata" playsinline>
+          <source src={asset('/videos/capacitacion-instaladores-ducha-segura.mp4') + '#t=1'} type="video/mp4" />
+          Tu navegador no puede reproducir este video.
+        </video>
+      </div>
+
+      <div class="part-cap__copy reveal">
+        <span class="kicker">Todo puesto por la marca</span>
+        <h2 class="h2">Te capacitamos y te pasamos <span class="accent">todos los insumos.</span></h2>
+        <p class="lead">No necesitas invertir en aprender por tu cuenta ni salir a buscar materiales: capacitamos a cada Partner en la técnica de Ducha Segura® y le entregamos todo lo necesario para ejecutar el servicio.</p>
+        <ul class="part-cap__list">
+          <li><svg class="ic"><use href="#i-check"/></svg><span><strong>Capacitación completa</strong> en la técnica de corte, instalación y sellado, con los estándares de la marca.</span></li>
+          <li><svg class="ic"><use href="#i-check"/></svg><span><strong>Todos los insumos</strong> necesarios para la instalación del servicio: la pieza y los materiales de trabajo.</span></li>
+          <li><svg class="ic"><use href="#i-check"/></svg><span><strong>Acompañamiento técnico</strong> durante tus primeras instalaciones y soporte permanente después.</span></li>
+        </ul>
+        <a class="btn btn--primary btn--lg" href="#postular">Quiero capacitarme y postular</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Cobertura -->
   <section class="section section--alt">
     <div class="container">
       <header class="section-head section-head--center">
@@ -117,7 +143,7 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
     </div>
   </section>
 
-  <!-- 4. Formulario -->
+  <!-- 5. Formulario -->
   <section class="section" id="postular">
     <div class="container part-form-wrap">
       <header class="section-head section-head--center">
@@ -196,6 +222,17 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
   .part-card__ic .ic{width:24px;height:24px}
   .part-card__t{font-family:var(--ds-display);font-size:17px;font-weight:700;color:var(--ds-text-strong);margin:0 0 8px;line-height:1.25}
   .part-card__d{font-size:14px;line-height:1.55;color:var(--ds-text);margin:0}
+
+  /* Capacitación e insumos: video vertical (9:16) + copy */
+  .part-cap{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:center}
+  @media (max-width:900px){.part-cap{grid-template-columns:1fr;gap:28px}}
+  .part-cap__media{display:flex;justify-content:center}
+  .part-cap__video{width:100%;max-width:320px;aspect-ratio:9/16;display:block;border-radius:var(--ds-radius-lg);box-shadow:var(--ds-shadow-lg);background:var(--ds-blue-dark);object-fit:cover}
+  .part-cap__copy .lead{margin-top:14px}
+  .part-cap__list{list-style:none;margin:24px 0 28px;padding:0;display:flex;flex-direction:column;gap:14px}
+  .part-cap__list li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.55;color:var(--ds-text)}
+  .part-cap__list .ic{width:20px;height:20px;min-width:20px;margin-top:2px;color:var(--ds-blue);stroke-width:2.5}
+  .part-cap__list strong{color:var(--ds-text-strong)}
 
   /* Cobertura */
   .part-zonas{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
