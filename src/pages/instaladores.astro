@@ -95,10 +95,12 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
   <section class="section section--soft">
     <div class="container part-cap">
       <div class="part-cap__media reveal">
-        <!-- Video vertical (720x1280). Controles nativos: no necesita JS. #t=1 deja
-             un frame como still en vez de un rectángulo negro. -->
-        <video class="part-cap__video" controls preload="metadata" playsinline>
-          <source src={asset('/videos/capacitacion-instaladores-ducha-segura.mp4') + '#t=1'} type="video/mp4" />
+        <!-- Video vertical (720x1280). Controles nativos: no necesita JS.
+             El poster es el frame del segundo 11.2 ("Se trabaja sobre la misma tina"),
+             extraído del propio video con ffmpeg. -->
+        <video class="part-cap__video" controls preload="metadata" playsinline
+               poster={asset('/videos/capacitacion-instaladores-poster.webp')}>
+          <source src={asset('/videos/capacitacion-instaladores-ducha-segura.mp4')} type="video/mp4" />
           Tu navegador no puede reproducir este video.
         </video>
       </div>
