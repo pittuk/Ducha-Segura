@@ -37,8 +37,11 @@ try {
   http_response_code(500); echo json_encode(['ok'=>false,'error'=>'db']); exit;
 }
 
-// Aviso al gestor (no bloquea el éxito: la postulación ya quedó guardada).
-ds_send_mail($cfg['manager_email'], 'Gestor Ducha Segura', "Nueva postulación de instalador #$id — " . preg_replace('/[\r\n]+/', ' ', $nombre), ds_email_layout(
+// Aviso al encargado de la red de Partners (no bloquea el éxito: la postulación ya
+// quedó guardada). Destinatario propio, distinto al de las cotizaciones; se puede
+// sobrescribir con 'partners_email' en config.php.
+$destino = $cfg['partners_email'] ?? 'orellanalandaur@gmail.com';
+ds_send_mail($destino, 'Red de Partners Ducha Segura', "Nueva postulación de instalador #$id — " . preg_replace('/[\r\n]+/', ' ', $nombre), ds_email_layout(
   "Nueva postulación de instalador #$id",
   '<p><b>Nombre:</b> ' . htmlspecialchars($nombre) . '</p>'
   . '<p><b>Teléfono / WhatsApp:</b> ' . htmlspecialchars($telefono) . '</p>'
