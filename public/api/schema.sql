@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS postulaciones (
   nombre       VARCHAR(120) NOT NULL,
   telefono     VARCHAR(40)  NOT NULL,
   zona         VARCHAR(160) NOT NULL,
+  actividad    ENUM('empresa','honorarios','ninguna') NULL,
   herramientas TINYINT(1)   NOT NULL DEFAULT 0,
   experiencia  TEXT         NULL,
   estado       ENUM('nueva','contactada','aprobada','descartada') NOT NULL DEFAULT 'nueva',

@@ -48,7 +48,10 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
   <section class="section section--dark part-hero">
     <div class="container part-hero__inner">
       <div class="part-hero__copy">
-        <span class="kicker part-hero__kicker">Red nacional de Partners</span>
+        <div class="part-hero__top">
+          <span class="kicker part-hero__kicker">Red nacional de Partners</span>
+          <span class="part-hero__badge">Cupos limitados por zona</span>
+        </div>
         <h1 class="h2 part-hero__title">¿Eres instalador y quieres <span class="part-hero__em">aumentar tus ingresos?</span></h1>
         <p class="lead part-hero__lead">Convierte tu experiencia en un negocio rentable. Súmate como <strong>Partner Local de Ducha Segura®</strong>, accede a proyectos en tu ciudad y opera con un modelo probado de alta demanda. Pioneros en el rebaje de tina en Chile.</p>
         <div class="part-hero__cta">
@@ -61,7 +64,7 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
         <ul class="part-hero__facts">
           <li><strong>+6 años</strong><span>de marca en el mercado</span></li>
           <li><strong>Producto patentado</strong><span>de fabricación nacional</span></li>
-          <li><strong>Cobertura nacional</strong><span>zonas en convocatoria</span></li>
+          <li><strong>Cobertura nacional</strong><span>cupos limitados por zona</span></li>
         </ul>
       </div>
 
@@ -123,9 +126,9 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
   <section class="section section--alt">
     <div class="container">
       <header class="section-head section-head--center">
-        <span class="kicker">Convocatoria abierta</span>
+        <span class="kicker">Convocatoria abierta · cupos limitados</span>
         <h2 class="h2">Cobertura y territorios disponibles</h2>
-        <p class="lead">Estas son las zonas donde estamos incorporando Partners. Si tu ciudad no aparece, postula igual: evaluamos nuevas aperturas.</p>
+        <p class="lead">Estas son las zonas donde estamos incorporando Partners. Asignamos un número acotado de cupos por territorio para no saturar la zona y se otorgan por orden de postulación. Si tu ciudad no aparece, postula igual: evaluamos nuevas aperturas.</p>
       </header>
       <div class="part-zonas">
         {ZONAS.map((z) => (
@@ -151,7 +154,7 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
       <header class="section-head section-head--center">
         <span class="kicker">Postulación</span>
         <h2 class="h2">Postula tu zona y evalúa tu incorporación a la red</h2>
-        <p class="lead">Completa el formulario y nuestro equipo comercial te contactará para revisar la disponibilidad de tu territorio.</p>
+        <p class="lead">Completa el formulario y nuestro equipo comercial te contactará para revisar la disponibilidad de tu territorio. <strong>Los cupos por zona son limitados</strong>: postular antes te da prioridad.</p>
       </header>
 
       <form class="part-form" id="postulacionForm" novalidate>
@@ -160,6 +163,14 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
           <label>Teléfono / WhatsApp<input type="tel" name="telefono" required autocomplete="tel" /></label>
         </div>
         <label>Ciudad / Región donde operas<input type="text" name="zona" required autocomplete="address-level2" placeholder="Ej.: Valdivia, Los Ríos" /></label>
+        <label>¿Tienes actividad o giro iniciado?
+          <select name="actividad" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="empresa">Sí, como empresa (giro y factura)</option>
+            <option value="honorarios">Sí, como independiente (boleta de honorarios)</option>
+            <option value="ninguna">Todavía no tengo actividad iniciada</option>
+          </select>
+        </label>
         <label>¿Cuentas con herramientas y medio de transporte propio?
           <select name="herramientas" required>
             <option value="" disabled selected>Selecciona una opción</option>
@@ -199,7 +210,9 @@ const waPartner = SITE.whatsappUrl + '?text=' + encodeURIComponent('Hola Ducha S
   /* Hero: dos columnas (copy + pieza). En móvil se apila y la imagen queda arriba. */
   .part-hero__inner{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
   @media (max-width:900px){.part-hero__inner{grid-template-columns:1fr;gap:28px}}
+  .part-hero__top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   .part-hero__kicker{color:rgba(255,255,255,.75)}
+  .part-hero__badge{display:inline-block;padding:4px 12px;border-radius:999px;background:rgba(255,183,77,.16);border:1px solid rgba(255,183,77,.5);color:#ffc46b;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
   .part-hero__title{margin:8px 0 0}
   .part-hero__em{color:#4db4f0}
   .part-hero__lead{margin:16px 0 0;max-width:560px}

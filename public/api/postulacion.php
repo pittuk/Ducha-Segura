@@ -16,21 +16,25 @@ if (!is_array($d)) { http_response_code(400); echo json_encode(['ok'=>false,'err
 
 function p_s($v, $max = 255) { return mb_substr(trim((string)($v ?? '')), 0, $max); }
 function p_bad($msg) { http_response_code(400); echo json_encode(['ok'=>false,'error'=>$msg]); exit; }
+const ACTIVIDAD_LABEL = ['empresa'=>'Empresa (giro y factura)', 'honorarios'=>'Independiente (boleta de honorarios)', 'ninguna'=>'Sin actividad iniciada'];
 
 $nombre      = p_s($d['nombre'] ?? '', 120);
 $telefono    = p_s($d['telefono'] ?? '', 40);
 $zona        = p_s($d['zona'] ?? '', 160);
 $experiencia = p_s($d['experiencia'] ?? '', 2000);
 $herramientas = (($d['herramientas'] ?? '') === 'si') ? 1 : 0;
+// Giro tributario del postulante: empresa (factura) | honorarios (boleta) | ninguna.
+$actividad   = p_s($d['actividad'] ?? '', 20);
 // Honeypot: si un bot lo llena, respondemos ok sin guardar nada.
 if (p_s($d['website'] ?? '') !== '') { echo json_encode(['ok'=>true,'id'=>0]); exit; }
 
 if ($nombre === '' || $telefono === '' || $zona === '') p_bad('campos');
 if (!in_array($d['herramientas'] ?? '', ['si','no'], true)) p_bad('herramientas');
+if (!in_array($actividad, ['empresa','honorarios','ninguna'], true)) p_bad('actividad');
 
 try {
-  $stmt = ds_db()->prepare('INSERT INTO postulaciones (nombre,telefono,zona,herramientas,experiencia) VALUES (?,?,?,?,?)');
-  $stmt->execute([$nombre, $telefono, $zona, $herramientas, $experiencia ?: null]);
+  $stmt = ds_db()->prepare('INSERT INTO postulaciones (nombre,telefono,zona,actividad,herramientas,experiencia) VALUES (?,?,?,?,?,?)');
+  $stmt->execute([$nombre, $telefono, $zona, $actividad, $herramientas, $experiencia ?: null]);
   $id = (int)ds_db()->lastInsertId();
 } catch (Throwable $e) {
   error_log('postulacion insert error: ' . $e->getMessage());
@@ -46,6 +50,7 @@ ds_send_mail($destino, 'Red de Partners Ducha Segura', "Nueva postulación de in
   '<p><b>Nombre:</b> ' . htmlspecialchars($nombre) . '</p>'
   . '<p><b>Teléfono / WhatsApp:</b> ' . htmlspecialchars($telefono) . '</p>'
   . '<p><b>Ciudad / Región:</b> ' . htmlspecialchars($zona) . '</p>'
+  . '<p><b>Actividad / giro:</b> ' . ACTIVIDAD_LABEL[$actividad] . '</p>'
   . '<p><b>Herramientas y transporte propios:</b> ' . ($herramientas ? 'Sí' : 'No') . '</p>'
   . ($experiencia ? '<p><b>Experiencia:</b> ' . nl2br(htmlspecialchars($experiencia)) . '</p>' : '')
 ));

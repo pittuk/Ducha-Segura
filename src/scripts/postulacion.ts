@@ -27,6 +27,7 @@ export function initPostulacion(): void {
       nombre: String(fd.get('nombre') || '').trim(),
       telefono: String(fd.get('telefono') || '').trim(),
       zona: String(fd.get('zona') || '').trim(),
+      actividad: String(fd.get('actividad') || ''),
       herramientas: String(fd.get('herramientas') || ''),
       experiencia: String(fd.get('experiencia') || '').trim(),
       website: String(fd.get('website') || ''),
@@ -34,6 +35,9 @@ export function initPostulacion(): void {
 
     if (!payload.nombre || !payload.telefono || !payload.zona) {
       return showError(errorEl, 'Completa tu nombre, teléfono y la ciudad o región donde operas.');
+    }
+    if (!['empresa', 'honorarios', 'ninguna'].includes(payload.actividad)) {
+      return showError(errorEl, 'Indícanos si tienes actividad o giro iniciado.');
     }
     if (payload.herramientas !== 'si' && payload.herramientas !== 'no') {
       return showError(errorEl, 'Indícanos si cuentas con herramientas y transporte propio.');
