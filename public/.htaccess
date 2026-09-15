@@ -9,6 +9,10 @@ RewriteRule ^sitemap\.xml$ /sitemap-index.xml [R=301,L]
 # TC-03 — QR impreso: la ruta del PDF en el WordPress viejo → PDF en la raíz nueva (301).
 RewriteRule ^wp-content/uploads/2025/04/Manual-instalacion-piezas_V2-4\.pdf$ /Manual-instalacion-piezas_V2-4.pdf [R=301,L]
 
+# TC-04 — Entradas de blog eliminadas → índice del blog (301).
+RewriteRule ^subsidio-al-arriendo-para-adultos-mayores-en-chile-2026-guia-completa-para-acceder-al-beneficio/?$ /blog/ [R=301,L]
+RewriteRule ^secuelas-del-herpes-zoster-en-adultos-mayores-previene-a-tiempo-el-virus/?$ /blog/ [R=301,L]
+
 # Caché de estáticos (Lighthouse: "tiempos de almacenamiento en caché eficientes").
 # Assets con hash en el nombre (/_astro/) e imágenes con ?v= → inmutables a 1 año.
 # El HTML NO se cachea: es lo que trae las URLs nuevas tras cada deploy.
