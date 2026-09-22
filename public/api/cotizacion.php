@@ -84,6 +84,7 @@ ds_send_mail($email, $nombre, 'Recibimos tu cotización — Ducha Segura', ds_em
   "¡Gracias, $nombre!",
   "<p>Recibimos tu solicitud de cotización (N° <b>$id</b>). Un asesor te contactará a la brevedad.</p>"
   . "<p><b>Resumen:</b></p>$tabla"
+  . ($instalacion ? "<p style='font-size:13px;background:#e6f4fd;border-left:3px solid #0072C0;padding:10px 12px;margin:8px 0'><b>Instalación solicitada (+$30.000).</b> La instalación aplica solo a accesorios (barras, pisos, etc.). No aplica para los Kits de rebaje de tina. Si necesitas el rebaje instalado, cotiza el servicio <a href='https://www.duchasegura.cl/rebaje-de-tina'>Rebaje de tina</a>, que ya trae envío e instalación incluidos.</p>" : "")
   . "<p style='color:#888;font-size:12px'>Precios referenciales, sujetos a confirmación final.</p>"
 ));
 

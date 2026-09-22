@@ -213,7 +213,7 @@ function buildWhatsappUrl(
     .join('\n');
   const ubicacion = [comuna, region].filter(Boolean).join(', ');
   const msg = `Hola Ducha Segura® 👋 Quiero enviar mi cotización.\n\n${lineas}\n`
-    + (instalacion ? `Instalación: Sí (+$${clp(INSTALLATION_FEE)})\n` : '')
+    + (instalacion ? `Instalación: Sí (+$${clp(INSTALLATION_FEE)})\n(Aplica solo a accesorios; no incluye la instalación del rebaje de tina.)\n` : '')
     + `Total estimado: $${clp(total)}\n`
     + (tinaName ? `Tipo de tina: ${tinaName}\n` : '')
     + (ubicacion ? `Ubicación: ${ubicacion}\n` : '')
