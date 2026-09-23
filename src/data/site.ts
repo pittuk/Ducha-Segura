@@ -27,7 +27,7 @@ export const SITE = {
 
 // Mensajes rotativos del topbar. Copiados de legacy/index.html (const topbarMessages, ~1372–1376).
 export const TOPBAR_MESSAGES: string[] = [
-  '20% de descuento pagando con Banco de Chile',
+  '20% de descuento en rebaje de tina pagando con Banco de Chile',
   'Hasta 24 cuotas sin interés con tarjeta de crédito',
   'Servicios en RM, Valparaíso, Biobío y otras regiones',
 ];

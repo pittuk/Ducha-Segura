@@ -24,6 +24,7 @@ const waUrl = `${SITE.whatsappUrl}?text=${encodeURIComponent(waMsg)}`;
           <div class="calc__promo-txt">de descuento en tu rebaje de tina</div>
         </div>
 
+        <p class="calc__pays">Solo en el servicio de rebaje de tina (no aplica a kits ni accesorios)</p>
         <p class="calc__pays">Con todo medio de pago · hasta 24 cuotas sin interés</p>
         <p class="calc__regions">
           <svg class="ic" style="width:16px;height:16px;stroke-width:2"><use href="#i-pin"/></svg>
@@ -94,6 +95,7 @@ const waUrl = `${SITE.whatsappUrl}?text=${encodeURIComponent(waMsg)}`;
   @media (prefers-reduced-motion:reduce){.calc__promo-num{animation:none;filter:drop-shadow(0 8px 24px rgba(150,200,255,.4))}}
 
   .calc__pays{margin:26px 0 0;font-size:17px;font-weight:600;color:#fff}
+  .calc__pays + .calc__pays{margin-top:6px}
   .calc__regions{display:inline-flex;align-items:center;gap:8px;margin:12px 0 0;font-size:15px;color:rgba(255,255,255,.85)}
   .calc__regions .ic{flex-shrink:0}
 
