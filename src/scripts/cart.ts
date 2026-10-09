@@ -8,6 +8,7 @@ import type { CartItem, NewItem } from '../lib/cart';
 import { clp } from '../lib/format';
 import { escapeHtml } from './dom';
 import { PRODUCTOS, ACCESORIOS, type Grupo } from '../data/productos';
+import { precioVigente } from '../lib/promo';
 
 const ID_PREFIX: Record<Grupo, string> = { rebaje: 'reb', kit: 'kit', accesorio: 'acc' };
 
@@ -26,7 +27,11 @@ let _toastTimer: ReturnType<typeof setTimeout> | null = null;
 function load(): CartItem[] {
   try {
     const raw: CartItem[] = JSON.parse(localStorage.getItem('ds_cart') || '[]');
-    return raw.map(i => i.grupo ? i : { ...i, grupo: Cart.deriveGrupo(i.id) });
+    return raw.map(i => {
+      // Re-precia los ítems de catálogo al precio vigente: una oferta vencida no sobrevive en un carrito guardado.
+      const p = PRODUCTOS.find(x => `${ID_PREFIX[x.grupo]}-${x.slug}` === i.id);
+      return { ...i, grupo: i.grupo ?? Cart.deriveGrupo(i.id), ...(p && p.price > 0 ? { unitPrice: precioVigente(p) } : {}) };
+    });
   } catch (_) { return []; }
 }
 
@@ -178,7 +183,7 @@ function bindDocumentClick(): void {
     if (addP) {
       const p = PRODUCTOS.find(x => x.slug === addP.dataset.addProducto);
       if (p && p.price > 0) {
-        add({ id: `${ID_PREFIX[p.grupo]}-${p.slug}`, name: p.name, variant: p.shortDescription, unitPrice: p.price, label: p.name, image: p.image, grupo: p.grupo });
+        add({ id: `${ID_PREFIX[p.grupo]}-${p.slug}`, name: p.name, variant: p.shortDescription, unitPrice: precioVigente(p), label: p.name, image: p.image, grupo: p.grupo });
       }
       return;
     }
@@ -240,6 +245,7 @@ export function initCart(): void {
 
   // Re-read from localStorage in case another tab changed it
   items = load();
+  if (items.length) save();   // persiste el re-precio (cotizar.ts lee el mismo localStorage)
 
   // Bind per-page nodes (fresh DOM each Astro transition)
   const cartTrigger = document.getElementById('cartTrigger');

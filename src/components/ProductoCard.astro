@@ -2,11 +2,14 @@
 import type { Producto } from '../data/productos';
 import { clp } from '../lib/format';
 import { asset } from '../lib/asset';
+import { precioPromo } from '../lib/promo';
 interface Props { producto: Producto; priority?: boolean; }  // priority: primera card above-the-fold (LCP) → carga ansiosa
 const { producto: p, priority = false } = Astro.props;
 const href = `/producto/${p.slug}/`;
 const img = asset(p.image);
-const priceTxt = p.price > 0 ? `${p.grupo === 'rebaje' ? 'Desde ' : ''}$${clp(p.price)}` : (p.priceLabel ?? 'Consultar');
+const pre = p.grupo === 'rebaje' ? 'Desde ' : '';
+const priceTxt = p.price > 0 ? `${pre}$${clp(p.price)}` : (p.priceLabel ?? 'Consultar');
+const promo = p.price > 0 ? precioPromo(p.slug) : undefined;   // oferta temporal (se muestra solo si está vigente)
 const fit = (p.grupo === 'rebaje' || p.grupo === 'kit') ? 'cover' : 'contain';
 const extract = (p.descriptionHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 220);
 ---
@@ -15,6 +18,7 @@ const extract = (p.descriptionHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/
     <a href={href} class="prod-card__imglink" aria-label={p.name}>
       <img src={img} alt={p.name} loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} />
     </a>
+    {promo && <span class="prod-card__cyber promo-on">Cyber</span>}
     <button
       class="prod-card__qv"
       type="button"
@@ -37,7 +41,14 @@ const extract = (p.descriptionHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/
     <h3 class="prod-card__name"><a href={href}>{p.name}</a></h3>
     <div class="prod-card__foot">
       <span class="prod-card__pricewrap">
-        <span class="prod-card__price">{priceTxt}</span>
+        {promo ? (
+          <span class="prod-card__price">
+            <span class="promo-off">{priceTxt}</span>
+            <span class="promo-on"><s class="prod-card__was">${clp(p.price)}</s>{pre}${clp(promo)}</span>
+          </span>
+        ) : (
+          <span class="prod-card__price">{priceTxt}</span>
+        )}
         {p.price > 0 && <span class="prod-card__iva">IVA incluido</span>}
       </span>
       {p.price > 0 ? (
@@ -75,4 +86,6 @@ const extract = (p.descriptionHtml || '').replace(/<[^>]+>/g, ' ').replace(/\s+/
   .prod-card__price{font-family:var(--ds-tnum);font-weight:800;font-size:19px;color:var(--ds-blue);font-variant-numeric:tabular-nums}
   .prod-card__iva{font-size:11px;font-weight:500;color:var(--ds-text);text-transform:uppercase;letter-spacing:.04em}
   .prod-card--featured .prod-card__price{font-size:22px}
+  .prod-card__was{display:block;font-size:12px;font-weight:500;color:var(--ds-text)}
+  .prod-card__cyber{position:absolute;top:12px;left:12px;padding:7px 16px;border-radius:999px;background:#03060f;color:#4fe3ff;font-family:var(--ds-display);font-weight:800;font-style:italic;font-size:15px;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 0 12px rgba(79,227,255,.55);pointer-events:none}
 </style>

@@ -1,0 +1,71 @@
+---
+// CyberBanner.astro — Banner del home con las ofertas Cyber (estilo de los artes de las ads).
+// Sustituye al bloque del 20% (Calculator.astro) solo mientras la promo está vigente:
+// index.astro lo envuelve en `.promo-on` (ver lib/promo.ts).
+import { PROMO } from '../lib/promo';
+import { getProducto } from '../data/productos';
+import { clp } from '../lib/format';
+import { asset } from '../lib/asset';
+
+const OFERTAS = [
+  { slug: 'kit-rebaje-40cm', tag: 'Kit', name: 'Rebaje de tina', plus: '+ despacho', note: 'Incluye manual de instalación' },
+  { slug: 'rebaje-de-tina-tradicional', tag: 'Servicio', name: 'Rebaje de tina', plus: '', note: 'Instalación a domicilio' },
+].map((o) => ({ ...o, p: getProducto(o.slug)!, precio: PROMO.prices[o.slug] }));
+// Misma foto del banner del 20%, muy tenue: se funde con el fondo oscuro.
+const bgUrl = asset('/images/rebajes/rebaje-tina-jacuzzi-20-descuento.webp');
+---
+<section class="section section--xl cyb">
+  <div class="cyb__bg" style={`background-image:url('${bgUrl}')`} aria-hidden="true"></div>
+  <div class="container">
+    <div class="cyb__cols">
+      <div class="cyb__head">
+        <div class="cyb__top">Alargamos el</div>
+        <h2 class="cyb__title">Cyber</h2>
+        <p class="cyb__desc">Extendimos las ofertas del Cyber en nuestro kit y en el servicio de rebaje de tina, para que tengas un acceso seguro a tu ducha al mejor precio.</p>
+        <p class="cyb__legal">Hasta el {PROMO.hasta} · No acumulable con otras promociones</p>
+      </div>
+
+      <div class="cyb__grid">
+        {OFERTAS.map((o) => (
+          <a class="cyb__card" href={`/producto/${o.slug}/`}>
+            <img class="cyb__img" src={asset(o.p.image)} alt={o.p.name} loading="lazy" />
+            <div class="cyb__body">
+              <div class="cyb__name"><span>{o.tag}</span> {o.name}</div>
+              <s class="cyb__was">${clp(o.p.price)}</s>
+              <div class="cyb__price">${clp(o.precio)}{o.plus && <small>{o.plus}</small>}</div>
+              <div class="cyb__note">{o.note}</div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cyb{position:relative;overflow:hidden;color:#fff;background:radial-gradient(ellipse at 50% 115%,#0a4a78 0%,#06243d 38%,#03060f 75%)}
+  .cyb__bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.2}
+  .cyb .container{position:relative;z-index:1}
+
+  /* 2 columnas: título + descripción a la izquierda, las 2 tarjetas a la derecha. */
+  .cyb__cols{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,4vw,48px);align-items:center}
+  @media (max-width:768px){.cyb__cols{grid-template-columns:1fr;gap:32px}.cyb__head{text-align:center}.cyb__desc{margin-left:auto;margin-right:auto}}
+
+  .cyb__top{font-family:var(--ds-display);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(20px,2.4vw,30px);line-height:1}
+  .cyb__title{margin:4px 0 0;font-family:var(--ds-display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:clamp(64px,9vw,116px);line-height:.9;letter-spacing:-.02em;color:#4fe3ff;text-shadow:0 0 28px rgba(79,227,255,.65)}
+  .cyb__desc{margin:22px 0 0;max-width:400px;font-size:17px;line-height:1.55;color:rgba(255,255,255,.9)}
+  .cyb__legal{margin:18px 0 0;font-size:12px;text-transform:uppercase;letter-spacing:.08em;opacity:.75}
+
+  .cyb__grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media (max-width:560px){.cyb__grid{grid-template-columns:1fr}}
+  .cyb__card{display:flex;flex-direction:column;color:#fff;border:1px solid rgba(79,227,255,.45);border-radius:var(--ds-radius-lg);overflow:hidden;background:linear-gradient(180deg,#0b6fb8,#06365c);box-shadow:0 0 26px rgba(79,227,255,.22);transition:transform .2s,box-shadow .2s}
+  .cyb__card:hover{transform:translateY(-4px);box-shadow:0 0 40px rgba(79,227,255,.45)}
+  .cyb__img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+  .cyb__body{padding:16px 14px 20px;text-align:center}
+  .cyb__name{font-family:var(--ds-display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:17px;line-height:1.2}
+  .cyb__name span{font-weight:500}
+  .cyb__was{display:block;margin-top:10px;font-size:14px;opacity:.75}
+  .cyb__price{font-family:var(--ds-tnum);font-weight:800;font-size:36px;line-height:1.1;font-variant-numeric:tabular-nums}
+  .cyb__price small{display:block;margin-top:4px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .cyb__note{margin-top:8px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;opacity:.85}
+</style>

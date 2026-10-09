@@ -1,0 +1,24 @@
+---
+// PromoBar.astro — Franja de la oferta Cyber (estilo de los artes de las ads).
+// Solo visible mientras la promo está vigente: `.promo-on` + clase `promo` en <html> (ver lib/promo.ts).
+import { PROMO } from '../lib/promo';
+import { clp } from '../lib/format';
+---
+<div class="promo-on" role="region" aria-label="Oferta Cyber">
+  <div class="promobar">
+    <strong class="promobar__title">Alargamos el Cyber</strong>
+    <a class="promobar__item" href="/producto/kit-rebaje-40cm/">Kit rebaje de tina <b>${clp(PROMO.prices['kit-rebaje-40cm'])}</b></a>
+    <a class="promobar__item" href="/producto/rebaje-de-tina-tradicional/">Servicio rebaje de tina <b>${clp(PROMO.prices['rebaje-de-tina-tradicional'])}</b></a>
+    <span class="promobar__until">Hasta el {PROMO.hasta}</span>
+  </div>
+</div>
+
+<style>
+.promobar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 18px;padding:9px 16px;background:linear-gradient(90deg,#03060f,#06243d 50%,#03060f);color:#fff;font-size:14px;line-height:1.3;text-align:center}
+.promobar__title{font-family:var(--ds-display);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.04em;color:#4fe3ff;text-shadow:0 0 12px rgba(79,227,255,.7)}
+.promobar__item{color:#fff;padding:3px 12px;border:1px solid rgba(79,227,255,.45);border-radius:999px;transition:background .15s}
+.promobar__item:hover{background:rgba(79,227,255,.16)}
+.promobar__item b{font-family:var(--ds-tnum);color:#4fe3ff;font-variant-numeric:tabular-nums}
+.promobar__until{font-size:12px;text-transform:uppercase;letter-spacing:.06em;opacity:.8}
+@media (max-width:768px){.promobar{font-size:13px;gap:6px 10px}.promobar__title{width:100%}}
+</style>

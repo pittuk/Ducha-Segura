@@ -1,6 +1,7 @@
 // quickview.ts — Modal de vista rápida. Lee data-qv-* de la tarjeta y rellena el modal.
 // El "Agregar" del modal usa data-add-producto → lo maneja la delegación del carrito (cart.ts).
 import { clp } from '../lib/format';
+import { precioVigente } from '../lib/promo';
 
 let _docBound = false;
 
@@ -8,7 +9,7 @@ function openQV(el: HTMLElement): void {
   const qv = document.getElementById('qv');
   if (!qv) return;
   const d = el.dataset;
-  const price = Number(d.qvPrice || '0');
+  const price = precioVigente({ slug: d.qvSlug || '', price: Number(d.qvPrice || '0') });
 
   const img = document.getElementById('qvImg') as HTMLImageElement | null;
   if (img) { img.src = d.qvImg || ''; img.alt = d.qvName || ''; }

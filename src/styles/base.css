@@ -91,3 +91,9 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--ds-blue);outline-of
   .js .reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease-out,transform .5s ease-out}
   .js .reveal.in{opacity:1;transform:translateY(0)}
 }
+
+/* Oferta temporal (lib/promo.ts): el <head> pone la clase `promo` en <html> mientras está vigente.
+   `.promo-on` solo se ve con la oferta activa; `.promo-off` es el estado normal que reemplaza. */
+.promo-on{display:none}
+.promo .promo-on{display:revert}
+.promo .promo-off{display:none}

@@ -16,6 +16,8 @@ import QuickView from '../components/QuickView.astro';
 import { ClientRouter } from 'astro:transitions';
 import { organizationGraph, type JsonLdNode } from '../lib/seo';
 import { asset } from '../lib/asset';
+import { PROMO_ENDS_MS } from '../lib/promo';
+import PromoBar from '../components/PromoBar.astro';
 
 interface Props {
   title: string;
@@ -60,6 +62,13 @@ const jsonLd = {
   <!-- Progressive enhancement: marca `js` para gatear la animación .reveal.
        Sin JS, el contenido .reveal se muestra de inmediato (no queda invisible). -->
   <script is:inline>document.documentElement.classList.add('js')</script>
+  <!-- Oferta temporal: clase `promo` en <html> solo mientras está vigente (antes del primer paint,
+       sin parpadeo). Astro reemplaza los atributos de <html> en cada swap → se reaplica. -->
+  <script is:inline define:vars={{ promoEnds: PROMO_ENDS_MS }}>
+    function promoToggle() { document.documentElement.classList.toggle('promo', Date.now() < promoEnds); }
+    promoToggle();
+    if (!window.__promoBound) { window.__promoBound = true; document.addEventListener('astro:after-swap', promoToggle); }
+  </script>
   <!-- Terceros (GTM + TikTok Pixel) fuera de la ruta crítica.
        ponytail: arrancan en la primera interacción o 1,5 s después de `load`, lo que ocurra
        primero. Sacarlos del head libera ancho de banda para el LCP y ~370 KiB de JS del TBT.
@@ -129,6 +138,7 @@ const jsonLd = {
   <!-- End Google Tag Manager (noscript) -->
   <a href="#main" class="skip-link">Saltar al contenido principal</a>
   <Icons />
+  <PromoBar />
   <Topbar />
   <Header />
   <main id="main">
