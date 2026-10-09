@@ -6,6 +6,7 @@ import ComoFunciona from '../components/ComoFunciona.astro';
 import CanalesMayoristas from '../components/CanalesMayoristas.astro';
 import ProductosTeaser from '../components/ProductosTeaser.astro';
 import Calculator from '../components/Calculator.astro';
+import CyberBanner from '../components/CyberBanner.astro';
 import Diferenciadores from '../components/Diferenciadores.astro';
 import Prensa from '../components/Prensa.astro';
 import TestimoniosVideo from '../components/TestimoniosVideo.astro';
@@ -22,7 +23,9 @@ import BlogTeaser from '../components/BlogTeaser.astro';
   <ConveniosMarquee />
   <ComoFunciona />
   <ProductosTeaser />
-  <Calculator />
+  <!-- Oferta temporal: el banner Cyber sustituye al del 20% solo mientras está vigente (lib/promo.ts). -->
+  <div class="promo-on"><CyberBanner /></div>
+  <div class="promo-off"><Calculator /></div>
   <CanalesMayoristas />
   <Diferenciadores />
   <TestimoniosVideo />

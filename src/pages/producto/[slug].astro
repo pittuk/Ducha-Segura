@@ -7,6 +7,7 @@ import { SITE } from '../../data/site';
 import { clp } from '../../lib/format';
 import { asset } from '../../lib/asset';
 import { productNode, breadcrumbNode } from '../../lib/seo';
+import { PROMO, precioPromo } from '../../lib/promo';
 
 export function getStaticPaths() {
   return PRODUCTOS.map((p) => ({ params: { slug: p.slug }, props: { producto: p } }));
@@ -17,6 +18,7 @@ const { producto: p } = Astro.props;
 const GRUPO: Record<Producto['grupo'], string> = { rebaje: 'Rebaje de tina', kit: 'Kit', accesorio: 'Accesorio' };
 const grupoLabel = GRUPO[p.grupo];
 const priceTxt = p.price > 0 ? `$${clp(p.price)}` : (p.priceLabel ?? 'Consultar');
+const promo = p.price > 0 ? precioPromo(p.slug) : undefined;   // oferta temporal (se muestra solo si está vigente)
 const fit = (p.grupo === 'rebaje' || p.grupo === 'kit') ? 'cover' : 'contain';
 const related = PRODUCTOS.filter((x) => x.grupo === p.grupo && x.slug !== p.slug).slice(0, 4);
 
@@ -52,8 +54,20 @@ const schema = [
         <div class="ficha__info">
           <span class="kicker">{grupoLabel}</span>
           <h1 class="h2 ficha__name">{p.name}</h1>
-          <div class="ficha__price">{priceTxt}</div>
+          {promo ? (
+            <div class="ficha__price">
+              <span class="promo-off">{priceTxt}</span>
+              <span class="promo-on">
+                <s class="ficha__was">${clp(p.price)}</s>${clp(promo)}{p.grupo === 'kit' && <small class="ficha__plus"> + despacho</small>}
+              </span>
+            </div>
+          ) : (
+            <div class="ficha__price">{priceTxt}</div>
+          )}
           {p.price > 0 && <div class="ficha__iva">IVA incluido</div>}
+          {promo && (
+            <p class="ficha__promo promo-on"><strong>Oferta Cyber</strong> hasta el {PROMO.hasta}. No acumulable con otras promociones.</p>
+          )}
           {p.shortDescription && <p class="ficha__short">{p.shortDescription}</p>}
           <div class="ficha__actions">
             {p.price > 0 ? (
@@ -104,6 +118,10 @@ const schema = [
     .ficha__info{display:flex;flex-direction:column;gap:14px}
     .ficha__name{margin:4px 0 0}
     .ficha__price{font-family:var(--ds-tnum);font-weight:700;font-size:34px;color:var(--ds-blue);font-variant-numeric:tabular-nums}
+    .ficha__was{display:block;font-size:17px;font-weight:500;color:var(--ds-text)}
+    .ficha__plus{font-size:15px;font-weight:600;color:var(--ds-text)}
+    .ficha__promo{margin:0;padding:10px 14px;border-radius:var(--ds-radius);background:#03060f;color:#fff;font-size:14px;line-height:1.45}
+    .ficha__promo strong{font-family:var(--ds-display);font-style:italic;text-transform:uppercase;letter-spacing:.04em;color:#4fe3ff}
     .ficha__iva{margin-top:-8px;font-size:12px;font-weight:600;color:var(--ds-text);text-transform:uppercase;letter-spacing:.05em}
     .ficha__short{margin:0;font-size:15px;line-height:1.55;color:var(--ds-text)}
     .ficha__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}

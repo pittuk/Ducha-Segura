@@ -4,6 +4,7 @@
 import { $, $$ } from './dom';
 import { PRODUCTOS, type Producto } from '../data/productos';
 import { clp } from '../lib/format';
+import { precioVigente } from '../lib/promo';
 
 let _searchKeyBound = false;
 
@@ -24,7 +25,7 @@ const GRUPO_LABEL: Record<Producto['grupo'], string> = {
 
 function priceLabel(p: Producto): string {
   if (p.priceLabel) return p.priceLabel;
-  if (p.price > 0) return `$${clp(p.price)}`;
+  if (p.price > 0) return `$${clp(precioVigente(p))}`;
   return 'A consultar';
 }
 
