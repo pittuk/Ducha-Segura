@@ -28,8 +28,10 @@ const { convenio: c } = Astro.props;
   .conv-card{background:#fff;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);box-shadow:var(--ds-shadow);padding:22px;display:flex;flex-direction:column;gap:12px;transition:transform .2s,box-shadow .2s}
   .conv-card:hover{transform:translateY(-3px);box-shadow:var(--ds-shadow-lg)}
   .conv-card__head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .conv-card__logo{height:46px;display:flex;align-items:center}
+  .conv-card__logo{min-height:46px;display:flex;align-items:center}
   .conv-card__logo img{max-height:46px;max-width:150px;width:auto;object-fit:contain}
+  /* ponytail: sello circular de Chile Cuida necesita más alto para leerse */
+  .conv-card__logo img[src*="chile-cuida"]{max-height:74px}
   .conv-card__badge{flex-shrink:0;background:var(--ds-blue);color:#fff;font-family:var(--ds-tnum);font-weight:700;font-size:14px;padding:5px 12px;border-radius:999px;white-space:nowrap}
   .conv-card__name{margin:0;font-family:var(--ds-display);font-weight:700;font-size:18px;line-height:1.2;color:var(--ds-text-strong);letter-spacing:-.01em}
   .conv-card__benef{margin:0;font-size:13px;font-weight:600;color:var(--ds-blue)}

@@ -25,8 +25,9 @@ const items = [...CONVENIOS, ...CONVENIOS];
 .marquee__track{display:flex;gap:56px;animation:marquee 35s linear infinite;width:max-content}
 @media (max-width:768px){.marquee__track{gap:32px}}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.convenio-chip{display:flex;align-items:center;justify-content:center;height:64px;flex-shrink:0;opacity:.75;transition:opacity .2s}
+.convenio-chip{display:flex;align-items:center;justify-content:center;min-height:64px;flex-shrink:0;opacity:.75;transition:opacity .2s}
 .convenio-chip img{max-height:56px;max-width:170px;width:auto;object-fit:contain}
+.convenio-chip img[src*="chile-cuida"]{max-height:78px}
 .convenio-chip:hover{opacity:1}
-@media (max-width:768px){.convenio-chip img{max-height:44px;max-width:130px}}
+@media (max-width:768px){.convenio-chip img{max-height:44px;max-width:130px}.convenio-chip img[src*="chile-cuida"]{max-height:64px}}
 </style>
